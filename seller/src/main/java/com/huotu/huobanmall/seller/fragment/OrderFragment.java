@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.avast.android.dialogs.fragment.SimpleDialogFragment;
+//import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.github.mikephil.charting.charts.LineChart;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
@@ -159,8 +159,8 @@ public class OrderFragment extends BaseFragment {
 
             _orderPulltorefreshScrollView.onRefreshComplete();
 
-            SimpleDialogFragment.createBuilder(getActivity(), getFragmentManager())
-                    .setMessage("oooooooo").show();
+           // SimpleDialogFragment.createBuilder(getActivity(), getFragmentManager())
+                   // .setMessage("oooooooo").show();
         }
     };
 
@@ -169,11 +169,11 @@ public class OrderFragment extends BaseFragment {
         public void onErrorResponse(VolleyError volleyError) {
             _orderPulltorefreshScrollView.onRefreshComplete();
 
-            SimpleDialogFragment.createBuilder( getActivity() , getFragmentManager() )
-                    .setTitle("错误信息")
-                    .setMessage( volleyError.getMessage())
-                    .setNegativeButtonText("关闭")
-                    .show();
+////           SimpleDialogFragment.createBuilder( getActivity() , getFragmentManager() )
+////                    .setTitle("错误信息")
+//                    .setMessage( volleyError.getMessage())
+//                    .setNegativeButtonText("关闭")
+//                    .show();
         }
     };
 

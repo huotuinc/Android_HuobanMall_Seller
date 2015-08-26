@@ -1,5 +1,5 @@
 
-package com.huobanmall.seller;
+package com.huotu.huobanmall.seller.activity;
 
 
 import android.os.Bundle;
@@ -9,11 +9,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-
+import com.huotu.huobanmall.seller.common.Constants;
 import com.huotu.android.library.libedittext.EditText;
-
-
-
+import com.huotu.huobanmall.seller.R;
 
 
 /**
@@ -61,7 +59,7 @@ public class ForgetActivity extends AppCompatActivity implements OnClickListener
         edtPhone=(EditText)findViewById(R.id.edtPhone);
         edtCode = (EditText) this.findViewById(R.id.edtCode);
         btnGet = (TextView) this.findViewById(R.id.btnGet);
-        btnGet.setTag(Constant.SMS_TYPE_TEXT);
+        btnGet.setTag(Constants.SMS_TYPE_TEXT);
         btnGet.setText("获取验证码");
         edtPwd = (EditText) this.findViewById(R.id.edtPwd);
         edtRePwd = (EditText) this.findViewById(R.id.edtRePwd);
