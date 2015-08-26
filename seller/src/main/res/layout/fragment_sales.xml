@@ -1,10 +1,122 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.huobanmall.seller.fragment.SalesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/sales_statistic" />
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/sales_pulltorefreshScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ptr:ptrAnimationStyle="flip">
+
+        <RelativeLayout
+            android:id="@+id/sales_context"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/sales_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_20"
+                android:text="@string/sales_statistic" />
+
+            <LinearLayout
+                android:id="@+id/sales_summery"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_below= "@id/sales_title"
+                android:layout_height="@dimen/sales_statistic_height">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginRight="1dip"
+                    android:background="@color/sales_week_bg"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/order_week"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="bottom"
+                        android:textColor="@android:color/white"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/text_size_18"
+                        android:text="@string/sales_week"/>
+                    <TextView
+                        android:id="@+id/order_weekValue"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:text="7852.11"
+                        android:layout_gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_18"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="1dip"
+                    android:layout_weight="1"
+                    android:background="@color/sales_month_bg"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/order_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="bottom"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_18"
+                        android:text="@string/sales_month"/>
+                    <TextView
+                        android:id="@+id/order_monthValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/white"
+                        android:layout_gravity="center"
+                        android:text="302200"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/sales_lineChart_container"
+                android:layout_below="@id/sales_summery"
+                android:layout_marginTop="@dimen/space_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/sales_lineChartTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_18"
+                    android:text="@string/sales_chartTitle"/>
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/sales_lineChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/sales_lineChart_height"
+                    android:layout_below="@id/sales_lineChartTitle"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/sales_detail_container"
+                android:layout_below="@id/sales_lineChart_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/space_5">
+
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
 </FrameLayout>

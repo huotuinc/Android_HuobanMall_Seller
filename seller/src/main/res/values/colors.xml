@@ -6,4 +6,8 @@
     <color name="pageindicator_circle_fill_color">#000000</color>
     <color name="order_month_bg">#0066FF</color>
     <color name="order_week_bg">#CC3399</color>
+    <color name="sales_month_bg">#0066FF</color>
+    <color name="sales_week_bg">#CC3399</color>
+    <color name="members_month_bg">#0066FF</color>
+    <color name="members_week_bg">#CC3399</color>
 </resources>

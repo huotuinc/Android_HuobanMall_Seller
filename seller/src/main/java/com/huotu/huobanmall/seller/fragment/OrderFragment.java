@@ -1,6 +1,7 @@
 package com.huotu.huobanmall.seller.fragment;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,7 +16,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.huotu.huobanmall.seller.R;
@@ -26,6 +31,7 @@ import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -244,6 +250,42 @@ public class OrderFragment extends BaseFragment {
         _purchaseAdapter=new PurchaseOfGoodsAdapter(getActivity(), _purchaseOfGoods);
         _orderGoods.setAdapter(_purchaseAdapter);
 
+        setLineChartData();
     }
+
+    private void setLineChartData(){
+
+        _orderLineChart.setBackgroundColor(Color.WHITE);
+        //_orderLineChart.setDescription("line chart description");
+        _orderLineChart.setNoDataText("no date to show chart");
+        _orderLineChart.getAxisRight().setEnabled(false);
+
+        List<String> xValues= new ArrayList<String>();
+        List<Entry> yValues=new ArrayList<>();
+        Random r=new Random();
+        for(int i=1;i<=7;i++){
+            xValues.add( "7."+ i );
+            float y = r.nextFloat()*100;
+            Entry item=new Entry( y ,i);
+            yValues.add(item);
+        }
+        LineDataSet dataset =new LineDataSet( yValues ,"");
+        dataset.setCircleColor(Color.RED);
+        dataset.setCircleSize(4);
+        dataset.setDrawCircleHole(false);
+        dataset.setDrawValues(true);
+        dataset.setLineWidth(1);
+        dataset.setColor(Color.BLUE);
+        dataset.setValueTextSize(14);
+        dataset.setValueTextColor(Color.GREEN);
+        dataset.setDrawCubic(true);
+
+        LineData data =new LineData(xValues ,dataset );
+
+        _orderLineChart.setData(data);
+
+        _orderLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+    }
+
 
 }
