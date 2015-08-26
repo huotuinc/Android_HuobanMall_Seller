@@ -3,6 +3,10 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="hint_username2">用户名/手机号</string>
+    <string name="hint_pwd2">密码</string>
+    <string name="hint_pwd">请输入密码(6－12位)</string>
+
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

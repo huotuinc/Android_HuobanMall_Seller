@@ -23,13 +23,25 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.huotu.huobanmall.seller.activity.ForgetActivity"
+            />
+        <activity android:name="com.huotu.huobanmall.seller.activity.SplashActivity"
+            />
+
+
+
+
+
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
@@ -53,6 +65,7 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="xIa1QGYszsjFs9C9kDANe7BR" />
+
 
     </application>
 
