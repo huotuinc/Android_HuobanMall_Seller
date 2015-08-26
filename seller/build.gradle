@@ -10,6 +10,7 @@ android {
         }
     }
 
+
     defaultConfig {
         applicationId "com.huobanmall.seller"
         minSdkVersion 8
