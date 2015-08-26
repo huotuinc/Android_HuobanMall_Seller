@@ -1,37 +1,82 @@
 package com.huobanmall.seller;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+
+import com.huotu.android.library.libedittext.EditText;
+
+
+
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private Button titleBack;
+
+    // 用户名
+    private EditText userName;
+
+    // 密码
+    private EditText passWord;
+
+    // 登录按钮
+    private Button loginBtn;
+
+    // 忘记密码
+    private TextView forgetPsw;
+
+    // 界面名称
+    private TextView titleName;
+
+
+    // 返回文字事件
+    private TextView backText;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.user_login);
+        initView();
+
+    }
+    private void initView()
+    {
+        titleName = (TextView) this.findViewById(R.id.title);
+        titleName.setText("用户登录");
+        userName = (EditText) this.findViewById(R.id.edtUserName);
+        passWord = (EditText) this.findViewById(R.id.edtPwd);
+        loginBtn = (Button) this.findViewById(R.id.btnLogin);
+        forgetPsw = (TextView) this.findViewById(R.id.forgetpsw);
+        forgetPsw.setOnClickListener(this);
+        forgetPsw.setText("忘记密码？");
+        titleBack = (Button) this.findViewById(R.id.backImage);
+        backText = (TextView) this.findViewById(R.id.backtext);
+        backText.setOnClickListener(this);
+
+
+
+
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void onClick(View v) {
+        switch (v.getId()) {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            case R.id.forgetpsw:
+            {
+                Intent intent=new Intent(this, ForgetActivity.class);
+                startActivity(intent);
+            }
+            break;
+
+            }
         }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
