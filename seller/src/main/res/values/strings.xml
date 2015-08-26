@@ -3,7 +3,25 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+<<<<<<< HEAD
     <string name="hint_username2">用户名/手机号</string>
     <string name="hint_pwd2">密码</string>
     <string name="hint_pwd">请输入密码(6－12位)</string>
+=======
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_data_statistic">DataStatisticActivity</string>
+    <string name="title_activity_base_fragment">BaseFragmentActivity</string>
+
+    <string name="back">返回</string>
+    <string name="order_statistic">订单统计</string>
+    <string name="sales_statistic">销售额统计</string>
+    <string name="members_statistic">会员量统计</string>
+    <string name="order_week">本周</string>
+    <string name="order_month">本月</string>
+    <string name="order_chartTitle">数据分析（本周/本月）</string>
+    <string name="order_countOfGoods">商品购买量排列（Top10）</string>
+    <string name="title_activity_splash">SplashActivity</string>
+>>>>>>> 03ef33ac2f2e618aad2961d7c25ef3c048f56a19
 </resources>
