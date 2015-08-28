@@ -10,9 +10,12 @@ import com.huotu.huobanmall.seller.adapter.MenuAdapter;
 import com.huotu.huobanmall.seller.bean.MenuModel;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.R;
+<<<<<<< HEAD
+=======
 import com.huotu.huobanmall.seller.widget.CountUpTimerView;
 import java.util.ArrayList;
 import java.util.List;
+>>>>>>> 338cfba8b01439cb4b33f87541fe86a0adfcbfc3
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
