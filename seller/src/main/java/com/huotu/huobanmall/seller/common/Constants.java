@@ -40,11 +40,18 @@ public class Constants {
 
     public static final String GET_VD_INTERFACE = BASE_URL + "sendSMS";// 获取验证码
 
+    public static final String GOODSLIST_INTERFACE=BASE_URL+"goodsList";//商品列表
+
+    public static final String LOGIN_INTERFACE=BASE_URL+"login";//登录接口
+
     // 短信获取方式:文本
     public final static String SMS_TYPE_TEXT = "0";
 
     // 短信获取方式:语音
     public final static String SMS_TYPE_VOICE = "1";
+
+    //Activity之间传递参数的参数名称
+    public final static String Extra_Url="url";
 }
 
 

@@ -10,6 +10,9 @@ import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+
+import org.apache.http.client.methods.HttpHead;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -31,6 +34,11 @@ public class GsonRequest<T> extends Request<T> {
 	 * Class type for the response
 	 */
 	private final Class<T> mClass;
+
+	/**
+	 *
+	 */
+	private final TypeToken<T> mTypeToken;//提供和解析自定义的复杂JSON数据支持,这点与Jackson使用TypeReference不同，但原理是大同小异的
 	
 	
 	/**
@@ -66,14 +74,37 @@ public class GsonRequest<T> extends Request<T> {
 		if( null != headers ) {
 			mHeader.putAll(headers);
 		}
+		mTypeToken=null;
+	}
+
+	public GsonRequest(int method
+					   , String url
+					   , TypeToken<T> typeToken
+					   , Map<String,String> headers
+					   , Listener<T> listener
+					   , ErrorListener errorListener
+					   ){
+		super(method,url, errorListener);
+		this.mTypeToken= typeToken;
+		this.mListener = listener;
+		this.mGson = new Gson();
+		if( null != headers){
+			mHeader.putAll(headers);
+		}
+		this.mClass=null;
 	}
 
 	@Override
 	protected Response<T> parseNetworkResponse(NetworkResponse response) {
 		try {
 			String json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-			return Response.success(mGson.fromJson(json, mClass),
-					HttpHeaderParser.parseCacheHeaders(response));
+			if( mTypeToken==null) {
+				return Response.success(mGson.fromJson(json, mClass),
+						HttpHeaderParser.parseCacheHeaders(response));
+			}else{
+				return  (Response<T>)Response.success( mGson.fromJson( json , mTypeToken.getType())
+						,HttpHeaderParser.parseCacheHeaders( response));
+			}
 		} catch (UnsupportedEncodingException e) {
 			return Response.error(new ParseError(e));
 		} catch (JsonSyntaxException e) {
@@ -84,7 +115,6 @@ public class GsonRequest<T> extends Request<T> {
 	@Override
 	protected void deliverResponse(T response) {
 		mListener.onResponse(response);
-		
 	}
 
 	@Override

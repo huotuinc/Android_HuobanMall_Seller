@@ -4,6 +4,9 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="header_height">50dip</dimen>
     <dimen name="pageindicator_circle_radius">6dip</dimen>
+
+    <dimen name="main_summary_height">100dip</dimen>
+
     <dimen name="order_statistic_height">60dip</dimen>
     <dimen name="order_lineChart_height">200dip</dimen>
     <dimen name="order_goods_height">350dip</dimen>
