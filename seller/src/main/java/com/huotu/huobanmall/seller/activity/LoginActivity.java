@@ -16,19 +16,23 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends BaseFragmentActivity implements View.OnClickListener {
     @Bind(R.id.backImage)
-    private Button titleBack;
+    public Button titleBack;
+
     @Bind(R.id.edtUserName)
     // 用户名
-    private EditText userName;
+    public EditText userName;
+
     @Bind(R.id.edtPwd)
     // 密码
-    private EditText passWord;
+    public EditText passWord;
+
     @Bind(R.id.btnLogin)
     // 登录按钮
-    private Button loginBtn;
+    public Button loginBtn;
+
     @Bind(R.id.forgetpsw)
     // 忘记密码
-    private TextView forgetPsw;
+    public TextView forgetPsw;
 
     // 界面名称
     @Bind(R.id.title)
@@ -36,7 +40,7 @@ public class LoginActivity extends BaseFragmentActivity implements View.OnClickL
 
     @Bind(R.id.backtext)
     // 返回文字事件
-    private TextView backText;
+    public TextView backText;
 
 
 
@@ -44,7 +48,7 @@ public class LoginActivity extends BaseFragmentActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.user_login);
+        setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
 

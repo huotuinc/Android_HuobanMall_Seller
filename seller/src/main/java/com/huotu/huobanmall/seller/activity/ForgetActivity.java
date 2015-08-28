@@ -3,7 +3,6 @@ package com.huotu.huobanmall.seller.activity;
 
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -25,7 +24,7 @@ import com.huotu.huobanmall.seller.R;
  * @version:
  */
 
-public class ForgetActivity extends AppCompatActivity implements OnClickListener {
+public class ForgetActivity extends BaseFragmentActivity implements OnClickListener {
 
     private TextView titleName;
 
@@ -47,7 +46,7 @@ public class ForgetActivity extends AppCompatActivity implements OnClickListener
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.user_forget);
+        this.setContentView(R.layout.activity_forget);
         initView();
     }
 

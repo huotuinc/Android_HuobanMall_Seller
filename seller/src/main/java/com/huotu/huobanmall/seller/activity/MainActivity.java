@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.Button;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.R;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
