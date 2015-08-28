@@ -19,6 +19,9 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
+        if( v.getId()== R.id.header_back){
+            this.finish();
+        }
     }
 
     @Override

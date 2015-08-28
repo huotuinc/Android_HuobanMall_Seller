@@ -25,6 +25,7 @@
     <string name="sales_week">本周</string>
     <string name="sales_month">本月</string>
     <string name="sales_chartTitle">数据分析（本周/本月）</string>
+    <string name="sales_sale_statistic">销售明细</string>
 
     <string name="members_statistic">注册会员统计（人）</string>
     <string name="members_week">本周</string>
@@ -34,4 +35,27 @@
     <string name="members_chartTitle">数据分析（本周/本月）</string>
     <string name="members_jf_statistic">会员小伙伴返利积分统计</string>
     <string name="members_xf_statistic">会员小伙伴消费统计</string>
+    <string name="title_activity_goods">GoodsActivity</string>
+    <string name="header_edit">编辑</string>
+    <string name="title_activity_goods_edit">GoodsEditActivity</string>
+    <string name="goodsedit_all">全选</string>
+    <string name="goodsedit_delete">删除</string>
+    <string name="goodsedit_onshelf">上架</string>
+    <string name="goodsedit_offshelf">下架</string>
+    <string-array name="main_menu_name">
+        <item>产品管理</item>
+        <item>订单管理</item>
+        <item>周月统计</item>
+        <item>设置管理</item>
+        <item>更多数据</item>
+        <item>店铺首页</item>
+    </string-array>
+    <integer-array name="main_menu_icon">
+        <item>@mipmap/cpgl</item>
+        <item>@mipmap/ddgl</item>
+        <item>@mipmap/zytj</item>
+        <item>@mipmap/szgl</item>
+        <item>@mipmap/gdsj</item>
+        <item>@mipmap/dpsy</item>
+    </integer-array>
 </resources>

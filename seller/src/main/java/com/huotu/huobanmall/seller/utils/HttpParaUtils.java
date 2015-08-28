@@ -125,7 +125,7 @@ public class HttpParaUtils {
         return signHex;
     }
 
-    public String getHttpGetUrl(String url , HashMap<String,String> paras ){
+    public String getHttpGetUrl(String url , Map<String,String> paras ){
         Uri.Builder builder = Uri.parse(url).buildUpon();
 
         Map<String,String> map = getParaMaps(paras);

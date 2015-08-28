@@ -9,8 +9,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/main_header_bg"
+        android:textColor="@android:color/white"
         android:text="@string/back"
         android:drawableLeft="@drawable/btn_back"/>
+
+    <Button
+        android:id="@+id/header_operate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="操作"
+        android:textColor="@android:color/white"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent"/>
 
     <TextView
         android:id="@+id/header_title"
@@ -22,5 +32,6 @@
         android:singleLine="true"
         android:textColor="@color/main_header_title_color"
         android:textSize="@dimen/text_size_22"
+        android:layout_toLeftOf="@id/header_operate"
         android:layout_toRightOf="@id/header_back"/>
 </RelativeLayout>

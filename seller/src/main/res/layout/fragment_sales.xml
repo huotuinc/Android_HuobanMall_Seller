@@ -109,10 +109,24 @@
                 android:id="@+id/sales_detail_container"
                 android:layout_below="@id/sales_lineChart_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space_5"
+                android:layout_margin="@dimen/space_5"
+                android:background="@android:color/darker_gray"
                 android:layout_marginTop="@dimen/space_5">
-
-
+                <TextView
+                    android:text="@string/sales_sale_statistic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_18"
+                    android:layout_toLeftOf="@+id/sale_arrow1"/>
+                <ImageView
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/sale_arrow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/info_arrow"/>
 
             </RelativeLayout>
         </RelativeLayout>
