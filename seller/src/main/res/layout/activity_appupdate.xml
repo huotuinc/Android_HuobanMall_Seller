@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:id="@+id/lay"
+    android:background="#000000"
+    android:orientation="vertical" >
+
+    <com.huotu.huobanmall.seller.widget.CircleProgressBar
+        android:id="@+id/progressWithArrow"
+        app:mlpb_show_arrow="true"
+        app:mlpb_arrow_height="5dp"
+        app:mlpb_arrow_width="10dp"
+        app:mlpb_progress_stoke_width="20dp"
+        app:mlpb_progress_text_visibility="visible"
+        app:mlpb_background_color="@color/circle_color"
+        app:mlpb_progress_color="@color/ring_color"
+        app:mlpb_progress_text_size="@dimen/text_size_25"
+        app:mlpb_progress_text_color="@color/white"
+        app:mlpb_inner_radius="100dip"
+        android:layout_gravity="center"
+        android:layout_width="240dp"
+        android:layout_height="240dp" />
+
+    <TextView
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_15"
+        android:layout_marginTop="@dimen/space_5"
+        android:text="@string/update_msg" />
+    <TextView
+        android:padding="@dimen/space_10"
+        android:id="@+id/txtTips"
+        android:gravity="left"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update_msg" />
+
+
+</LinearLayout>

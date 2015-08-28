@@ -33,8 +33,8 @@ public class MainActivity extends BaseFragmentActivity {
         ButterKnife.bind(this);
 
         String formatText="￥%.2f";
-        CountUpTimerView countUpView =new CountUpTimerView( main_todyMoney , formatText , 1000.33f,5000.45f, 3000,100);
-        countUpView.start();
+        //CountUpTimerView countUpView =new CountUpTimerView( main_todyMoney , formatText , 1000.33f,5000.45f, 3000,100);
+        //countUpView.start();
 
         mMenus=new ArrayList<>();
         final String[] menus = getResources().getStringArray(R.array.main_menu_name);
@@ -73,7 +73,6 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     public void onClick(View v) {
-
         super.onClick(v);
     }
 }

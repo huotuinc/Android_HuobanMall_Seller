@@ -1,5 +1,6 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.avast.android.dialogs.iface.ISimpleDialogCancelListener;
+import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.MerchantModel;
@@ -30,7 +32,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class LoginActivity extends BaseFragmentActivity implements
-        View.OnClickListener  {
+        View.OnClickListener , ISimpleDialogListener{
+    private final static int REQUEST_UPDATE=2045;
+
     @Bind(R.id.backImage)
     public Button titleBack;
     // 用户名
@@ -117,7 +121,7 @@ public class LoginActivity extends BaseFragmentActivity implements
         @Override
         public void onResponse(Object o) {
 
-            ActivityUtils.getInstance().showActivity(LoginActivity.this,MainActivity.class);
+            ActivityUtils.getInstance().showActivity(LoginActivity.this, MainActivity.class);
 
         }
     };
@@ -136,24 +140,86 @@ public class LoginActivity extends BaseFragmentActivity implements
         }
     };
 
+    protected void testAppUpdate(){
+        String tips="本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.";
+        SimpleDialogFragment.createBuilder(this,getSupportFragmentManager())
+                .setTitle("温馨提示")
+                .setMessage("发现新版本，马上更新?\n"+tips )
+                .setPositiveButtonText("马上更新")
+                .setNegativeButtonText("跳过该版本")
+                .setRequestCode(REQUEST_UPDATE)
+                .show();
+    }
+
+    protected void updateApp(){
+        boolean isForce=false;
+        AppUpdateActivity.UpdateType type= AppUpdateActivity.UpdateType.FullUpate;
+        String md5="sadfsafsafafd121";
+        String url="http://cdn4.ops.baidu.com/new-repackonline/baidunuomi/AndroidPhone/5.12.0.1/1/1009769b/20150810142355/baidunuomi_AndroidPhone_5-12-0-1_1009769b.apk"; //"http://newresources.fanmore.cn/fanmore/fanmore3.0.apk";
+        String tips="本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.";
+
+        Intent intent = new Intent( this, AppUpdateActivity.class);
+        intent.putExtra("isForce", isForce);
+        intent.putExtra("type", type);
+        intent.putExtra("md5", md5);
+        intent.putExtra("url", url);
+        intent.putExtra("tips", tips);
+        startActivityForResult(intent, Constants.REQUEST_CODE_CLIENT_DOWNLOAD);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent arg2) {
+        if (requestCode == Constants.REQUEST_CODE_CLIENT_DOWNLOAD
+                && resultCode == Constants.RESULT_CODE_CLIENT_DOWNLOAD_FAILED) {
+            Bundle extra = arg2.getExtras();
+            if (extra != null) {
+                boolean isForce = extra.getBoolean("isForce");
+                if (isForce) {
+                    finish();
+                } else {
+                    //toHome();
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, arg2);
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.forgetpsw:
             {
-                Intent intent=new Intent(this, ForgetActivity.class);
-                startActivity(intent);
+//                Intent intent=new Intent(this, ForgetActivity.class);
+//                startActivity(intent);
+                testAppUpdate();
             }
             break;
             case R.id.btnLogin:
             {
-//                Intent intent=new Intent(this, MainActivity.class);
-//                startActivity(intent);
-                Login();
+                Intent intent=new Intent(this, MainActivity.class);
+                startActivity(intent);
+                //Login();
             }
             break;
 
             }
         }
 
+    @Override
+    public void onNegativeButtonClicked(int requestCode) {
+
+    }
+
+    @Override
+    public void onNeutralButtonClicked(int requestCode) {
+
+    }
+
+    @Override
+    public void onPositiveButtonClicked(int requestCode) {
+        if( requestCode == REQUEST_UPDATE){
+            updateApp();
+        }
+    }
 }
