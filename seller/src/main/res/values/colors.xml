@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="white">#FFFFFFFF</color>
     <color name="main_header_bg">#0195FF</color>
     <color name="main_header_title_color">#FFFFFF</color>
     <color name="main_info_bg">#EDEDED</color>
@@ -13,4 +14,7 @@
     <color name="members_month_bg">#0066FF</color>
     <color name="members_week_bg">#CC3399</color>
 
+    <color name="circle_color">#323a45</color>
+    <color name="ring_color">#14b9d6</color>
+    
 </resources>

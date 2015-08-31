@@ -27,7 +27,7 @@
                 <!-- 店铺名称 -->
 
                 <LinearLayout
-                    android:id="@+id/shopNameLL"
+                    android:id="@+id/shopNameLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -71,7 +71,7 @@
                 <!-- 店铺描述 -->
 
                 <LinearLayout
-                    android:id="@+id/ShopdescriptionLL"
+                    android:id="@+id/shopdescriptionLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -116,7 +116,7 @@
                 <!-- 店铺logo -->
 
                 <LinearLayout
-                    android:id="@+id/layImg"
+                    android:id="@+id/imgLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -171,7 +171,7 @@
                 <!-- 当前账号 -->
 
                 <LinearLayout
-                    android:id="@+id/layName"
+                    android:id="@+id/idLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -192,7 +192,7 @@
                          />
 
                     <TextView
-                        android:id="@+id/txtName"
+                        android:id="@+id/txtId"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -219,7 +219,7 @@
                 <!-- 昵称 -->
 
                 <LinearLayout
-                    android:id="@+id/laySex"
+                    android:id="@+id/nameLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -239,7 +239,7 @@
                          />
 
                     <TextView
-                        android:id="@+id/txtSex"
+                        android:id="@+id/txtName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -265,7 +265,7 @@
                 <!-- 修改登录密码 -->
 
                 <LinearLayout
-                    android:id="@+id/layAge"
+                    android:id="@+id/changePswLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -284,7 +284,7 @@
                         android:text="修改登录密码"
                         />
                     <TextView
-                        android:id="@+id/txtAge"
+                        android:id="@+id/txtchangePsw"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -314,7 +314,7 @@
                     />
 
                 <LinearLayout
-                    android:id="@+id/layJob"
+                    android:id="@+id/pushLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -334,7 +334,7 @@
                         />
 
                     <TextView
-                        android:id="@+id/txtJob"
+                        android:id="@+id/txtlayPush"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -360,7 +360,7 @@
                 <!-- 关于我们 -->
 
                 <LinearLayout
-                    android:id="@+id/layIncome"
+                    android:id="@+id/aboutusLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -376,7 +376,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="推送设置"
+                        android:text="关于我们"
                        />
 
                     <TextView
@@ -406,7 +406,7 @@
                 <!-- 使用帮助 -->
 
                 <LinearLayout
-                    android:id="@+id/layFav"
+                    android:id="@+id/helpLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -450,7 +450,7 @@
                 <!-- 问题反馈 -->
 
                 <LinearLayout
-                    android:id="@+id/layFeedback"
+                    android:id="@+id/FeedbackLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"

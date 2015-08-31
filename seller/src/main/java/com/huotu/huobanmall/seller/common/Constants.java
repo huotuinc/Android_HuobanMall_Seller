@@ -1,5 +1,9 @@
 package com.huotu.huobanmall.seller.common;
 
+import android.os.Environment;
+
+import java.io.File;
+
 /**
  * Created by Administrator on 2015/8/25.
  */
@@ -34,7 +38,7 @@ public class Constants {
     // 城市码
     public final static String  PRE_LOCATION_CITY_CODE = "cityCode";
 
-    public final static String BASE_ROOT_URL ="http://www.baidu.com";
+    public final static String BASE_ROOT_URL ="http://www.baidu.com/";
 
     public static final String BASE_URL = BASE_ROOT_URL + "app/";// 基础URL
 
@@ -46,6 +50,7 @@ public class Constants {
 
     public static final String FORGET_INTERFACE=BASE_URL+"forgetPassword";//忘记密码接口
 
+    public static final String INIT_INTERFACE= BASE_URL+"init";//初始化接口
 
     // 短信获取方式:文本
     public final static String SMS_TYPE_TEXT = "0";
@@ -55,6 +60,13 @@ public class Constants {
 
     //Activity之间传递参数的参数名称
     public final static String Extra_Url="url";
+
+
+    public static final String BASE_IMAGE_PATH = Environment.getExternalStorageDirectory().toString() + File.separator + "hbimage";
+
+    public static final String PATH_PKG_TEMP = BASE_IMAGE_PATH + File.separator + "pkgtemp";
+    public final static int RESULT_CODE_CLIENT_DOWNLOAD_FAILED = -8000;
+    public final static int REQUEST_CODE_CLIENT_DOWNLOAD = 8000;
 }
 
 

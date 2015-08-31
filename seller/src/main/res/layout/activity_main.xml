@@ -60,6 +60,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/main_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -67,10 +68,12 @@
 
     <LinearLayout
         android:id="@+id/main_info"
-        android:layout_below="@id/main_Summary"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:background="@color/main_info_bg"
+        android:layout_above="@+id/main_gridView"
+        android:paddingTop="@dimen/space_15"
+        android:paddingBottom="@dimen/space_15"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="wrap_content"
@@ -82,12 +85,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textSize="@dimen/text_size_25"
                 android:text="135"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textSize="@dimen/text_size_25"
                 android:text="会员"/>
         </LinearLayout>
         <LinearLayout
@@ -107,12 +112,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textSize="@dimen/text_size_25"
                 android:text="51"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textSize="@dimen/text_size_25"
                 android:text="商品"/>
         </LinearLayout>
         <LinearLayout
@@ -132,22 +139,24 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_weight="1"
+                android:textSize="@dimen/text_size_25"
                 android:text="34"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_weight="1"
+                android:textSize="@dimen/text_size_25"
                 android:text="分销商"/>
         </LinearLayout>
     </LinearLayout>
 
     <GridView
         android:id="@+id/main_gridView"
-        android:layout_below="@id/main_info"
         android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
         android:numColumns="3"
-        android:layout_marginTop="@dimen/space_5"
-        android:layout_height="match_parent"/>
-
+        android:layout_marginTop="@dimen/space_10"
+        android:layout_marginBottom="@dimen/space_10"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

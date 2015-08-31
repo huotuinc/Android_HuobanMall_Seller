@@ -58,4 +58,7 @@
         <item>@mipmap/gdsj</item>
         <item>@mipmap/dpsy</item>
     </integer-array>
+
+    <string name="update_msg">更新内容:</string>
+
 </resources>
