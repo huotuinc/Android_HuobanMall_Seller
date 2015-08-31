@@ -1,5 +1,6 @@
 package com.huotu.huobanmall.seller.activity;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,25 +34,6 @@ public class LoginActivity extends BaseFragmentActivity implements
         View.OnClickListener  {
     @Bind(R.id.backImage)
     public Button titleBack;
-<<<<<<< HEAD
-
-    @Bind(R.id.edtUserName)
-    // 用户名
-    public EditText userName;
-
-    @Bind(R.id.edtPwd)
-    // 密码
-    public EditText passWord;
-
-    @Bind(R.id.btnLogin)
-    // 登录按钮
-    public Button loginBtn;
-
-    @Bind(R.id.forgetpsw)
-    // 忘记密码
-    public TextView forgetPsw;
-
-=======
     // 用户名
     @Bind(R.id.edtUserName)
     public EditText userName;
@@ -64,20 +46,14 @@ public class LoginActivity extends BaseFragmentActivity implements
     // 忘记密码
     @Bind(R.id.forgetpsw)
     public TextView forgetPsw;
->>>>>>> 338cfba8b01439cb4b33f87541fe86a0adfcbfc3
     // 界面名称
     @Bind(R.id.title)
     public TextView titleName;
     // 返回文字事件
-<<<<<<< HEAD
-    public TextView backText;
-
-
-=======
     @Bind(R.id.backtext)
     public TextView backText;
     public ProgressDialogFragment progressDialog;
->>>>>>> 338cfba8b01439cb4b33f87541fe86a0adfcbfc3
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +124,7 @@ public class LoginActivity extends BaseFragmentActivity implements
         }
     };
 
+
     Response.ErrorListener errorListener=new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
@@ -169,17 +146,18 @@ public class LoginActivity extends BaseFragmentActivity implements
             {
                 Intent intent=new Intent(this, ForgetActivity.class);
                 startActivity(intent);
+              
             }
             break;
             case R.id.btnLogin:
             {
-//                Intent intent=new Intent(this, MainActivity.class);
-//                startActivity(intent);
                 Login();
             }
             break;
 
             }
         }
+
+
 
 }

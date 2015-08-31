@@ -44,6 +44,9 @@ public class Constants {
 
     public static final String LOGIN_INTERFACE=BASE_URL+"login";//登录接口
 
+    public static final String FORGET_INTERFACE=BASE_URL+"forgetPassword";//忘记密码接口
+
+
     // 短信获取方式:文本
     public final static String SMS_TYPE_TEXT = "0";
 
