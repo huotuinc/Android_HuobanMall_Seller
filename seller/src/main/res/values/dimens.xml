@@ -6,6 +6,7 @@
     <dimen name="pageindicator_circle_radius">6dip</dimen>
 
     <dimen name="main_summary_height">100dip</dimen>
+    <dimen name="main_menu_height">250dip</dimen>
 
     <dimen name="order_statistic_height">60dip</dimen>
     <dimen name="order_lineChart_height">200dip</dimen>
@@ -22,7 +23,18 @@
     <dimen name="members_statistic_height">70dip</dimen>
     <dimen name="members_lineChart_height">200dip</dimen>
 
+    <dimen name="todayOrder_lineChart_height">200dip</dimen>
+
     <!-- 通用 -->
+    <dimen name="text_size_45">45.0sp</dimen>
+    <dimen name="text_size_40">40.0sp</dimen>
+    <dimen name="text_size_39">39.0sp</dimen>
+    <dimen name="text_size_38">38.0sp</dimen>
+    <dimen name="text_size_37">37.0sp</dimen>
+    <dimen name="text_size_36">36.0sp</dimen>
+    <dimen name="text_size_35">35.0sp</dimen>
+    <dimen name="text_size_34">34.0sp</dimen>
+    <dimen name="text_size_33">33.0sp</dimen>
     <dimen name="text_size_32">32.0sp</dimen>
     <dimen name="text_size_31">31.0sp</dimen>
     <dimen name="text_size_30">30.0sp</dimen>

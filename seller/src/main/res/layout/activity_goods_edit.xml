@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/goodsedit_header"
-        android:layout_above="@+id/goodsedit_bottom"        />
+        android:layout_above="@+id/goodsedit_bottom"/>
 
     <RelativeLayout
         android:id="@+id/goodsedit_bottom"
