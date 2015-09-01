@@ -15,10 +15,7 @@
  */
 package com.huotu.huobanmall.seller.widget;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
-import android.animation.ValueAnimator.AnimatorUpdateListener;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -96,9 +93,9 @@ public class SlideSwitch extends View {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		int width = measureDimension(280, widthMeasureSpec);
-		int height = measureDimension(140, heightMeasureSpec);
-		if (shape == SHAPE_CIRCLE) {
+			int width = measureDimension(50, widthMeasureSpec);
+			int height = measureDimension(30, heightMeasureSpec);
+			if (shape == SHAPE_CIRCLE) {
 			if (width < height)
 				width = height * 2;
 		}

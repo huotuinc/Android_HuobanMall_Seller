@@ -33,12 +33,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:background="@color/theme_color"
                     >
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        />
+                        android:background="@drawable/line_gray_shape" />
 
                     <TextView
                         android:id="@+id/txtPhone"
@@ -71,7 +72,7 @@
                         android:layout_height="1px"
                         android:layout_below="@+id/edtPhone"
                         android:layout_marginLeft="10dp"
-                        />
+                        android:background="@drawable/line_gray_shape"/>
                 </RelativeLayout>
                 <!-- 手机号end -->
 
@@ -82,6 +83,7 @@
                     android:id="@+id/layCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/theme_color"
                     >
 
                     <TextView
@@ -112,7 +114,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/edtCode"
-                         />
+                        android:background="@drawable/line_gray_shape" />
+
 
                     <TextView
                         android:id="@+id/btnGet"
@@ -139,12 +142,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:background="@color/theme_color"
                     >
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                         />
+                        android:background="@drawable/line_gray_shape" />
+
 
                     <TextView
                         android:id="@+id/txtPwd"
@@ -174,7 +179,7 @@
                         android:layout_height="1px"
                         android:layout_below="@+id/edtPwd"
                         android:layout_marginLeft="10dp"
-                        />
+                        android:background="@drawable/line_gray_shape" />
                 </RelativeLayout>
                 <!-- 密码end -->
 
@@ -184,6 +189,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/theme_color"
                     >
 
                     <TextView
@@ -213,7 +219,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/edtRePwd"
-                       />
+                        android:background="@drawable/line_gray_shape" />
                 </RelativeLayout>
                 <!-- 密码确认end -->
 

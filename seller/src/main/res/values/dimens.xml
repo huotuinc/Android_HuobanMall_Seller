@@ -13,6 +13,11 @@
 
     <dimen name="sales_statistic_height">60dip</dimen>
     <dimen name="sales_lineChart_height">200dip</dimen>
+    <!-- 信息箭头大小 -->
+    <dimen name="info_arrow_width">8dp</dimen>
+    <dimen name="info_arrow_height">13dp</dimen>
+    <!-- title字体大小 -->
+    <dimen name="main_title_text_size">16sp</dimen>
 
     <dimen name="members_statistic_height">70dip</dimen>
     <dimen name="members_lineChart_height">200dip</dimen>

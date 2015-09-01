@@ -1,5 +1,6 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.utils.ActivityUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,7 +19,7 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2015/8/31.
  */
 public class SettingActivity extends BaseFragmentActivity
-        implements View.OnClickListener  {
+        implements View.OnClickListener {
 
     @Bind(R.id.title)
     public TextView titleName;
@@ -53,13 +55,18 @@ public class SettingActivity extends BaseFragmentActivity
 
         ButterKnife.bind(this);
 
+        initView();
+    }
+
+    private void initView() {
+        pushLabel.setOnClickListener(this);
 
     }
+
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
     }
-
 
 
 //    public boolean handleMessage(Message msg) {
@@ -68,6 +75,13 @@ public class SettingActivity extends BaseFragmentActivity
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.pushLabel: {
+                ActivityUtils.getInstance().showActivity(SettingActivity.this, PushActivity.class);
+
+            }
+            break;
+        }
 
     }
 }
