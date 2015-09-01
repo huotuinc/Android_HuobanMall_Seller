@@ -88,6 +88,15 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.backtext: {
+               finish();
+
+            }
+            break;
+
+        }
+
 
     }
     private void forgetPassword() {

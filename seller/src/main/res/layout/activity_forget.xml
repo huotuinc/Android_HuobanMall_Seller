@@ -124,6 +124,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
+                        android:background="@drawable/shape_red"
                         android:clickable="true"
                         android:gravity="center"
                         android:minWidth="120dp"
@@ -131,6 +132,7 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:text="获取验证码"
+                        android:textColor="@color/white"
                        />
                 </RelativeLayout>
                 <!-- 验证码end -->
@@ -234,9 +236,12 @@
         android:clickable="true"
         android:gravity="center"
         android:onClick="onClick"
+        android:layout_margin="10dp"
         android:text="找回"
-
-        android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:background="@drawable/btn_red_sel"
+        android:layout_height="40dp"
         android:layout_below="@+id/scrollLayout2"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

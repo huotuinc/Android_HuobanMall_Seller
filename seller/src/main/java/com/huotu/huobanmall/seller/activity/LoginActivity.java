@@ -217,6 +217,10 @@ public class LoginActivity extends BaseFragmentActivity implements
 
             }
             break;
+            case R.id.backtext:
+            {
+                finish();
+            }
 
             }
         }

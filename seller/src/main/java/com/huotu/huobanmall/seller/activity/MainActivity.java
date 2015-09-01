@@ -74,6 +74,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     public void onClick(View v) {
-        super.onClick(v);
+        switch (v.getId()) {
+        }
     }
 }

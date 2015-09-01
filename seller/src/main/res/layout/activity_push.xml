@@ -15,15 +15,18 @@
 
 
     <RelativeLayout
+        android:orientation="horizontal"
         android:layout_below="@+id/title_login"
         android:id="@+id/RLnotice"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/theme_color">
 
 
 
         <TextView
             android:id="@+id/tvnotice"
+            android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -41,14 +44,23 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"/>
 
+
     </RelativeLayout>
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/line1"
         android:layout_below="@+id/RLnotice"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@drawable/line_gray_shape" />
+    <RelativeLayout
+        android:layout_below="@+id/line1"
         android:id="@+id/RLxiaohuoban"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/theme_color">
 
         <TextView
+            android:layout_marginLeft="10dp"
             android:id="@+id/tvxiaohuoban"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,15 +80,23 @@
             android:layout_marginTop="10dp"/>
 
     </RelativeLayout>
+    <ImageView
+        android:id="@+id/line2"
+        android:layout_below="@+id/RLxiaohuoban"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@drawable/line_gray_shape" />
     <RelativeLayout
         android:id="@+id/RLmiandarao"
-        android:layout_below="@+id/RLxiaohuoban"
+        android:layout_below="@+id/line2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/theme_color">
 
 
 
         <TextView
+            android:layout_marginLeft="10dp"
             android:id="@+id/tvmiandarao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,12 +116,19 @@
             android:layout_marginTop="10dp"/>
 
     </RelativeLayout>
+    <ImageView
+        android:id="@+id/line3"
+        android:layout_below="@+id/RLmiandarao"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@drawable/line_gray_shape" />
     <TextView
         android:id="@+id/tip"
-        android:layout_below="@+id/RLmiandarao"
+        android:layout_below="@+id/line3"
         android:text="开启免打扰,在22：00到8：00不会收到系统的消息推送。"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        />
 
 
 
