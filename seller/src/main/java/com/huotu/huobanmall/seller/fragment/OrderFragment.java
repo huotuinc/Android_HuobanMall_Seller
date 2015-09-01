@@ -57,16 +57,16 @@ public class OrderFragment extends BaseFragment {
 
     private OnFragmentInteractionListener mListener;
 
-    @Bind(R.id.order_lineChart)
-    LineChart _orderLineChart;
-    @Bind(R.id.order_goods)
-    RecyclerView _orderGoods;
-    @Bind(R.id.order_weekValue)
-    TextView _orderWeekValue;
-    @Bind(R.id.order_monthValue)
-    TextView _orderMonthValue;
-    @Bind(R.id.order_pulltorefreshScrollView)
-    PullToRefreshScrollView _orderPulltorefreshScrollView;
+    //@Bind(R.id.order_lineChart)
+    //LineChart _orderLineChart;
+    //@Bind(R.id.order_goods)
+    //RecyclerView _orderGoods;
+    //@Bind(R.id.order_weekValue)
+    //TextView _orderWeekValue;
+    //@Bind(R.id.order_monthValue)
+    //TextView _orderMonthValue;
+    //@Bind(R.id.order_pulltorefreshScrollView)
+    //PullToRefreshScrollView _orderPulltorefreshScrollView;
 
     List<PurchaseOfGoods> _purchaseOfGoods;
     PurchaseOfGoodsAdapter _purchaseAdapter;
@@ -164,7 +164,7 @@ public class OrderFragment extends BaseFragment {
         @Override
         public void onResponse(PurchaseOfGoods purchaseOfGoods) {
 
-            _orderPulltorefreshScrollView.onRefreshComplete();
+            //_orderPulltorefreshScrollView.onRefreshComplete();
 
            // SimpleDialogFragment.createBuilder(getActivity(), getFragmentManager())
                    // .setMessage("oooooooo").show();
@@ -174,7 +174,7 @@ public class OrderFragment extends BaseFragment {
     protected Response.ErrorListener errorListener = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
-            _orderPulltorefreshScrollView.onRefreshComplete();
+            //_orderPulltorefreshScrollView.onRefreshComplete();
 
 ////           SimpleDialogFragment.createBuilder( getActivity() , getFragmentManager() )
 ////                    .setTitle("错误信息")
@@ -193,16 +193,16 @@ public class OrderFragment extends BaseFragment {
 
     private void initData(){
 
-        _orderPulltorefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
-            @Override
-            public void onRefresh(PullToRefreshBase<ScrollView> pullToRefreshBase) {
-                getData();
-            }
-        });
+        //_orderPulltorefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+        //    @Override
+        //    public void onRefresh(PullToRefreshBase<ScrollView> pullToRefreshBase) {
+        //        getData();
+        //    }
+        //});
 
 
 
-        _orderGoods.setHasFixedSize(true);
+        //_orderGoods.setHasFixedSize(true);
 
         _purchaseOfGoods =new ArrayList<PurchaseOfGoods>();
         PurchaseOfGoods item=new PurchaseOfGoods();
@@ -247,19 +247,19 @@ public class OrderFragment extends BaseFragment {
         _purchaseOfGoods.add(item);
 
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL , false);
-        _orderGoods.setLayoutManager(layoutManager);
+        //_orderGoods.setLayoutManager(layoutManager);
         _purchaseAdapter=new PurchaseOfGoodsAdapter(getActivity(), _purchaseOfGoods);
-        _orderGoods.setAdapter(_purchaseAdapter);
+        //_orderGoods.setAdapter(_purchaseAdapter);
 
         setLineChartData();
     }
 
     private void setLineChartData(){
 
-        _orderLineChart.setBackgroundColor(Color.WHITE);
+        //_orderLineChart.setBackgroundColor(Color.WHITE);
         //_orderLineChart.setDescription("line chart description");
-        _orderLineChart.setNoDataText("no date to show chart");
-        _orderLineChart.getAxisRight().setEnabled(false);
+        //_orderLineChart.setNoDataText("no date to show chart");
+        //_orderLineChart.getAxisRight().setEnabled(false);
 
         List<String> xValues= new ArrayList<String>();
         List<Entry> yValues=new ArrayList<>();
@@ -283,9 +283,9 @@ public class OrderFragment extends BaseFragment {
 
         LineData data =new LineData(xValues ,dataset );
 
-        _orderLineChart.setData(data);
+        //_orderLineChart.setData(data);
 
-        _orderLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+        //_orderLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
     }
 
 

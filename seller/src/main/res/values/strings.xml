@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">seller</string>
+    <string name="app_name">伙伴商城卖家版</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -45,20 +45,19 @@
     <string-array name="main_menu_name">
         <item>产品管理</item>
         <item>订单管理</item>
-        <item>周月统计</item>
+        <item>更多统计</item>
         <item>设置管理</item>
-        <item>更多数据</item>
-        <item>店铺首页</item>
     </string-array>
     <integer-array name="main_menu_icon">
         <item>@mipmap/cpgl</item>
         <item>@mipmap/ddgl</item>
-        <item>@mipmap/zytj</item>
+        <item>@mipmap/gdtj</item>
         <item>@mipmap/szgl</item>
-        <item>@mipmap/gdsj</item>
-        <item>@mipmap/dpsy</item>
     </integer-array>
 
     <string name="update_msg">更新内容:</string>
+    <string name="onshelf">已上架</string>
+    <string name="offshelf">已下架</string>
+    <string name="todayNewOrder">今日新增</string>
 
 </resources>

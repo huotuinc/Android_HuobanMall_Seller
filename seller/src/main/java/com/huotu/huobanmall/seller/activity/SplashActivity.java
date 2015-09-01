@@ -3,10 +3,20 @@ package com.huotu.huobanmall.seller.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.baidu.location.LocationClientOption;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.MJInitData;
+import com.huotu.huobanmall.seller.common.Constants;
 import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.GsonRequest;
+import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -14,17 +24,43 @@ import butterknife.ButterKnife;
 public class SplashActivity extends BaseFragmentActivity {
     @Bind(R.id.splash_login)
     Button splashlogin;
+    @Bind(R.id.splash_update)
+    Button splashUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        ButterKnife.bind(this);
+        initView();
 
         initLocation();
 
+        callInit();
+    }
+
+    protected void initView(){
+        ButterKnife.bind(this);
+
         splashlogin.setOnClickListener(this);
+        splashUpdate.setOnClickListener(this);
+
+
+    }
+
+    protected void callInit() {
+        String url = Constants.INIT_INTERFACE;
+        HttpParaUtils httpParaUtils = new HttpParaUtils();
+        url = httpParaUtils.getHttpGetUrl(url, null);
+        GsonRequest<MJInitData> initRequest = new GsonRequest<>(
+                Request.Method.GET
+                , url
+                , MJInitData.class
+                , null
+                , initListener
+                , errorListener);
+
+        VolleyRequestManager.getRequestQueue().add(initRequest);
     }
 
     @Override
@@ -32,6 +68,8 @@ public class SplashActivity extends BaseFragmentActivity {
         if( v.getId() == R.id.splash_login){
             ActivityUtils.getInstance().showActivity(this, MainActivity.class);
             this.finish();
+        }else if(v.getId()==R.id.splash_update){
+
         }
     }
 
@@ -60,4 +98,24 @@ public class SplashActivity extends BaseFragmentActivity {
 
         SellerApplication.getInstance().getBaiduLocationClient().start();
     }
+
+    Response.Listener<MJInitData> initListener =new Response.Listener<MJInitData>() {
+        @Override
+        public void onResponse(MJInitData data ) {
+
+
+
+        }
+    };
+
+    Response.ErrorListener errorListener = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager())
+                    .setTitle("错误信息")
+                    .setMessage( volleyError.getMessage())
+                    .setPositiveButtonText("关闭")
+                    .show();
+        }
+    };
 }

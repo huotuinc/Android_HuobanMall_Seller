@@ -37,21 +37,17 @@ import android.os.Handler;
  *
  */
 public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDialogListener{
-
 	protected static final int REQUEST_INFO = 1567;
 	protected static final int CODE_SUCCESS=1;
 	protected static final int CODE_PROGRESS=2;
 	protected static final int CODE_FAIL=0;
 	private String softwarePath = null;
-	private ClientDownLoadTask task;
 	private boolean isCancel;
 	private boolean taskIsComplete;
 	private String destMd5;
 	private String tips;
 	private boolean isForce;
 	TextView txtTips;
-
-	//--------------
 	Handler handler;
 	CircleProgressBar progressWithArrow;
 
@@ -73,17 +69,17 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 	}
 
 	@Override
-	public void onNeutralButtonClicked(int requestCode) {
-
-	}
-
-	@Override
 	public void onPositiveButtonClicked(int requestCode) {
 		if(requestCode == REQUEST_INFO){
 			if (taskIsComplete) {
 				downloadClientSuccess();
 			}
 		}
+	}
+
+	@Override
+	public void onNeutralButtonClicked(int i) {
+
 	}
 
 	/**
@@ -106,8 +102,8 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_appupdate);
-		LinearLayout lay = (LinearLayout) findViewById(R.id.lay);
-		lay.getBackground().setAlpha(150);
+		//LinearLayout lay = (LinearLayout) findViewById(R.id.lay);
+		//lay.getBackground().setAlpha(150);
 
 		oldapk_filepath = Constants.PATH_PKG_TEMP  + File.separator + getPackageName() + "_old.apk";
 		newapk_savepath = Constants.PATH_PKG_TEMP + File.separator + getPackageName() + "_new.apk";
@@ -131,21 +127,12 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 			txtTips = (TextView) findViewById(R.id.txtTips);
 			txtTips.setText(tips);
 
-			//task = new ClientDownLoadTask();
-			//task.execute(clientURL);
 			new ApkDownloadThread(handler, clientURL).start();
-
 		}
-
-
-		//-----------
-
-
 	}
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode == KeyEvent.KEYCODE_BACK){
-
 			SimpleDialogFragment.createBuilder(this, getSupportFragmentManager())
 					.setTitle("提示")
 					.setMessage("确定要取消更新吗？")
@@ -153,7 +140,6 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 					.setNegativeButtonText("取消更新")
 					.setRequestCode(REQUEST_INFO)
 					.show();
-
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -191,60 +177,6 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 		intent.putExtra("isForce", isForce);
 		setResult(Constants.RESULT_CODE_CLIENT_DOWNLOAD_FAILED, intent);
 		finish();
-	}
-
-	private boolean backupApk(String srcPkgName, String destPkgName){
-		if (TextUtils.isEmpty(srcPkgName) || TextUtils.isEmpty(destPkgName)) {
-			return false;
-		}
-		// check file /data/app/appId-1.apk exists
-		File apkFile = new File(srcPkgName);
-		if (!apkFile.exists() ) {
-			return false;
-		}
-		FileInputStream in = null;
-		try {
-			in = new FileInputStream(apkFile);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return false;
-		}
-		// create dest folder if necessary
-		int i = destPkgName.lastIndexOf('/');
-		if (i != -1) {
-			File dirs = new File(destPkgName.substring(0, i));
-			dirs.mkdirs();
-			dirs = null;
-		}
-		// do file copy operation
-		byte[] c = new byte[1024];
-		int slen;
-		FileOutputStream out = null;
-		try {
-			out = new FileOutputStream(destPkgName);
-			while ((slen = in.read(c, 0, c.length)) != -1)
-				out.write(c, 0, slen);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			if (out != null)
-				try {
-					out.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-					return false;
-				}
-			if (in != null) {
-				try {
-					in.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-					return false;
-				}
-			}
-		}
-		return true;
 	}
 
 	//版本下载成功，开始启动安装
@@ -393,6 +325,7 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 			}
 		}
 	}
+
 	private String formatterSize(int size){
 		return Formatter.formatFileSize(AppUpdateActivity.this, size);
 	}

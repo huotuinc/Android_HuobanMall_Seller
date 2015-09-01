@@ -27,6 +27,9 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 商品编辑页面
+ */
 public class GoodsEditActivity extends BaseFragmentActivity {
     @Bind(R.id.header_back)
     Button _headerBack;

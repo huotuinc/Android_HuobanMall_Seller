@@ -8,6 +8,7 @@ import org.w3c.dom.ProcessingInstruction;
  * Created by Administrator on 2015/8/27.
  */
 public enum  GoodsOpeTypeEnum {
+    //1 上架商品 2 下架商品 3 删除商品
     ONSHELF("上架商品",1),
     OFFSHELF("下架商品",2),
     DELETEGOODS("删除商品",3);
@@ -47,6 +48,6 @@ public enum  GoodsOpeTypeEnum {
     private int index;
 
 
-    //1 上架商品 2 下架商品 3 删除商品
+
 
 }

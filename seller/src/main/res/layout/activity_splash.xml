@@ -4,6 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    xmlns:slideswitch="http://schemas.android.com/apk/res-auto"
     tools:context="com.huobanmall.seller.activity.SplashActivity">
 
     <TextView android:text="@string/hello_world"
@@ -19,5 +20,37 @@
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/splash_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="update"
+        android:layout_below="@id/splash_login"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/splash_update">
+
+        <TextView
+            android:id="@+id/tt"
+            android:text="asdfa阿斯顿飞士大夫"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/swit4"
+            android:layout_centerVertical="true"/>
+
+        <com.zcw.togglebutton.ToggleButton
+            android:id="@+id/swit4"
+            android:layout_marginLeft="20dp"
+            android:layout_width="54dp"
+            android:layout_height="30dp" >
+        </com.zcw.togglebutton.ToggleButton>
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -1,11 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:wave="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context=".MainActivity">
-
+    <!-- 页头 -->
     <RelativeLayout
         android:id="@+id/main_header"
         android:layout_width="match_parent"
@@ -13,38 +12,29 @@
         <include layout="@layout/layout_main_header"></include>
     </RelativeLayout>
 
+    <!-- 汇总信息 -->
     <RelativeLayout
         android:id="@+id/main_Summary"
         android:layout_below="@id/main_header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/main_summary_height">
-        <com.john.waveview.WaveView
-            android:id="@+id/main_waveView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/main_header_bg"
-            wave:above_wave_color="@android:color/white"
-            wave:blow_wave_color="@android:color/white"
-            wave:wave_height="middle"
-            wave:wave_hz="normal"
-            wave:progress="20"
-            wave:wave_length="middle"
-            />
+        android:background="@color/main_header_bg"
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/main_todyMoney"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/text_size_30"
+            android:layout_marginTop="@dimen/space_10"
+            android:textSize="@dimen/text_size_40"
             android:textColor="@android:color/white"
             android:text="￥256454.25"
-            android:gravity="center"
-            android:layout_centerInParent="true"
+            android:gravity="left"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/main_today"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/main_today"
             android:layout_alignTop="@id/main_todyMoney"
-            android:layout_toRightOf="@id/main_todyMoney"
-            android:layout_marginLeft="@dimen/space_5"
+            android:layout_marginRight="@dimen/space_5"
+            android:layout_alignParentRight="true"
             android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,110 +43,67 @@
             android:id="@+id/main_totalMoney"
             android:layout_below="@id/main_todyMoney"
             android:textColor="@android:color/white"
-            android:text="总销售额5,354,343(元)"
+            android:text="总销售额(元)5354343.12"
+            android:textSize="@dimen/text_size_20"
             android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_15"
+            />
+    </RelativeLayout>
+
+    <!-- 线性图 -->
+    <RelativeLayout
+        android:id="@+id/main_TodayOrder"
+        android:layout_below="@id/main_Summary"
+        android:layout_above="@+id/main_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/main_TodayOrderText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/todayNewOrder"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_20"
+            android:gravity="center"/>
+        <ImageView
+            android:layout_marginTop="@dimen/space_5"
+            android:id="@+id/main_todayLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_2"
+            android:background="@color/gray"
+            android:layout_margin="@dimen/space_5"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10"
+            android:layout_below="@id/main_TodayOrderText">
+        </ImageView>
+
+        <RelativeLayout
+            android:id="@+id/main_TodayChart"
+            android:layout_below="@id/main_todayLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/layout_main_data"></include>
+        </RelativeLayout>
+
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/main_order"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/main_info"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:background="@color/main_info_bg"
-        android:layout_above="@+id/main_gridView"
-        android:paddingTop="@dimen/space_15"
-        android:paddingBottom="@dimen/space_15"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="@dimen/text_size_25"
-                android:text="135"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="@dimen/text_size_25"
-                android:text="会员"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="1dp"
-            android:layout_marginTop="@dimen/space_5"
-            android:layout_marginBottom="@dimen/space_5"
-            android:background="@android:color/black"
-            android:layout_height="match_parent">
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="@dimen/text_size_25"
-                android:text="51"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="@dimen/text_size_25"
-                android:text="商品"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="1dp"
-            android:layout_marginTop="@dimen/space_5"
-            android:layout_marginBottom="@dimen/space_5"
-            android:background="@android:color/black"
-            android:layout_height="match_parent">
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:textSize="@dimen/text_size_25"
-                android:text="34"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:textSize="@dimen/text_size_25"
-                android:text="分销商"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <GridView
-        android:id="@+id/main_gridView"
+        android:id="@+id/main_menu"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
-        android:numColumns="3"
-        android:layout_marginTop="@dimen/space_10"
-        android:layout_marginBottom="@dimen/space_10"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <include layout="@layout/layout_menuitem"></include>
+    </RelativeLayout>
+    <!--<GridView-->
+        <!--android:id="@+id/main_gridView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:numColumns="2"-->
+        <!--android:layout_marginTop="@dimen/space_5"-->
+        <!--android:layout_marginBottom="@dimen/space_5"-->
+        <!--android:layout_height="@dimen/main_menu_height"/>-->
 </RelativeLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/header_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/white"
+        android:text="@string/back"
+        android:drawableLeft="@drawable/btn_back"/>
+
+        <RadioGroup
+            android:id="@+id/header_title"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <RadioButton
+                android:id="@+id/header_tab_a"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:text="@string/onshelf"
+                android:textSize="@dimen/text_size_20"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:singleLine="true"
+                android:checked="true"
+
+                android:textColor="@android:color/black"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="0dp"
+                />
+            <RadioButton
+                android:id="@+id/tab_rb_b"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:text="贡献度"
+                android:textSize="@dimen/text_size_20"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:singleLine="true"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@android:color/black"
+                />
+
+        </RadioGroup>
+
+</RelativeLayout>
