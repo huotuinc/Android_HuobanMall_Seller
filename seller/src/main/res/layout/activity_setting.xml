@@ -27,7 +27,7 @@
                 <!-- 店铺名称 -->
 
                 <LinearLayout
-                    android:id="@+id/shopNameLL"
+                    android:id="@+id/shopNameLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -38,6 +38,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
                     >
 
                     <TextView
@@ -57,21 +58,22 @@
                         />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
                         />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    />
+                    android:background="@drawable/line_gray_shape" />
                 <!-- 店铺名称end -->
                 <!-- 店铺描述 -->
 
                 <LinearLayout
-                    android:id="@+id/ShopdescriptionLL"
+                    android:id="@+id/shopdescriptionLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -82,6 +84,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
                     >
 
                     <TextView
@@ -101,22 +104,23 @@
                         />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
                         />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    />
+                    android:background="@drawable/line_gray_shape" />
                 <!-- 店铺描述end -->
 
                 <!-- 店铺logo -->
 
                 <LinearLayout
-                    android:id="@+id/layImg"
+                    android:id="@+id/imgLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -127,6 +131,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
                    >
 
                     <TextView
@@ -151,6 +156,7 @@
                         <ImageView
                             android:layout_width="60dp"
                             android:layout_height="60dp"
+                            android:background="@mipmap/ic_launcher"
                             />
                     </RelativeLayout>
 
@@ -164,14 +170,14 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    />
+                    android:background="@drawable/line_gray_shape" />
                 <!-- 店铺logo -->
 
 
                 <!-- 当前账号 -->
 
                 <LinearLayout
-                    android:id="@+id/layName"
+                    android:id="@+id/idLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -182,6 +188,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
                     >
 
                     <TextView
@@ -192,34 +199,35 @@
                          />
 
                     <TextView
-                        android:id="@+id/txtName"
+                        android:id="@+id/txtId"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:gravity="right"
                         android:maxLength="20"
-                        android:text="1"
+                        android:text="18767152078"
                         />
 
                     <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
-                       />
+                        android:background="@mipmap/info_arrow"
+                        />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    />
+                    android:background="@drawable/line_gray_shape" />
                 <!-- 当前账号 -->
 
 
                 <!-- 昵称 -->
 
                 <LinearLayout
-                    android:id="@+id/laySex"
+                    android:id="@+id/nameLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -230,6 +238,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
                    >
 
                     <TextView
@@ -239,7 +248,7 @@
                          />
 
                     <TextView
-                        android:id="@+id/txtSex"
+                        android:id="@+id/txtName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -258,14 +267,14 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                   />
+                    android:background="@drawable/line_gray_shape" />
                 <!-- 昵称 -->
 
 
                 <!-- 修改登录密码 -->
 
                 <LinearLayout
-                    android:id="@+id/layAge"
+                    android:id="@+id/changePswLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -276,6 +285,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
                   >
 
                     <TextView
@@ -284,7 +294,7 @@
                         android:text="修改登录密码"
                         />
                     <TextView
-                        android:id="@+id/txtAge"
+                        android:id="@+id/txtchangePsw"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -294,27 +304,24 @@
                        />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
-                       />
+                        android:background="@mipmap/info_arrow"
+                        />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                     />
+                    android:background="@drawable/line_gray_shape" />
                 <!-- 修改登录密码 -->
 
                 <!-- 推送设置 -->
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginTop="10dp"
-                    />
+
 
                 <LinearLayout
-                    android:id="@+id/layJob"
+                    android:id="@+id/pushLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -325,6 +332,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
                     >
 
                     <TextView
@@ -334,7 +342,7 @@
                         />
 
                     <TextView
-                        android:id="@+id/txtJob"
+                        android:id="@+id/txtlayPush"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -344,23 +352,24 @@
                         />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
                        />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                   />
+                    android:background="@drawable/line_gray_shape" />
                 <!-- 推送设置 -->
 
 
                 <!-- 关于我们 -->
 
                 <LinearLayout
-                    android:id="@+id/layIncome"
+                    android:id="@+id/aboutusLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -371,12 +380,13 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
                    >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="推送设置"
+                        android:text="关于我们"
                        />
 
                     <TextView
@@ -390,23 +400,24 @@
                          />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
                         />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    />
+                    android:background="@drawable/line_gray_shape" />
                 <!-- 推送设置 -->
 
 
                 <!-- 使用帮助 -->
 
                 <LinearLayout
-                    android:id="@+id/layFav"
+                    android:id="@+id/helpLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -417,6 +428,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
                    >
 
                     <TextView
@@ -434,23 +446,23 @@
                         android:gravity="right"
                         android:text=""
                         />
-
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
-                         />
+                        android:background="@mipmap/info_arrow"
+                        />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    />
+                    android:background="@drawable/line_gray_shape" />
                 <!-- 使用帮助 -->
                 <!-- 问题反馈 -->
 
                 <LinearLayout
-                    android:id="@+id/layFeedback"
+                    android:id="@+id/FeedbackLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -461,6 +473,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
                     >
 
                     <TextView
@@ -480,37 +493,38 @@
                         />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
                         />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    />
+                    android:background="@drawable/line_gray_shape" />
                 <!-- 问题反馈 -->
 
-
+                <Button
+                    android:id="@+id/quit"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="match_parent"
+                    android:layout_margin="10dp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="onClickButton"
+                    android:text="退出登录"
+                    android:background="@drawable/btn_red_sel"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:layout_height="40dp"/>
 
 
 
             </LinearLayout>
-        <Button
-            android:id="@+id/quit"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:clickable="true"
-            android:gravity="center"
-            android:onClick="onClickButton"
-            android:text="退出登录"
 
-            android:layout_height="40dp"/>
 
     </RelativeLayout>
 </RelativeLayout>

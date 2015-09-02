@@ -3,10 +3,7 @@
     android:layout_height="match_parent"
     tools:context="com.huotu.huobanmall.seller.fragment.SaleGoodsFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="oneoneone"/>
+
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:layout_width="match_parent"

@@ -7,10 +7,26 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.avast.android.dialogs.fragment.ProgressDialogFragment;
+import com.avast.android.dialogs.fragment.SimpleDialogFragment;
+import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.common.Constants;
 import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.DigestUtils;
+import com.huotu.huobanmall.seller.utils.GsonRequest;
+import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -41,6 +57,7 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     private Button btnComplete;
     //返回文字事件
     private TextView backText;
+    public ProgressDialogFragment progressDialog;
 
 
 
@@ -71,8 +88,72 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.backtext: {
+               finish();
+
+            }
+            break;
+
+        }
+
 
     }
+    private void forgetPassword() {
+        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager())
+        .setMessage("正在修改密码，请稍等...")
+                .setCancelable(false)
+                .setCancelableOnTouchOutside(false);
+        progressDialog = (ProgressDialogFragment) builder.show();
+        String url = Constants.FORGET_INTERFACE;
+        HttpParaUtils httpUtils = new HttpParaUtils();
+        Map<String,String> paras = new HashMap<>();
+
+        String pwd = edtPwd.getText().toString();
+        String pwdEncy="";
+        try {
+            pwdEncy = DigestUtils.md5DigestAsHex(pwd.getBytes("utf-8"));
+        }catch (UnsupportedEncodingException ex){
+
+        }
+
+        paras.put("username","test");
+        paras.put("password", pwdEncy);
+        url = httpUtils.getHttpGetUrl(url,paras);
+
+        GsonRequest<MerchantModel> forgetPasswordRequest = new GsonRequest<MerchantModel>(
+                Request.Method.GET
+                ,url
+                ,MerchantModel.class
+                ,null
+                ,forgetPasswordListener
+                ,errorListener
+        );
+
+        VolleyRequestManager.getRequestQueue().add(forgetPasswordRequest);
+    }
+
+    Response.Listener forgetPasswordListener = new Response.Listener() {
+        @Override
+        public void onResponse(Object o) {
+
+
+        }
+    };
+
+    Response.ErrorListener errorListener=new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            if(progressDialog!=null){
+                progressDialog.dismiss();
+            }
+            SimpleDialogFragment.createBuilder(ForgetActivity.this, ForgetActivity.this.getSupportFragmentManager())
+                    .setTitle("错误信息")
+                    .setMessage( volleyError.getMessage())
+                    .setNegativeButtonText("关闭")
+                    .show();
+        }
+    };
 }
 
 

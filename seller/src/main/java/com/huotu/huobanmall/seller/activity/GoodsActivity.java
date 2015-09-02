@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.DataStatisticFragmentAdapter;
@@ -29,6 +30,10 @@ import butterknife.ButterKnife;
  * 商品管理
  */
 public class GoodsActivity extends BaseFragmentActivity {
+    @Bind(R.id.header_title)
+    TextView _header_title;
+    @Bind(R.id.header_back)
+    Button  _header_back;
     @Bind(R.id.goods_pager)
     ViewPager _goodsViewPager;
     @Bind(R.id.goods_indicator)
@@ -47,10 +52,11 @@ public class GoodsActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods);
         ButterKnife.bind(this);
-
+        _header_back.setOnClickListener(this);
+        _btnOperate.setOnClickListener(this);
         _btnOperate.setVisibility(View.VISIBLE);
         _btnOperate.setText(getString(R.string.header_edit));
-
+        _header_title.setText("产品列表");
         _salesGoodsFragment=SaleGoodsFragment.newInstance();
         _offShelfFragments=OffShelfFragment.newInstance();
         _fragments = new ArrayList<>();
@@ -76,6 +82,9 @@ public class GoodsActivity extends BaseFragmentActivity {
         super.onClick(v);
         if( v.getId() == R.id.header_operate){
             ActivityUtils.getInstance().showActivity(this, GoodsEditActivity.class);
+        }
+        if( v.getId() == R.id.header_back){
+            finish();
         }
     }
 }

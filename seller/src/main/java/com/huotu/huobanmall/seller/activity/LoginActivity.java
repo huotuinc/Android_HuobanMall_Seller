@@ -1,6 +1,9 @@
 package com.huotu.huobanmall.seller.activity;
 
-import android.content.DialogInterface;
+
+
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +15,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
-import com.avast.android.dialogs.iface.ISimpleDialogCancelListener;
 import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
@@ -50,7 +52,6 @@ public class LoginActivity extends BaseFragmentActivity implements
     // 忘记密码
     @Bind(R.id.forgetpsw)
     public TextView forgetPsw;
-
     // 界面名称
     @Bind(R.id.title)
     public TextView titleName;
@@ -76,6 +77,9 @@ public class LoginActivity extends BaseFragmentActivity implements
         forgetPsw.setOnClickListener(this);
         forgetPsw.setText("忘记密码？");
         backText.setOnClickListener(this);
+
+
+
     }
 
     @Override
@@ -127,6 +131,7 @@ public class LoginActivity extends BaseFragmentActivity implements
 
         }
     };
+
 
     Response.ErrorListener errorListener=new Response.ErrorListener() {
         @Override
@@ -192,21 +197,36 @@ public class LoginActivity extends BaseFragmentActivity implements
         switch (v.getId()) {
             case R.id.forgetpsw:
             {
+
+                Intent intent=new Intent(this, ForgetActivity.class);
+                startActivity(intent);
+
 //                Intent intent=new Intent(this, ForgetActivity.class);
 //                startActivity(intent);
                 testAppUpdate();
+
             }
             break;
             case R.id.btnLogin:
             {
+
+                Login();
+
                 Intent intent=new Intent(this, MainActivity.class);
                 startActivity(intent);
                 //Login();
+
             }
             break;
+            case R.id.backtext:
+            {
+                finish();
+            }
 
             }
         }
+
+
 
     @Override
     public void onNegativeButtonClicked(int requestCode) {

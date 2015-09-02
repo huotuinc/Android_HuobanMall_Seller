@@ -64,9 +64,13 @@ public class MainActivity extends BaseFragmentActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        //String formatText="￥%.2f";
+
+        //String formatText = "￥%.2f";
         //CountUpTimerView countUpView =new CountUpTimerView( main_todyMoney , formatText , 1000.33f,5000.45f, 3000,100);
         //countUpView.start();
+
+
+
 
         initTodayData();
 
@@ -102,6 +106,7 @@ public class MainActivity extends BaseFragmentActivity {
 //                }
 //            }
 //        });
+
     }
 
     @Override
@@ -112,17 +117,21 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     public void onClick(View v) {
+
+        switch (v.getId()) {
+        }
+
         super.onClick(v);
         if( v.getId() == R.id.main_menu_cpgl){
             ActivityUtils.getInstance().showActivity(this, GoodsActivity.class);
         }else if( v.getId() == R.id.main_menu_ddgl){
             Intent intent = new Intent( this , WebViewActivity.class);
             intent.putExtra(Constants.Extra_Url,"http://www.baidu.com");
-            ActivityUtils.getInstance().showActivity( this , intent);
+            ActivityUtils.getInstance().showActivity(this, WebViewActivity.class);
         }else if( v.getId() == R.id.main_menu_gdtj){
             ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class);
         }else if( v.getId() ==R.id.main_menu_szgl){
-            //ActivityUtils.getInstance().showActivity(this, );
+            ActivityUtils.getInstance().showActivity(this, SettingActivity.class);
         }
     }
 
@@ -138,5 +147,6 @@ public class MainActivity extends BaseFragmentActivity {
         _fragmentAdapter=new TodayDataFragmentAdapter(_fragments, getSupportFragmentManager());
         _viewPager.setAdapter(_fragmentAdapter);
         _indicator.setViewPager(_viewPager);
+
     }
 }

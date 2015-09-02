@@ -48,6 +48,8 @@ public class Constants {
 
     public static final String LOGIN_INTERFACE=BASE_URL+"login";//登录接口
 
+    public static final String FORGET_INTERFACE=BASE_URL+"forgetPassword";//忘记密码接口
+
     public static final String INIT_INTERFACE= BASE_URL+"init";//初始化接口
 
     // 短信获取方式:文本

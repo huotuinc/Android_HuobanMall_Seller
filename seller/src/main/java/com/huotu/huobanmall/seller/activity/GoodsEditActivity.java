@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -15,6 +16,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.common.Constants;
+import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
@@ -31,8 +33,10 @@ import butterknife.ButterKnife;
  * 商品编辑页面
  */
 public class GoodsEditActivity extends BaseFragmentActivity {
+    @Bind(R.id.header_title)
+    TextView _header_title;
     @Bind(R.id.header_back)
-    Button _headerBack;
+    TextView _header_back;
     @Bind(R.id.goodsedit_all)
     RadioButton goodsedit_all;
     @Bind(R.id.goodsedit_delete)
@@ -49,8 +53,8 @@ public class GoodsEditActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_edit);
         ButterKnife.bind(this);
-
-        _headerBack.setOnClickListener(this);
+        _header_title.setText("产品编辑");
+        _header_back.setOnClickListener(this);
 
         getGoodsData();
     }
@@ -99,7 +103,7 @@ public class GoodsEditActivity extends BaseFragmentActivity {
     public void onClick(View v) {
         super.onClick(v);
         if( v.getId() == R.id.header_back){
-
+           finish();
         }
     }
 }

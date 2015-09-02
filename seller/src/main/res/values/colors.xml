@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="theme_color">#ffffffff</color>
     <color name="white">#FFFFFFFF</color>
     <color name="main_header_bg">#FE3C00</color>
     <color name="main_header_title_color">#FFFFFF</color>
@@ -11,6 +12,9 @@
     <color name="order_week_bg">#CC3399</color>
     <color name="sales_month_bg">#0066FF</color>
     <color name="sales_week_bg">#CC3399</color>
+    <color name="txt_title">#000000</color>
+    <color name="click_txt_title">#338CFA</color>
+    <color name="title_bottom_color">#666666</color>
     <color name="members_month_bg">#0066FF</color>
     <color name="members_week_bg">#CC3399</color>
 
