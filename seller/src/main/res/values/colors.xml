@@ -26,7 +26,7 @@
 
     <color name="statistic_check_color">#FE3C00</color>
     <color name="statistic_uncheck_color">#FFFFFFFF</color>
-    <color name="main_lineChart_Color">#3B91DE</color>
+    <color name="main_lineChart_Color">#F8F8F8</color>
     <color name="main_circle_color">#2D8FE1</color>
     <color name="indicator_footline_color">#AEAEAE</color>
     <color name="order_info_bg">#E8E8E8</color>

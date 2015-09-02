@@ -1,5 +1,6 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -19,7 +20,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2015/8/26.
  */
-public class WebViewActivity extends BaseFragmentActivity {
+public class WebViewActivity extends Activity implements View.OnClickListener{
     @Bind(R.id.webView_page)
     PullToRefreshWebView _pullToRefreshWebViewPage;
 
@@ -43,7 +44,7 @@ public class WebViewActivity extends BaseFragmentActivity {
         _webView = _pullToRefreshWebViewPage.getRefreshableView();
         _webView.getSettings().setJavaScriptEnabled(true);
         _webView.setWebViewClient(new SellerWebViewClient());
-        _webView.setWebChromeClient(new SellerWebChromeClient(_webViewTitle , _pullToRefreshWebViewPage ));
+        //_webView.setWebChromeClient(new SellerWebChromeClient(_webViewTitle , _pullToRefreshWebViewPage ));
 
         if( null != getIntent() && getIntent().hasExtra(Constants.Extra_Url )){
             _url= getIntent().getStringExtra( Constants.Extra_Url );
@@ -53,7 +54,10 @@ public class WebViewActivity extends BaseFragmentActivity {
 
     @Override
     public void onClick(View v) {
-        super.onClick(v);
+        //super.onClick(v);
+        if( v.getId() == R.id.header_back){
+            this.finish();
+        }
     }
 
     @Override

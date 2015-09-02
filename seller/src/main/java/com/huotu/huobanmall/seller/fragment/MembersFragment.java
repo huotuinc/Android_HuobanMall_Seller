@@ -24,6 +24,7 @@ import com.huotu.huobanmall.seller.adapter.MembersFragmentPageAdapter;
 import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
 import com.huotu.huobanmall.seller.common.Constants;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
@@ -42,13 +43,7 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class MembersFragment extends BaseFragment implements View.OnClickListener{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     private OnFragmentInteractionListener mListener;
-
 
     @Bind(R.id.members_statis1)
     RelativeLayout _membersstatis1;
@@ -101,8 +96,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
         _membersstatis1.setOnClickListener(this);
         _membersstatis2.setOnClickListener(this);
 
-
-
+        initFragments();
 
         return rootView;
     }
@@ -110,13 +104,13 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        initFragments();
+
     }
 
     List<BaseFragment> _fragments;
     FragmentManager _fragmentManager;
     @Bind(R.id.members_indicator)
-    TitlePageIndicator _indicator;
+    TabPageIndicator _indicator;
 
     protected void initFragments(){
         MemberLineChartFragment fragment1 = new MemberLineChartFragment();
@@ -221,7 +215,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
             View rootView = inflater.inflate(R.layout.layout_memberchart , container, false);
             ButterKnife.bind(this, rootView);
-            initData();
+
             return rootView;
         }
 
@@ -258,7 +252,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
         @Override
         public void onResume() {
             super.onResume();
-
+            initData();
         }
     }
 

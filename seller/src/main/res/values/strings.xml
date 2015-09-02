@@ -33,8 +33,8 @@
     <string name="member_huoban">小伙伴</string>
     <string name="member_member">会员</string>
     <string name="members_chartTitle">数据分析（本周/本月）</string>
-    <string name="members_jf_statistic">会员小伙伴返利积分统计</string>
-    <string name="members_xf_statistic">会员小伙伴消费统计</string>
+    <string name="members_jf_statistic">返利积分统计</string>
+    <string name="members_xf_statistic">消费统计</string>
     <string name="title_activity_goods">GoodsActivity</string>
     <string name="header_edit">编辑</string>
     <string name="title_activity_goods_edit">GoodsEditActivity</string>

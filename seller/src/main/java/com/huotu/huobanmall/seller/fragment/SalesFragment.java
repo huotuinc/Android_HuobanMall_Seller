@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
 import com.huotu.huobanmall.seller.adapter.SalesFragmentPageAdapter;
+import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
@@ -87,7 +88,7 @@ public class SalesFragment extends BaseFragment {
 
         ButterKnife.bind(this, rootView);
 
-
+        initFragments();
 
         return rootView;
     }
@@ -95,7 +96,7 @@ public class SalesFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        initFragments();
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -140,7 +141,7 @@ public class SalesFragment extends BaseFragment {
     List<BaseFragment> _fragments;
     FragmentManager _fragmentManager;
     @Bind(R.id.sales_indicator)
-    TitlePageIndicator _indicator;
+    TabPageIndicator _indicator;
     SalesFragmentPageAdapter _salesFragmentAdapter;
     @Bind(R.id.sales_viewPager)
     ViewPager _viewPager;

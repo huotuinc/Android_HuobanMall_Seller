@@ -1,5 +1,6 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -10,11 +11,13 @@ import android.widget.RadioGroup;
 
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.DataStatisticFragmentAdapter;
+import com.huotu.huobanmall.seller.common.Constants;
 import com.huotu.huobanmall.seller.fragment.BaseFragment;
 import com.huotu.huobanmall.seller.fragment.MembersFragment;
 import com.huotu.huobanmall.seller.fragment.OrderFragment;
 import com.huotu.huobanmall.seller.fragment.SalesFragment;
 import com.huotu.huobanmall.seller.activity.BaseFragmentActivity;
+import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -115,12 +118,16 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+
         if( checkedId == R.id.tab_rb_a){
             _circlePageIndicator.setCurrentItem( 0 );
         }else if( checkedId == R.id.tab_rb_b){
             _circlePageIndicator.setCurrentItem(1);
         }else if( checkedId == R.id.tab_rb_c){
             _circlePageIndicator.setCurrentItem(2);
+//            Intent intent =new Intent(this,WebViewActivity.class);
+//            intent.putExtra(Constants.Extra_Url,"http://www.baidu.com");
+//            ActivityUtils.getInstance().showActivity(this,intent);
         }
     }
 }

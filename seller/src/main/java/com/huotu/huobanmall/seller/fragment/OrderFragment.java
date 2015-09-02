@@ -1,6 +1,7 @@
 package com.huotu.huobanmall.seller.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.android.volley.Request;
@@ -29,12 +31,16 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.activity.WebViewActivity;
 import com.huotu.huobanmall.seller.adapter.DataStatisticFragmentAdapter;
 import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
 import com.huotu.huobanmall.seller.adapter.PurchaseOfGoodsAdapter;
 import com.huotu.huobanmall.seller.bean.PurchaseOfGoods;
+import com.huotu.huobanmall.seller.common.Constants;
+import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
@@ -52,7 +58,7 @@ import butterknife.ButterKnife;
  * Use the {@link OrderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OrderFragment extends BaseFragment {
+public class OrderFragment extends BaseFragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
 
@@ -67,7 +73,8 @@ public class OrderFragment extends BaseFragment {
     //@Bind(R.id.order_pulltorefreshScrollView)
     //PullToRefreshScrollView _orderPulltorefreshScrollView;
 
-
+    @Bind(R.id.order_statis1)
+    RelativeLayout order_statis1;
 
     @Bind(R.id.order_viewPager)
     ViewPager _viewPager;
@@ -111,7 +118,8 @@ public class OrderFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_order, container, false);
         ButterKnife.bind(this, rootView);
 
-
+        initData();
+        order_statis1.setOnClickListener(this);
 
         return rootView;
     }
@@ -127,7 +135,6 @@ public class OrderFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 
-        initData();
 
     }
 
@@ -146,6 +153,15 @@ public class OrderFragment extends BaseFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if( v.getId()==R.id.order_statis1){
+            Intent intent = new Intent(this.getActivity(), WebViewActivity.class);
+            intent.putExtra(Constants.Extra_Url,"http://www.baidu.com");
+            ActivityUtils.getInstance().showActivity(this.getActivity(),intent);
+        }
     }
 
     /**
@@ -211,7 +227,7 @@ public class OrderFragment extends BaseFragment {
     List<BaseFragment> _fragments;
     FragmentManager _fragmentManager;
      @Bind(R.id.order_indicator)
-     TitlePageIndicator _indicator;
+     TabPageIndicator _indicator;
 
     protected void initFragments(){
         LineChartFragment fragment1 = new LineChartFragment();

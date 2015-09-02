@@ -1,5 +1,6 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -69,7 +70,9 @@ public class SplashActivity extends BaseFragmentActivity {
             ActivityUtils.getInstance().showActivity(this, LoginActivity.class);
             this.finish();
         }else if(v.getId()==R.id.splash_update){
-
+            Intent intent=new Intent(this, WebViewActivity.class);
+            intent.putExtra(Constants.Extra_Url,"http://www.baidu.com");
+            ActivityUtils.getInstance().showActivity(this, intent );
         }
     }
 
