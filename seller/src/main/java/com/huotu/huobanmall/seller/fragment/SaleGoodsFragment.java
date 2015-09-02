@@ -10,6 +10,11 @@ import android.view.ViewGroup;
 
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.adapter.GoodsAdapter;
+import com.huotu.huobanmall.seller.bean.GoodsModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,6 +31,9 @@ public class SaleGoodsFragment extends BaseFragment {
 
     @Bind(R.id.goods_sale_listView)
     PullToRefreshListView _goodsSaleListView;
+
+    List<GoodsModel> goodsList = null;
+    GoodsAdapter goodsAdapter = null;
 
 
     private OnFragmentInteractionListener mListener;
@@ -63,7 +71,31 @@ public class SaleGoodsFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_sale_goods, container, false);
-        ButterKnife.bind( this, rootView);
+        ButterKnife.bind(this, rootView);
+        goodsList = new ArrayList<>();
+        GoodsModel goodsModel = new GoodsModel();
+        goodsModel.setPrice(1000);
+        goodsModel.setStock(100);
+        goodsModel.setTitle("qwqeqwwqeqewqewq");
+        goodsList.add(goodsModel);
+        goodsModel = new GoodsModel();
+        goodsModel.setPrice(1000);
+        goodsModel.setStock(100);
+        goodsModel.setTitle("qwqeqwwqeqewqewq");
+        goodsList.add(goodsModel);
+        goodsModel = new GoodsModel();
+        goodsModel.setPrice(1000);
+        goodsModel.setStock(100);
+        goodsModel.setTitle("qwqeqwwqeqewqewq");
+        goodsList.add(goodsModel);
+        goodsModel = new GoodsModel();
+        goodsModel.setPrice(1000);
+        goodsModel.setStock(100);
+        goodsModel.setTitle("qwqeqwwqeqewqewq");
+        goodsList.add(goodsModel);
+        goodsAdapter = new GoodsAdapter(this.getActivity(), goodsList);
+        _goodsSaleListView.getRefreshableView().setAdapter(goodsAdapter);
+
         return rootView;
     }
 

@@ -99,13 +99,11 @@ public class SettingActivity extends BaseFragmentActivity
             }
             break;
             case R.id.backtext: {
-                ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
-
+                finish();
             }
             break;
             case R.id.backImage: {
-                ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
-
+                finish();
             }
             break;
             case R.id.changePswLabel: {
@@ -114,17 +112,17 @@ public class SettingActivity extends BaseFragmentActivity
             }
             break;
             case R.id.aboutusLabel: {
-               // ActivityUtils.getInstance().showActivity(SettingActivity.this,"www.baidu.com");
+                // ActivityUtils.getInstance().showActivity(SettingActivity.this,"www.baidu.com");
 
             }
             break;
             case R.id.helpLabel: {
-               // ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
+                // ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
 
             }
             break;
             case R.id.FeedbackLabel: {
-               // ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
+                // ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
 
             }
             break;

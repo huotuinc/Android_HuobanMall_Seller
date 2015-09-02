@@ -66,7 +66,7 @@ public class SplashActivity extends BaseFragmentActivity {
     @Override
     public void onClick(View v) {
         if( v.getId() == R.id.splash_login){
-            ActivityUtils.getInstance().showActivity(this, MainActivity.class);
+            ActivityUtils.getInstance().showActivity(this, LoginActivity.class);
             this.finish();
         }else if(v.getId()==R.id.splash_update){
 

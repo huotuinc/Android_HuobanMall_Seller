@@ -10,6 +10,11 @@ import android.view.ViewGroup;
 
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.adapter.GoodsAdapter;
+import com.huotu.huobanmall.seller.bean.GoodsModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,6 +31,8 @@ public class OffShelfFragment extends BaseFragment {
 
     @Bind(R.id.goods_offshelf_listView)
     PullToRefreshListView _goodsOffshelfListview;
+    List<GoodsModel> goodsList = null;
+    GoodsAdapter goodsAdapter = null;
 
 
     private OnFragmentInteractionListener mListener;
@@ -64,6 +71,25 @@ public class OffShelfFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View rootView= inflater.inflate(R.layout.fragment_off_shelf, container, false);
         ButterKnife.bind( this ,rootView);
+        goodsList = new ArrayList<>();
+        GoodsModel goodsModel = new GoodsModel();
+        goodsModel.setPrice(100);
+        goodsModel.setStock(10);
+        goodsModel.setTitle("sdadsadsadsad");
+        goodsList.add(goodsModel);
+        goodsModel = new GoodsModel();
+        goodsModel.setPrice(100);
+        goodsModel.setStock(10);
+        goodsModel.setTitle("sdadsadsadsad");
+        goodsList.add(goodsModel);
+        goodsModel = new GoodsModel();
+        goodsModel.setPrice(100);
+        goodsModel.setStock(10);
+        goodsModel.setTitle("sdadsadsadsad");
+        goodsList.add(goodsModel);
+        goodsAdapter = new GoodsAdapter(this.getActivity(), goodsList);
+        _goodsOffshelfListview.getRefreshableView().setAdapter(goodsAdapter);
+
         return rootView;
     }
 

@@ -62,43 +62,13 @@ public class MainActivity extends BaseFragmentActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-<<<<<<< HEAD
-        String formatText = "￥%.2f";
+
+        //String formatText = "￥%.2f";
         //CountUpTimerView countUpView =new CountUpTimerView( main_todyMoney , formatText , 1000.33f,5000.45f, 3000,100);
         //countUpView.start();
 
-        mMenus = new ArrayList<>();
-        final String[] menus = getResources().getStringArray(R.array.main_menu_name);
-        TypedArray iconsTA = getResources().obtainTypedArray(R.array.main_menu_icon);
 
-        for (int i = 0; i < menus.length; i++) {
-            MenuModel item = new MenuModel();
-            item.setName(menus[i]);
-            item.setIcon(iconsTA.getResourceId(i, 0));
-            mMenus.add(item);
-        }
-        mAdapter = new MenuAdapter(mMenus, this);
-        main_gridView.setAdapter(mAdapter);
-        main_gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MenuModel item = mMenus.get(position);
-                if (item.getIcon() == R.mipmap.cpgl) {
-                    ActivityUtils.getInstance().showActivity(MainActivity.this, GoodsEditActivity.class);
-                } else if (item.getIcon() == R.mipmap.ddgl) {
-                    //ActivityUtils.getInstance().showActivity(this , GoodsEditActivity.class);
-                } else if (item.getIcon() == R.mipmap.zytj) {
-                    ActivityUtils.getInstance().showActivity(MainActivity.this, DataStatisticActivity.class);
-                } else if (item.getIcon() == R.mipmap.szgl) {
-                    ActivityUtils.getInstance().showActivity(MainActivity.this, SettingActivity.class);
-                } else if (item.getIcon() == R.mipmap.gdsj) {
-                }
-            }
-        });
-=======
-        //String formatText="￥%.2f";
-        //CountUpTimerView countUpView =new CountUpTimerView( main_todyMoney , formatText , 1000.33f,5000.45f, 3000,100);
-        //countUpView.start();
+
 
         initTodayData();
 
@@ -134,7 +104,7 @@ public class MainActivity extends BaseFragmentActivity {
 //                }
 //            }
 //        });
->>>>>>> 3b4f33996af5842ec88f115502b9f78195866b2a
+
     }
 
 
@@ -146,19 +116,19 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     public void onClick(View v) {
-<<<<<<< HEAD
+
         switch (v.getId()) {
         }
-=======
+
         super.onClick(v);
         if( v.getId() == R.id.main_menu_cpgl){
-
+            ActivityUtils.getInstance().showActivity(this, GoodsActivity.class);
         }else if( v.getId() == R.id.main_menu_ddgl){
-
+            ActivityUtils.getInstance().showActivity(this, WebViewActivity.class);
         }else if( v.getId() == R.id.main_menu_gdtj){
             ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class);
         }else if( v.getId() ==R.id.main_menu_szgl){
-            //ActivityUtils.getInstance().showActivity(this, );
+            ActivityUtils.getInstance().showActivity(this, SettingActivity.class);
         }
     }
 
@@ -174,6 +144,6 @@ public class MainActivity extends BaseFragmentActivity {
         _fragmentAdapter=new TodayDataFragmentAdapter(_fragments, getSupportFragmentManager());
         _viewPager.setAdapter(_fragmentAdapter);
         _indicator.setViewPager(_viewPager);
->>>>>>> 3b4f33996af5842ec88f115502b9f78195866b2a
+
     }
 }
