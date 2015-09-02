@@ -59,5 +59,6 @@
     <string name="onshelf">已上架</string>
     <string name="offshelf">已下架</string>
     <string name="todayNewOrder">今日新增</string>
+    <string name="title_activity_more_statistic">MoreStatisticActivity</string>
 
 </resources>

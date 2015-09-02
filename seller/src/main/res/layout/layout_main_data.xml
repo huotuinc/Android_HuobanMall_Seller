@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         vpi:radius="@dimen/pageindicator_circle_radius"
         vpi:strokeColor="@color/pageindicator_circle_stoken_color"
-        vpi:fillColor="@color/pageindicator_circle_fill_color"
+        vpi:fillColor="@color/main_circle_color"
         android:layout_alignParentBottom="true"
         android:padding="@dimen/space_5"/>
 

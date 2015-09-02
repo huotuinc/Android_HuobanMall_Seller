@@ -5,11 +5,15 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.android.volley.Request;
@@ -25,10 +29,13 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.adapter.DataStatisticFragmentAdapter;
+import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
 import com.huotu.huobanmall.seller.adapter.PurchaseOfGoodsAdapter;
 import com.huotu.huobanmall.seller.bean.PurchaseOfGoods;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,14 +53,6 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class OrderFragment extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -68,15 +67,19 @@ public class OrderFragment extends BaseFragment {
     //@Bind(R.id.order_pulltorefreshScrollView)
     //PullToRefreshScrollView _orderPulltorefreshScrollView;
 
+
+
+    @Bind(R.id.order_viewPager)
+    ViewPager _viewPager;
+
+    OrderFragmentPageAdapter _orderFragmentAdapter;
+
     List<PurchaseOfGoods> _purchaseOfGoods;
     PurchaseOfGoodsAdapter _purchaseAdapter;
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment OrderFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -106,9 +109,9 @@ public class OrderFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_order, container, false);
-        ButterKnife.bind( this ,rootView);
+        ButterKnife.bind(this, rootView);
 
-        initData();
+
 
         return rootView;
     }
@@ -124,7 +127,7 @@ public class OrderFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 
-
+        initData();
 
     }
 
@@ -200,59 +203,44 @@ public class OrderFragment extends BaseFragment {
         //    }
         //});
 
-
-
-        //_orderGoods.setHasFixedSize(true);
-
-        _purchaseOfGoods =new ArrayList<PurchaseOfGoods>();
-        PurchaseOfGoods item=new PurchaseOfGoods();
-        item.setName("1、萨芬阿是打发斯蒂芬啊发送发送阿斯撒飞撒 阿萨德阿斯");
-        item.setCounts("10件");
-        _purchaseOfGoods.add(item);
-        item=new PurchaseOfGoods();
-        item.setName("2、萨芬阿是打发斯蒂芬啊发送发送阿斯撒飞撒 阿萨德阿斯");
-        item.setCounts("20件");
-        _purchaseOfGoods.add(item);
-        item=new PurchaseOfGoods();
-        item.setName("3、萨芬阿是打发斯蒂芬啊发送发送阿斯撒飞撒 阿萨德阿斯");
-        item.setCounts("30件");
-        _purchaseOfGoods.add(item);
-        item=new PurchaseOfGoods();
-        item.setName("4、萨芬阿是打发斯蒂芬啊发送发送阿斯撒飞撒 阿萨德阿斯");
-        item.setCounts("40件");
-        _purchaseOfGoods.add(item);
-        item=new PurchaseOfGoods();
-        item.setName("5、萨芬阿是打发斯蒂芬啊发送发送阿斯撒飞撒 阿萨德阿斯");
-        item.setCounts("50件");
-        _purchaseOfGoods.add(item);
-        item=new PurchaseOfGoods();
-        item.setName("6、萨芬阿是打发斯蒂芬啊发送发送阿斯撒飞撒 阿萨德阿斯");
-        item.setCounts("60件");
-        _purchaseOfGoods.add(item);
-        item=new PurchaseOfGoods();
-        item.setName("7、萨芬阿是打发斯蒂芬啊发送发送阿斯撒飞撒 阿萨德阿斯");
-        item.setCounts("70件");
-        _purchaseOfGoods.add(item);
-        item=new PurchaseOfGoods();
-        item.setName("8、萨芬阿是打发斯蒂芬啊发送发送阿斯撒飞撒 阿萨德阿斯");
-        item.setCounts("80件");
-        _purchaseOfGoods.add(item);
-        item=new PurchaseOfGoods();
-        item.setName("9、萨芬阿是打发斯蒂芬啊发送发送阿斯撒飞撒 阿萨德阿斯");
-        item.setCounts("90件");
-        _purchaseOfGoods.add(item);
-        item=new PurchaseOfGoods();
-        item.setName("10、萨芬阿是打发斯蒂芬啊发送发送阿斯撒飞撒 阿萨德阿斯");
-        item.setCounts("100件");
-        _purchaseOfGoods.add(item);
-
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL , false);
-        //_orderGoods.setLayoutManager(layoutManager);
-        _purchaseAdapter=new PurchaseOfGoodsAdapter(getActivity(), _purchaseOfGoods);
-        //_orderGoods.setAdapter(_purchaseAdapter);
+        initFragments();
 
         setLineChartData();
     }
+
+    List<BaseFragment> _fragments;
+    FragmentManager _fragmentManager;
+     @Bind(R.id.order_indicator)
+     TitlePageIndicator _indicator;
+
+    protected void initFragments(){
+        LineChartFragment fragment1 = new LineChartFragment();
+        LineChartFragment fragment2 = new LineChartFragment();
+        LineChartFragment fragment3 = new LineChartFragment();
+        _fragments = new ArrayList<>();
+        _fragments.add(fragment1);
+        _fragments.add(fragment2);
+        _fragments.add(fragment3);
+        _fragmentManager = this.getActivity().getSupportFragmentManager();
+        _orderFragmentAdapter = new OrderFragmentPageAdapter(_fragments, _fragmentManager);
+        _viewPager.setAdapter(_orderFragmentAdapter);
+
+        _indicator.setViewPager(_viewPager);
+//        _orderFragment  = OrderFragment.newInstance();
+//        _salesFragments = SalesFragment.newInstance();
+//        _membersFragments = MembersFragment.newInstance();
+//        _fragments = new ArrayList<>();
+//        _fragments.add(_orderFragment);
+//        _fragments.add(_salesFragments);
+//        _fragments.add(_membersFragments);
+//        _fragmentManager = this.getSupportFragmentManager();
+//        _dataStatisticFragmentAdapter = new DataStatisticFragmentAdapter(_fragments,_fragmentManager);
+//
+//        _viewPager.setAdapter(_dataStatisticFragmentAdapter);
+//        _circlePageIndicator.setViewPager(_viewPager);
+    }
+
+
 
     private void setLineChartData(){
 
@@ -288,5 +276,64 @@ public class OrderFragment extends BaseFragment {
         //_orderLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
     }
 
+
+    class LineChartFragment extends BaseFragment{
+
+        @Bind(R.id.order_lineChart)
+        LineChart _orderLineChart;
+
+
+        public LineChartFragment (){
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.layout_orderchart , container, false);
+            ButterKnife.bind(this, rootView);
+            initData();
+            return rootView;
+        }
+
+        protected void initData(){
+            _orderLineChart.setBackgroundColor(Color.WHITE);
+            _orderLineChart.setDescription("line chart description");
+            _orderLineChart.setNoDataText("no date to show chart");
+            _orderLineChart.getAxisRight().setEnabled(false);
+
+            List<String> xValues= new ArrayList<String>();
+            List<Entry> yValues=new ArrayList<>();
+            Random r=new Random();
+            for(int i=1;i<=7;i++){
+                xValues.add( "7."+ i );
+                float y = r.nextFloat()*100;
+                Entry item=new Entry( y ,i);
+                yValues.add(item);
+            }
+            LineDataSet dataset =new LineDataSet( yValues ,"");
+            dataset.setCircleColor(Color.RED);
+            dataset.setCircleSize(4);
+            dataset.setDrawCircleHole(false);
+            dataset.setDrawValues(true);
+            dataset.setLineWidth(1);
+            dataset.setColor(Color.BLUE);
+            dataset.setValueTextSize(14);
+            dataset.setValueTextColor(Color.GREEN);
+            dataset.setDrawCubic(true);
+            LineData data =new LineData(xValues ,dataset );
+            _orderLineChart.setData(data);
+            _orderLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+        }
+    }
 
 }

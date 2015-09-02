@@ -1,14 +1,32 @@
 package com.huotu.huobanmall.seller.fragment;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
+import com.huotu.huobanmall.seller.adapter.SalesFragmentPageAdapter;
+import com.viewpagerindicator.TitlePageIndicator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,7 +83,19 @@ public class SalesFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sales, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_sales, container, false);
+
+        ButterKnife.bind(this, rootView);
+
+
+
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initFragments();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -106,5 +136,123 @@ public class SalesFragment extends BaseFragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
+    List<BaseFragment> _fragments;
+    FragmentManager _fragmentManager;
+    @Bind(R.id.sales_indicator)
+    TitlePageIndicator _indicator;
+    SalesFragmentPageAdapter _salesFragmentAdapter;
+    @Bind(R.id.sales_viewPager)
+    ViewPager _viewPager;
+
+    protected void initFragments(){
+        SalesLineChartFragment fragment1 = new SalesLineChartFragment();
+        SalesLineChartFragment fragment2 = new SalesLineChartFragment();
+        SalesLineChartFragment fragment3 = new SalesLineChartFragment();
+        _fragments = new ArrayList<>();
+        _fragments.add(fragment1);
+        _fragments.add(fragment2);
+        _fragments.add(fragment3);
+        _fragmentManager = this.getActivity().getSupportFragmentManager();
+        _salesFragmentAdapter = new SalesFragmentPageAdapter(_fragments, _fragmentManager);
+        _viewPager.setAdapter(_salesFragmentAdapter);
+
+        _indicator.setViewPager(_viewPager);
+    }
+
+
+    private void setLineChartData(){
+
+        //_orderLineChart.setBackgroundColor(Color.WHITE);
+        //_orderLineChart.setDescription("line chart description");
+        //_orderLineChart.setNoDataText("no date to show chart");
+        //_orderLineChart.getAxisRight().setEnabled(false);
+
+        List<String> xValues= new ArrayList<String>();
+        List<Entry> yValues=new ArrayList<>();
+        Random r=new Random();
+        for(int i=1;i<=7;i++){
+            xValues.add( "7."+ i );
+            float y = r.nextFloat()*100;
+            Entry item=new Entry( y ,i);
+            yValues.add(item);
+        }
+        LineDataSet dataset =new LineDataSet( yValues ,"");
+        dataset.setCircleColor(Color.RED);
+        dataset.setCircleSize(4);
+        dataset.setDrawCircleHole(false);
+        dataset.setDrawValues(true);
+        dataset.setLineWidth(1);
+        dataset.setColor(Color.BLUE);
+        dataset.setValueTextSize(14);
+        dataset.setValueTextColor(Color.GREEN);
+        dataset.setDrawCubic(true);
+
+        LineData data =new LineData(xValues ,dataset );
+
+        //_orderLineChart.setData(data);
+
+        //_orderLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+    }
+
+
+    class SalesLineChartFragment extends BaseFragment{
+
+        @Bind(R.id.sales_lineChart)
+        LineChart _saleslineChart;
+
+        public SalesLineChartFragment (){
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.layout_saleslinechart , container, false);
+            ButterKnife.bind(this, rootView);
+            initData();
+            return rootView;
+        }
+
+        protected void initData(){
+            _saleslineChart.setBackgroundColor(Color.WHITE);
+            _saleslineChart.setDescription("line chart description");
+            _saleslineChart.setNoDataText("no date to show chart");
+            _saleslineChart.getAxisRight().setEnabled(false);
+
+            List<String> xValues= new ArrayList<String>();
+            List<Entry> yValues=new ArrayList<>();
+            Random r=new Random();
+            for(int i=1;i<=7;i++){
+                xValues.add( "7."+ i );
+                float y = r.nextFloat()*100;
+                Entry item=new Entry( y ,i);
+                yValues.add(item);
+            }
+            LineDataSet dataset =new LineDataSet( yValues ,"");
+            dataset.setCircleColor(Color.RED);
+            dataset.setCircleSize(4);
+            dataset.setDrawCircleHole(false);
+            dataset.setDrawValues(true);
+            dataset.setLineWidth(1);
+            dataset.setColor(Color.BLUE);
+            dataset.setValueTextSize(14);
+            dataset.setValueTextColor(Color.GREEN);
+            dataset.setDrawCubic(true);
+            LineData data =new LineData(xValues ,dataset );
+            _saleslineChart.setData(data);
+            _saleslineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+        }
+    }
+
 
 }

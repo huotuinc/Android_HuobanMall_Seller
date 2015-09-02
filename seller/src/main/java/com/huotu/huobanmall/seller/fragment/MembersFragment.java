@@ -2,18 +2,33 @@ package com.huotu.huobanmall.seller.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.activity.WebViewActivity;
+import com.huotu.huobanmall.seller.adapter.MembersFragmentPageAdapter;
+import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
 import com.huotu.huobanmall.seller.common.Constants;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.viewpagerindicator.TitlePageIndicator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,10 +47,6 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
 
@@ -43,6 +54,11 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     RelativeLayout _membersstatis1;
     @Bind(R.id.members_statis2)
     RelativeLayout _membersstatis2;
+
+    @Bind(R.id.members_viewPager)
+    ViewPager _viewPager;
+
+    MembersFragmentPageAdapter _membersFragmentAdapter;
 
     /**
      * Use this factory method to create a new instance of
@@ -80,13 +96,55 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_members, container, false);
-        ButterKnife.bind( this , rootView );
+        ButterKnife.bind(this, rootView);
 
         _membersstatis1.setOnClickListener(this);
         _membersstatis2.setOnClickListener(this);
 
+
+
+
         return rootView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initFragments();
+    }
+
+    List<BaseFragment> _fragments;
+    FragmentManager _fragmentManager;
+    @Bind(R.id.members_indicator)
+    TitlePageIndicator _indicator;
+
+    protected void initFragments(){
+        MemberLineChartFragment fragment1 = new MemberLineChartFragment();
+        MemberLineChartFragment fragment2 = new MemberLineChartFragment();
+        MemberLineChartFragment fragment3 = new MemberLineChartFragment();
+        _fragments = new ArrayList<>();
+        _fragments.add(fragment1);
+        _fragments.add(fragment2);
+        _fragments.add(fragment3);
+        _fragmentManager = this.getActivity().getSupportFragmentManager();
+        _membersFragmentAdapter = new MembersFragmentPageAdapter(_fragments, _fragmentManager);
+        _viewPager.setAdapter(_membersFragmentAdapter);
+
+        _indicator.setViewPager(_viewPager);
+//        _orderFragment  = OrderFragment.newInstance();
+//        _salesFragments = SalesFragment.newInstance();
+//        _membersFragments = MembersFragment.newInstance();
+//        _fragments = new ArrayList<>();
+//        _fragments.add(_orderFragment);
+//        _fragments.add(_salesFragments);
+//        _fragments.add(_membersFragments);
+//        _fragmentManager = this.getSupportFragmentManager();
+//        _dataStatisticFragmentAdapter = new DataStatisticFragmentAdapter(_fragments,_fragmentManager);
+//
+//        _viewPager.setAdapter(_dataStatisticFragmentAdapter);
+//        _circlePageIndicator.setViewPager(_viewPager);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -143,4 +201,65 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
             ActivityUtils.getInstance().showActivity(getActivity(), intent);
         }
     }
+
+
+    class MemberLineChartFragment extends BaseFragment{
+
+        @Bind(R.id.members_lineChart)
+        LineChart _memberLineChart;
+
+
+        public MemberLineChartFragment (){
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.layout_memberchart , container, false);
+            ButterKnife.bind(this, rootView);
+            initData();
+            return rootView;
+        }
+
+        protected void initData(){
+            _memberLineChart.setBackgroundColor(Color.WHITE);
+            _memberLineChart.setDescription("line chart description");
+            _memberLineChart.setNoDataText("no date to show chart");
+            _memberLineChart.getAxisRight().setEnabled(false);
+
+            List<String> xValues= new ArrayList<String>();
+            List<Entry> yValues=new ArrayList<>();
+            Random r=new Random();
+            for(int i=1;i<=7;i++){
+                xValues.add( "7."+ i );
+                float y = r.nextFloat()*100;
+                Entry item=new Entry( y ,i);
+                yValues.add(item);
+            }
+            LineDataSet dataset =new LineDataSet( yValues ,"");
+            dataset.setCircleColor(Color.RED);
+            dataset.setCircleSize(4);
+            dataset.setDrawCircleHole(false);
+            dataset.setDrawValues(true);
+            dataset.setLineWidth(1);
+            dataset.setColor(Color.BLUE);
+            dataset.setValueTextSize(14);
+            dataset.setValueTextColor(Color.GREEN);
+            dataset.setDrawCubic(true);
+            LineData data =new LineData(xValues ,dataset );
+            _memberLineChart.setData(data);
+            _memberLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+        }
+    }
+
 }

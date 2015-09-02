@@ -1,9 +1,11 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
@@ -27,12 +29,16 @@ public class WebViewActivity extends BaseFragmentActivity {
     public TextView _webViewTitle;
 
     String _url;
+    @Bind(R.id.header_back)
+    Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
+
+        btnBack.setOnClickListener(this);
 
         _webView = _pullToRefreshWebViewPage.getRefreshableView();
         _webView.getSettings().setJavaScriptEnabled(true);
@@ -45,6 +51,10 @@ public class WebViewActivity extends BaseFragmentActivity {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+    }
 
     @Override
     protected void onDestroy() {
@@ -81,6 +91,8 @@ public class WebViewActivity extends BaseFragmentActivity {
                 _webview.onRefreshComplete();
             }
         }
+
+
     }
 
 

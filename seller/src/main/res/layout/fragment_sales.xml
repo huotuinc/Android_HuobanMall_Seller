@@ -3,134 +3,126 @@
     xmlns:ptr="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.huobanmall.seller.fragment.SalesFragment">
 
-    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
-        android:id="@+id/sales_pulltorefreshScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        ptr:ptrAnimationStyle="flip">
+    <!--<com.handmark.pulltorefresh.library.PullToRefreshScrollView-->
+        <!--android:id="@+id/sales_pulltorefreshScrollView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--ptr:ptrAnimationStyle="flip">-->
 
         <RelativeLayout
             android:id="@+id/sales_context"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/sales_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_20"
-                android:text="@string/sales_statistic" />
-
-            <LinearLayout
-                android:id="@+id/sales_summery"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_below= "@id/sales_title"
-                android:layout_height="@dimen/sales_statistic_height">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginRight="1dip"
-                    android:background="@color/sales_week_bg"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/order_week"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="bottom"
-                        android:textColor="@android:color/white"
-                        android:layout_height="match_parent"
-                        android:textSize="@dimen/text_size_18"
-                        android:text="@string/sales_week"/>
-                    <TextView
-                        android:id="@+id/order_weekValue"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:text="7852.11"
-                        android:layout_gravity="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_18"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="1dip"
-                    android:layout_weight="1"
-                    android:background="@color/sales_month_bg"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/order_month"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="bottom"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_18"
-                        android:text="@string/sales_month"/>
-                    <TextView
-                        android:id="@+id/order_monthValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textColor="@android:color/white"
-                        android:layout_gravity="center"
-                        android:text="302200"/>
-                </LinearLayout>
-            </LinearLayout>
-
             <RelativeLayout
-                android:id="@+id/sales_lineChart_container"
-                android:layout_below="@id/sales_summery"
-                android:layout_marginTop="@dimen/space_5"
+                android:id="@+id/sales_title"
+                android:padding="@dimen/space_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/sales_lineChartTitle"
+                <ImageView
+                    android:id="@+id/sales_total_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_18"
-                    android:text="@string/sales_chartTitle"/>
+                    android:background="@mipmap/xsze"/>
+                <TextView
+                    android:id="@+id/sales_total"
+                    android:layout_alignTop="@id/sales_total_image"
+                    android:layout_toRightOf="@id/sales_total_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:textSize="@dimen/text_size_20"
+                    android:text="15234.33" />
+                <TextView
+                    android:id="@+id/sales_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/sales_total"
+                    android:layout_toRightOf="@id/sales_total_image"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:textSize="@dimen/text_size_20"
+                    android:text="销售总数"/>
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/sales_lineChart"
+                <ImageView
+                    android:layout_below="@id/sales_total_image"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/sales_lineChart_height"
-                    android:layout_below="@id/sales_lineChartTitle"
-                    />
+                    android:layout_height="@dimen/space_1"
+                    android:background="@color/gray"/>
+
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/sales_detail_container"
-                android:layout_below="@id/sales_lineChart_container"
+            <com.viewpagerindicator.TitlePageIndicator
+                android:id="@+id/sales_indicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/sales_title"
                 android:padding="@dimen/space_5"
-                android:layout_margin="@dimen/space_5"
-                android:background="@android:color/darker_gray"
-                android:layout_marginTop="@dimen/space_5">
+                android:textColor="#AA000000"
+                android:textSize="@dimen/text_size_20"
+                ptr:footerColor="@color/indicator_footline_color"
+                ptr:selectedColor="#FE3C00"
+                />
+
+            <RelativeLayout
+                android:id="@+id/sales_info"
+                android:background="@color/sales_info_bg"
+                android:layout_below="@id/sales_indicator"
+                android:layout_width="match_parent"
+                android:padding="@dimen/space_5"
+                android:layout_height="wrap_content">
                 <TextView
-                    android:text="@string/sales_sale_statistic"
+                    android:id="@+id/sales_info_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_20"
+                    android:textColor="@android:color/black"
+                    android:text="当前统计："/>
+                <TextView
+                    android:id="@+id/sales_info_count"
+                    android:layout_toRightOf="@id/sales_info_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_20"
+                    android:textColor="@android:color/black"
+                    android:text="32542.00"/>
+            </RelativeLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/sales_viewPager"
+                android:layout_below="@id/sales_info"
+                android:layout_above="@+id/sales_statis1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </android.support.v4.view.ViewPager>
+
+            <RelativeLayout
+                android:id="@+id/sales_statis1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:padding="@dimen/space_5"
+                android:background="@drawable/round_gray"
+                android:layout_margin="@dimen/space_5">
+                <TextView
+                    android:text="销量明细"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_18"
-                    android:layout_toLeftOf="@+id/sale_arrow1"/>
+                    android:layout_toLeftOf="@+id/order_arrow1"/>
                 <ImageView
                     android:layout_alignParentRight="true"
-                    android:id="@+id/sale_arrow1"
+                    android:id="@+id/sales_arrow1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:background="@mipmap/info_arrow"/>
-
             </RelativeLayout>
+
         </RelativeLayout>
 
-    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+    <!--</com.handmark.pulltorefresh.library.PullToRefreshScrollView>-->
 
 </FrameLayout>

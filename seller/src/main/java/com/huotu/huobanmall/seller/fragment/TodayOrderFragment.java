@@ -1,6 +1,7 @@
 package com.huotu.huobanmall.seller.fragment;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.PurchaseOfGoods;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +33,11 @@ import com.huotu.huobanmall.seller.R;
  * create an instance of this fragment.
  */
 public class TodayOrderFragment extends BaseFragment {
+
+    @Bind(R.id.todayOrder_lineChart)
+    LineChart _orderLineChart;
+
+
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -52,7 +71,12 @@ public class TodayOrderFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_today_order, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_today_order, container, false);
+        ButterKnife.bind(this, rootView);
+
+        setLineChartData();
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -88,5 +112,46 @@ public class TodayOrderFragment extends BaseFragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
+
+    private void setLineChartData(){
+        int bg=0x3B91DE;
+        int gridbg=0x56A5EA;
+        _orderLineChart.setGridBackgroundColor( gridbg );
+
+        //_orderLineChart.setBackgroundColor(  bg );
+        _orderLineChart.setDescription("暂无数据");
+        _orderLineChart.setNoDataText("暂无数据");
+        _orderLineChart.getAxisRight().setEnabled(false);
+        //_orderLineChart.getAxisLeft().setEnabled(false);
+
+
+        List<String> xValues= new ArrayList<String>();
+        List<Entry> yValues=new ArrayList<>();
+        Random r=new Random();
+        for(int i=1;i<=7;i++){
+            xValues.add( "7."+ i );
+            float y = r.nextFloat()*100;
+            Entry item=new Entry( y ,i);
+            yValues.add(item);
+        }
+        LineDataSet dataset =new LineDataSet( yValues ,"");
+        dataset.setCircleColor(Color.WHITE);
+        dataset.setCircleSize(4);
+        dataset.setDrawCircleHole(true);
+        dataset.setDrawValues(true);
+        dataset.setLineWidth(2);
+        dataset.setColor(Color.WHITE);
+        dataset.setValueTextSize(14);
+        dataset.setValueTextColor(Color.GREEN);
+        dataset.setDrawCubic(true);
+
+        LineData data =new LineData(xValues ,dataset );
+
+        _orderLineChart.setData(data);
+
+        _orderLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -14,6 +15,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.huotu.huobanmall.seller.adapter.MenuAdapter;
 import com.huotu.huobanmall.seller.adapter.TodayDataFragmentAdapter;
 import com.huotu.huobanmall.seller.bean.MenuModel;
+import com.huotu.huobanmall.seller.common.Constants;
 import com.huotu.huobanmall.seller.fragment.BaseFragment;
 import com.huotu.huobanmall.seller.fragment.TodayDistributorsFragment;
 import com.huotu.huobanmall.seller.fragment.TodayMemberFragment;
@@ -102,7 +104,6 @@ public class MainActivity extends BaseFragmentActivity {
 //        });
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -113,9 +114,11 @@ public class MainActivity extends BaseFragmentActivity {
     public void onClick(View v) {
         super.onClick(v);
         if( v.getId() == R.id.main_menu_cpgl){
-
+            ActivityUtils.getInstance().showActivity(this, GoodsActivity.class);
         }else if( v.getId() == R.id.main_menu_ddgl){
-
+            Intent intent = new Intent( this , WebViewActivity.class);
+            intent.putExtra(Constants.Extra_Url,"http://www.baidu.com");
+            ActivityUtils.getInstance().showActivity( this , intent);
         }else if( v.getId() == R.id.main_menu_gdtj){
             ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class);
         }else if( v.getId() ==R.id.main_menu_szgl){

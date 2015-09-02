@@ -1,202 +1,189 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.huobanmall.seller.fragment.MembersFragment">
-
 
         <RelativeLayout
             android:id="@+id/members_context"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/members_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_20"
-                android:text="@string/members_statistic" />
-
-            <LinearLayout
-                android:id="@+id/members_summery"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_below= "@id/members_title"
-                android:layout_height="@dimen/members_statistic_height">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginRight="1dip"
-                    android:background="@color/members_week_bg"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/order_week"
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="bottom"
-                        android:textColor="@android:color/white"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_18"
-                        android:text="@string/members_week"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        >
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/member_huoban"
-                                android:layout_weight="1"
-                                android:textColor="@android:color/white"
-                                android:gravity="center"
-                                />
-                            <TextView
-                                android:id="@+id/members_huoban_weekValue"
-                                android:layout_width="wrap_content"
-                                android:layout_weight="1"
-                                android:text="789"
-                                android:layout_gravity="center"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/text_size_18"
-                                android:layout_height="match_parent" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:textColor="@android:color/white"
-                                android:gravity="center"
-                                android:text="@string/member_member"
-                                />
-                            <TextView
-                                android:id="@+id/members_member_weekValue"
-                                android:layout_width="wrap_content"
-                                android:layout_weight="1"
-                                android:text="788"
-                                android:layout_gravity="center"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/text_size_18"
-                                android:layout_height="match_parent" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="1dip"
-                    android:layout_weight="1"
-                    android:background="@color/members_month_bg"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/members_month"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:gravity="bottom"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/text_size_18"
-                        android:text="@string/members_month"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/member_huoban"
-                                android:layout_weight="1"
-                                android:textColor="@android:color/white"
-                                android:gravity="center"
-                                />
-                            <TextView
-                                android:id="@+id/members_member_monthValue"
-                                android:layout_width="wrap_content"
-                                android:layout_weight="1"
-                                android:text="8789"
-                                android:layout_gravity="center"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/text_size_18"
-                                android:layout_height="match_parent" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:textColor="@android:color/white"
-                                android:gravity="center"
-                                android:text="@string/member_member"
-                                />
-                            <TextView
-                                android:id="@+id/members_member_memberValue"
-                                android:layout_width="wrap_content"
-                                android:layout_weight="1"
-                                android:text="8888"
-                                android:layout_gravity="center"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/text_size_18"
-                                android:layout_height="match_parent" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
 
             <RelativeLayout
-                android:id="@+id/members_lineChart_container"
-                android:layout_below="@id/members_summery"
-                android:layout_marginTop="@dimen/space_5"
+                android:id="@+id/members_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/members_total_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/zchyzrs"/>
                 <TextView
-                    android:id="@+id/members_lineChartTitle"
+                    android:id="@+id/members_total"
+                    android:layout_alignTop="@id/members_total_image"
+                    android:layout_toRightOf="@id/members_total_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_20"
+                    android:text="153" />
+                <TextView
+                    android:id="@+id/members_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/members_total"
+                    android:textSize="@dimen/text_size_18"
+                    android:layout_toRightOf="@id/members_total_image"
+                    android:text="注册会员总人数"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/members_firend"
+                    android:layout_alignTop="@id/members_total_image"
+                    android:layout_toLeftOf="@+id/members_firendCount"
+                    android:textSize="@dimen/text_size_18"
+                    android:text="小伙伴："/>
+                <TextView
+                    android:id="@+id/members_firendCount"
+                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_18"
-                    android:text="@string/members_chartTitle"/>
+                    android:text="1545"/>
+                <TextView
+                    android:id="@+id/members_member"
+                    android:layout_below="@id/members_firend"
+                    android:layout_alignLeft="@id/members_firend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_18"
+                    android:text="会员："/>
+                <TextView
+                    android:id="@+id/members_memberCount"
+                    android:layout_alignTop="@id/members_member"
+                    android:layout_toRightOf="@id/members_member"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_18"
+                    android:text="1544"/>
 
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/members_lineChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/members_lineChart_height"
-                    android:layout_below="@id/members_lineChartTitle"
-                    />
             </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/members_spaceLine"
+                android:layout_below="@id/members_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1"
+                android:background="@color/gray"/>
+
+            <com.viewpagerindicator.TitlePageIndicator
+                android:id="@+id/members_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/members_spaceLine"
+                android:padding="@dimen/space_5"
+                android:textColor="#AA000000"
+                android:textSize="@dimen/text_size_20"
+                ptr:footerColor="@color/indicator_footline_color"
+                ptr:selectedColor="#FE3C00"
+                />
+
+            <RelativeLayout
+                android:id="@+id/members_info"
+                android:background="@color/members_info_bg"
+                android:layout_below="@id/members_indicator"
+                android:layout_width="match_parent"
+                android:paddingBottom="@dimen/space_10"
+                android:paddingTop="@dimen/space_10"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/members_info_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_18"
+                    android:text="当前统计："/>
+                <TextView
+                    android:id="@+id/members_info_count"
+                    android:layout_toRightOf="@id/members_info_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_18"
+                    android:text="32"/>
+
+                <TextView
+                    android:id="@+id/members_firend_color"
+                    android:background="@color/members_line_firend_color"
+                    android:layout_toRightOf="@id/members_info_count"
+                    android:layout_width="@dimen/space_15"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/space_5"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_height="@dimen/space_15" />
+                <TextView
+                    android:id="@+id/members_firend_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/members_firend_color"
+                    android:textSize="@dimen/text_size_18"
+                    android:text="小伙伴："/>
+                <TextView
+                    android:id="@+id/members_firendCount2"
+                    android:layout_toRightOf="@id/members_firend_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_18"
+                    android:text="233"/>
+
+                <TextView
+                    android:id="@+id/members_member_color"
+                    android:background="@color/members_line_member_color"
+                    android:layout_toRightOf="@id/members_firendCount2"
+                    android:layout_width="@dimen/space_15"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/space_5"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_height="@dimen/space_15" />
+
+                <TextView
+                    android:id="@+id/members_member_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/members_member_color"
+                    android:textSize="@dimen/text_size_18"
+                    android:text="会员："/>
+                <TextView
+                    android:id="@+id/members_memberCount2"
+                    android:layout_toRightOf="@id/members_member_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_18"
+                    android:text="877"/>
+
+            </RelativeLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/members_viewPager"
+                android:layout_below="@id/members_info"
+                android:layout_above="@+id/members_statistic_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </android.support.v4.view.ViewPager>
 
         <RelativeLayout
             android:id="@+id/members_statistic_container"
-            android:layout_below="@id/members_lineChart_container"
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_5"
             android:layout_marginTop="@dimen/space_5">
             <RelativeLayout
                 android:id="@+id/members_statis1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/space_5"
-                android:background="@android:color/darker_gray"
+                android:background="@drawable/round_gray"
                 android:layout_margin="@dimen/space_5">
                 <TextView
                     android:text="@string/members_jf_statistic"
@@ -218,7 +205,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/members_statis1"
-                android:background="@android:color/darker_gray"
+                android:background="@drawable/round_gray"
                 android:padding="@dimen/space_5"
                 android:layout_margin="@dimen/space_5">
                 <TextView
@@ -234,6 +221,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:background="@mipmap/info_arrow"/>
+
 
             </RelativeLayout>
         </RelativeLayout>
