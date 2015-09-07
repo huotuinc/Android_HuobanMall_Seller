@@ -23,20 +23,20 @@ import java.util.Map;
 public class HttpParaUtils {
     private String TAG= HttpParaUtils.class.getName();
     private String PARA_NAME1="appKey";
-    private String PARA_NAME2="lat";
-    private String PARA_NAME3="lng";
-    private String PARA_NAME4="cityCode";
-    private String PARA_NAME5="timestamp";
+    private String PARA_NAME2="cityCode";
+    private String PARA_NAME3 ="cpaCode";
+    private String PARA_NAME4="imei";
+    private String PARA_NAME5="ip";
     private String PARA_NAME6="operation";
-    private String PARA_NAME7="version";
-    private String PARA_NAME8="token";
-    private String PARA_NAME9="imei";
-    private String PARA_NAME10 ="cpaCode";
+    private String PARA_NAME7="timestamp";
+    private String PARA_NAME8="version";
+    private String PARA_NAME9="token";
 
-    private String PARA_APPSECURE="appSecret";
     private String PARA_SIGN="sign";
-
     private String timestamp;
+
+    private String PARA_APPSECURE = "appSecret";
+
 
     public HttpParaUtils(){
         timestamp = String.valueOf(System.currentTimeMillis());
@@ -44,38 +44,31 @@ public class HttpParaUtils {
 
     protected String getCommonPara(Uri.Builder builder ){
         builder.appendQueryParameter(PARA_NAME1, Constant.APPKEY);
-        String lat = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO , Constant.PRE_LOCATION_LATITUDE, "0");
-        builder.appendQueryParameter(PARA_NAME2, lat);
-        String lng = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO , Constant.PRE_LOCATION_LONGITUDE,"0");
-        builder.appendQueryParameter(PARA_NAME3, lng);
         String cityCode = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO, Constant.PRE_LOCATION_CITY_CODE,"");
-        builder.appendQueryParameter(PARA_NAME4, cityCode);
-        builder.appendQueryParameter(PARA_NAME5, timestamp);
+        builder.appendQueryParameter(PARA_NAME2, cityCode);
+        builder.appendQueryParameter(PARA_NAME3, Constant.CAP_CODE);
+        builder.appendQueryParameter(PARA_NAME4, SystemUtils.getPhoneIMEI(SellerApplication.getInstance()));
+        builder.appendQueryParameter(PARA_NAME5, "127.0.0.1");
         builder.appendQueryParameter(PARA_NAME6, Constant.OPERATION_CODE);
-        builder.appendQueryParameter(PARA_NAME7, SystemUtils.getAppVersion(SellerApplication.getInstance()));
+        builder.appendQueryParameter(PARA_NAME8, SystemUtils.getAppVersion(SellerApplication.getInstance()));
         String token = PreferenceHelper.readString( SellerApplication.getInstance() , Constant.LOGIN_USER_INFO , Constant.PRE_USER_TOKEN , "");
-        builder.appendQueryParameter(PARA_NAME8, token);
-        builder.appendQueryParameter(PARA_NAME9, SystemUtils.getPhoneIMEI(SellerApplication.getInstance()));
-        builder.appendQueryParameter(PARA_NAME10, Constant.CAP_CODE);
+        builder.appendQueryParameter(PARA_NAME9, token);
         return  builder.build().toString();
     }
 
     public Map<String,String> getParaMaps( Map<String,String> map ){
         Map<String,String> paras = new HashMap<>();
         paras.put(PARA_NAME1, Constant.APPKEY);
-        String lat = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO , Constant.PRE_LOCATION_LATITUDE, "0");
-        paras.put(PARA_NAME2, lat);
-        String lng = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO , Constant.PRE_LOCATION_LONGITUDE,"0");
-        paras.put(PARA_NAME3, lng);
         String cityCode = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO, Constant.PRE_LOCATION_CITY_CODE,"");
-        paras.put(PARA_NAME4, cityCode);
-        paras.put(PARA_NAME5, timestamp);
+        paras.put(PARA_NAME2, cityCode);
+        paras.put(PARA_NAME3, Constant.CAP_CODE);
+        paras.put ( PARA_NAME4, SystemUtils.getPhoneIMEI ( SellerApplication.getInstance ( ) ) );
+        paras.put(PARA_NAME7, timestamp);
         paras.put(PARA_NAME6, Constant.OPERATION_CODE);
-        paras.put(PARA_NAME7, SystemUtils.getAppVersion(SellerApplication.getInstance()));
+        paras.put(PARA_NAME8, SystemUtils.getAppVersion(SellerApplication.getInstance()));
         String token = PreferenceHelper.readString( SellerApplication.getInstance() , Constant.LOGIN_USER_INFO , Constant.PRE_USER_TOKEN , "");
-        paras.put(PARA_NAME8, token);
-        paras.put(PARA_NAME9, SystemUtils.getPhoneIMEI(SellerApplication.getInstance()));
-        paras.put(PARA_NAME10, Constant.CAP_CODE);
+        paras.put(PARA_NAME9, token);
+        paras.put(PARA_NAME5, "127.0.0.1");
 
         if(map!=null){
             paras.putAll(map);
@@ -85,9 +78,10 @@ public class HttpParaUtils {
 
     private String doSort(Map<String,String> paras ){
         //Map<String,String> map = getParaMaps(paras);
-        paras.put(PARA_APPSECURE, Constant.APP_SECRET);
+        Map<String, String> signMap = new HashMap<String, String> ( paras );
+        signMap.put(PARA_APPSECURE, Constant.APP_SECRET);
 
-        List sortList = new ArrayList(paras.entrySet());
+        List sortList = new ArrayList(signMap.entrySet());
         Collections.sort(sortList, new Comparator() {
             @Override
             public int compare(Object arg1, Object arg2) {

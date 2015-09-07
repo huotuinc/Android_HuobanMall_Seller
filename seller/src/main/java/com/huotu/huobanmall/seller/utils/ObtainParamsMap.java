@@ -54,24 +54,6 @@ public class ObtainParamsMap
         Map<String, String> paramsMap = new HashMap<String, String>();
         paramsMap.put("appKey", Constant.APPKEY);
         if (null != PreferenceHelper.readString(context, Constant.LOCATION_INFO,
-                "latitude"))
-        {
-            paramsMap.put("lat", PreferenceHelper.readString(context,
-                    Constant.LOCATION_INFO, "latitude"));
-        } else
-        {
-            paramsMap.put("lat", "");
-        }
-        if (null != PreferenceHelper.readString(context, Constant.LOCATION_INFO,
-                "Longitude"))
-        {
-            paramsMap.put("lng", PreferenceHelper.readString(context,
-                    Constant.LOCATION_INFO, "Longitude"));
-        } else
-        {
-            paramsMap.put("lng", "");
-        }
-        if (null != PreferenceHelper.readString(context, Constant.LOCATION_INFO,
                 "cityCode"))
         {
             paramsMap.put("cityCode", PreferenceHelper.readString(context,
@@ -117,28 +99,6 @@ public class ObtainParamsMap
         {
             buffer.append("&appKey=");
             buffer.append(URLEncoder.encode(Constant.APPKEY, "UTF-8"));
-            if (null != PreferenceHelper.readString(context, Constant.LOCATION_INFO,
-                    "latitude"))
-            {
-                buffer.append("&lat=");
-                buffer.append(URLEncoder.encode(PreferenceHelper.readString(
-                        context, Constant.LOCATION_INFO, "latitude"), "UTF-8"));
-            } else
-            {
-                buffer.append("&lat=");
-                buffer.append("");
-            }
-            if (null != PreferenceHelper.readString(context, Constant.LOCATION_INFO,
-                    "Longitude"))
-            {
-                buffer.append("&lng=");
-                buffer.append(URLEncoder.encode(PreferenceHelper.readString(
-                        context, Constant.LOCATION_INFO, "Longitude"), "UTF-8"));
-            } else
-            {
-                buffer.append("&lng=");
-                buffer.append("");
-            }
             if (null != PreferenceHelper.readString(context, Constant.LOCATION_INFO,
                     "cityCode"))
             {

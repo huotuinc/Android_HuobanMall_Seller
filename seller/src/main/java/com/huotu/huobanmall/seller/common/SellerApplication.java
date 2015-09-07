@@ -3,6 +3,7 @@ package com.huotu.huobanmall.seller.common;
 import android.app.Application;
 
 import com.baidu.location.LocationClient;
+import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 /**
@@ -33,10 +34,22 @@ public class SellerApplication extends Application{
     }
 
     protected void initVolley(){
-        VolleyRequestManager.init(this);
+        VolleyRequestManager.init ( this );
     }
 
     public LocationClient getBaiduLocationClient(){
         return _baiduLocation.mLocationClient;
+    }
+
+    public void writeUserToken(String token)
+    {
+        PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant
+                                               .PRE_USER_TOKEN, token );
+    }
+
+    public void readUserToken()
+    {
+        PreferenceHelper.readString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant
+                                               .PRE_USER_TOKEN );
     }
 }
