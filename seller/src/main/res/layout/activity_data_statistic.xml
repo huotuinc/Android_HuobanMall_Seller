@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:vpi="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.huobanmall.seller.activity.DataStatisticActivity">
+    <RelativeLayout
+        android:id="@+id/datastatistic_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_height">
+        <include layout="@layout/layout_datastatistic_header"></include>
+    </RelativeLayout>
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/datastatistic_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/datastatistic_header"
+        android:visibility="gone"
+        vpi:radius="@dimen/pageindicator_circle_radius"
+        vpi:strokeColor="@color/pageindicator_circle_stoken_color"
+        vpi:fillColor="@color/pageindicator_circle_fill_color"
+        android:padding="@dimen/space_10"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/datastatistic_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/datastatistic_indicator"
+        />
+
+</RelativeLayout>

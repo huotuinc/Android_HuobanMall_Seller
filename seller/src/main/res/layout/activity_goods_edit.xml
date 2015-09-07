@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.huotu.huobanmall.seller.activity.GoodsEditActivity">
+
+    <RelativeLayout
+        android:id="@+id/goodsedit_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_header"></include>
+
+    </RelativeLayout>
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/goodsedit_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/goodsedit_header"
+        android:layout_above="@+id/goodsedit_bottom"/>
+
+    <RelativeLayout
+        android:id="@+id/goodsedit_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <RadioButton
+            android:id="@+id/goodsedit_all"
+            android:text="@string/goodsedit_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+        <Button
+            android:id="@+id/goodsedit_delete"
+            android:text="@string/goodsedit_delete"
+            android:layout_toRightOf="@id/goodsedit_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/goodsedit_onshelf"
+            android:text="@string/goodsedit_onshelf"
+            android:layout_toRightOf="@id/goodsedit_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/goodsedit_offshelf"
+            android:text="@string/goodsedit_offshelf"
+            android:layout_toRightOf="@id/goodsedit_onshelf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

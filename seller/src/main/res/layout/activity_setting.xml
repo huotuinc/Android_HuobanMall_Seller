@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:id="@+id/title_login"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal" >
+
+        <include layout="@layout/title" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_login" >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <!-- 店铺名称 -->
+
+                <LinearLayout
+                    android:id="@+id/shopNameLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="店铺名称"
+                        />
+
+                    <TextView
+                        android:id="@+id/shopName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="火图"
+                        />
+
+                    <ImageView
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+                <!-- 店铺名称end -->
+                <!-- 店铺描述 -->
+
+                <LinearLayout
+                    android:id="@+id/shopdescriptionLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="店铺描述"
+                        />
+
+                    <TextView
+                        android:id="@+id/Shopdescription"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="火图hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+                        />
+
+                    <ImageView
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+                <!-- 店铺描述end -->
+
+                <!-- 店铺logo -->
+
+                <LinearLayout
+                    android:id="@+id/imgLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
+                   >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="店铺logo"
+                        android:textSize="30sp"
+                         />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <ImageView
+                            android:id="@+id/img"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            >
+                        </ImageView>
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@mipmap/ic_launcher"
+                            />
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                       />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+                <!-- 店铺logo -->
+
+
+                <!-- 当前账号 -->
+
+                <LinearLayout
+                    android:id="@+id/idLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="当前账号"
+
+                         />
+
+                    <TextView
+                        android:id="@+id/txtId"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:maxLength="20"
+                        android:text="18767152078"
+                        />
+
+                    <ImageView
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+                <!-- 当前账号 -->
+
+
+                <!-- 昵称 -->
+
+                <LinearLayout
+                    android:id="@+id/nameLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
+                   >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="昵称"
+                         />
+
+                    <TextView
+                        android:id="@+id/txtName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="开开"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                       />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+                <!-- 昵称 -->
+
+
+                <!-- 修改登录密码 -->
+
+                <LinearLayout
+                    android:id="@+id/changePswLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
+                  >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="修改登录密码"
+                        />
+                    <TextView
+                        android:id="@+id/txtchangePsw"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text=""
+                       />
+
+                    <ImageView
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+                <!-- 修改登录密码 -->
+
+                <!-- 推送设置 -->
+
+
+                <LinearLayout
+                    android:id="@+id/pushLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="推送设置"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtlayPush"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text=""
+                        />
+
+                    <ImageView
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
+                       />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+                <!-- 推送设置 -->
+
+
+                <!-- 关于我们 -->
+
+                <LinearLayout
+                    android:id="@+id/aboutusLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
+                   >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="关于我们"
+                       />
+
+                    <TextView
+                        android:id="@+id/txtIncome"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text=""
+                         />
+
+                    <ImageView
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+                <!-- 推送设置 -->
+
+
+                <!-- 使用帮助 -->
+
+                <LinearLayout
+                    android:id="@+id/helpLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
+                   >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="使用帮助"
+                         />
+
+                    <TextView
+                        android:id="@+id/txtFav"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text=""
+                        />
+                    <ImageView
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+                <!-- 使用帮助 -->
+                <!-- 问题反馈 -->
+
+                <LinearLayout
+                    android:id="@+id/FeedbackLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="问题反馈"
+                        />
+
+                    <TextView
+                        android:id="@+id/Feedback"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text=""
+                        />
+
+                    <ImageView
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/info_arrow"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+                <!-- 问题反馈 -->
+
+                <Button
+                    android:id="@+id/quit"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="match_parent"
+                    android:layout_margin="10dp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="onClickButton"
+                    android:text="退出登录"
+                    android:background="@drawable/btn_red_sel"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:layout_height="40dp"/>
+
+
+
+            </LinearLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

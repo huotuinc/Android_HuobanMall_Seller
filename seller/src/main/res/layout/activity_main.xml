@@ -1,11 +1,109 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".MainActivity">
+    <!-- 页头 -->
+    <RelativeLayout
+        android:id="@+id/main_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_height">
+        <include layout="@layout/layout_main_header"></include>
+    </RelativeLayout>
 
-    <TextView android:text="@string/hello_world" android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <!-- 汇总信息 -->
+    <RelativeLayout
+        android:id="@+id/main_Summary"
+        android:layout_below="@id/main_header"
+        android:layout_width="match_parent"
+        android:background="@color/main_header_bg"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/main_todyMoney"
+            android:layout_marginTop="@dimen/space_10"
+            android:textSize="@dimen/text_size_40"
+            android:textColor="@android:color/white"
+            android:text="￥256454.25"
+            android:gravity="left"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/main_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/main_today"
+            android:layout_alignTop="@id/main_todyMoney"
+            android:layout_marginRight="@dimen/space_5"
+            android:layout_alignParentRight="true"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今日"/>
+        <TextView
+            android:id="@+id/main_totalMoney"
+            android:layout_below="@id/main_todyMoney"
+            android:textColor="@android:color/white"
+            android:text="总销售额(元)5354343.12"
+            android:textSize="@dimen/text_size_20"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_15"
+            />
+    </RelativeLayout>
 
+    <!-- 线性图 -->
+    <RelativeLayout
+        android:id="@+id/main_TodayOrder"
+        android:layout_below="@id/main_Summary"
+        android:layout_above="@+id/main_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/main_TodayOrderText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/todayNewOrder"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_20"
+            android:gravity="center"/>
+        <ImageView
+            android:layout_marginTop="@dimen/space_5"
+            android:id="@+id/main_todayLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_2"
+            android:background="@color/gray"
+            android:layout_margin="@dimen/space_5"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10"
+            android:layout_below="@id/main_TodayOrderText">
+        </ImageView>
+
+        <RelativeLayout
+            android:id="@+id/main_TodayChart"
+            android:layout_below="@id/main_todayLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/layout_main_data"></include>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/main_menu"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
+        <include layout="@layout/layout_menuitem"></include>
+    </RelativeLayout>
+    <!--<GridView-->
+        <!--android:id="@+id/main_gridView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:numColumns="2"-->
+        <!--android:layout_marginTop="@dimen/space_5"-->
+        <!--android:layout_marginBottom="@dimen/space_5"-->
+        <!--android:layout_height="@dimen/main_menu_height"/>-->
 </RelativeLayout>

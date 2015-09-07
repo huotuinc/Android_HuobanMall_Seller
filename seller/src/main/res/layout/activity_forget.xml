@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:cy="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/title_login"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal" >
+        <include layout="@layout/title" />
+    </RelativeLayout>
+    <ScrollView
+        android:id="@+id/scrollLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_login">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+
+                <!-- 手机号 -->
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/theme_color"
+                    >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@drawable/line_gray_shape" />
+
+                    <TextView
+                        android:id="@+id/txtPhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="手机号"
+                       />
+
+                    <com.huotu.android.library.libedittext.EditText
+                        android:id="@+id/edtPhone"
+
+                        cy:style="transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="13dp"
+                        android:layout_toRightOf="@+id/txtPhone"
+                        android:layout_weight="1"
+                        android:hint="请输入手机号"
+                        android:phoneNumber="true"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:maxLength="11"
+                         />
+
+                    <ImageView
+                        android:id="@+id/imgPhoneLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_below="@+id/edtPhone"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/line_gray_shape"/>
+                </RelativeLayout>
+                <!-- 手机号end -->
+
+
+                <!-- 验证码 -->
+
+                <RelativeLayout
+                    android:id="@+id/layCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/theme_color"
+                    >
+
+                    <TextView
+                        android:id="@+id/txtCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="验证码"
+                       />
+
+                    <com.huotu.android.library.libedittext.EditText
+                        android:id="@+id/edtCode"
+
+                        cy:style="transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="13dp"
+                        android:layout_toLeftOf="@+id/btnGet"
+                        android:layout_toRightOf="@+id/txtCode"
+                        android:hint="请输入验证码"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:maxLength="20"
+                        />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_below="@+id/edtCode"
+                        android:background="@drawable/line_gray_shape" />
+
+
+                    <TextView
+                        android:id="@+id/btnGet"
+                        android:layout_width="120dp"
+                        android:layout_height="33dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/shape_red"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:minWidth="120dp"
+                        android:onClick="onClickButton"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="获取验证码"
+                        android:textColor="@color/white"
+                       />
+                </RelativeLayout>
+                <!-- 验证码end -->
+
+
+                <!-- 密码 -->
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/theme_color"
+                    >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@drawable/line_gray_shape" />
+
+
+                    <TextView
+                        android:id="@+id/txtPwd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text=" 密 码 "
+                       />
+
+                    <com.huotu.android.library.libedittext.EditText
+                        android:id="@+id/edtPwd"
+                        cy:style="transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="13dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@+id/txtPwd"
+                        android:hint="@string/hint_pwd"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPassword"
+                        android:maxLength="12"
+                        />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_below="@+id/edtPwd"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/line_gray_shape" />
+                </RelativeLayout>
+                <!-- 密码end -->
+
+
+                <!-- 密码确认 -->
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/theme_color"
+                    >
+
+                    <TextView
+                        android:id="@+id/txtRePwd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text=" 密 码 "
+                       />
+
+                    <com.huotu.android.library.libedittext.EditText
+                        android:id="@+id/edtRePwd"
+                        cy:style="transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="13dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@+id/txtRePwd"
+                        android:hint="密码确认"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPassword"
+                        android:maxLength="12"
+                       />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_below="@+id/edtRePwd"
+                        android:background="@drawable/line_gray_shape" />
+                </RelativeLayout>
+                <!-- 密码确认end -->
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnComplete"
+        android:layout_width="match_parent"
+
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:layout_margin="10dp"
+        android:text="找回"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:background="@drawable/btn_red_sel"
+        android:layout_height="40dp"
+        android:layout_below="@+id/scrollLayout2"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

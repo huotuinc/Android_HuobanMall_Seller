@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/space_5"
+    android:background="@color/main_header_bg">
+    <ImageButton
+        android:id="@+id/header_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/sz"
+        />
+    <ImageButton
+        android:id="@+id/header_operate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/dp_top"
+        android:layout_alignParentRight="true"/>
+    <TextView
+        android:id="@+id/header_title"
+        android:layout_toLeftOf="@id/header_operate"
+        android:layout_toRightOf="@id/header_setting"
+        android:layout_width="match_parent"
+        android:layout_centerVertical="true"
+        android:text="姚生记"
+        android:textSize="@dimen/text_size_20"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

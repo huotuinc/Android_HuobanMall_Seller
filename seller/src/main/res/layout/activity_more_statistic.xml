@@ -1,0 +1,144 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.huotu.huobanmall.seller.activity.MoreStatisticActivity">
+    <RelativeLayout
+        android:id="@+id/datastatistic_header"
+        android:layout_marginBottom="@dimen/space_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/layout_morestatistic_header"></include>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@id/datastatistic_header"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="@color/gray"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@color/gray"
+            android:layout_marginRight="@dimen/space_2"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/morestatistic_menu_fxs"
+                android:drawableTop="@mipmap/fxs"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/space_2"
+                android:text="132"/>
+
+            <Button
+                android:id="@+id/morestatistic_menu_sxetj"
+                android:drawableTop="@mipmap/sxetj"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text=""/>
+
+            <Button
+                android:id="@+id/morestatistic_menu_xftj"
+                android:drawableTop="@mipmap/xftj"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_2"
+                android:text=""/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@color/gray"
+            android:layout_marginRight="@dimen/space_2"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/morestatistic_menu_sp"
+                android:drawableTop="@mipmap/sp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/space_2"
+                android:text=""/>
+
+            <Button
+                android:id="@+id/morestatistic_menu_xsmx"
+                android:drawableTop="@mipmap/xsmx"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text=""/>
+
+            <Button
+                android:id="@+id/morestatistic_menu_10"
+                android:background="@color/white"
+                android:drawableTop="@mipmap/kb"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_2"
+                android:text=""/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@color/gray"
+            android:layout_marginRight="@dimen/space_2"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/morestatistic_menu_hytj"
+                android:drawableTop="@mipmap/hytj"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/space_2"
+                android:text=""/>
+
+            <Button
+                android:id="@+id/morestatistic_menu_fljftj"
+                android:drawableTop="@mipmap/fljftj"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text=""/>
+
+            <Button
+                android:id="@+id/morestatistic_menu_11"
+                android:drawableTop="@mipmap/kb"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_2"
+                android:text=""/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
