@@ -44,7 +44,7 @@
                     android:layout_alignTop="@id/members_total_image"
                     android:layout_toLeftOf="@+id/members_firendCount"
                     android:textSize="@dimen/text_size_18"
-                    android:text="小伙伴："/>
+                    android:text="分销商："/>
                 <TextView
                     android:id="@+id/members_firendCount"
                     android:layout_alignParentRight="true"
@@ -78,7 +78,7 @@
                 android:layout_height="@dimen/space_1"
                 android:background="@color/gray"/>
 
-            <com.viewpagerindicator.TitlePageIndicator
+            <com.viewpagerindicator.TabPageIndicator
                 android:id="@+id/members_indicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/members_firend_color"
                     android:textSize="@dimen/text_size_18"
-                    android:text="小伙伴："/>
+                    android:text="分销商："/>
                 <TextView
                     android:id="@+id/members_firendCount2"
                     android:layout_toRightOf="@id/members_firend_name"
@@ -185,11 +185,22 @@
                 android:padding="@dimen/space_5"
                 android:background="@drawable/round_gray"
                 android:layout_margin="@dimen/space_5">
+
+                <ImageView
+                    android:id="@+id/members_statis_icon1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@mipmap/hyxhbfljftj"/>
+
                 <TextView
                     android:text="@string/members_jf_statistic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_18"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/members_statis_icon1"
                     android:layout_toLeftOf="@+id/members_arrow1"/>
                 <ImageView
                     android:layout_alignParentRight="true"
@@ -208,11 +219,20 @@
                 android:background="@drawable/round_gray"
                 android:padding="@dimen/space_5"
                 android:layout_margin="@dimen/space_5">
+                <ImageView
+                    android:id="@+id/members_statis_icon2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@mipmap/hyxhbxftj"/>
                 <TextView
                     android:text="@string/members_xf_statistic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_18"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/members_statis_icon2"
                     android:layout_toLeftOf="@+id/members_arrow2"/>
                 <ImageView
                     android:layout_alignParentRight="true"
@@ -221,7 +241,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:background="@mipmap/info_arrow"/>
-
 
             </RelativeLayout>
         </RelativeLayout>

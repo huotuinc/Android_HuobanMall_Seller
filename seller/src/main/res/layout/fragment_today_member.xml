@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:background="@color/white"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/space_5">
+        android:paddingTop="@dimen/space_1">
 
         <LinearLayout
             android:layout_width="0px"
@@ -75,15 +75,15 @@
     <ImageView
         android:id="@+id/todayMember_Space"
         android:layout_below="@id/todayMember_header"
-        android:background="@color/blue"
+        android:background="@color/gray"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_10" />
+        android:layout_height="@dimen/space_2" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/todayMember_lineChart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blue"
+        android:background="@color/main_lineChart_Color"
         android:layout_below="@id/todayMember_Space"/>
 
 </RelativeLayout>

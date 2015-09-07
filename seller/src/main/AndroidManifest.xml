@@ -40,6 +40,7 @@
         </activity>
         <activity
             android:name=".activity.DataStatisticActivity"
+            android:theme="@style/Theme.PageIndicatorDefaults"
             android:label="@string/title_activity_data_statistic" >
         </activity>
         <activity

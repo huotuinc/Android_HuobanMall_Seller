@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="header_height">50dip</dimen>
+    <dimen name="morestatistic_height">150dip</dimen>
     <dimen name="pageindicator_circle_radius">6dip</dimen>
 
     <dimen name="main_summary_height">100dip</dimen>
