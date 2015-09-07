@@ -2,11 +2,9 @@ package com.huotu.huobanmall.seller.utils;
 
 
 import android.net.Uri;
-import android.os.StrictMode;
 import android.util.Log;
-import android.view.GestureDetector;
 
-import com.huotu.huobanmall.seller.common.Constants;
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.common.SellerApplication;
 
 import java.io.UnsupportedEncodingException;
@@ -45,39 +43,39 @@ public class HttpParaUtils {
     }
 
     protected String getCommonPara(Uri.Builder builder ){
-        builder.appendQueryParameter(PARA_NAME1, Constants.APPKEY);
-        String lat = PreferenceHelper.readString(SellerApplication.getInstance(), Constants.LOCATION_INFO , Constants.PRE_LOCATION_LATITUDE, "0");
+        builder.appendQueryParameter(PARA_NAME1, Constant.APPKEY);
+        String lat = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO , Constant.PRE_LOCATION_LATITUDE, "0");
         builder.appendQueryParameter(PARA_NAME2, lat);
-        String lng = PreferenceHelper.readString(SellerApplication.getInstance(),Constants.LOCATION_INFO , Constants.PRE_LOCATION_LONGITUDE,"0");
+        String lng = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO , Constant.PRE_LOCATION_LONGITUDE,"0");
         builder.appendQueryParameter(PARA_NAME3, lng);
-        String cityCode = PreferenceHelper.readString(SellerApplication.getInstance(),Constants.LOCATION_INFO,Constants.PRE_LOCATION_CITY_CODE,"");
+        String cityCode = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO, Constant.PRE_LOCATION_CITY_CODE,"");
         builder.appendQueryParameter(PARA_NAME4, cityCode);
         builder.appendQueryParameter(PARA_NAME5, timestamp);
-        builder.appendQueryParameter(PARA_NAME6, Constants.OPERATION_CODE);
+        builder.appendQueryParameter(PARA_NAME6, Constant.OPERATION_CODE);
         builder.appendQueryParameter(PARA_NAME7, SystemUtils.getAppVersion(SellerApplication.getInstance()));
-        String token = PreferenceHelper.readString( SellerApplication.getInstance() , Constants.LOGIN_USER_INFO , Constants.PRE_USER_TOKEN , "");
+        String token = PreferenceHelper.readString( SellerApplication.getInstance() , Constant.LOGIN_USER_INFO , Constant.PRE_USER_TOKEN , "");
         builder.appendQueryParameter(PARA_NAME8, token);
         builder.appendQueryParameter(PARA_NAME9, SystemUtils.getPhoneIMEI(SellerApplication.getInstance()));
-        builder.appendQueryParameter(PARA_NAME10, Constants.CAP_CODE);
+        builder.appendQueryParameter(PARA_NAME10, Constant.CAP_CODE);
         return  builder.build().toString();
     }
 
     public Map<String,String> getParaMaps( Map<String,String> map ){
         Map<String,String> paras = new HashMap<>();
-        paras.put(PARA_NAME1, Constants.APPKEY);
-        String lat = PreferenceHelper.readString(SellerApplication.getInstance(), Constants.LOCATION_INFO , Constants.PRE_LOCATION_LATITUDE, "0");
+        paras.put(PARA_NAME1, Constant.APPKEY);
+        String lat = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO , Constant.PRE_LOCATION_LATITUDE, "0");
         paras.put(PARA_NAME2, lat);
-        String lng = PreferenceHelper.readString(SellerApplication.getInstance(),Constants.LOCATION_INFO , Constants.PRE_LOCATION_LONGITUDE,"0");
+        String lng = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO , Constant.PRE_LOCATION_LONGITUDE,"0");
         paras.put(PARA_NAME3, lng);
-        String cityCode = PreferenceHelper.readString(SellerApplication.getInstance(),Constants.LOCATION_INFO,Constants.PRE_LOCATION_CITY_CODE,"");
+        String cityCode = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO, Constant.PRE_LOCATION_CITY_CODE,"");
         paras.put(PARA_NAME4, cityCode);
         paras.put(PARA_NAME5, timestamp);
-        paras.put(PARA_NAME6, Constants.OPERATION_CODE);
+        paras.put(PARA_NAME6, Constant.OPERATION_CODE);
         paras.put(PARA_NAME7, SystemUtils.getAppVersion(SellerApplication.getInstance()));
-        String token = PreferenceHelper.readString( SellerApplication.getInstance() , Constants.LOGIN_USER_INFO , Constants.PRE_USER_TOKEN , "");
+        String token = PreferenceHelper.readString( SellerApplication.getInstance() , Constant.LOGIN_USER_INFO , Constant.PRE_USER_TOKEN , "");
         paras.put(PARA_NAME8, token);
         paras.put(PARA_NAME9, SystemUtils.getPhoneIMEI(SellerApplication.getInstance()));
-        paras.put(PARA_NAME10, Constants.CAP_CODE);
+        paras.put(PARA_NAME10, Constant.CAP_CODE);
 
         if(map!=null){
             paras.putAll(map);
@@ -87,7 +85,7 @@ public class HttpParaUtils {
 
     private String doSort(Map<String,String> paras ){
         //Map<String,String> map = getParaMaps(paras);
-        paras.put(PARA_APPSECURE, Constants.APP_SECRET);
+        paras.put(PARA_APPSECURE, Constant.APP_SECRET);
 
         List sortList = new ArrayList(paras.entrySet());
         Collections.sort(sortList, new Comparator() {
@@ -111,19 +109,16 @@ public class HttpParaUtils {
         return buffer.toString();
     }
 
-    private String getSign( Map<String,String> paras ){
-        String values = this.doSort( paras );
+    private String getSign( Map<String,String> paras ) {
+        String values = this.doSort(paras);
         Log.i("sign", values);
         //String signHex = EncryptUtils.getInstance().encryptMd532(values);
-        String signHex="";
-        try {
-            signHex = DigestUtils.md5DigestAsHex(values.getBytes("utf-8"));
-        }catch (UnsupportedEncodingException ex){
-            Log.e(TAG, ex.getMessage());
-        }
+        String signHex = "";
+        signHex = EncryptUtil.getInstance().encryptMd532(values);
         Log.i("signHex", signHex);
         return signHex;
     }
+
 
     public String getHttpGetUrl(String url , Map<String,String> paras ){
         Uri.Builder builder = Uri.parse(url).buildUpon();

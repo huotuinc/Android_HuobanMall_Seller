@@ -2,58 +2,76 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_header_bg">
+
     android:layout_height="match_parent">
     <Button
         android:id="@+id/header_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:layout_centerVertical="true"
+        android:background="@color/main_header_bg"
         android:textColor="@android:color/white"
         android:text="@string/back"
         android:drawableLeft="@drawable/btn_back"/>
 
-        <RadioGroup
-            android:id="@+id/header_title"
+
+    <RadioGroup
+        android:id="@+id/goodsedit_title"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_margin="0dp"
+        >
+        <RadioButton
+            android:id="@+id/saleing_btn"
             android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:button="@null"
+            android:text="销售中"
+            android:textSize="@dimen/text_size_16"
+            android:gravity="center"
+            android:singleLine="true"
+            android:checked="true"
+            android:background="@drawable/radiobutton_left"
+            android:textColor="@drawable/check_text"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="@dimen/space_5"
+            android:paddingRight="@dimen/space_5"
+            android:paddingLeft="@dimen/space_5"
+            android:paddingTop="@dimen/space_5"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="0dp"
+            />
 
-            <RadioButton
-                android:id="@+id/header_tab_a"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:button="@null"
-                android:text="@string/onshelf"
-                android:textSize="@dimen/text_size_20"
-                android:layout_weight="1.0"
-                android:gravity="center"
-                android:singleLine="true"
-                android:checked="true"
-
-                android:textColor="@android:color/black"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="0dp"
-                />
-            <RadioButton
-                android:id="@+id/tab_rb_b"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:button="@null"
-                android:text="贡献度"
-                android:textSize="@dimen/text_size_20"
-                android:layout_weight="1.0"
-                android:gravity="center"
-                android:singleLine="true"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:textColor="@android:color/black"
-                />
-
-        </RadioGroup>
+        <RadioButton
+            android:id="@+id/offshelf_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text="已下架"
+            android:checked="false"
+            android:paddingBottom="@dimen/space_5"
+            android:paddingTop="@dimen/space_5"
+            android:paddingRight="@dimen/space_5"
+            android:paddingLeft="@dimen/space_5"
+            android:textSize="@dimen/text_size_16"
+            android:gravity="center"
+            android:singleLine="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/radiobutton_right"
+            android:textColor="@drawable/check_text"
+            />
+    </RadioGroup>
 
 </RelativeLayout>

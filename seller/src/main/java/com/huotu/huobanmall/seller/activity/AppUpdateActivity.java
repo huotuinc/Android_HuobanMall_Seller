@@ -3,8 +3,6 @@ package com.huotu.huobanmall.seller.activity;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,19 +13,16 @@ import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.common.BaseService;
-import com.huotu.huobanmall.seller.common.Constants;
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.widget.CircleProgressBar;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
-import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.view.KeyEvent;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Handler;
@@ -105,9 +100,9 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 		//LinearLayout lay = (LinearLayout) findViewById(R.id.lay);
 		//lay.getBackground().setAlpha(150);
 
-		oldapk_filepath = Constants.PATH_PKG_TEMP  + File.separator + getPackageName() + "_old.apk";
-		newapk_savepath = Constants.PATH_PKG_TEMP + File.separator + getPackageName() + "_new.apk";
-		softwarePath = Constants.PATH_PKG_TEMP + File.separator + getPackageName() + "_patch.apk";
+		oldapk_filepath = Constant.PATH_PKG_TEMP  + File.separator + getPackageName() + "_old.apk";
+		newapk_savepath = Constant.PATH_PKG_TEMP + File.separator + getPackageName() + "_new.apk";
+		softwarePath = Constant.PATH_PKG_TEMP + File.separator + getPackageName() + "_patch.apk";
 
 		isCancel = false;
 		taskIsComplete = false;
@@ -175,7 +170,7 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 		Toast.makeText(this, "新版本更新失败...", Toast.LENGTH_SHORT).show();
 		Intent intent = getIntent();
 		intent.putExtra("isForce", isForce);
-		setResult(Constants.RESULT_CODE_CLIENT_DOWNLOAD_FAILED, intent);
+		setResult(Constant.RESULT_CODE_CLIENT_DOWNLOAD_FAILED, intent);
 		finish();
 	}
 
