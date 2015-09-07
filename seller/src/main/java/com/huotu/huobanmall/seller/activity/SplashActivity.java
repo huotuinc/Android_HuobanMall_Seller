@@ -71,7 +71,7 @@ public class SplashActivity extends BaseFragmentActivity {
             this.finish();
         }else if(v.getId()==R.id.splash_update){
             Intent intent=new Intent(this, WebViewActivity.class);
-            intent.putExtra(Constants.Extra_Url,"http://www.baidu.com");
+            intent.putExtra(Constant.Extra_Url,"http://www.baidu.com");
             ActivityUtils.getInstance().showActivity(this, intent );
         }
     }
