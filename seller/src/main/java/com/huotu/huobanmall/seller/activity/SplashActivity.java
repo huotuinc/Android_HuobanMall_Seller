@@ -11,7 +11,7 @@ import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.baidu.location.LocationClientOption;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.MJInitData;
-import com.huotu.huobanmall.seller.common.Constants;
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
@@ -49,7 +49,7 @@ public class SplashActivity extends BaseFragmentActivity {
     }
 
     protected void callInit() {
-        String url = Constants.INIT_INTERFACE;
+        String url = Constant.INIT_INTERFACE;
         HttpParaUtils httpParaUtils = new HttpParaUtils();
         url = httpParaUtils.getHttpGetUrl(url, null);
         GsonRequest<MJInitData> initRequest = new GsonRequest<>(

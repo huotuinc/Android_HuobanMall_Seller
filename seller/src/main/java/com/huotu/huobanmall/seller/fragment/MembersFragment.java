@@ -21,8 +21,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.activity.WebViewActivity;
 import com.huotu.huobanmall.seller.adapter.MembersFragmentPageAdapter;
-import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
-import com.huotu.huobanmall.seller.common.Constants;
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -191,13 +190,13 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
             String url = "http://m.cnblogs.com";
             Intent intent = new Intent();
             intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra(Constants.Extra_Url, url);
+            intent.putExtra(Constant.Extra_Url, url);
             ActivityUtils.getInstance().showActivity(getActivity(), intent);
         }else if( v.getId()==R.id.members_statis2){
             String url = "http://www.baidu.com";
             Intent intent = new Intent();
             intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra(Constants.Extra_Url, url);
+            intent.putExtra(Constant.Extra_Url, url);
             ActivityUtils.getInstance().showActivity(getActivity(), intent);
         }
     }

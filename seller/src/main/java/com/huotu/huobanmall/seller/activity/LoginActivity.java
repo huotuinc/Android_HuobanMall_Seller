@@ -6,6 +6,8 @@ package com.huotu.huobanmall.seller.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,18 +15,26 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.huotu.android.library.libedittext.EditText;
+import com.huotu.huobanmall.seller.MyApplication;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.HTMerchantModel;
 import com.huotu.huobanmall.seller.bean.MerchantModel;
-import com.huotu.huobanmall.seller.common.Constants;
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
-import com.huotu.huobanmall.seller.utils.DigestUtils;
+import com.huotu.huobanmall.seller.utils.EncryptUtil;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.JSONUtil;
+import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -72,6 +82,8 @@ public class LoginActivity extends BaseFragmentActivity implements
     }
     private void initView()
     {
+        userName.setText("huotu");
+        passWord.setText("123456");
         titleName.setText("用户登录");
         loginBtn.setOnClickListener(this);
         forgetPsw.setOnClickListener(this);
@@ -95,39 +107,46 @@ public class LoginActivity extends BaseFragmentActivity implements
                 .setCancelableOnTouchOutside(false);
         progressDialog = (ProgressDialogFragment) builder.show();
 
-        String url = Constants.LOGIN_INTERFACE;
+        String url = Constant.LOGIN_INTERFACE;
         HttpParaUtils httpUtils = new HttpParaUtils();
         Map<String,String> paras = new HashMap<>();
 
         String pwd = passWord.getText().toString();
         String pwdEncy="";
-        try {
-            pwdEncy = DigestUtils.md5DigestAsHex(pwd.getBytes("utf-8"));
-        }catch (UnsupportedEncodingException ex){
-
-        }
-
-        paras.put("username","test");
+        pwdEncy = EncryptUtil.getInstance().encryptMd532(pwd);
+        paras.put("username", userName.getText().toString());
         paras.put("password", pwdEncy);
         url = httpUtils.getHttpGetUrl(url,paras);
 
-        GsonRequest<MerchantModel> loginRequest = new GsonRequest<MerchantModel>(
-                Request.Method.GET
-                ,url
-                ,MerchantModel.class
-                ,null
-                ,loginListener
-                ,errorListener
-        );
+        VolleyRequestManager.getRequestQueue().add(new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        HTMerchantModel htMerchantModel = new HTMerchantModel();
+                        JSONUtil<HTMerchantModel> jsonStr = new JSONUtil<HTMerchantModel>();
+                        htMerchantModel = jsonStr.toBean(response.toString(), htMerchantModel);
+                        String token = htMerchantModel.getResultData().getUser().getToken();
 
-        VolleyRequestManager.getRequestQueue().add(loginRequest);
+                        //记录token
+                        PreferenceHelper.writeString(LoginActivity.this, "loginInfo", "login_token", token);
+                        ActivityUtils.getInstance().showActivity(LoginActivity.this, MainActivity.class);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String err = error.getMessage();
+                Log.e("", "err : " + err);
+            }
+        }));
+
     }
 
     Response.Listener loginListener = new Response.Listener() {
         @Override
         public void onResponse(Object o) {
 
-            ActivityUtils.getInstance().showActivity(LoginActivity.this, MainActivity.class);
+
+
 
         }
     };
@@ -171,13 +190,13 @@ public class LoginActivity extends BaseFragmentActivity implements
         intent.putExtra("md5", md5);
         intent.putExtra("url", url);
         intent.putExtra("tips", tips);
-        startActivityForResult(intent, Constants.REQUEST_CODE_CLIENT_DOWNLOAD);
+        startActivityForResult(intent, Constant.REQUEST_CODE_CLIENT_DOWNLOAD);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent arg2) {
-        if (requestCode == Constants.REQUEST_CODE_CLIENT_DOWNLOAD
-                && resultCode == Constants.RESULT_CODE_CLIENT_DOWNLOAD_FAILED) {
+        if (requestCode == Constant.REQUEST_CODE_CLIENT_DOWNLOAD
+                && resultCode == Constant.RESULT_CODE_CLIENT_DOWNLOAD_FAILED) {
             Bundle extra = arg2.getExtras();
             if (extra != null) {
                 boolean isForce = extra.getBoolean("isForce");
@@ -198,12 +217,11 @@ public class LoginActivity extends BaseFragmentActivity implements
             case R.id.forgetpsw:
             {
 
-                Intent intent=new Intent(this, ForgetActivity.class);
-                startActivity(intent);
+                ActivityUtils.getInstance().showActivity(LoginActivity.this, ForgetActivity.class);
 
 //                Intent intent=new Intent(this, ForgetActivity.class);
 //                startActivity(intent);
-                testAppUpdate();
+               // testAppUpdate();
 
             }
             break;
@@ -212,8 +230,8 @@ public class LoginActivity extends BaseFragmentActivity implements
 
                 Login();
 
-                Intent intent=new Intent(this, MainActivity.class);
-                startActivity(intent);
+                //Intent intent=new Intent(this, MainActivity.class);
+                //startActivity(intent);
                 //Login();
 
             }
@@ -243,5 +261,17 @@ public class LoginActivity extends BaseFragmentActivity implements
         if( requestCode == REQUEST_UPDATE){
             updateApp();
         }
+    }
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN)
+        {
+            // finish自身
+            LoginActivity.this.finish();
+            return true;
+        }
+        // TODO Auto-generated method stub
+        return super.onKeyDown(keyCode, event);
     }
 }

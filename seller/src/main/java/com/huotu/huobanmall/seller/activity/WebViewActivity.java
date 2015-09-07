@@ -10,8 +10,7 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
 import com.huotu.huobanmall.seller.R;
-import com.huotu.huobanmall.seller.common.Constants;
-import com.huotu.huobanmall.seller.fragment.OrderFragment;
+import com.huotu.huobanmall.seller.common.Constant;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,8 +44,8 @@ public class WebViewActivity extends BaseFragmentActivity {
         _webView.setWebViewClient(new SellerWebViewClient());
         _webView.setWebChromeClient(new SellerWebChromeClient(_webViewTitle , _pullToRefreshWebViewPage ));
 
-        if( null != getIntent() && getIntent().hasExtra(Constants.Extra_Url )){
-            _url= getIntent().getStringExtra( Constants.Extra_Url );
+        if( null != getIntent() && getIntent().hasExtra(Constant.Extra_Url )){
+            _url= getIntent().getStringExtra( Constant.Extra_Url );
             _webView.loadUrl(_url);
         }
     }

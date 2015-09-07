@@ -4,8 +4,6 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 import android.util.Log;
 
-import com.github.mikephil.charting.utils.Utils;
-import com.huotu.huobanmall.seller.utils.DigestUtils;
 //import com.huotu.huobanmall.seller.utils.EncryptUtils;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 

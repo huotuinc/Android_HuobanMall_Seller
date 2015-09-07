@@ -7,10 +7,9 @@
     <RelativeLayout
         android:id="@+id/goodsedit_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp">
 
-        <include layout="@layout/layout_header"></include>
-
+        <include layout="@layout/layout_goodsedit_header"></include>
     </RelativeLayout>
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
@@ -26,8 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
         <RadioButton
+            android:button="@null"
             android:id="@+id/goodsedit_all"
-            android:text="@string/goodsedit_all"
+            android:background="@mipmap/wsz"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.huotu.huobanmall.seller.R;
@@ -13,21 +13,16 @@ import com.huotu.huobanmall.seller.bean.GoodsModel;
 
 import java.util.List;
 
-
 /**
  * Created by Administrator on 2015/9/2.
  */
-public class GoodsAdapter extends BaseAdapter{
-
+public class GoodseditAdapter extends BaseAdapter {
     private List<GoodsModel> _list;
     private Context _context;
-
-    public GoodsAdapter(Context context, List<GoodsModel> list){
+    public GoodseditAdapter(Context context, List<GoodsModel> list){
         _list=list;
         _context=context;
     }
-
-
 
     @Override
     public int getCount() {
@@ -40,6 +35,11 @@ public class GoodsAdapter extends BaseAdapter{
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null)
@@ -47,6 +47,8 @@ public class GoodsAdapter extends BaseAdapter{
             holder = new ViewHolder();
             convertView = View.inflate(_context,
                     R.layout.layout_goodsedit_item, null);
+            holder.radioButton =(RadioButton) convertView
+                    .findViewById(R.id.radioButton);
             holder.goods_imageView = (ImageView) convertView
                     .findViewById(R.id.goods_imageView);
             holder.goods_name = (TextView) convertView
@@ -58,6 +60,7 @@ public class GoodsAdapter extends BaseAdapter{
         {
             holder = (ViewHolder) convertView.getTag();
         }
+        holder.radioButton.setVisibility(View.VISIBLE);
         holder.goods_name.setText(String.valueOf(_list.get(position).getTitle()));
         holder.goods_num.setText(String.valueOf(_list.get(position)
                 .getStock()));
@@ -68,14 +71,11 @@ public class GoodsAdapter extends BaseAdapter{
 
 
     }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
     class ViewHolder
 
     {
+        RadioButton radioButton;
+
         ImageView goods_imageView;
 
         TextView goods_name;

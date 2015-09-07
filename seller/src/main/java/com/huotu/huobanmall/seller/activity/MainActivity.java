@@ -1,28 +1,20 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.huotu.huobanmall.seller.adapter.MenuAdapter;
 import com.huotu.huobanmall.seller.adapter.TodayDataFragmentAdapter;
-import com.huotu.huobanmall.seller.bean.MenuModel;
-import com.huotu.huobanmall.seller.common.Constants;
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.fragment.BaseFragment;
 import com.huotu.huobanmall.seller.fragment.TodayDistributorsFragment;
 import com.huotu.huobanmall.seller.fragment.TodayMemberFragment;
 import com.huotu.huobanmall.seller.fragment.TodayOrderFragment;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.R;
-import com.huotu.huobanmall.seller.widget.CountUpTimerView;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -101,7 +93,7 @@ public class MainActivity extends BaseFragmentActivity {
 //                    //ActivityUtils.getInstance().showActivity(this , GoodsEditActivity.class);
 //                }else if( item.getIcon()==R.mipmap.zytj){
 //                    ActivityUtils.getInstance().showActivity(MainActivity.this,DataStatisticActivity.class);
-//                }else if( item.getIcon()==R.mipmap.szgl){
+//                }else if( item.getIcon()==R.mipmap.setting){
 //
 //                }
 //            }
@@ -126,7 +118,7 @@ public class MainActivity extends BaseFragmentActivity {
             ActivityUtils.getInstance().showActivity(this, GoodsActivity.class);
         }else if( v.getId() == R.id.main_menu_ddgl){
             Intent intent = new Intent( this , WebViewActivity.class);
-            intent.putExtra(Constants.Extra_Url,"http://www.baidu.com");
+            intent.putExtra(Constant.Extra_Url,"http://www.baidu.com");
             ActivityUtils.getInstance().showActivity(this, WebViewActivity.class);
         }else if( v.getId() == R.id.main_menu_gdtj){
             ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class);
