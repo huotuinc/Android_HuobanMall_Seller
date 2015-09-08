@@ -40,20 +40,13 @@ public class Constant {
     public final static String LOGIN_USER_ACCOUNT = "account_name";
     // 登录信息文件
     public final static String LOGIN_USER_INFO = "login_user_info";
-
+    // 用户Token
     public final static String PRE_USER_TOKEN="user_token";
-
-    // 纬度
-    public final static String  PRE_LOCATION_LATITUDE = "latitude";
-
-    // 经度
-    public final static String PRE_LOCATION_LONGITUDE = "Longitude";
     // 城市码
     public final static String  PRE_LOCATION_CITY_CODE = "cityCode";
-
+    // url请求前缀
     public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
     //public final static String BASE_ROOT_URL ="http://192.168.1.48:8080/huobanmall/";
-
     public static final String BASE_URL = BASE_ROOT_URL + "app/";// 基础URL
 
     public static final String GET_VD_INTERFACE = BASE_URL + "sendSMS";// 获取验证码
@@ -77,8 +70,28 @@ public class Constant {
 
     // 口令参数
     public final static String LOGIN_AUTH_TOKEN = "user_token";
-
-
+    //商户权限
+    public final static String LOGIN_AUTH_AUTHORITY = "authority";
+    //店铺描述
+    public final static String LOGIN_AUTH_DISCRIPTION = "discription";
+    //支付订单通知
+    public final static String LOGIN_AUTH_ENABLE_BILL_NOTICE = "enableBillNotice";
+    //新增小伙伴通知（0关闭，1开启）
+    public final static String LOGIN_AUTH_ENABLE_PARTNER_NOTICE = "enablePartnerNotice";
+    //店铺logo
+    public final static String LOGIN_AUTH_LOGO = "logo";
+    //手机号mobile
+    public final static String LOGIN_AUTH_MOBILE = "mobile";
+    //登录名
+    public final static String LOGIN_AUTH_NAME = "name";
+    //昵称
+    public final static String LOGIN_AUTH_NICKNAME = "nickName";
+    //夜间免打扰
+    public final static String LOGIN_AUTH_NO_DISTURBD = "noDisturbed";
+    //欢迎提示
+    public final static String LOGIN_AUTH_WELCOME_TIP = "welcomeTip";
+    //操作者
+    public final static String LOGIN_AUTH_OPERATOR = "operator";
 
     // 短信获取方式:文本
     public final static String SMS_TYPE_TEXT = "0";

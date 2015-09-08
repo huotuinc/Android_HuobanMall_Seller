@@ -3,6 +3,7 @@ package com.huotu.huobanmall.seller.common;
 import android.app.Application;
 
 import com.baidu.location.LocationClient;
+import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
@@ -49,7 +50,41 @@ public class SellerApplication extends Application{
 
     public void readUserToken()
     {
-        PreferenceHelper.readString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant
-                                               .PRE_USER_TOKEN );
+        PreferenceHelper.readString (
+                getApplicationContext ( ), Constant.LOGIN_USER_INFO, Constant
+                        .PRE_USER_TOKEN
+                                    );
+    }
+
+    public void writeMerchantInfo(MerchantModel user)
+    {
+        //店铺权限
+        PreferenceHelper.readString ( getApplicationContext (), Constant.LOGIN_USER_INFO,  Constant.LOGIN_AUTH_AUTHORITY, user.getAuthority ());
+        //店铺描述
+        PreferenceHelper.readString ( getApplicationContext (), Constant.LOGIN_USER_INFO,  Constant.LOGIN_AUTH_DISCRIPTION, user.getDiscription ( ));
+        //支付订单通知
+        PreferenceHelper.readInt ( getApplicationContext ( ), Constant.LOGIN_USER_INFO, Constant
+                                           .LOGIN_AUTH_ENABLE_BILL_NOTICE, user.getEnableBillNotice
+                                           ( ) );
+        //新增小伙伴通知
+        PreferenceHelper.readInt ( getApplicationContext (), Constant.LOGIN_USER_INFO,  Constant.LOGIN_AUTH_ENABLE_PARTNER_NOTICE, user.getEnableBillNotice ());
+        //店铺logo
+        PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_LOGO, user.getLogo () );
+        //用户Token
+        PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant
+                                               .PRE_USER_TOKEN, user.getToken () );
+        //用户手机
+        PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_MOBILE, user.getMobile () );
+        //用户名
+        PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_NAME, user.getName ( ) );
+        //昵称
+        PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_NICKNAME, user.getName () );
+        //夜间免打扰
+        PreferenceHelper.writeInt ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_NO_DISTURBD, user.isNoDisturbed () );
+        //欢迎提示
+        PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_WELCOME_TIP, user.getWelcomeTip () );
+        //操作者
+        PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_OPERATOR, user.getOperator () );
+
     }
 }

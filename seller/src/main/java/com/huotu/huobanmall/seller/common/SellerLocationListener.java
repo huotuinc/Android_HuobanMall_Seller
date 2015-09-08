@@ -112,12 +112,6 @@ public class SellerLocationListener implements BDLocationListener {
                     Constant.LOCATION_INFO,"city", locationBean.getCity());
             PreferenceHelper.writeString(SellerApplication.getInstance(),
                     Constant.LOCATION_INFO, "address", locationBean.getAddress());
-            PreferenceHelper.writeString(SellerApplication.getInstance(),
-                    Constant.LOCATION_INFO, Constant.PRE_LOCATION_LATITUDE ,
-                    String.valueOf(locationBean.getLatitude()));
-            PreferenceHelper.writeString(SellerApplication.getInstance(),
-                    Constant.LOCATION_INFO, Constant.PRE_LOCATION_LONGITUDE ,
-                    String.valueOf(locationBean.getLongitude()));
         }
     }
 

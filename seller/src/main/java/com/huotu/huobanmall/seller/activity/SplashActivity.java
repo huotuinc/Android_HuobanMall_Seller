@@ -18,6 +18,7 @@ import com.baidu.location.LocationClientOption;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.HTInitBean;
 import com.huotu.huobanmall.seller.bean.MJInitData;
+import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
@@ -26,6 +27,7 @@ import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.JSONUtil;
 import com.huotu.huobanmall.seller.utils.KJLoger;
 import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
+import com.huotu.huobanmall.seller.utils.StringUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import org.json.JSONObject;
@@ -39,11 +41,13 @@ import butterknife.ButterKnife;
 public class SplashActivity extends BaseFragmentActivity {
 
     private RelativeLayout loadLayout;
+    public SellerApplication application;
 
     @Override
     protected
     void onCreate ( Bundle savedInstanceState ) {
         super.onCreate ( savedInstanceState );
+        application = ( SellerApplication ) SplashActivity.this.getApplication ();
         setContentView ( R.layout.activity_splash );
 
         initView ( );
@@ -58,36 +62,37 @@ public class SplashActivity extends BaseFragmentActivity {
     private void handlerView()
     {
         AlphaAnimation anima = new AlphaAnimation(0.0f, 1.0f);
-        anima.setDuration(Constant.ANIMATION_COUNT);// 设置动画显示时间
-        loadLayout.setAnimation(anima);
-        anima.setAnimationListener(new Animation.AnimationListener ()
-                                   {
+        anima.setDuration ( Constant.ANIMATION_COUNT );// 设置动画显示时间
+        loadLayout.setAnimation ( anima );
+        anima.setAnimationListener (
+                new Animation.AnimationListener ( ) {
 
-                                       @Override
-                                       public
-                                       void onAnimationStart ( Animation animation ) {
+                    @Override
+                    public
+                    void onAnimationStart ( Animation animation ) {
 
-                                           //百度定位
-                                           initLocation ();
-
-
-                                       }
-
-                                       @Override
-                                       public
-                                       void onAnimationEnd ( Animation animation ) {
-
-                                           //调用初始化接口
-                                           callInit ();
-                                       }
-
-                                       @Override
-                                       public
-                                       void onAnimationRepeat ( Animation animation ) {
+                        //百度定位
+                        initLocation ( );
 
 
-                                       }
-                                   });
+                    }
+
+                    @Override
+                    public
+                    void onAnimationEnd ( Animation animation ) {
+
+                        //调用初始化接口
+                        callInit ( );
+                    }
+
+                    @Override
+                    public
+                    void onAnimationRepeat ( Animation animation ) {
+
+
+                    }
+                }
+                                   );
     }
 
     protected
@@ -121,10 +126,34 @@ public class SplashActivity extends BaseFragmentActivity {
                                                                HTInitBean init = new HTInitBean ();
                                                                JSONUtil<HTInitBean> jsonUtil = new JSONUtil< HTInitBean > ();
                                                                init = jsonUtil.toBean ( jsonObject.toString (), init );
-                                                               //记录初始化信息
+                                                               //更新Token信息
+                                                               MerchantModel user = init.getResultData ( ).getUser ( );
 
+                                                               if(null != user)
+                                                               {
+                                                                   String token = user.getToken ();
+                                                                   //记录商户信息
+                                                                   application.writeMerchantInfo ( user );
+                                                                   if( !StringUtils.isEmpty ( token ))
+                                                                   {
+                                                                       //直接登录
+                                                                       ActivityUtils.getInstance().showActivity(SplashActivity.this, MainActivity.class);
+                                                                       finish();
 
-
+                                                                   }
+                                                                   else
+                                                                   {
+                                                                       //跳转到登录界面
+                                                                       ActivityUtils.getInstance().showActivity(SplashActivity.this, LoginActivity.class);
+                                                                       finish();
+                                                                   }
+                                                               }
+                                                               else
+                                                               {
+                                                                   //跳转到登录界面
+                                                                   ActivityUtils.getInstance().showActivity(SplashActivity.this, LoginActivity.class);
+                                                                   finish();
+                                                               }
                                                            }
                                                        }
                                                                , new Response.ErrorListener ( ) {
