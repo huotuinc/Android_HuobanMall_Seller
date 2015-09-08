@@ -1,5 +1,6 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -128,7 +129,6 @@ public class SplashActivity extends BaseFragmentActivity {
                                                                init = jsonUtil.toBean ( jsonObject.toString (), init );
                                                                //更新Token信息
                                                                MerchantModel user = init.getResultData ( ).getUser ( );
-
                                                                if(null != user)
                                                                {
                                                                    String token = user.getToken ();
@@ -137,22 +137,19 @@ public class SplashActivity extends BaseFragmentActivity {
                                                                    if( !StringUtils.isEmpty ( token ))
                                                                    {
                                                                        //直接登录
-                                                                       ActivityUtils.getInstance().showActivity(SplashActivity.this, MainActivity.class);
-                                                                       finish();
+                                                                       ActivityUtils.getInstance().skipActivity ( SplashActivity.this, MainActivity.class);
 
                                                                    }
                                                                    else
                                                                    {
                                                                        //跳转到登录界面
-                                                                       ActivityUtils.getInstance().showActivity(SplashActivity.this, LoginActivity.class);
-                                                                       finish();
+                                                                       ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class );
                                                                    }
                                                                }
                                                                else
                                                                {
                                                                    //跳转到登录界面
-                                                                   ActivityUtils.getInstance().showActivity(SplashActivity.this, LoginActivity.class);
-                                                                   finish();
+                                                                   ActivityUtils.getInstance().skipActivity(SplashActivity.this, LoginActivity.class);
                                                                }
                                                            }
                                                        }
@@ -160,7 +157,24 @@ public class SplashActivity extends BaseFragmentActivity {
                                                            @Override
                                                            public
                                                            void onErrorResponse ( VolleyError volleyError ) {
+                                                               //提示初始化失败
+                                                               //服务器问题
+                                                               final AlertDialog failureDialog = new AlertDialog.Builder(SplashActivity.this).create ();
+                                                               failureDialog.show ();
+                                                               failureDialog.getWindow ().setContentView ( R.layout.failure_dialog );
+                                                               failureDialog.getWindow ().findViewById ( R.id.button_back_mydialog ).setOnClickListener (
+                                                                       new View.OnClickListener ( ) {
 
+                                                                           @Override
+                                                                           public
+                                                                           void onClick ( View v ) {
+                                                                               failureDialog.dismiss ();
+                                                                               //关闭当前页
+                                                                               SplashActivity.this.finish ();
+
+                                                                           }
+                                                                       }
+                                                                                                                                                        );
                                                            }
                                                        }
                                                        ) );

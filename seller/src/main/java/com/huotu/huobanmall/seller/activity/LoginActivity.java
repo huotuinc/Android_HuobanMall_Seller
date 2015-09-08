@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -32,12 +33,15 @@ import com.huotu.huobanmall.seller.utils.EncryptUtil;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.JSONUtil;
+import com.huotu.huobanmall.seller.utils.KJLoger;
+import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,13 +80,13 @@ public class LoginActivity extends BaseFragmentActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate ( savedInstanceState );
 
         setContentView ( R.layout.activity_login );
         application = ( SellerApplication ) LoginActivity.this.getApplication ();
-        ButterKnife.bind(this);
+        ButterKnife.bind ( this );
 
-        initView();
+        initView ( );
     }
     private void initView()
     {
@@ -91,8 +95,8 @@ public class LoginActivity extends BaseFragmentActivity implements
         titleName.setText("用户登录");
         loginBtn.setOnClickListener(this);
         forgetPsw.setOnClickListener(this);
-        forgetPsw.setText("忘记密码？");
-        backText.setOnClickListener(this);
+        forgetPsw.setText ( "忘记密码？" );
+        backText.setOnClickListener ( this );
 
 
 
@@ -120,7 +124,24 @@ public class LoginActivity extends BaseFragmentActivity implements
         pwdEncy = EncryptUtil.getInstance().encryptMd532(pwd);
         paras.put("username", userName.getText().toString());
         paras.put("password", pwdEncy);
-        url = httpUtils.getHttpGetUrl(url,paras);
+        ObtainParamsMap obtainMap = new ObtainParamsMap(
+                LoginActivity.this);
+        String paramMap = obtainMap.getMap();
+        String signStr = obtainMap.getSign(paras);
+        try
+        {
+            url = url
+                  + "?username="
+                  + URLEncoder.encode(paras.get ( "username" ), "UTF-8")
+                  + "&password="
+                  + URLEncoder.encode(paras.get ( "password" ), "UTF-8");
+            url += paramMap;
+            url += "&sign=" + URLEncoder.encode(signStr, "UTF-8");
+        } catch (UnsupportedEncodingException e)
+        {
+            // TODO Auto-generated catch block
+            KJLoger.errorLog ( e.getMessage ( ) );
+        }
 
         VolleyRequestManager.getRequestQueue().add(new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -129,46 +150,34 @@ public class LoginActivity extends BaseFragmentActivity implements
                         HTMerchantModel htMerchantModel = new HTMerchantModel();
                         JSONUtil<HTMerchantModel> jsonStr = new JSONUtil<HTMerchantModel>();
                         htMerchantModel = jsonStr.toBean(response.toString(), htMerchantModel);
-                        String token = htMerchantModel.getResultData().getUser().getToken();
+                        MerchantModel user = htMerchantModel.getResultData().getUser();
+                        if(null != user)
+                        {
+                            //记录token
+                            application.writeMerchantInfo ( user );
+                            ActivityUtils.getInstance().skipActivity(LoginActivity.this, MainActivity.class);
+                        }
+                        else
+                        {
+                            Toast.makeText ( LoginActivity.this, "未请求到数据", Toast.LENGTH_SHORT ).show ();
+                        }
 
-                        //记录token
-                        application.writeUserToken ( token );
-                        ActivityUtils.getInstance().showActivity(LoginActivity.this, MainActivity.class);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String err = error.getMessage();
-                Log.e("", "err : " + err);
+                if(progressDialog!=null){
+                    progressDialog.dismiss();
+                }
+                SimpleDialogFragment.createBuilder( LoginActivity.this , LoginActivity.this.getSupportFragmentManager())
+                                    .setTitle("错误信息")
+                                    .setMessage( error.getMessage())
+                                    .setNegativeButtonText("关闭")
+                                    .show ( );
             }
         }));
 
     }
-
-    Response.Listener loginListener = new Response.Listener() {
-        @Override
-        public void onResponse(Object o) {
-
-
-
-
-        }
-    };
-
-
-    Response.ErrorListener errorListener=new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            if(progressDialog!=null){
-                progressDialog.dismiss();
-            }
-            SimpleDialogFragment.createBuilder( LoginActivity.this , LoginActivity.this.getSupportFragmentManager())
-                    .setTitle("错误信息")
-                    .setMessage( volleyError.getMessage())
-                    .setNegativeButtonText("关闭")
-                    .show();
-        }
-    };
 
     protected void testAppUpdate(){
         String tips="本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.";

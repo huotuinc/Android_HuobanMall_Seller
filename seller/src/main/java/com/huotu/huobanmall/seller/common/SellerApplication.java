@@ -48,9 +48,9 @@ public class SellerApplication extends Application{
                                                .PRE_USER_TOKEN, token );
     }
 
-    public void readUserToken()
+    public String readUserToken()
     {
-        PreferenceHelper.readString (
+        return PreferenceHelper.readString (
                 getApplicationContext ( ), Constant.LOGIN_USER_INFO, Constant
                         .PRE_USER_TOKEN
                                     );
@@ -59,15 +59,22 @@ public class SellerApplication extends Application{
     public void writeMerchantInfo(MerchantModel user)
     {
         //店铺权限
-        PreferenceHelper.readString ( getApplicationContext (), Constant.LOGIN_USER_INFO,  Constant.LOGIN_AUTH_AUTHORITY, user.getAuthority ());
+        PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO,  Constant.LOGIN_AUTH_AUTHORITY, user.getAuthority ());
         //店铺描述
-        PreferenceHelper.readString ( getApplicationContext (), Constant.LOGIN_USER_INFO,  Constant.LOGIN_AUTH_DISCRIPTION, user.getDiscription ( ));
+        PreferenceHelper.writeString (
+                getApplicationContext ( ), Constant.LOGIN_USER_INFO,
+                Constant.LOGIN_AUTH_DISCRIPTION, user.getDiscription ( )
+                                     );
         //支付订单通知
-        PreferenceHelper.readInt ( getApplicationContext ( ), Constant.LOGIN_USER_INFO, Constant
-                                           .LOGIN_AUTH_ENABLE_BILL_NOTICE, user.getEnableBillNotice
-                                           ( ) );
+        PreferenceHelper.writeInt (
+                getApplicationContext ( ), Constant.LOGIN_USER_INFO, Constant
+                        .LOGIN_AUTH_ENABLE_BILL_NOTICE, user.getEnableBillNotice
+                        ( )
+                                  );
         //新增小伙伴通知
-        PreferenceHelper.readInt ( getApplicationContext (), Constant.LOGIN_USER_INFO,  Constant.LOGIN_AUTH_ENABLE_PARTNER_NOTICE, user.getEnableBillNotice ());
+        PreferenceHelper.writeInt ( getApplicationContext ( ), Constant.LOGIN_USER_INFO, Constant
+                                            .LOGIN_AUTH_ENABLE_PARTNER_NOTICE, user
+                                            .getEnableBillNotice ( ) );
         //店铺logo
         PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_LOGO, user.getLogo () );
         //用户Token
@@ -86,5 +93,10 @@ public class SellerApplication extends Application{
         //操作者
         PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_OPERATOR, user.getOperator () );
 
+    }
+
+    public void cleanMerchantInfo()
+    {
+        PreferenceHelper.clean ( getApplicationContext (), Constant.LOGIN_USER_INFO);
     }
 }
