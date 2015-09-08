@@ -97,7 +97,7 @@
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content">
         <include layout="@layout/layout_menuitem"
-            android:layout_alignParentTop="true"></include>
+           ></include>
     </RelativeLayout>
     <!--<GridView-->
         <!--android:id="@+id/main_gridView"-->
