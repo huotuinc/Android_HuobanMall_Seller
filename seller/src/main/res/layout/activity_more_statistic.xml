@@ -38,7 +38,7 @@
 
             <Button
                 android:id="@+id/morestatistic_menu_sxetj"
-                android:drawableTop="@mipmap/sxetj"
+                android:drawableTop="@mipmap/xsetj"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
