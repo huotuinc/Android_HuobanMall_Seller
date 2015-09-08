@@ -10,14 +10,14 @@ import java.io.File;
 public class Constant {
 
 
-    // 平台安全码
-    public static final String APP_SECRET = "1165a8d240b29af3f418b8d10599d0da";
     /**
      * 操作平台码
      *
      */
 
     public static final String APPKEY = "b73ca64567fb49ee963477263283a1bf";
+    // 平台安全码
+    public static final String APP_SECRET = "1165a8d240b29af3f418b8d10599d0da";
 
     public static final String OPERATION_CODE = "FM2015AD";
     // 定位信息文件
@@ -52,6 +52,7 @@ public class Constant {
     public final static String  PRE_LOCATION_CITY_CODE = "cityCode";
 
     public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
+    //public final static String BASE_ROOT_URL ="http://192.168.1.48:8080/huobanmall/";
 
     public static final String BASE_URL = BASE_ROOT_URL + "app/";// 基础URL
 
@@ -94,6 +95,9 @@ public class Constant {
     public static final String PATH_PKG_TEMP = BASE_IMAGE_PATH + File.separator + "pkgtemp";
     public final static int RESULT_CODE_CLIENT_DOWNLOAD_FAILED = -8000;
     public final static int REQUEST_CODE_CLIENT_DOWNLOAD = 8000;
+
+    //loading动画加载时间
+    public final static int ANIMATION_COUNT = 1000;
 }
 
 
