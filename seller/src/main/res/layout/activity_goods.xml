@@ -9,7 +9,8 @@
         android:id="@+id/goods_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/header_height">
-        <include layout="@layout/layout_header"></include>
+        <include layout="@layout/layout_header"
+            ></include>
     </RelativeLayout>
 
     <com.viewpagerindicator.TabPageIndicator

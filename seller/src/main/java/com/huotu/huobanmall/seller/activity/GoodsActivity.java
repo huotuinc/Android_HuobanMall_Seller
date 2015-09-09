@@ -39,7 +39,7 @@ public class GoodsActivity extends BaseFragmentActivity {
     @Bind(R.id.goods_indicator)
     TabPageIndicator _goodIndicator;
     @Bind(R.id.header_operate)
-    Button _btnOperate;
+    TextView _btnOperate;
 
     SaleGoodsFragment _salesGoodsFragment;
     OffShelfFragment _offShelfFragments;
@@ -55,7 +55,6 @@ public class GoodsActivity extends BaseFragmentActivity {
         _header_back.setOnClickListener(this);
         _btnOperate.setOnClickListener(this);
         _btnOperate.setVisibility(View.VISIBLE);
-        _btnOperate.setText(getString(R.string.header_edit));
         _header_title.setText("产品列表");
         _salesGoodsFragment=SaleGoodsFragment.newInstance();
         _offShelfFragments=OffShelfFragment.newInstance();
@@ -63,9 +62,7 @@ public class GoodsActivity extends BaseFragmentActivity {
         _fragments.add(_salesGoodsFragment);
         _fragments.add(_offShelfFragments);
         _fragmentManager = this.getSupportFragmentManager();
-
         _goodsFragmentAdapter = new GoodsFragmentAdapter(_fragments,_fragmentManager);
-
         _goodsViewPager.setAdapter(_goodsFragmentAdapter);
         _goodIndicator.setViewPager(_goodsViewPager);
 

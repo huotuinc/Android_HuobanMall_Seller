@@ -13,134 +13,182 @@
 
     <LinearLayout
         android:layout_below="@id/datastatistic_header"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:background="@color/gray"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:background="@color/gray"
-            android:layout_marginRight="@dimen/space_2"
             android:layout_height="wrap_content">
             <Button
+                android:layout_margin="0.1dp"
+                style="@style/home_tab_bottom"
                 android:id="@+id/morestatistic_menu_fxs"
                 android:drawableTop="@mipmap/fxs"
                 android:background="@color/white"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/space_2"
                 android:text="132"
                 android:textColor="@color/main_header_bg"/>
 
             <Button
-                android:id="@+id/morestatistic_menu_sxetj"
-                android:drawableTop="@mipmap/xsetj"
+                android:layout_margin="0.1dp"
+                style="@style/home_tab_bottom"
+                android:id="@+id/morestatistic_menu_sp"
+                android:drawableTop="@mipmap/sp"
                 android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 />
 
             <Button
-                android:id="@+id/morestatistic_menu_xftj"
-                android:drawableTop="@mipmap/xftj"
+                android:layout_margin="0.1dp"
+                style="@style/home_tab_bottom"
+                android:id="@+id/morestatistic_menu_hytj"
+                android:drawableTop="@mipmap/hytj"
                 android:background="@color/white"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/space_2"
+
                />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:background="@color/gray"
-            android:layout_marginRight="@dimen/space_2"
             android:layout_height="wrap_content">
             <Button
-                android:id="@+id/morestatistic_menu_sp"
-                android:drawableTop="@mipmap/sp"
+                android:layout_margin="0.1dp"
+                style="@style/home_tab_bottom"
+                android:id="@+id/morestatistic_menu_xseftj"
+                android:drawableTop="@mipmap/xsetj"
                 android:background="@color/white"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/space_2"
-                android:text="14"
+                android:text=""
                 android:textColor="@color/main_header_bg"/>
 
             <Button
+                android:layout_margin="0.1dp"
+                style="@style/home_tab_bottom"
                 android:id="@+id/morestatistic_menu_xsmx"
                 android:drawableTop="@mipmap/xsmx"
                 android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-                android:text=""/>
+                />
 
             <Button
-                android:id="@+id/morestatistic_menu_10"
+                android:layout_margin="0.1dp"
+                style="@style/home_tab_bottom"
+                android:id="@+id/morestatistic_menu_fltj"
+                android:drawableTop="@mipmap/fltj"
                 android:background="@color/white"
-                android:drawableTop="@mipmap/kb"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/space_2"
-                android:text=""/>
-        </LinearLayout>
 
+                />
+
+        </LinearLayout>
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_weight="1"
             android:background="@color/gray"
-            android:layout_marginRight="@dimen/space_2"
             android:layout_height="wrap_content">
             <Button
-                android:id="@+id/morestatistic_menu_hytj"
-                android:drawableTop="@mipmap/hytj"
+                android:layout_margin="0.1dp"
+                style="@style/home_tab_bottom"
+                android:id="@+id/morestatistic_menu_xftj"
+                android:drawableTop="@mipmap/xftj"
                 android:background="@color/white"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/space_2"
-                android:text="124"
+                android:text=""
                 android:textColor="@color/main_header_bg"/>
 
             <Button
-                android:id="@+id/morestatistic_menu_fljftj"
-                android:drawableTop="@mipmap/fljftj"
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:text=""/>
-
-            <Button
-                android:id="@+id/morestatistic_menu_11"
+                android:layout_margin="0.1dp"
+                style="@style/home_tab_bottom"
                 android:drawableTop="@mipmap/kb"
                 android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/space_2"
-                android:text=""/>
+                />
+
+            <Button
+                android:layout_margin="0.1dp"
+                style="@style/home_tab_bottom"
+                android:drawableTop="@mipmap/kb"
+                android:background="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+
+                />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="0.1dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:background="@color/gray"
+            android:layout_height="wrap_content">
+            <Button
+                android:drawableTop="@color/white"
+                android:background="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text=""
+                android:textColor="@color/main_header_bg"/>
+
+            <Button
+                android:id="@+id/morestatistic_menu_sxetj"
+                android:drawableTop="@color/white"
+                android:background="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                />
+
+            <Button
+                android:drawableTop="@color/white"
+                android:background="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

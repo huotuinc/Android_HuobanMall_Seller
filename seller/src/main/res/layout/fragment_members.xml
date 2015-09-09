@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/members_total"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_20"
                     android:layout_toRightOf="@id/members_total_image"
                     android:text="注册会员总人数"/>
 
@@ -50,7 +50,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_20"
                     android:text="1545"/>
                 <TextView
                     android:id="@+id/members_member"
@@ -58,7 +58,7 @@
                     android:layout_alignLeft="@id/members_firend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_20"
                     android:text="会员："/>
                 <TextView
                     android:id="@+id/members_memberCount"
@@ -103,6 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_18"
+                    android:textColor="@android:color/black"
                     android:text="当前统计："/>
                 <TextView
                     android:id="@+id/members_info_count"
@@ -110,6 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_18"
+                    android:textColor="@android:color/black"
                     android:text="32"/>
 
                 <TextView
@@ -124,6 +126,7 @@
                 <TextView
                     android:id="@+id/members_firend_name"
                     android:layout_width="wrap_content"
+                    android:textColor="@android:color/black"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/members_firend_color"
                     android:textSize="@dimen/text_size_18"
@@ -133,6 +136,7 @@
                     android:layout_toRightOf="@id/members_firend_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_18"
                     android:text="233"/>
 
@@ -152,6 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/members_member_color"
                     android:textSize="@dimen/text_size_18"
+                    android:textColor="@android:color/black"
                     android:text="会员："/>
                 <TextView
                     android:id="@+id/members_memberCount2"
@@ -159,6 +164,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_18"
+                    android:textColor="@android:color/black"
                     android:text="877"/>
 
             </RelativeLayout>
@@ -188,8 +194,8 @@
 
                 <ImageView
                     android:id="@+id/members_statis_icon1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentLeft="true"
                     android:background="@mipmap/hyxhbfljftj"/>
 
@@ -205,10 +211,10 @@
                 <ImageView
                     android:layout_alignParentRight="true"
                     android:id="@+id/members_arrow1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_centerVertical="true"
-                    android:background="@mipmap/info_arrow"/>
+                    android:background="@mipmap/hsjt"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -221,8 +227,9 @@
                 android:layout_margin="@dimen/space_5">
                 <ImageView
                     android:id="@+id/members_statis_icon2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+
                     android:layout_alignParentLeft="true"
                     android:background="@mipmap/hyxhbxftj"/>
                 <TextView
@@ -237,10 +244,10 @@
                 <ImageView
                     android:layout_alignParentRight="true"
                     android:id="@+id/members_arrow2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_centerVertical="true"
-                    android:background="@mipmap/info_arrow"/>
+                    android:background="@mipmap/hsjt"/>
 
             </RelativeLayout>
         </RelativeLayout>

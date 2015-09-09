@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 
@@ -51,6 +52,7 @@ public class GoodsAdapter extends BaseAdapter{
                     .findViewById(R.id.goods_imageView);
             holder.goods_name = (TextView) convertView
                     .findViewById(R.id.goods_name);
+            holder.goods_cplx = (TextView) convertView.findViewById(R.id.cplx);
             holder.goods_num = (TextView) convertView.findViewById(R.id.goods_num);
             holder.goods_price = (TextView) convertView.findViewById(R.id.goods_price);
             convertView.setTag(holder);
@@ -58,6 +60,7 @@ public class GoodsAdapter extends BaseAdapter{
         {
             holder = (ViewHolder) convertView.getTag();
         }
+        holder.goods_cplx.setText("干果");
         holder.goods_name.setText(String.valueOf(_list.get(position).getTitle()));
         holder.goods_num.setText(String.valueOf(_list.get(position)
                 .getStock()));
@@ -77,6 +80,7 @@ public class GoodsAdapter extends BaseAdapter{
 
     {
         ImageView goods_imageView;
+        TextView goods_cplx;
 
         TextView goods_name;
 

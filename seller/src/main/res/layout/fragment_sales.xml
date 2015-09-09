@@ -106,19 +106,29 @@
                 android:padding="@dimen/space_5"
                 android:background="@drawable/round_gray"
                 android:layout_margin="@dimen/space_5">
+                <ImageView
+                    android:id="@+id/sales_statis_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@mipmap/xsmxs"/>
                 <TextView
                     android:text="销量明细"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_18"
-                    android:layout_toLeftOf="@+id/order_arrow1"/>
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/sales_statis_icon"
+                    android:layout_toLeftOf="@+id/members_arrow1" />
                 <ImageView
                     android:layout_alignParentRight="true"
                     android:id="@+id/sales_arrow1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_centerVertical="true"
-                    android:background="@mipmap/info_arrow"/>
+                    android:background="@mipmap/hsjt"/>
             </RelativeLayout>
 
         </RelativeLayout>

@@ -13,14 +13,14 @@
         android:text="@string/back"
         android:drawableLeft="@drawable/btn_back"/>
 
-    <Button
+    <TextView
         android:id="@+id/header_operate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
         android:textColor="@android:color/white"
         android:layout_alignParentRight="true"
-        android:background="@android:color/transparent"/>
+        android:background="@mipmap/bj"/>
 
     <TextView
         android:id="@+id/header_title"

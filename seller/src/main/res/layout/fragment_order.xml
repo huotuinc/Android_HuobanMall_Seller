@@ -40,6 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/order_total"
+                    android:textSize="@dimen/text_size_20"
                     android:layout_toRightOf="@id/order_total_image"
                     android:text="订单总数"/>
 
@@ -98,7 +99,7 @@
             <RelativeLayout
                 android:id="@+id/order_statis1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:padding="@dimen/space_5"
                 android:background="@drawable/round_gray"
@@ -108,14 +109,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_18"
-                    android:layout_toLeftOf="@+id/order_arrow1"/>
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/order_arrow1"
+                    android:layout_toStartOf="@+id/order_arrow1" />
                 <ImageView
                     android:layout_alignParentRight="true"
                     android:id="@+id/order_arrow1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_centerVertical="true"
-                    android:background="@mipmap/info_arrow"/>
+                    android:background="@mipmap/hsjt"/>
             </RelativeLayout>
 
         </RelativeLayout>

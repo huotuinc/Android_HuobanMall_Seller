@@ -29,7 +29,7 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
     Button moresta_hytj;
     @Bind(R.id.morestatistic_menu_xsmx)
     Button moresta_xsmx;
-    @Bind(R.id.morestatistic_menu_fljftj)
+    @Bind(R.id.morestatistic_menu_fltj)
     Button moresta_fljftj;
     @Bind(R.id.morestatistic_menu_xftj)
     Button moresta_xftj;
@@ -62,7 +62,7 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
 
         }else if( v.getId() == R.id.morestatistic_menu_hytj){
             ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class);
-        }else if( v.getId() == R.id.morestatistic_menu_fljftj){
+        }else if( v.getId() == R.id.morestatistic_menu_fltj){
 
         }else if( v.getId() == R.id.morestatistic_menu_sxetj){
 

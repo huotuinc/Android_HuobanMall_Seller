@@ -26,7 +26,6 @@ import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.HTMerchantModel;
 import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.common.Constant;
-import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.EncryptUtil;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
@@ -71,15 +70,12 @@ public class LoginActivity extends BaseFragmentActivity implements
     public TextView backText;
     public ProgressDialogFragment progressDialog;
 
-    public
-    SellerApplication application;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView ( R.layout.activity_login );
-        application = ( SellerApplication ) LoginActivity.this.getApplication ();
+        setContentView(R.layout.activity_login);
+
         ButterKnife.bind(this);
 
         initView();
@@ -132,7 +128,7 @@ public class LoginActivity extends BaseFragmentActivity implements
                         String token = htMerchantModel.getResultData().getUser().getToken();
 
                         //记录token
-                        application.writeUserToken ( token );
+                        PreferenceHelper.writeString(LoginActivity.this, "loginInfo", "login_token", token);
                         ActivityUtils.getInstance().showActivity(LoginActivity.this, MainActivity.class);
                     }
                 }, new Response.ErrorListener() {

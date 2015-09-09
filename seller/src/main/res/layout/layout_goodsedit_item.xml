@@ -8,62 +8,91 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/radiobutton"
+            android:button="@null"
+            android:visibility="visible"
             android:id="@+id/radioButton"
-            android:layout_alignTop="@+id/goods_name"
+            android:layout_marginLeft="5dp"
+            android:layout_alignBottom="@+id/textView2"
             android:layout_alignParentLeft="true"
-            android:visibility="gone"
             android:layout_alignParentStart="true" />
 
         <ImageView
             android:layout_toRightOf="@+id/radioButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:background="@mipmap/ic_launcher"
             android:id="@+id/goods_imageView" />
         <TextView
+            android:layout_marginLeft="10dp"
             android:id="@+id/goods_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="s地方说的方式发生地方多舒服舒服水电费水"
-            android:layout_margin="10dp"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/goods_imageView"
             />
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="产品分类："
+            android:id="@+id/textView2"
+            android:layout_above="@+id/goods_inventory"
+            android:layout_alignLeft="@+id/goods_inventory"
+            android:layout_alignStart="@+id/goods_inventory" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="干果"
+            android:id="@+id/cplx"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_toRightOf="@+id/textView2"
+            android:layout_toEndOf="@+id/textView2" />
+
+
+        <TextView
+            android:textSize="18sp"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="库存："
+            android:text="￥ "
             android:layout_alignBottom="@+id/goods_imageView"
             android:layout_toRightOf="@+id/goods_imageView"
-            android:id="@+id/goods_inventory"/>
+            android:id="@+id/goods_inventory"
+            android:textColor="@color/main_header_bg"/>
         <TextView
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100"
+            android:textColor="@color/main_header_bg"
             android:layout_alignTop="@+id/goods_inventory"
             android:layout_toRightOf="@+id/goods_inventory"
             android:layout_toEndOf="@+id/goods_inventory"
-            android:id="@+id/goods_num" />
+            android:id="@+id/goods_price" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="销售价："
-            android:layout_alignTop="@+id/goods_price"
-            android:layout_toLeftOf="@+id/goods_price"
-            />
+            android:text="库存："
+            android:textSize="18sp"
+            android:textColor="@color/main_header_bg"
+            android:layout_below="@+id/cplx"
+            android:layout_toRightOf="@+id/cplx"
+            android:layout_toEndOf="@+id/cplx"
+            android:id="@+id/textView" />
         <TextView
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1000元"
-            android:layout_alignTop="@+id/goods_num"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/goods_price"
-            android:layout_marginRight="10dp"/>
+            android:text="1000"
+            android:textColor="@color/main_header_bg"
+            android:id="@+id/goods_num"
+            android:layout_alignTop="@+id/textView"
+            android:layout_toRightOf="@+id/textView"
+            android:layout_toEndOf="@+id/textView" />
 
     </RelativeLayout>
 
