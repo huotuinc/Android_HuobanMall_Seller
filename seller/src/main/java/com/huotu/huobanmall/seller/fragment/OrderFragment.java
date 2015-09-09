@@ -36,7 +36,8 @@ import com.huotu.huobanmall.seller.adapter.DataStatisticFragmentAdapter;
 import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
 import com.huotu.huobanmall.seller.adapter.PurchaseOfGoodsAdapter;
 import com.huotu.huobanmall.seller.bean.PurchaseOfGoods;
-import com.huotu.huobanmall.seller.common.Constants;
+import com.huotu.huobanmall.seller.common.Constant;
+
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
@@ -159,7 +160,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
     public void onClick(View v) {
         if( v.getId()==R.id.order_statis1){
             Intent intent = new Intent(this.getActivity(), WebViewActivity.class);
-            intent.putExtra(Constants.Extra_Url,"http://www.baidu.com");
+            intent.putExtra(Constant.Extra_Url,"http://www.baidu.com");
             ActivityUtils.getInstance().showActivity(this.getActivity(),intent);
         }
     }

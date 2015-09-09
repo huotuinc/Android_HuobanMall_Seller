@@ -7,8 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.huotu.huobanmall.seller.Interface.IIndexFragmentInteractionListener;
 import com.huotu.huobanmall.seller.R;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,15 +23,17 @@ import com.huotu.huobanmall.seller.R;
  * Use the {@link TodayMemberFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodayMemberFragment extends BaseFragment {
-    private OnFragmentInteractionListener mListener;
+public class TodayMemberFragment extends BaseFragment implements View.OnClickListener{
+    private IIndexFragmentInteractionListener mListener;
+    @Bind(R.id.ll_todayOrder_order)
+    LinearLayout _ll_order;
+    @Bind(R.id.ll_todayOrder_fxs)
+    LinearLayout _ll_fxs;
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment TodayMemberFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -53,31 +60,47 @@ public class TodayMemberFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_today_member, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_today_member, container, false);
+
+        ButterKnife.bind(this, rootView);
+
+        _ll_order.setOnClickListener(this);
+        _ll_fxs.setOnClickListener(this);
+
+        return  rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onSwitchFragment(int position ) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.switchFragment(position);
         }
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+        try {
+            mListener = (IIndexFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement IIndexFragmentInteractionListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if( v.getId() == R.id.ll_todayOrder_order){
+            onSwitchFragment(0);
+        }else if( v.getId()==R.id.ll_todayOrder_fxs){
+            onSwitchFragment(2);
+        }
     }
 
     /**
@@ -90,9 +113,9 @@ public class TodayMemberFragment extends BaseFragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
+//    public interface OnFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        public void onFragmentInteraction(Uri uri);
+//    }
 
 }

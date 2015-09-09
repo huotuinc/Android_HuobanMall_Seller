@@ -33,28 +33,29 @@
                 android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/space_2"
-                android:text="132"/>
+                android:text="132"
+                android:textColor="@color/main_header_bg"/>
 
             <Button
                 android:id="@+id/morestatistic_menu_sxetj"
-                android:drawableTop="@mipmap/sxetj"
+                android:drawableTop="@mipmap/xsetj"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-                android:text=""/>
+                />
 
             <Button
                 android:id="@+id/morestatistic_menu_xftj"
                 android:drawableTop="@mipmap/xftj"
                 android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/space_2"
-                android:text=""/>
+               />
 
         </LinearLayout>
 
@@ -74,7 +75,8 @@
                 android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/space_2"
-                android:text=""/>
+                android:text="14"
+                android:textColor="@color/main_header_bg"/>
 
             <Button
                 android:id="@+id/morestatistic_menu_xsmx"
@@ -114,7 +116,8 @@
                 android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/space_2"
-                android:text=""/>
+                android:text="124"
+                android:textColor="@color/main_header_bg"/>
 
             <Button
                 android:id="@+id/morestatistic_menu_fljftj"

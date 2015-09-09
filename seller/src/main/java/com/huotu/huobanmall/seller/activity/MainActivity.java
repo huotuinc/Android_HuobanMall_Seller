@@ -1,28 +1,21 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.huotu.huobanmall.seller.adapter.MenuAdapter;
+import com.huotu.huobanmall.seller.Interface.IIndexFragmentInteractionListener;
 import com.huotu.huobanmall.seller.adapter.TodayDataFragmentAdapter;
-import com.huotu.huobanmall.seller.bean.MenuModel;
-import com.huotu.huobanmall.seller.common.Constants;
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.fragment.BaseFragment;
 import com.huotu.huobanmall.seller.fragment.TodayDistributorsFragment;
 import com.huotu.huobanmall.seller.fragment.TodayMemberFragment;
 import com.huotu.huobanmall.seller.fragment.TodayOrderFragment;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.R;
-import com.huotu.huobanmall.seller.widget.CountUpTimerView;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -30,10 +23,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseFragmentActivity {
+public class MainActivity extends BaseFragmentActivity implements IIndexFragmentInteractionListener{
 
-    //@Bind(R.id.main_gridView)
-    //GridView main_gridView;
     @Bind(R.id.main_todyMoney)
     TextView main_TodayMoney;
     @Bind(R.id.main_menu_cpgl)
@@ -44,9 +35,6 @@ public class MainActivity extends BaseFragmentActivity {
     Button main_menu_gdtj;
     @Bind(R.id.main_menu_szgl)
     Button main_menu_szgl;
-
-    //MenuAdapter mAdapter;
-    //List<MenuModel> mMenus;
 
     TodayDistributorsFragment _todayDistributorsFragments;
     TodayMemberFragment _todayMemberFragments;
@@ -101,7 +89,7 @@ public class MainActivity extends BaseFragmentActivity {
 //                    //ActivityUtils.getInstance().showActivity(this , GoodsEditActivity.class);
 //                }else if( item.getIcon()==R.mipmap.zytj){
 //                    ActivityUtils.getInstance().showActivity(MainActivity.this,DataStatisticActivity.class);
-//                }else if( item.getIcon()==R.mipmap.szgl){
+//                }else if( item.getIcon()==R.mipmap.setting){
 //
 //                }
 //            }
@@ -126,7 +114,7 @@ public class MainActivity extends BaseFragmentActivity {
             ActivityUtils.getInstance().showActivity(this, GoodsActivity.class);
         }else if( v.getId() == R.id.main_menu_ddgl){
             Intent intent = new Intent( this , WebViewActivity.class);
-            intent.putExtra(Constants.Extra_Url,"http://www.baidu.com");
+            intent.putExtra(Constant.Extra_Url,"http://www.baidu.com");
             ActivityUtils.getInstance().showActivity(this, WebViewActivity.class);
         }else if( v.getId() == R.id.main_menu_gdtj){
             ActivityUtils.getInstance().showActivity(this, MoreStatisticActivity.class);
@@ -148,5 +136,10 @@ public class MainActivity extends BaseFragmentActivity {
         _viewPager.setAdapter(_fragmentAdapter);
         _indicator.setViewPager(_viewPager);
 
+    }
+
+    @Override
+    public void switchFragment(int position) {
+        _indicator.setCurrentItem(position);
     }
 }

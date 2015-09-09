@@ -1,15 +1,12 @@
 package com.huotu.huobanmall.seller.activity;
 
-
-
-
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -18,28 +15,25 @@ import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.HTMerchantModel;
 import com.huotu.huobanmall.seller.bean.MerchantModel;
-import com.huotu.huobanmall.seller.common.Constants;
+import com.huotu.huobanmall.seller.common.Constant;
+import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
-import com.huotu.huobanmall.seller.utils.DigestUtils;
+import com.huotu.huobanmall.seller.utils.EncryptUtil;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
-
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class LoginActivity extends BaseFragmentActivity implements
         View.OnClickListener , ISimpleDialogListener{
     private final static int REQUEST_UPDATE=2045;
-
     @Bind(R.id.backImage)
     public Button titleBack;
-
     // 用户名
     @Bind(R.id.edtUserName)
     public EditText userName;
@@ -59,27 +53,26 @@ public class LoginActivity extends BaseFragmentActivity implements
     @Bind(R.id.backtext)
     public TextView backText;
     public ProgressDialogFragment progressDialog;
+    public SellerApplication application;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate ( savedInstanceState );
 
-        setContentView(R.layout.activity_login);
-
-        ButterKnife.bind(this);
-
+        setContentView ( R.layout.activity_login );
+        application = ( SellerApplication ) LoginActivity.this.getApplication ();
+        ButterKnife.bind ( this );
         initView();
     }
     private void initView()
     {
+        userName.setText("huotu");
+        passWord.setText("123456");
         titleName.setText("用户登录");
         loginBtn.setOnClickListener(this);
         forgetPsw.setOnClickListener(this);
-        forgetPsw.setText("忘记密码？");
-        backText.setOnClickListener(this);
-
-
-
+        forgetPsw.setText ( "忘记密码？" );
+        backText.setOnClickListener ( this );
     }
 
     @Override
@@ -88,64 +81,39 @@ public class LoginActivity extends BaseFragmentActivity implements
         ButterKnife.unbind(this);
     }
 
-    protected void Login(){
+    protected void login(){
+        if( null != progressDialog){
+            progressDialog.dismiss();
+            progressDialog=null;
+        }
         ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager())
                 .setMessage("正在登录，请稍等...")
                 .setCancelable(false)
                 .setCancelableOnTouchOutside(false);
         progressDialog = (ProgressDialogFragment) builder.show();
 
-        String url = Constants.LOGIN_INTERFACE;
+        String url = Constant.LOGIN_INTERFACE;
         HttpParaUtils httpUtils = new HttpParaUtils();
         Map<String,String> paras = new HashMap<>();
-
         String pwd = passWord.getText().toString();
-        String pwdEncy="";
-        try {
-            pwdEncy = DigestUtils.md5DigestAsHex(pwd.getBytes("utf-8"));
-        }catch (UnsupportedEncodingException ex){
-
-        }
-
-        paras.put("username","test");
+        String pwdEncy= EncryptUtil.getInstance().encryptMd532(pwd);
+        paras.put("username", userName.getText().toString());
         paras.put("password", pwdEncy);
-        url = httpUtils.getHttpGetUrl(url,paras);
 
-        GsonRequest<MerchantModel> loginRequest = new GsonRequest<MerchantModel>(
-                Request.Method.GET
-                ,url
-                ,MerchantModel.class
-                ,null
-                ,loginListener
-                ,errorListener
-        );
+        url = httpUtils.getHttpGetUrl(url , paras);
+
+        GsonRequest<HTMerchantModel> loginRequest = new GsonRequest<HTMerchantModel>(
+                Request.Method.GET,
+                url ,
+                HTMerchantModel.class,
+                null,
+                loginListener,
+                errorListener
+                );
 
         VolleyRequestManager.getRequestQueue().add(loginRequest);
+
     }
-
-    Response.Listener loginListener = new Response.Listener() {
-        @Override
-        public void onResponse(Object o) {
-
-            ActivityUtils.getInstance().showActivity(LoginActivity.this, MainActivity.class);
-
-        }
-    };
-
-
-    Response.ErrorListener errorListener=new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            if(progressDialog!=null){
-                progressDialog.dismiss();
-            }
-            SimpleDialogFragment.createBuilder( LoginActivity.this , LoginActivity.this.getSupportFragmentManager())
-                    .setTitle("错误信息")
-                    .setMessage( volleyError.getMessage())
-                    .setNegativeButtonText("关闭")
-                    .show();
-        }
-    };
 
     protected void testAppUpdate(){
         String tips="本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.";
@@ -171,13 +139,13 @@ public class LoginActivity extends BaseFragmentActivity implements
         intent.putExtra("md5", md5);
         intent.putExtra("url", url);
         intent.putExtra("tips", tips);
-        startActivityForResult(intent, Constants.REQUEST_CODE_CLIENT_DOWNLOAD);
+        startActivityForResult(intent, Constant.REQUEST_CODE_CLIENT_DOWNLOAD);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent arg2) {
-        if (requestCode == Constants.REQUEST_CODE_CLIENT_DOWNLOAD
-                && resultCode == Constants.RESULT_CODE_CLIENT_DOWNLOAD_FAILED) {
+        if (requestCode == Constant.REQUEST_CODE_CLIENT_DOWNLOAD
+                && resultCode == Constant.RESULT_CODE_CLIENT_DOWNLOAD_FAILED) {
             Bundle extra = arg2.getExtras();
             if (extra != null) {
                 boolean isForce = extra.getBoolean("isForce");
@@ -191,41 +159,27 @@ public class LoginActivity extends BaseFragmentActivity implements
         super.onActivityResult(requestCode, resultCode, arg2);
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.forgetpsw:
-            {
-
-                Intent intent=new Intent(this, ForgetActivity.class);
-                startActivity(intent);
+            case R.id.forgetpsw: {
+                ActivityUtils.getInstance().showActivity(LoginActivity.this, ForgetActivity.class);
 
 //                Intent intent=new Intent(this, ForgetActivity.class);
 //                startActivity(intent);
-                testAppUpdate();
+                // testAppUpdate();
 
             }
             break;
-            case R.id.btnLogin:
-            {
-
-                Login();
-
-                Intent intent=new Intent(this, MainActivity.class);
-                startActivity(intent);
-                //Login();
-
+            case R.id.btnLogin: {
+                login();
             }
             break;
-            case R.id.backtext:
-            {
+            case R.id.backtext: {
                 finish();
             }
-
-            }
         }
-
+    }
 
 
     @Override
@@ -244,4 +198,72 @@ public class LoginActivity extends BaseFragmentActivity implements
             updateApp();
         }
     }
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN)
+        {
+            // finish自身
+            LoginActivity.this.finish();
+            return true;
+        }
+        // TODO Auto-generated method stub
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    Response.Listener<HTMerchantModel> loginListener = new Response.Listener<HTMerchantModel>() {
+        @Override
+        public void onResponse(HTMerchantModel htMerchantModel) {
+            if( null == htMerchantModel ){
+                SimpleDialogFragment.createBuilder( LoginActivity.this , LoginActivity.this.getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage("请求出错")
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }
+            else if( htMerchantModel.getSystemResultCode() != 1){
+                SimpleDialogFragment.createBuilder( LoginActivity.this , LoginActivity.this.getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage(htMerchantModel.getSystemResultDescription())
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }else if( htMerchantModel.getResultCode() !=1){
+                SimpleDialogFragment.createBuilder( LoginActivity.this , LoginActivity.this.getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage(htMerchantModel.getResultDescription() )
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }
+
+            MerchantModel user = htMerchantModel.getResultData().getUser();
+            if(null != user)
+            {
+                //记录token
+                application.writeMerchantInfo ( user );
+                ActivityUtils.getInstance().skipActivity(LoginActivity.this, MainActivity.class);
+            }
+            else
+            {
+                Toast.makeText ( LoginActivity.this, "未请求到数据", Toast.LENGTH_SHORT ).show ();
+            }
+        }
+    };
+
+    Response.ErrorListener errorListener=new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            if(progressDialog!=null){
+                progressDialog.dismiss();
+            }
+            SimpleDialogFragment.createBuilder( LoginActivity.this , LoginActivity.this.getSupportFragmentManager())
+                    .setTitle("错误信息")
+                    .setMessage(volleyError.getMessage())
+                    .setNegativeButtonText("关闭")
+                    .show();
+        }
+    };
 }

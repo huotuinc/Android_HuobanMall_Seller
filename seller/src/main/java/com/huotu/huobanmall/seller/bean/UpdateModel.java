@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class UpdateModel implements Serializable{
 
     private String updateTips;
-    private VersionUpdateTypeEnum updateType;
+    private UpdateType updateType;
     private String updateUrl;
     private String updateMD5;
 
@@ -20,9 +20,6 @@ public class UpdateModel implements Serializable{
         return updateTips;
     }
 
-    public VersionUpdateTypeEnum getUpdateType() {
-        return updateType;
-    }
 
     public String getUpdateUrl() {
         return updateUrl;
@@ -32,15 +29,29 @@ public class UpdateModel implements Serializable{
         this.updateMD5 = updateMD5;
     }
 
-    public void setUpdateTips(String updateTips) {
-        this.updateTips = updateTips;
+    public
+    UpdateType getUpdateType ( ) {
+        return updateType;
     }
 
-    public void setUpdateType(VersionUpdateTypeEnum updateType) {
+    public
+    void setUpdateType ( UpdateType updateType ) {
         this.updateType = updateType;
     }
 
+    public void setUpdateTips(String updateTips) {
+
+        this.updateTips = updateTips;
+    }
+
+
     public void setUpdateUrl(String updateUrl) {
         this.updateUrl = updateUrl;
+    }
+
+    class UpdateType
+    {
+        String name;
+        int value;
     }
 }

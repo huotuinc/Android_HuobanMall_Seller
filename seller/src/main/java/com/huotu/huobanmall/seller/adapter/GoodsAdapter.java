@@ -12,12 +12,13 @@ import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 
 import java.util.List;
-import java.util.PriorityQueue;
+
 
 /**
  * Created by Administrator on 2015/9/2.
  */
 public class GoodsAdapter extends BaseAdapter{
+
     private List<GoodsModel> _list;
     private Context _context;
 
@@ -25,6 +26,8 @@ public class GoodsAdapter extends BaseAdapter{
         _list=list;
         _context=context;
     }
+
+
 
     @Override
     public int getCount() {
@@ -43,7 +46,7 @@ public class GoodsAdapter extends BaseAdapter{
         {
             holder = new ViewHolder();
             convertView = View.inflate(_context,
-                    R.layout.layout_goodsitem, null);
+                    R.layout.layout_goodsedit_item, null);
             holder.goods_imageView = (ImageView) convertView
                     .findViewById(R.id.goods_imageView);
             holder.goods_name = (TextView) convertView

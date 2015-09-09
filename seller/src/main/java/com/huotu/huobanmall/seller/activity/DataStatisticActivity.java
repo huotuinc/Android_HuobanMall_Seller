@@ -11,7 +11,7 @@ import android.widget.RadioGroup;
 
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.DataStatisticFragmentAdapter;
-import com.huotu.huobanmall.seller.common.Constants;
+
 import com.huotu.huobanmall.seller.fragment.BaseFragment;
 import com.huotu.huobanmall.seller.fragment.MembersFragment;
 import com.huotu.huobanmall.seller.fragment.OrderFragment;

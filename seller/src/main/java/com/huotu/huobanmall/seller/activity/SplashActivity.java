@@ -1,79 +1,128 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.baidu.location.LocationClientOption;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.HTInitBean;
 import com.huotu.huobanmall.seller.bean.MJInitData;
-import com.huotu.huobanmall.seller.common.Constants;
+import com.huotu.huobanmall.seller.bean.MerchantModel;
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.JSONUtil;
+import com.huotu.huobanmall.seller.utils.KJLoger;
+import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
+import com.huotu.huobanmall.seller.utils.StringUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class SplashActivity extends BaseFragmentActivity {
-    @Bind(R.id.splash_login)
-    Button splashlogin;
-    @Bind(R.id.splash_update)
-    Button splashUpdate;
+
+    @Bind(R.id.loadL)
+    RelativeLayout loadLayout;
+    public SellerApplication application;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+    protected
+    void onCreate ( Bundle savedInstanceState ) {
+        super.onCreate ( savedInstanceState );
+        application = ( SellerApplication ) SplashActivity.this.getApplication ();
+        setContentView ( R.layout.activity_splash );
 
-        initView();
-
-        initLocation();
-
-        callInit();
-    }
-
-    protected void initView(){
         ButterKnife.bind(this);
-
-        splashlogin.setOnClickListener(this);
-        splashUpdate.setOnClickListener(this);
-
-
+        initView();
+        handlerView ( );
     }
 
-    protected void callInit() {
-        String url = Constants.INIT_INTERFACE;
-        HttpParaUtils httpParaUtils = new HttpParaUtils();
-        url = httpParaUtils.getHttpGetUrl(url, null);
-        GsonRequest<MJInitData> initRequest = new GsonRequest<>(
-                Request.Method.GET
-                , url
-                , MJInitData.class
-                , null
-                , initListener
-                , errorListener);
+    protected
+    void initView ( ) {
+        //loadLayout = (RelativeLayout) this.findViewById(R.id.loadL);
+    }
+
+    private void handlerView()
+    {
+        AlphaAnimation anima = new AlphaAnimation(0.0f, 1.0f);
+        anima.setDuration(Constant.ANIMATION_COUNT);// 设置动画显示时间
+        loadLayout.setAnimation(anima);
+        anima.setAnimationListener(
+                new Animation.AnimationListener() {
+
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                        //百度定位
+                        initLocation();
+
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                        //调用初始化接口
+                        callInit();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+
+                    }
+                }
+        );
+    }
+
+    protected
+    void callInit ( ) {
+        String url = Constant.INIT_INTERFACE;
+        Map<String, String> map = new HashMap<>();
+        HttpParaUtils utils = new HttpParaUtils();
+        url = utils.getHttpGetUrl(url, null);
+
+
+
+        GsonRequest<HTInitBean> initRequest = new GsonRequest<HTInitBean>(Request.Method.GET,
+                url,
+                HTInitBean.class,
+                null,
+                htInitBeanListener,
+                errorListener
+        );
+
+        initRequest.setRetryPolicy( new DefaultRetryPolicy(20*1000,1,1.0f));
 
         VolleyRequestManager.getRequestQueue().add(initRequest);
     }
 
     @Override
-    public void onClick(View v) {
-        if( v.getId() == R.id.splash_login){
-            ActivityUtils.getInstance().showActivity(this, LoginActivity.class);
-            this.finish();
-        }else if(v.getId()==R.id.splash_update){
-            Intent intent=new Intent(this, WebViewActivity.class);
-            intent.putExtra(Constants.Extra_Url,"http://www.baidu.com");
-            ActivityUtils.getInstance().showActivity(this, intent );
-        }
+    public
+    void onClick ( View v ) {
     }
 
     @Override
@@ -102,22 +151,43 @@ public class SplashActivity extends BaseFragmentActivity {
         SellerApplication.getInstance().getBaiduLocationClient().start();
     }
 
-    Response.Listener<MJInitData> initListener =new Response.Listener<MJInitData>() {
+    Response.Listener<HTInitBean> htInitBeanListener = new Response.Listener<HTInitBean>() {
         @Override
-        public void onResponse(MJInitData data ) {
-
-
-
+        public void onResponse(HTInitBean htInitBean) {
+            //更新Token信息
+            MerchantModel user = htInitBean.getResultData ().getUser ();
+            if(null != user)
+            {
+                String token = user.getToken ();
+                //记录商户信息
+                application.writeMerchantInfo ( user );
+                if( !StringUtils.isEmpty ( token ))
+                {
+                    //直接登录
+                    ActivityUtils.getInstance().skipActivity ( SplashActivity.this, MainActivity.class);
+                }
+                else
+                {
+                    //跳转到登录界面
+                    ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class );
+                }
+            }
+            else
+            {
+                //跳转到登录界面
+                ActivityUtils.getInstance().skipActivity(SplashActivity.this, LoginActivity.class);
+            }
         }
     };
 
     Response.ErrorListener errorListener = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
+            //提示初始化失败,服务器问题
             SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager())
                     .setTitle("错误信息")
-                    .setMessage( volleyError.getMessage())
-                    .setPositiveButtonText("关闭")
+                    .setTitle(volleyError.getMessage())
+                    .setNegativeButtonText("关闭")
                     .show();
         }
     };

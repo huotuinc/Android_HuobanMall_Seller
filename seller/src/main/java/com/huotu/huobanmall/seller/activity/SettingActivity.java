@@ -9,8 +9,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.common.Constant;
+import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.BitmapLoader;
+import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,6 +26,8 @@ import butterknife.ButterKnife;
 public class SettingActivity extends BaseFragmentActivity
         implements View.OnClickListener {
 
+    public
+    SellerApplication application;
     @Bind(R.id.title)
     public TextView titleName;
 
@@ -62,12 +69,23 @@ public class SettingActivity extends BaseFragmentActivity
 
     @Bind(R.id.quit)
     public Button quitbtn;
+    @Bind(R.id.shopName)
+    TextView shopName;
+    @Bind(R.id.Shopdescription)
+    TextView ShopDescription;
+    @Bind(R.id.logo)
+    NetworkImageView logo;
+    @Bind(R.id.txtId)
+    TextView tvUserId;
+    @Bind(R.id.txtName)
+    TextView tvNickName;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_setting);
-
+        setContentView ( R.layout.activity_setting );
+        application = ( SellerApplication ) SettingActivity.this.getApplication ();
         ButterKnife.bind(this);
 
         initView();
@@ -78,6 +96,18 @@ public class SettingActivity extends BaseFragmentActivity
         titleName.setText("用户设置");
         backText.setOnClickListener(this);
         backImage.setOnClickListener(this);
+        quitbtn.setOnClickListener(this);
+
+        String shopNameStr = PreferenceHelper.readString( application , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_SHOPNAME );
+        shopName.setText( shopNameStr);
+        String shopDescription = PreferenceHelper.readString(application , Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_DISCRIPTION);
+        ShopDescription.setText(shopDescription);
+        String logoUrl = PreferenceHelper.readString(application, Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_LOGO);
+        BitmapLoader.create().displayUrl(SettingActivity.this, logo, logoUrl);
+        String userId = PreferenceHelper.readString(application, Constant.LOGIN_USER_INFO,Constant.LOGIN_AUTH_MOBILE);
+        tvUserId.setText( userId );
+        String nickname=PreferenceHelper.readString(application,Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_NICKNAME);
+        tvNickName.setText(nickname);
     }
 
     protected void onDestroy() {
@@ -85,10 +115,10 @@ public class SettingActivity extends BaseFragmentActivity
         ButterKnife.unbind(this);
     }
 
-
-//    public boolean handleMessage(Message msg) {
-//        return false;
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     public void onClick(View v) {
@@ -99,7 +129,7 @@ public class SettingActivity extends BaseFragmentActivity
             }
             break;
             case R.id.backtext: {
-                finish();
+                finish ( );
             }
             break;
             case R.id.backImage: {
@@ -107,7 +137,7 @@ public class SettingActivity extends BaseFragmentActivity
             }
             break;
             case R.id.changePswLabel: {
-                ActivityUtils.getInstance().showActivity(SettingActivity.this, ForgetActivity.class);
+                ActivityUtils.getInstance().showActivity ( SettingActivity.this, ForgetActivity.class );
 
             }
             break;
@@ -124,6 +154,15 @@ public class SettingActivity extends BaseFragmentActivity
             case R.id.FeedbackLabel: {
                 // ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
 
+            }
+            break;
+            case R.id.quit: {
+                // ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
+
+                //清空token等用户信息
+                application.cleanMerchantInfo ();
+                //跳转到
+                ActivityUtils.getInstance ().skipActivity ( SettingActivity.this, LoginActivity.class );
             }
             break;
         }

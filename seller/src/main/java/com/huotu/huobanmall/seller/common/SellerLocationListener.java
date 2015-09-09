@@ -4,11 +4,8 @@ import android.util.Log;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
-import com.baidu.location.Poi;
 import com.huotu.huobanmall.seller.bean.BaiduLocationInfo;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2015/8/25.
@@ -110,17 +107,11 @@ public class SellerLocationListener implements BDLocationListener {
 
         if( null != locationBean ){
             PreferenceHelper.writeString( SellerApplication.getInstance() ,
-                    Constants.LOCATION_INFO, Constants.PRE_LOCATION_CITY_CODE , locationBean.getCityCode());
+                    Constant.LOCATION_INFO, Constant.PRE_LOCATION_CITY_CODE , locationBean.getCityCode());
             PreferenceHelper.writeString(SellerApplication.getInstance(),
-                    Constants.LOCATION_INFO,"city", locationBean.getCity());
+                    Constant.LOCATION_INFO,"city", locationBean.getCity());
             PreferenceHelper.writeString(SellerApplication.getInstance(),
-                    Constants.LOCATION_INFO, "address", locationBean.getAddress());
-            PreferenceHelper.writeString(SellerApplication.getInstance(),
-                    Constants.LOCATION_INFO, Constants.PRE_LOCATION_LATITUDE ,
-                    String.valueOf(locationBean.getLatitude()));
-            PreferenceHelper.writeString(SellerApplication.getInstance(),
-                    Constants.LOCATION_INFO, Constants.PRE_LOCATION_LONGITUDE ,
-                    String.valueOf(locationBean.getLongitude()));
+                    Constant.LOCATION_INFO, "address", locationBean.getAddress());
         }
     }
 
