@@ -54,7 +54,7 @@ public class ObtainParamsMap
         Map<String, String> paramsMap = new HashMap<String, String>();
         paramsMap.put("appKey", Constant.APPKEY);
         if (null != PreferenceHelper.readString(context, Constant.LOCATION_INFO,
-                "cityCode"))
+                                                Constant.PRE_LOCATION_CITY_CODE))
         {
             paramsMap.put("cityCode", PreferenceHelper.readString(context,
                     Constant.LOCATION_INFO, "cityCode"));
@@ -67,12 +67,12 @@ public class ObtainParamsMap
         paramsMap.put("version",
                 MyApplication.getAppVersion(context.getApplicationContext()));
         if (null != PreferenceHelper.readString(
-                context.getApplicationContext(), Constant.LOGIN_AUTH_INFO,
-                Constant.LOGIN_AUTH_TOKEN))
+                context.getApplicationContext(), Constant.LOGIN_USER_INFO,
+                Constant.PRE_USER_TOKEN))
         {
             paramsMap.put("token", PreferenceHelper.readString(
-                    context.getApplicationContext(), Constant.LOGIN_AUTH_INFO,
-                    Constant.LOGIN_AUTH_TOKEN));
+                    context.getApplicationContext(), Constant.LOGIN_USER_INFO,
+                    Constant.PRE_USER_TOKEN));
         } else
         {
             paramsMap.put("token", "");
@@ -117,14 +117,15 @@ public class ObtainParamsMap
             buffer.append("&version=");
             buffer.append(URLEncoder.encode(MyApplication.getAppVersion(context
                     .getApplicationContext()), "UTF-8"));
-            if (null != PreferenceHelper.readString(
-                    context.getApplicationContext(), Constant.LOGIN_AUTH_INFO,
-                    Constant.LOGIN_AUTH_TOKEN))
+            if (null != PreferenceHelper.readString (
+                    context.getApplicationContext ( ), Constant.LOGIN_USER_INFO,
+                    Constant.PRE_USER_TOKEN
+                                                    ))
             {
                 buffer.append("&token=");
                 buffer.append(URLEncoder.encode(PreferenceHelper.readString(
-                        context.getApplicationContext(), Constant.LOGIN_AUTH_INFO,
-                        Constant.LOGIN_AUTH_TOKEN), "UTF-8"));
+                        context.getApplicationContext(), Constant.LOGIN_USER_INFO,
+                        Constant.PRE_USER_TOKEN), "UTF-8"));
             } else
             {
                 buffer.append("&token=");

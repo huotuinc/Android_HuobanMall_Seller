@@ -1,5 +1,6 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -86,7 +87,95 @@ public class SplashActivity extends BaseFragmentActivity {
 
                     }
                 }
+<<<<<<< HEAD
         );
+=======
+                                   );
+    }
+
+    protected
+    void callInit ( ) {
+        String        url           = Constant.INIT_INTERFACE;
+        ObtainParamsMap obtainMap = new ObtainParamsMap(
+                SplashActivity.this);
+        String paramMap = obtainMap.getMap();
+        String signStr = obtainMap.getSign(null);
+        try
+        {
+            url += "?sign=" + URLEncoder.encode ( signStr, "UTF-8" );
+        } catch (UnsupportedEncodingException e)
+        {
+            // TODO Auto-generated catch block
+            KJLoger.errorLog(e.getMessage());
+        }
+        url += paramMap;
+
+        VolleyRequestManager.getRequestQueue ( ).add ( new JsonObjectRequest (
+                                                               Request.Method.GET
+                                                               , url
+                                                               , null
+                                                               , new Response.Listener< JSONObject > ( ) {
+                                                           @Override
+                                                           public
+                                                           void onResponse ( JSONObject jsonObject ) {
+
+                                                               //解析json callback
+                                                               KJLoger.i ( "init json str." + jsonObject.toString () );
+                                                               HTInitBean init = new HTInitBean ();
+                                                               JSONUtil<HTInitBean> jsonUtil = new JSONUtil< HTInitBean > ();
+                                                               init = jsonUtil.toBean ( jsonObject.toString (), init );
+                                                               //更新Token信息
+                                                               MerchantModel user = init.getResultData ( ).getUser ( );
+                                                               if(null != user)
+                                                               {
+                                                                   String token = user.getToken ();
+                                                                   //记录商户信息
+                                                                   application.writeMerchantInfo ( user );
+                                                                   if( !StringUtils.isEmpty ( token ))
+                                                                   {
+                                                                       //直接登录
+                                                                       ActivityUtils.getInstance().skipActivity ( SplashActivity.this, MainActivity.class);
+
+                                                                   }
+                                                                   else
+                                                                   {
+                                                                       //跳转到登录界面
+                                                                       ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class );
+                                                                   }
+                                                               }
+                                                               else
+                                                               {
+                                                                   //跳转到登录界面
+                                                                   ActivityUtils.getInstance().skipActivity(SplashActivity.this, LoginActivity.class);
+                                                               }
+                                                           }
+                                                       }
+                                                               , new Response.ErrorListener ( ) {
+                                                           @Override
+                                                           public
+                                                           void onErrorResponse ( VolleyError volleyError ) {
+                                                               //提示初始化失败
+                                                               //服务器问题
+                                                               final AlertDialog failureDialog = new AlertDialog.Builder(SplashActivity.this).create ();
+                                                               failureDialog.show ();
+                                                               failureDialog.getWindow ().setContentView ( R.layout.failure_dialog );
+                                                               failureDialog.getWindow ().findViewById ( R.id.button_back_mydialog ).setOnClickListener (
+                                                                       new View.OnClickListener ( ) {
+
+                                                                           @Override
+                                                                           public
+                                                                           void onClick ( View v ) {
+                                                                               failureDialog.dismiss ();
+                                                                               //关闭当前页
+                                                                               SplashActivity.this.finish ();
+
+                                                                           }
+                                                                       }
+                                                                                                                                                        );
+                                                           }
+                                                       }
+                                                       ) );
+>>>>>>> 886e6060843efdcb6d753905cfa0a912791e7750
     }
 
     protected void callInit() {
