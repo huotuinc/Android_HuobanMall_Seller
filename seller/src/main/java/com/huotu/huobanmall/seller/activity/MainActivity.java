@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.huotu.huobanmall.seller.Interface.IIndexFragmentInteractionListener;
 import com.huotu.huobanmall.seller.adapter.TodayDataFragmentAdapter;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.fragment.BaseFragment;
@@ -22,10 +23,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseFragmentActivity {
+public class MainActivity extends BaseFragmentActivity implements IIndexFragmentInteractionListener{
 
-    //@Bind(R.id.main_gridView)
-    //GridView main_gridView;
     @Bind(R.id.main_todyMoney)
     TextView main_TodayMoney;
     @Bind(R.id.main_menu_cpgl)
@@ -36,9 +35,6 @@ public class MainActivity extends BaseFragmentActivity {
     Button main_menu_gdtj;
     @Bind(R.id.main_menu_szgl)
     Button main_menu_szgl;
-
-    //MenuAdapter mAdapter;
-    //List<MenuModel> mMenus;
 
     TodayDistributorsFragment _todayDistributorsFragments;
     TodayMemberFragment _todayMemberFragments;
@@ -140,5 +136,10 @@ public class MainActivity extends BaseFragmentActivity {
         _viewPager.setAdapter(_fragmentAdapter);
         _indicator.setViewPager(_viewPager);
 
+    }
+
+    @Override
+    public void switchFragment(int position) {
+        _indicator.setCurrentItem(position);
     }
 }

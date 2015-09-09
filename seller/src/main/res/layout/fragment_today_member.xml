@@ -13,6 +13,7 @@
         android:paddingTop="@dimen/space_1">
 
         <LinearLayout
+            android:id="@+id/ll_todayOrder_order"
             android:layout_width="0px"
             android:layout_weight="1"
             android:orientation="vertical"
@@ -32,6 +33,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_todayOrder_member"
             android:layout_width="0px"
             android:layout_weight="1"
             android:orientation="vertical"
@@ -48,9 +50,14 @@
                 android:gravity="center"
                 android:textSize="@dimen/text_size_18"
                 android:text="会员"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_5"
+                android:background="#FF3D00"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_todayOrder_fxs"
             android:layout_width="0px"
             android:layout_weight="1"
             android:orientation="vertical"

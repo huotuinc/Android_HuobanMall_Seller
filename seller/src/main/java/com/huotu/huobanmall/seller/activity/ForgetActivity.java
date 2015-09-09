@@ -17,29 +17,23 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
+import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.huotu.huobanmall.seller.bean.HTForget;
 import com.huotu.huobanmall.seller.bean.HTMerchantModel;
+import com.huotu.huobanmall.seller.bean.MJInitData;
+import com.huotu.huobanmall.seller.bean.MJSendSMSModel;
 import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.common.SellerApplication;
-import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.EncryptUtil;
+import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
-import com.huotu.huobanmall.seller.utils.JSONUtil;
-import com.huotu.huobanmall.seller.utils.KJLoger;
-import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
-import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import com.huotu.huobanmall.seller.widget.CountDownTimerButton;
 import java.util.HashMap;
 import java.util.Map;
-
-
 
 /**
  * @类名称：ForgetActivity
@@ -50,8 +44,8 @@ import java.util.Map;
  * @修改备注：
  * @version:
  */
-
-public class ForgetActivity extends BaseFragmentActivity implements OnClickListener {
+public class ForgetActivity extends BaseFragmentActivity implements OnClickListener ,ISimpleDialogListener {
+    private int REQUEST_CODE= 3001;
 
     private TextView titleName;
 
@@ -69,10 +63,11 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     //返回文字事件
     private TextView backText;
 
-    public
-    SellerApplication application;
+    public SellerApplication application;
 
     public ProgressDialogFragment progressDialog;
+
+    private CountDownTimerButton countDownTimerButton;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +77,13 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
         initView ( );
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimerButton != null) {
+            countDownTimerButton.Stop();
+        }
+    }
 
     private void initView() {
         titleName = (TextView) this.findViewById(R.id.title);
@@ -107,7 +109,6 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
         switch (v.getId()) {
             case R.id.backtext: {
                 finish();
-
             }
             break;
             case R.id.btnComplete: {
@@ -123,6 +124,10 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
                 if(hasPhone ( ))
                 {
                     sendSMS();
+
+                    countDownTimerButton=new CountDownTimerButton( btnGet , "%d秒重新发送", "获取验证码", 60000,null);
+                    countDownTimerButton.start();
+
                 } else
                 {
                     edtPhone.setError ( "请输入手机号" );
@@ -180,116 +185,112 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
 
     private void sendSMS()
     {
-        ObtainParamsMap obtainMap = new ObtainParamsMap(ForgetActivity.this);
         String url = Constant.GET_VD_INTERFACE;
-        try
-        {
-            url = Constant.GET_VD_INTERFACE + "?phone="
-                         + URLEncoder.encode(edtPhone.getText().toString(), "UTF-8")
-                         + "&type="
-                         + URLEncoder.encode(Constant.GET_VD_TYPE_FORGET, "UTF-8")
-                         + "&codeType=" + btnGet.getTag();
-            url += obtainMap.getMap();
-            //封装sign
-            Map<String, String> signMap = new HashMap<String, String>();
-            signMap.put("phone", edtPhone.getText().toString());
-            signMap.put("type", Constant.GET_VD_TYPE_FORGET);
-            signMap.put("codeType", (String) btnGet.getTag());
-            String signStr = obtainMap.getSign(signMap);
-            url += "&sign=" + signStr;
-        } catch (UnsupportedEncodingException e)
-        {
-            // TODO Auto-generated catch block
-            KJLoger.errorLog(e.getMessage());
-        }
+        HttpParaUtils httpParaUtils = new HttpParaUtils();
+        Map<String , String> map = new HashMap<>();
+        map.put("phone", edtPhone.getText().toString());
+        map.put("type", Constant.GET_VD_TYPE_FORGET);
+        map.put("codeType", btnGet.getTag().toString());
+        url = httpParaUtils.getHttpGetUrl( url , map );
 
-        VolleyRequestManager.getRequestQueue().add(new JsonObjectRequest(Request.Method.GET, url, null,
-                                                                         new Response.Listener<JSONObject>() {
-                                                                             @Override
-                                                                             public void onResponse(JSONObject response) {
-                                                                                 HTForget forget = new HTForget();
-                                                                                 JSONUtil<HTForget> jsonStr = new JSONUtil<HTForget>();
-                                                                                 forget = jsonStr.toBean(response.toString(), forget);
+        GsonRequest<MJSendSMSModel> sendSMSRequest = new GsonRequest<MJSendSMSModel>(Request.Method.GET,
+                url ,
+                MJSendSMSModel.class,
+                null,
+                sendSMSListener,
+                errorListener
+                );
 
-                                                                             }
-                                                                         }, new Response.ErrorListener() {
-                                                       @Override
-                                                       public void onErrorResponse(VolleyError error) {
-                                                           if(progressDialog!=null){
-                                                               progressDialog.dismiss();
-                                                           }
-                                                           SimpleDialogFragment.createBuilder( ForgetActivity.this , ForgetActivity.this.getSupportFragmentManager())
-                                                                               .setTitle("错误信息")
-                                                                               .setMessage( error.getMessage())
-                                                                               .setNegativeButtonText("关闭")
-                                                                               .show ( );
-                                                       }
-                                                   }));
+        VolleyRequestManager.getRequestQueue().add( sendSMSRequest );
     }
 
     private void forgetPassword() {
-
-        ObtainParamsMap obtainMap = new ObtainParamsMap(ForgetActivity.this);
         String url = Constant.FORGET_INTERFACE;
+        Map<String, String> paras = new HashMap<>();
+        paras.put("phone", edtPhone.getText().toString());
+        paras.put("password", EncryptUtil.getInstance().encryptMd532(edtPwd.getText().toString()));
+        paras.put("authcode",edtCode.getText().toString());
+        HttpParaUtils utils = new HttpParaUtils();
+        url = utils.getHttpGetUrl(url, paras);
 
-        try
-        {
-            url = url
-                  + "?phone="
-                  + URLEncoder.encode(edtPhone.getText().toString(),
-                                      "UTF-8")
-                  + "&password="
-                  + URLEncoder.encode(EncryptUtil.getInstance()
-                                                 .encryptMd532(edtPwd.getText().toString()),
-                                      "UTF-8") + "&authcode=" + URLEncoder.encode(edtCode.getText().toString(),
-                                                                                  "UTF-8");
-            String paramMap = obtainMap.getMap();
-            // 忘记密码是get方式提交
-            //封装sign
-            Map<String, String> signMap = new HashMap<String, String>();
-            signMap.put("phone", edtPhone.getText().toString());
-            signMap.put("password", EncryptUtil.getInstance().encryptMd532(edtPwd.getText().toString()));
-            signMap.put("authcode", edtCode.getText().toString());
-            String signStr = obtainMap.getSign(signMap);
-            url += paramMap;
-            url += "&sign=" + URLEncoder.encode(signStr, "UTF-8");
-
-        } catch (UnsupportedEncodingException e)
-        {
-            // TODO Auto-generated catch block
-            KJLoger.errorLog(e.getMessage());
+        if( progressDialog !=null ) {
+            progressDialog.dismiss();
+            progressDialog=null;
         }
+        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager())
+                    .setMessage("正在登录，请稍等...")
+                    .setCancelable(false)
+                    .setCancelableOnTouchOutside(false);
+        progressDialog = (ProgressDialogFragment) builder.show();
 
-        VolleyRequestManager.getRequestQueue().add(new JsonObjectRequest(Request.Method.GET, url, null,
-                                                                         new Response.Listener<JSONObject>() {
-                                                                             @Override
-                                                                             public void onResponse(JSONObject response) {
-                                                                                 HTForget forget = new HTForget();
-                                                                                 JSONUtil<HTForget> jsonStr = new JSONUtil<HTForget>();
-                                                                                 forget = jsonStr.toBean(response.toString(), forget);
+        GsonRequest<HTForget> forgetGsonRequest =new GsonRequest<HTForget>(
+                Request.Method.GET,
+                url ,
+                HTForget.class,
+                null,
+                forgetPasswordListener,
+                errorListener
+        );
 
-                                                                             }
-                                                                         }, new Response.ErrorListener() {
-                                                       @Override
-                                                       public void onErrorResponse(VolleyError error) {
-                                                           if(progressDialog!=null){
-                                                               progressDialog.dismiss();
-                                                           }
-                                                           SimpleDialogFragment.createBuilder( ForgetActivity.this , ForgetActivity.this.getSupportFragmentManager())
-                                                                               .setTitle("错误信息")
-                                                                               .setMessage( error.getMessage())
-                                                                               .setNegativeButtonText("关闭")
-                                                                               .show ( );
-                                                       }
-                                                   }));
-
+        VolleyRequestManager.getRequestQueue().add(forgetGsonRequest);
     }
 
-    Response.Listener forgetPasswordListener = new Response.Listener() {
+    Response.Listener<MJSendSMSModel> sendSMSListener = new Response.Listener<MJSendSMSModel>() {
         @Override
-        public void onResponse(Object o) {
+        public void onResponse(MJSendSMSModel sendSMSModel ) {
+           if( sendSMSModel.getSystemResultCode() != 1){
+               SimpleDialogFragment.createBuilder( ForgetActivity.this , ForgetActivity.this.getSupportFragmentManager())
+                       .setTitle("错误信息")
+                       .setMessage(sendSMSModel.getSystemResultDescription() )
+                       .setNegativeButtonText("关闭")
+                       .show();
+               return;
+           }
+            if( sendSMSModel.getResultCode() != 1 ){
+                SimpleDialogFragment.createBuilder( ForgetActivity.this , ForgetActivity.this.getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage(sendSMSModel.getResultDescription() )
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }
 
+            Toast.makeText(ForgetActivity.this, ""+ sendSMSModel.getResultData().getVoiceAble() ,Toast.LENGTH_LONG).show();
+        }
+    };
 
+    Response.Listener<HTForget> forgetPasswordListener = new Response.Listener<HTForget>() {
+        @Override
+        public void onResponse(HTForget htForget ) {
+            if(progressDialog!=null){
+                progressDialog.dismiss();
+                progressDialog=null;
+            }
+
+            if(  htForget.getSystemResultCode() != 1 ) {
+                SimpleDialogFragment.createBuilder(ForgetActivity.this, ForgetActivity.this.getSupportFragmentManager())
+                        .setTitle("系统错误")
+                        .setMessage(htForget.getSystemResultDescription())
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }
+            if( htForget.getResultCode() !=1 ){
+                SimpleDialogFragment.createBuilder(ForgetActivity.this, ForgetActivity.this.getSupportFragmentManager())
+                        .setTitle("系统错误")
+                        .setMessage(htForget.getResultDescription())
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }
+
+            SimpleDialogFragment.createBuilder(ForgetActivity.this, ForgetActivity.this.getSupportFragmentManager())
+                    .setTitle("找回密码")
+                    .setMessage("找回密码成功")
+                    .setNegativeButtonText("关闭")
+                    .setRequestCode( REQUEST_CODE)
+                    .show();
+            return;
         }
     };
 
@@ -306,6 +307,23 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
                     .show();
         }
     };
+
+    @Override
+    public void onNegativeButtonClicked(int i) {
+        if( i== REQUEST_CODE){
+            this.finish();
+        }
+    }
+
+    @Override
+    public void onNeutralButtonClicked(int i) {
+
+    }
+
+    @Override
+    public void onPositiveButtonClicked(int i) {
+
+    }
 }
 
 

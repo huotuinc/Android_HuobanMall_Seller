@@ -46,7 +46,7 @@ public class Constant {
     public final static String  PRE_LOCATION_CITY_CODE = "cityCode";
     // url请求前缀
     public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
-    //public final static String BASE_ROOT_URL ="http://192.168.1.48:8080/huobanmall/";
+    //public final static String BASE_ROOT_URL ="http://192.168.1.57:8080/huobanmall/";
     public static final String BASE_URL = BASE_ROOT_URL + "app/";// 基础URL
 
     public static final String GET_VD_INTERFACE = BASE_URL + "sendSMS";// 获取验证码
@@ -58,6 +58,11 @@ public class Constant {
     public static final String FORGET_INTERFACE=BASE_URL+"forgetPassword";//忘记密码接口
 
     public static final String INIT_INTERFACE= BASE_URL+"init";//初始化接口
+
+    public static final String INDEX_INTERFACE=BASE_URL+"index";//app首页接口
+
+    public static final String UPDATEPROFILE_INTERFACE = BASE_URL + "updateProfile"; //更新商家信息
+
     /**
      * token添加的类型
      */
@@ -92,6 +97,8 @@ public class Constant {
     public final static String LOGIN_AUTH_WELCOME_TIP = "welcomeTip";
     //操作者
     public final static String LOGIN_AUTH_OPERATOR = "operator";
+    //商铺名称
+    public final static String LOGIN_AUTH_SHOPNAME="title";
 
     // 短信获取方式:文本
     public final static String SMS_TYPE_TEXT = "0";
@@ -110,7 +117,7 @@ public class Constant {
     public final static int REQUEST_CODE_CLIENT_DOWNLOAD = 8000;
 
     //loading动画加载时间
-    public final static int ANIMATION_COUNT = 1000;
+    public final static int ANIMATION_COUNT = 3000;
 }
 
 

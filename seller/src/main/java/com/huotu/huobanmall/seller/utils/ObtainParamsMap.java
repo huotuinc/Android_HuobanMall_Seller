@@ -3,7 +3,6 @@ package com.huotu.huobanmall.seller.utils;
 import android.content.Context;
 import android.util.Log;
 
-import com.huotu.huobanmall.seller.MyApplication;
 import com.huotu.huobanmall.seller.common.Constant;
 
 import java.io.UnsupportedEncodingException;
@@ -35,7 +34,7 @@ public class ObtainParamsMap
         // TODO Auto-generated constructor stub
         this.context = context;
         
-        timestamp = String.valueOf(System.currentTimeMillis());
+        timestamp = "1441762623123";// String.valueOf(System.currentTimeMillis());
     }
 
 
@@ -65,7 +64,7 @@ public class ObtainParamsMap
         paramsMap.put("timestamp", timestamp);
         paramsMap.put("operation", Constant.OPERATION_CODE);
         paramsMap.put("version",
-                MyApplication.getAppVersion(context.getApplicationContext()));
+                SystemUtils.getAppVersion(context.getApplicationContext()));
         if (null != PreferenceHelper.readString(
                 context.getApplicationContext(), Constant.LOGIN_USER_INFO,
                 Constant.PRE_USER_TOKEN))
@@ -78,7 +77,7 @@ public class ObtainParamsMap
             paramsMap.put("token", "");
         }
         paramsMap.put("imei",
-                MyApplication.getPhoneIMEI(context.getApplicationContext()));
+                SystemUtils.getPhoneIMEI(context.getApplicationContext()));
         paramsMap.put("cpaCode", Constant.CAP_CODE);
         return paramsMap;
     }
@@ -115,7 +114,7 @@ public class ObtainParamsMap
             buffer.append("&operation=");
             buffer.append(URLEncoder.encode(Constant.OPERATION_CODE, "UTF-8"));
             buffer.append("&version=");
-            buffer.append(URLEncoder.encode(MyApplication.getAppVersion(context
+            buffer.append(URLEncoder.encode(SystemUtils.getAppVersion(context
                     .getApplicationContext()), "UTF-8"));
             if (null != PreferenceHelper.readString (
                     context.getApplicationContext ( ), Constant.LOGIN_USER_INFO,
@@ -134,7 +133,7 @@ public class ObtainParamsMap
 
             buffer.append("&imei=");
             buffer.append(URLEncoder.encode(
-                    MyApplication.getPhoneIMEI(context.getApplicationContext()),
+                    SystemUtils.getPhoneIMEI(context.getApplicationContext()),
                     "UTF-8"));
             buffer.append("&cpaCode=");
             buffer.append(URLEncoder.encode(Constant.CAP_CODE, "UTF-8"));

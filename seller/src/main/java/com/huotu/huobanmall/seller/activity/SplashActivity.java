@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -35,13 +36,16 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class SplashActivity extends BaseFragmentActivity {
 
-    private RelativeLayout loadLayout;
+    @Bind(R.id.loadL)
+    RelativeLayout loadLayout;
     public SellerApplication application;
 
     @Override
@@ -50,13 +54,19 @@ public class SplashActivity extends BaseFragmentActivity {
         application = (SellerApplication) SplashActivity.this.getApplication();
         setContentView(R.layout.activity_splash);
 
+
         initView();
         handlerView();
     }
 
     protected void initView() {
         loadLayout = (RelativeLayout) this.findViewById(R.id.loadL);
+
+        ButterKnife.bind(this);
+
     }
+
+
 
     private void handlerView() {
         AlphaAnimation anima = new AlphaAnimation(0.0f, 1.0f);
@@ -86,163 +96,37 @@ public class SplashActivity extends BaseFragmentActivity {
 
 
                     }
-                }
-<<<<<<< HEAD
-        );
-=======
-                                   );
+                });
     }
+
 
     protected
     void callInit ( ) {
-        String        url           = Constant.INIT_INTERFACE;
-        ObtainParamsMap obtainMap = new ObtainParamsMap(
-                SplashActivity.this);
-        String paramMap = obtainMap.getMap();
-        String signStr = obtainMap.getSign(null);
-        try
-        {
-            url += "?sign=" + URLEncoder.encode ( signStr, "UTF-8" );
-        } catch (UnsupportedEncodingException e)
-        {
-            // TODO Auto-generated catch block
-            KJLoger.errorLog(e.getMessage());
-        }
-        url += paramMap;
 
-        VolleyRequestManager.getRequestQueue ( ).add ( new JsonObjectRequest (
-                                                               Request.Method.GET
-                                                               , url
-                                                               , null
-                                                               , new Response.Listener< JSONObject > ( ) {
-                                                           @Override
-                                                           public
-                                                           void onResponse ( JSONObject jsonObject ) {
 
-                                                               //解析json callback
-                                                               KJLoger.i ( "init json str." + jsonObject.toString () );
-                                                               HTInitBean init = new HTInitBean ();
-                                                               JSONUtil<HTInitBean> jsonUtil = new JSONUtil< HTInitBean > ();
-                                                               init = jsonUtil.toBean ( jsonObject.toString (), init );
-                                                               //更新Token信息
-                                                               MerchantModel user = init.getResultData ( ).getUser ( );
-                                                               if(null != user)
-                                                               {
-                                                                   String token = user.getToken ();
-                                                                   //记录商户信息
-                                                                   application.writeMerchantInfo ( user );
-                                                                   if( !StringUtils.isEmpty ( token ))
-                                                                   {
-                                                                       //直接登录
-                                                                       ActivityUtils.getInstance().skipActivity ( SplashActivity.this, MainActivity.class);
+        String url = Constant.INIT_INTERFACE;
+        Map<String, String> map = new HashMap<>();
+        HttpParaUtils utils = new HttpParaUtils();
+        url = utils.getHttpGetUrl(url, null);
 
-                                                                   }
-                                                                   else
-                                                                   {
-                                                                       //跳转到登录界面
-                                                                       ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class );
-                                                                   }
-                                                               }
-                                                               else
-                                                               {
-                                                                   //跳转到登录界面
-                                                                   ActivityUtils.getInstance().skipActivity(SplashActivity.this, LoginActivity.class);
-                                                               }
-                                                           }
-                                                       }
-                                                               , new Response.ErrorListener ( ) {
-                                                           @Override
-                                                           public
-                                                           void onErrorResponse ( VolleyError volleyError ) {
-                                                               //提示初始化失败
-                                                               //服务器问题
-                                                               final AlertDialog failureDialog = new AlertDialog.Builder(SplashActivity.this).create ();
-                                                               failureDialog.show ();
-                                                               failureDialog.getWindow ().setContentView ( R.layout.failure_dialog );
-                                                               failureDialog.getWindow ().findViewById ( R.id.button_back_mydialog ).setOnClickListener (
-                                                                       new View.OnClickListener ( ) {
 
-                                                                           @Override
-                                                                           public
-                                                                           void onClick ( View v ) {
-                                                                               failureDialog.dismiss ();
-                                                                               //关闭当前页
-                                                                               SplashActivity.this.finish ();
 
-                                                                           }
-                                                                       }
-                                                                                                                                                        );
-                                                           }
-                                                       }
-                                                       ) );
->>>>>>> 886e6060843efdcb6d753905cfa0a912791e7750
+        GsonRequest<HTInitBean> initRequest = new GsonRequest<HTInitBean>(Request.Method.GET,
+                url,
+                HTInitBean.class,
+                null,
+                htInitBeanListener,
+                errorListener
+        );
+
+        initRequest.setRetryPolicy( new DefaultRetryPolicy(20*1000,1,1.0f));
+
+        VolleyRequestManager.getRequestQueue().add(initRequest);
+
     }
 
-    protected void callInit() {
-//        String url = Constant.INIT_INTERFACE;
-//        ObtainParamsMap obtainMap = new ObtainParamsMap(
-//                SplashActivity.this);
-//        String paramMap = obtainMap.getMap();
-//        String signStr = obtainMap.getSign(null);
-//        try {
-//            url += "?sign=" + URLEncoder.encode(signStr, "UTF-8");
-//        } catch (UnsupportedEncodingException e) {
-//            // TODO Auto-generated catch block
-//            KJLoger.errorLog(e.getMessage());
-//        }
-//        url += paramMap;
-//
-//        VolleyRequestManager.getRequestQueue().add(new JsonObjectRequest(
-//                Request.Method.GET
-//                , url
-//                , null
-//                , new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject jsonObject) {
-//
-//                //解析json callback
-//                KJLoger.i("init json str." + jsonObject.toString());
-//                HTInitBean init = new HTInitBean();
-//                JSONUtil<HTInitBean> jsonUtil = new JSONUtil<HTInitBean>();
-//                init = jsonUtil.toBean(jsonObject.toString(), init);
-//                //更新Token信息
-//                MerchantModel user = init.getResultData().getUser();
-//
-//                if (null != user) {
-//                    String token = user.getToken();
-//                    //记录商户信息
-//                    application.writeMerchantInfo(user);
-//                    if (!StringUtils.isEmpty(token)) {
-//                        //直接登录
-                        ActivityUtils.getInstance().showActivity(SplashActivity.this, MainActivity.class);
-                        finish();
-//
-//                    } else {
-                        //跳转到登录界面
-//                        ActivityUtils.getInstance().showActivity(SplashActivity.this, LoginActivity.class);
-//                        finish();
-//                    }
-//                } else {
-//                    //跳转到登录界面
-//                    ActivityUtils.getInstance().showActivity(SplashActivity.this, LoginActivity.class);
-//                    finish();
-//                }
-//            }
-//        }
-//                , new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//
-//            }
-//        }
-//        ));
-   }
 
-//    @Override
-//    public void onClick(View v) {
-//    }
-//
-//    @Override
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
@@ -268,4 +152,44 @@ public class SplashActivity extends BaseFragmentActivity {
         SellerApplication.getInstance().getBaiduLocationClient().start();
     }
 
+    Response.Listener<HTInitBean> htInitBeanListener = new Response.Listener<HTInitBean>() {
+        @Override
+        public void onResponse(HTInitBean htInitBean) {
+            //更新Token信息
+            MerchantModel user = htInitBean.getResultData ().getUser ();
+            if(null != user)
+            {
+                String token = user.getToken ();
+                //记录商户信息
+                application.writeMerchantInfo ( user );
+                if( !StringUtils.isEmpty ( token ))
+                {
+                    //直接登录
+                    ActivityUtils.getInstance().skipActivity ( SplashActivity.this, MainActivity.class);
+                }
+                else
+                {
+                    //跳转到登录界面
+                    ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class );
+                }
+            }
+            else
+            {
+                //跳转到登录界面
+                ActivityUtils.getInstance().skipActivity(SplashActivity.this, LoginActivity.class);
+            }
+        }
+    };
+
+    Response.ErrorListener errorListener = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            //提示初始化失败,服务器问题
+            SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager())
+                    .setTitle("错误信息")
+                    .setTitle(volleyError.getMessage())
+                    .setNegativeButtonText("关闭")
+                    .show();
+        }
+    };
 }

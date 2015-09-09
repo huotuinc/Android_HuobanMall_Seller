@@ -26,7 +26,7 @@ public class HttpParaUtils {
     private String PARA_NAME2="cityCode";
     private String PARA_NAME3 ="cpaCode";
     private String PARA_NAME4="imei";
-    private String PARA_NAME5="ip";
+    //private String PARA_NAME5="ip";
     private String PARA_NAME6="operation";
     private String PARA_NAME7="timestamp";
     private String PARA_NAME8="version";
@@ -39,7 +39,7 @@ public class HttpParaUtils {
 
 
     public HttpParaUtils(){
-        timestamp = String.valueOf(System.currentTimeMillis());
+        timestamp ="1441762623123"; //String.valueOf(System.currentTimeMillis());
     }
 
     protected String getCommonPara(Uri.Builder builder ){
@@ -48,7 +48,7 @@ public class HttpParaUtils {
         builder.appendQueryParameter(PARA_NAME2, cityCode);
         builder.appendQueryParameter(PARA_NAME3, Constant.CAP_CODE);
         builder.appendQueryParameter(PARA_NAME4, SystemUtils.getPhoneIMEI(SellerApplication.getInstance()));
-        builder.appendQueryParameter(PARA_NAME5, "127.0.0.1");
+        //builder.appendQueryParameter(PARA_NAME5, "127.0.0.1");
         builder.appendQueryParameter(PARA_NAME6, Constant.OPERATION_CODE);
         builder.appendQueryParameter(PARA_NAME8, SystemUtils.getAppVersion(SellerApplication.getInstance()));
         String token = PreferenceHelper.readString( SellerApplication.getInstance() , Constant.LOGIN_USER_INFO , Constant.PRE_USER_TOKEN , "");
@@ -62,13 +62,13 @@ public class HttpParaUtils {
         String cityCode = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOCATION_INFO, Constant.PRE_LOCATION_CITY_CODE,"");
         paras.put(PARA_NAME2, cityCode);
         paras.put(PARA_NAME3, Constant.CAP_CODE);
-        paras.put ( PARA_NAME4, SystemUtils.getPhoneIMEI ( SellerApplication.getInstance ( ) ) );
+        paras.put(PARA_NAME4, SystemUtils.getPhoneIMEI ( SellerApplication.getInstance ( ) ) );
         paras.put(PARA_NAME7, timestamp);
         paras.put(PARA_NAME6, Constant.OPERATION_CODE);
         paras.put(PARA_NAME8, SystemUtils.getAppVersion(SellerApplication.getInstance()));
         String token = PreferenceHelper.readString( SellerApplication.getInstance() , Constant.LOGIN_USER_INFO , Constant.PRE_USER_TOKEN , "");
         paras.put(PARA_NAME9, token);
-        paras.put(PARA_NAME5, "127.0.0.1");
+        //paras.put(PARA_NAME5, "127.0.0.1");
 
         if(map!=null){
             paras.putAll(map);
@@ -98,7 +98,7 @@ public class HttpParaUtils {
             String key = (String) entry.getKey();
             // Log.i("key", key);
             // Log.i("value", resultMap.get(key));
-            buffer.append(paras.get(key));
+            buffer.append(signMap.get(key));
         }
         return buffer.toString();
     }

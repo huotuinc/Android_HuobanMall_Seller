@@ -10,6 +10,11 @@ public class MerchantModel extends BaseModel {
      */
     private String authority;
     /**
+     * 店铺名称
+     */
+    private String title;
+
+    /**
      * 店铺描述
      */
     private String discription;
@@ -149,5 +154,13 @@ public class MerchantModel extends BaseModel {
 
     public void setOperator(String operator) {
         this.operator = operator;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

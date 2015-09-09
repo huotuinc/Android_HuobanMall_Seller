@@ -2,6 +2,7 @@ package com.huotu.huobanmall.seller.utils;
 
 import android.content.Context;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 /**
@@ -17,6 +18,8 @@ public class VolleyRequestManager {
 	 */
 	private static RequestQueue mRequestQueue;
 
+	private static ImageLoader imageLoader = null;
+
 	/**
 	 * Nothing to see here.
 	 */
@@ -30,6 +33,7 @@ public class VolleyRequestManager {
 	 */
 	public static void init(Context context) {
 		mRequestQueue = Volley.newRequestQueue(context);
+		imageLoader = new ImageLoader(mRequestQueue, LruImageCache.instance() );
 	}
 
 	/**
@@ -44,5 +48,13 @@ public class VolleyRequestManager {
 	    } else {
 	        throw new IllegalStateException("Not initialized");
 	    }
+	}
+
+	public static ImageLoader getImageLoader(Context context) {
+		if (null == imageLoader)
+		{
+			init(context);
+		}
+		return imageLoader;
 	}
 }

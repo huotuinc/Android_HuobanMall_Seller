@@ -65,7 +65,6 @@ public class GoodsActivity extends BaseFragmentActivity {
         _goodsFragmentAdapter = new GoodsFragmentAdapter(_fragments,_fragmentManager);
         _goodsViewPager.setAdapter(_goodsFragmentAdapter);
         _goodIndicator.setViewPager(_goodsViewPager);
-
     }
 
     @Override
