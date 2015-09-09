@@ -25,7 +25,7 @@ public class Constant {
 
     public static final boolean IS_PRODUCTION_ENVIRONMENT = true;// 切换测试环境和生产环境阀值
     // 获取验证码类型
-    public static final String GET_VD_TYPE_REG = "1";//
+    public static final String GET_VD_TYPE_REG = "2";//
 
     public static final String GET_VD_TYPE_FORGET = "1";//
 
