@@ -155,6 +155,39 @@ public class SplashActivity extends BaseFragmentActivity {
     Response.Listener<HTInitBean> htInitBeanListener = new Response.Listener<HTInitBean>() {
         @Override
         public void onResponse(HTInitBean htInitBean) {
+            if( htInitBean == null){
+                SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage("请求失败")
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }
+            if( htInitBean.getSystemResultCode() != 1 ){
+                SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage(htInitBean.getSystemResultDescription())
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }
+            if( htInitBean.getResultCode() == Constant.TOKEN_OVERDUE ||
+                    htInitBean.getResultCode() == Constant.ERROR_USER_PASSWORD ){
+                //调转到登录界面
+                ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class);
+                return;
+            }
+
+
+            if( htInitBean.getResultCode() != 1){
+                SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage(htInitBean.getResultDescription())
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }
+
             //更新Token信息
             MerchantModel user = htInitBean.getResultData ().getUser ();
             if(null != user)
@@ -187,7 +220,7 @@ public class SplashActivity extends BaseFragmentActivity {
             //提示初始化失败,服务器问题
             SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager())
                     .setTitle("错误信息")
-                    .setTitle(volleyError.getMessage())
+                    .setMessage(volleyError.getMessage())
                     .setNegativeButtonText("关闭")
                     .show();
         }

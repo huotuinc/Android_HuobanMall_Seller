@@ -191,23 +191,24 @@ public class ObtainParamsMap
      * @exception
      * @since
      */
-    public String getSign(Map<String, String> map)
-    {
+    public String getSign(Map<String, String> map) {
 
-        /*
-         * try {
-         */
-        String values = this.doSort(map);
-        Log.i("sign", values);
-        // values = URLEncoder.encode(values);
-        //String signHex =DigestUtils.md5DigestAsHex(values.toString().getBytes("UTF-8")).toLowerCase();
-        String signHex = EncryptUtil.getInstance().encryptMd532(values);
-        Log.i("signHex", signHex);
-        return signHex;
-        /*
-         * } catch (UnsupportedEncodingException e) { // TODO Auto-generated
-         * catch block KJLoger.errorLog(e.getMessage()); return null; }
-         */
+
+        try {
+
+            String values = this.doSort(map);
+            Log.i("sign", values);
+            // values = URLEncoder.encode(values);
+            String signHex = DigestUtils.md5DigestAsHex(values.toString().getBytes("UTF-8")).toLowerCase();
+            //String signHex = EncryptUtil.getInstance().encryptMd532(values);
+            Log.i("signHex", signHex);
+            return signHex;
+
+        } catch (UnsupportedEncodingException e) { // TODO Auto-generated
+            // catch block KJLoger.errorLog(e.getMessage()); return null;
+            return null;
+        }
+
     }
 
     /**

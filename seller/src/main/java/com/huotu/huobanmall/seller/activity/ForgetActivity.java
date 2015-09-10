@@ -22,10 +22,13 @@ import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.common.SellerApplication;
+import com.huotu.huobanmall.seller.utils.DigestUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.huotu.huobanmall.seller.widget.CountDownTimerButton;
+
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -202,7 +205,14 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
         String url = Constant.FORGET_INTERFACE;
         Map<String, String> paras = new HashMap<>();
         paras.put("phone", edtPhone.getText().toString());
-        paras.put("password", EncryptUtil.getInstance().encryptMd532(edtPwd.getText().toString()));
+
+        String pwdEnc= "";
+        try{
+            pwdEnc = DigestUtils.md5DigestAsHex( edtPwd.getText().toString().getBytes("utf-8"));
+        }catch (UnsupportedEncodingException ex){
+        }
+
+        paras.put("password", pwdEnc );
         paras.put("authcode",edtCode.getText().toString());
         HttpParaUtils utils = new HttpParaUtils();
         url = utils.getHttpGetUrl(url, paras);

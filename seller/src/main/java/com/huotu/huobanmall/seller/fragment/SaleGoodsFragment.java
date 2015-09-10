@@ -83,9 +83,7 @@ public class SaleGoodsFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sale_goods, container, false);
         ButterKnife.bind(this, rootView);
 
@@ -101,9 +99,6 @@ public class SaleGoodsFragment extends BaseFragment {
                 getData();
             }
         });
-
-
-
 
         return rootView;
     }
@@ -154,10 +149,11 @@ public class SaleGoodsFragment extends BaseFragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    protected void getData(){
+    protected void getData( ){
         HttpParaUtils httpParaUtils = new HttpParaUtils();
         Map<String,String> maps = new HashMap<>();
         maps.put("type", "1");
+        maps.put("lastProductId","0");
         String url = Constant.GOODSLIST_INTERFACE;
         url = httpParaUtils.getHttpGetUrl(url,maps);
 

@@ -20,9 +20,12 @@ import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.DigestUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import butterknife.Bind;
@@ -83,8 +86,8 @@ public class LoginActivity extends BaseFragmentActivity implements
         titleName.setText("用户登录");
         loginBtn.setOnClickListener(this);
         forgetPsw.setOnClickListener(this);
-        forgetPsw.setText ( "忘记密码？" );
-        backText.setOnClickListener ( this );
+        forgetPsw.setText("忘记密码？");
+        backText.setOnClickListener(this);
     }
 
     @Override
@@ -108,7 +111,15 @@ public class LoginActivity extends BaseFragmentActivity implements
         HttpParaUtils httpUtils = new HttpParaUtils();
         Map<String,String> paras = new HashMap<>();
         String pwd = passWord.getText().toString();
-        String pwdEncy= EncryptUtil.getInstance().encryptMd532(pwd);
+
+        String pwdEncy ="";
+        try {
+            pwdEncy = DigestUtils.md5DigestAsHex(pwd.getBytes("utf-8"));
+        }catch (UnsupportedEncodingException ex){
+
+        }
+
+        //String pwdEncy= EncryptUtil.getInstance().encryptMd532(pwd);
         paras.put("username", userName.getText().toString());
         paras.put("password", pwdEncy);
 

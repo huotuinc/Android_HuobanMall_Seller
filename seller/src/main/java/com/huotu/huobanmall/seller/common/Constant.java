@@ -118,6 +118,11 @@ public class Constant {
 
     //loading动画加载时间
     public final static int ANIMATION_COUNT = 3000;
+
+    // token过期返回码
+    public final static int TOKEN_OVERDUE = 56001;
+    //用户名或密码错误
+    public final static int ERROR_USER_PASSWORD=56000;
 }
 
 
