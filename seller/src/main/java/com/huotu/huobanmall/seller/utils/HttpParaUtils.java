@@ -108,7 +108,12 @@ public class HttpParaUtils {
         Log.i("sign", values);
         //String signHex = EncryptUtils.getInstance().encryptMd532(values);
         String signHex = "";
-        signHex = EncryptUtil.getInstance().encryptMd532(values);
+        try {
+            signHex = DigestUtils.md5DigestAsHex(values.getBytes("utf-8"));
+        }catch (UnsupportedEncodingException ex){
+            Log.e(TAG, ex.getMessage());
+        }
+        //String signHex2 = EncryptUtil.getInstance().encryptMd532(values);
         Log.i("signHex", signHex);
         return signHex;
     }

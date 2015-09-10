@@ -5,6 +5,7 @@ import android.test.ApplicationTestCase;
 import android.util.Log;
 
 //import com.huotu.huobanmall.seller.utils.EncryptUtils;
+import com.huotu.huobanmall.seller.utils.DigestUtils;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 
 import java.io.UnsupportedEncodingException;
