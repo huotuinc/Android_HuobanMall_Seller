@@ -55,10 +55,18 @@ public class MerchantModel extends BaseModel {
      */
     private String welcomeTip;
 
+    public String getOperatored() {
+        return operatored;
+    }
+
+    public void setOperatored(String operatored) {
+        this.operatored = operatored;
+    }
+
     /**
      * 操作者
      */
-    private String operator;
+    private String operatored;
 
     public String getAuthority() {
         return authority;
@@ -148,13 +156,13 @@ public class MerchantModel extends BaseModel {
         this.welcomeTip = welcomeTip;
     }
 
-    public String getOperator() {
-        return operator;
-    }
+//    public String getOperator() {
+//        return operator;
+//    }
 
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
+//    public void setOperator(String operator) {
+//        this.operator = operator;
+//    }
 
     public String getTitle() {
         return title;

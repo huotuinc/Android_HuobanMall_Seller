@@ -1,41 +1,27 @@
 package com.huotu.huobanmall.seller.activity;
 
-import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.Volley;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.baidu.location.LocationClientOption;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.HTInitBean;
-import com.huotu.huobanmall.seller.bean.MJInitData;
 import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
-import com.huotu.huobanmall.seller.utils.JSONUtil;
-import com.huotu.huobanmall.seller.utils.KJLoger;
-import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
 import com.huotu.huobanmall.seller.utils.StringUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
-
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +29,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class SplashActivity extends BaseFragmentActivity {
-
     @Bind(R.id.loadL)
     RelativeLayout loadLayout;
     public SellerApplication application;
@@ -53,20 +38,13 @@ public class SplashActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         application = (SellerApplication) SplashActivity.this.getApplication();
         setContentView(R.layout.activity_splash);
-
-
         initView();
         handlerView();
     }
 
     protected void initView() {
-        loadLayout = (RelativeLayout) this.findViewById(R.id.loadL);
-
         ButterKnife.bind(this);
-
     }
-
-
 
     private void handlerView() {
         AlphaAnimation anima = new AlphaAnimation(0.0f, 1.0f);
@@ -74,55 +52,38 @@ public class SplashActivity extends BaseFragmentActivity {
         loadLayout.setAnimation(anima);
         anima.setAnimationListener(
                 new Animation.AnimationListener() {
-
                     @Override
                     public void onAnimationStart(Animation animation) {
-
                         //百度定位
                         initLocation();
-
-
                     }
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-
                         //调用初始化接口
                         callInit();
                     }
 
                     @Override
                     public void onAnimationRepeat(Animation animation) {
-
-
                     }
                 });
     }
 
 
-    protected
-    void callInit ( ) {
-
-
+    protected void callInit ( ) {
         String url = Constant.INIT_INTERFACE;
-        Map<String, String> map = new HashMap<>();
         HttpParaUtils utils = new HttpParaUtils();
         url = utils.getHttpGetUrl(url, null);
-
-
-
-        GsonRequest<HTInitBean> initRequest = new GsonRequest<HTInitBean>(Request.Method.GET,
+        GsonRequest<HTInitBean> initRequest = new GsonRequest<HTInitBean>(
+                Request.Method.GET,
                 url,
                 HTInitBean.class,
                 null,
                 htInitBeanListener,
                 errorListener
         );
-
-        initRequest.setRetryPolicy( new DefaultRetryPolicy(20*1000,1,1.0f));
-
         VolleyRequestManager.getRequestQueue().add(initRequest);
-
     }
 
 
@@ -178,7 +139,6 @@ public class SplashActivity extends BaseFragmentActivity {
                 return;
             }
 
-
             if( htInitBean.getResultCode() != 1){
                 SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager())
                         .setTitle("错误信息")
@@ -218,11 +178,11 @@ public class SplashActivity extends BaseFragmentActivity {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
             //提示初始化失败,服务器问题
-            SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager())
-                    .setTitle("错误信息")
-                    .setMessage(volleyError.getMessage())
-                    .setNegativeButtonText("关闭")
-                    .show();
+            String message ="";
+            if( volleyError.networkResponse !=null){
+                message = new String( volleyError.networkResponse.data);
+            }
+            DialogUtils.showDialog( SplashActivity.this, SplashActivity.this.getSupportFragmentManager(),"错误信息",message,"关闭");
         }
     };
 }

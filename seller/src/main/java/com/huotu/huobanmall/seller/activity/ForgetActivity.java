@@ -22,6 +22,7 @@ import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.common.SellerApplication;
+import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.DigestUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
@@ -31,6 +32,8 @@ import com.huotu.huobanmall.seller.widget.CountDownTimerButton;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+
+import butterknife.Bind;
 
 /**
  * @类名称：ForgetActivity
@@ -42,33 +45,34 @@ import java.util.Map;
  * @version:
  */
 public class ForgetActivity extends BaseFragmentActivity implements OnClickListener ,ISimpleDialogListener {
-    private int REQUEST_CODE= 3001;
-
-    private TextView titleName;
-
-    private EditText edtPhone;
-
-    private EditText edtCode;
-
-    private TextView btnGet;
-
-    private EditText edtPwd;
-
-    private EditText edtRePwd;
-
-    private Button btnComplete;
+    private final int REQUEST_CODE= 3001;
+    @Bind(R.id.title)
+    TextView titleName;
+    @Bind(R.id.edtPhone)
+    EditText edtPhone;
+    @Bind(R.id.edtCode)
+    EditText edtCode;
+    @Bind(R.id.btnGet)
+    TextView btnGet;
+    @Bind(R.id.edtPwd)
+    EditText edtPwd;
+    @Bind(R.id.edtRePwd)
+    EditText edtRePwd;
+    @Bind(R.id.btnComplete)
+    Button btnComplete;
     //返回文字事件
-    private TextView backText;
+    @Bind(R.id.backtext)
+    TextView backText;
 
     public SellerApplication application;
 
-    public ProgressDialogFragment progressDialog;
-
     private CountDownTimerButton countDownTimerButton;
 
+    private TimeCountDownListener timeCountDownListener;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        timeCountDownListener=new TimeCountDownListener();
         application = ( SellerApplication ) ForgetActivity.this.getApplication ();
         this.setContentView(R.layout.activity_forget);
         initView ( );
@@ -83,23 +87,13 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     }
 
     private void initView() {
-        titleName = (TextView) this.findViewById(R.id.title);
         titleName.setText("用户忘记密码");
-        edtPhone = (EditText) findViewById(R.id.edtPhone);
-        edtCode = (EditText) this.findViewById ( R.id.edtCode );
-        btnGet = (TextView) this.findViewById(R.id.btnGet);
         btnGet.setTag(Constant.SMS_TYPE_TEXT);
         btnGet.setText ( "获取验证码" );
-        edtPwd = (EditText) this.findViewById(R.id.edtPwd);
-        edtRePwd = (EditText) this.findViewById(R.id.edtRePwd);
-        btnComplete = (Button) this.findViewById(R.id.btnComplete);
-        backText = (TextView) this.findViewById(R.id.backtext);
         backText.setOnClickListener ( this );
         btnGet.setOnClickListener ( this );
         btnComplete.setOnClickListener ( this );
-
     }
-
 
     @Override
     public void onClick(View v) {
@@ -122,7 +116,7 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
                 {
                     sendSMS();
 
-                    countDownTimerButton=new CountDownTimerButton( btnGet , "%d秒重新发送", "获取验证码", 60000,null);
+                    countDownTimerButton=new CountDownTimerButton( btnGet , "%d秒重新发送", "获取验证码", 60000, timeCountDownListener );
                     countDownTimerButton.start();
 
                 } else
@@ -143,7 +137,6 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     {
         if ( TextUtils.isEmpty ( edtPhone.getText ( ) ))
         {
-
             return false;
         } else
         {
@@ -217,15 +210,7 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
         HttpParaUtils utils = new HttpParaUtils();
         url = utils.getHttpGetUrl(url, paras);
 
-        if( progressDialog !=null ) {
-            progressDialog.dismiss();
-            progressDialog=null;
-        }
-        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager())
-                    .setMessage("正在登录，请稍等...")
-                    .setCancelable(false)
-                    .setCancelableOnTouchOutside(false);
-        progressDialog = (ProgressDialogFragment) builder.show();
+        showProgressDialog("","正在获取数据，请稍等...");
 
         GsonRequest<HTForget> forgetGsonRequest =new GsonRequest<HTForget>(
                 Request.Method.GET,
@@ -242,34 +227,35 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     Response.Listener<MJSendSMSModel> sendSMSListener = new Response.Listener<MJSendSMSModel>() {
         @Override
         public void onResponse(MJSendSMSModel sendSMSModel ) {
+            ForgetActivity.this.closeProgressDialog();
+
            if( sendSMSModel.getSystemResultCode() != 1){
-               SimpleDialogFragment.createBuilder( ForgetActivity.this , ForgetActivity.this.getSupportFragmentManager())
-                       .setTitle("错误信息")
-                       .setMessage(sendSMSModel.getSystemResultDescription() )
-                       .setNegativeButtonText("关闭")
-                       .show();
+//               SimpleDialogFragment.createBuilder( ForgetActivity.this , ForgetActivity.this.getSupportFragmentManager())
+//                       .setTitle("错误信息")
+//                       .setMessage(sendSMSModel.getSystemResultDescription() )
+//                       .setNegativeButtonText("关闭")
+//                       .show();
+               DialogUtils.showDialog(ForgetActivity.this,ForgetActivity.this.getSupportFragmentManager(),"错误信息",sendSMSModel.getSystemResultDescription(),"关闭");
                return;
            }
             if( sendSMSModel.getResultCode() != 1 ){
-                SimpleDialogFragment.createBuilder( ForgetActivity.this , ForgetActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage(sendSMSModel.getResultDescription() )
-                        .setNegativeButtonText("关闭")
-                        .show();
+//                SimpleDialogFragment.createBuilder( ForgetActivity.this , ForgetActivity.this.getSupportFragmentManager())
+//                        .setTitle("错误信息")
+//                        .setMessage(sendSMSModel.getResultDescription() )
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+                DialogUtils.showDialog(ForgetActivity.this,ForgetActivity.this.getSupportFragmentManager(),"错误信息",sendSMSModel.getResultDescription(),"关闭");
                 return;
             }
 
-            Toast.makeText(ForgetActivity.this, ""+ sendSMSModel.getResultData().getVoiceAble() ,Toast.LENGTH_LONG).show();
+            timeCountDownListener.setEnableVoice( sendSMSModel.getResultData().getVoiceAble() );
         }
     };
 
     Response.Listener<HTForget> forgetPasswordListener = new Response.Listener<HTForget>() {
         @Override
         public void onResponse(HTForget htForget ) {
-            if(progressDialog!=null){
-                progressDialog.dismiss();
-                progressDialog=null;
-            }
+            ForgetActivity.this.closeProgressDialog();
 
             if(  htForget.getSystemResultCode() != 1 ) {
                 SimpleDialogFragment.createBuilder(ForgetActivity.this, ForgetActivity.this.getSupportFragmentManager())
@@ -301,14 +287,12 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     Response.ErrorListener errorListener = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
-            if (progressDialog != null) {
-                progressDialog.dismiss();
+            ForgetActivity.this.closeProgressDialog();
+            String message="";
+            if( null != volleyError.networkResponse){
+                message=new String( volleyError.networkResponse.data);
             }
-            SimpleDialogFragment.createBuilder(ForgetActivity.this, ForgetActivity.this.getSupportFragmentManager())
-                    .setTitle("错误信息")
-                    .setMessage(volleyError.getMessage())
-                    .setNegativeButtonText("关闭")
-                    .show();
+           DialogUtils.showDialog(ForgetActivity.this,ForgetActivity.this.getSupportFragmentManager(),"错误信息",message,"关闭");
         }
     };
 
@@ -327,6 +311,32 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     @Override
     public void onPositiveButtonClicked(int i) {
 
+    }
+
+//    public void onEvent(String enableVoice ){
+//        Toast.makeText(this, "called",Toast.LENGTH_LONG).show();
+//    }
+
+    public class TimeCountDownListener implements CountDownTimerButton.CountDownFinishListener{
+        public boolean getEnableVoice() {
+            return enableVoice;
+        }
+
+        public void setEnableVoice(boolean enableVoice) {
+            this.enableVoice = enableVoice;
+        }
+
+        private boolean enableVoice=false;
+
+        @Override
+        public void finish() {
+            if(enableVoice == false) return;
+            //刷新获取按钮状态，设置为可获取语音
+            btnGet.setText("尝试语音获取");
+            btnGet.setTag(Constant.SMS_TYPE_VOICE);
+            //ToastUtils.showLongToast(ForgetActivity.this, "还没收到短信，请尝试语音获取");
+            Toast.makeText(ForgetActivity.this, "还没收到短信，请尝试语音获取",Toast.LENGTH_LONG).show();
+        }
     }
 }
 

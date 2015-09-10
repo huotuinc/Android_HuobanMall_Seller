@@ -23,8 +23,8 @@ import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DigestUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
-
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,34 +54,20 @@ public class LoginActivity extends BaseFragmentActivity implements
     // 返回文字事件
     @Bind(R.id.backtext)
     public TextView backText;
-    public ProgressDialogFragment progressDialog;
-
+    //public ProgressDialogFragment progressDialog;
     public SellerApplication application;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_login);
-
         ButterKnife.bind(this);
-
-
         application = ( SellerApplication ) LoginActivity.this.getApplication ();
-
-
-
-
-
-
         initView();
-
     }
     private void initView()
     {
-        userName.setText("huotu");
+        userName.setText("jxd");
         passWord.setText("123456");
         titleName.setText("用户登录");
         loginBtn.setOnClickListener(this);
@@ -97,15 +83,11 @@ public class LoginActivity extends BaseFragmentActivity implements
     }
 
     protected void login(){
-        if( null != progressDialog){
-            progressDialog.dismiss();
-            progressDialog=null;
-        }
-        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager())
-                .setMessage("正在登录，请稍等...")
-                .setCancelable(false)
-                .setCancelableOnTouchOutside(false);
-        progressDialog = (ProgressDialogFragment) builder.show();
+        this.showProgressDialog("","正在登录，请稍等...");
+
+        //调用登录接口之前，先清空一下Token的值
+        PreferenceHelper.writeString( this.getApplicationContext() , Constant.LOGIN_USER_INFO, Constant.PRE_USER_TOKEN , "");
+        //String token = PreferenceHelper.readString(this.getApplicationContext(),Constant.LOGIN_USER_INFO, Constant.PRE_USER_TOKEN);
 
         String url = Constant.LOGIN_INTERFACE;
         HttpParaUtils httpUtils = new HttpParaUtils();
@@ -116,16 +98,12 @@ public class LoginActivity extends BaseFragmentActivity implements
         try {
             pwdEncy = DigestUtils.md5DigestAsHex(pwd.getBytes("utf-8"));
         }catch (UnsupportedEncodingException ex){
-
         }
 
         //String pwdEncy= EncryptUtil.getInstance().encryptMd532(pwd);
         paras.put("username", userName.getText().toString());
         paras.put("password", pwdEncy);
-
         url = httpUtils.getHttpGetUrl(url , paras);
-
-
 
         GsonRequest<HTMerchantModel> loginRequest = new GsonRequest<HTMerchantModel>(
                 Request.Method.GET,
@@ -137,7 +115,6 @@ public class LoginActivity extends BaseFragmentActivity implements
                 );
 
         VolleyRequestManager.getRequestQueue().add(loginRequest);
-
     }
 
     protected void testAppUpdate(){
@@ -193,7 +170,6 @@ public class LoginActivity extends BaseFragmentActivity implements
 //                Intent intent=new Intent(this, ForgetActivity.class);
 //                startActivity(intent);
                 // testAppUpdate();
-
             }
             break;
             case R.id.btnLogin: {
@@ -205,7 +181,6 @@ public class LoginActivity extends BaseFragmentActivity implements
             }
         }
     }
-
 
     @Override
     public void onNegativeButtonClicked(int requestCode) {
@@ -240,6 +215,8 @@ public class LoginActivity extends BaseFragmentActivity implements
     Response.Listener<HTMerchantModel> loginListener = new Response.Listener<HTMerchantModel>() {
         @Override
         public void onResponse(HTMerchantModel htMerchantModel) {
+            LoginActivity.this.closeProgressDialog();
+
             if( null == htMerchantModel ){
                 SimpleDialogFragment.createBuilder( LoginActivity.this , LoginActivity.this.getSupportFragmentManager())
                         .setTitle("错误信息")
@@ -281,9 +258,8 @@ public class LoginActivity extends BaseFragmentActivity implements
     Response.ErrorListener errorListener=new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
-            if(progressDialog!=null){
-                progressDialog.dismiss();
-            }
+            LoginActivity.this.closeProgressDialog();
+
             SimpleDialogFragment.createBuilder( LoginActivity.this , LoginActivity.this.getSupportFragmentManager())
                     .setTitle("错误信息")
                     .setMessage(volleyError.getMessage())

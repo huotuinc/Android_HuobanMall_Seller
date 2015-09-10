@@ -20,6 +20,7 @@ import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.GoodsAdapter;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.bean.MJGoodModel;
+import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
@@ -50,8 +51,10 @@ public class OffShelfFragment extends BaseFragment {
 
     ListView _listView =null;
 
+    OperateTypeEnum _type = OperateTypeEnum.REFRESH;
     private OnFragmentInteractionListener mListener;
 
+    ProgressDialogFragment _progressDialog=null;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -79,27 +82,32 @@ public class OffShelfFragment extends BaseFragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView= inflater.inflate(R.layout.fragment_off_shelf, container, false);
         ButterKnife.bind( this ,rootView);
 
+        _goodsList = new ArrayList<>();
+        _goodsAdapter=new GoodsAdapter(this.getActivity() , _goodsList);
+        _goodsOffshelfListview.getRefreshableView().setAdapter(_goodsAdapter);
+
         _goodsOffshelfListview.setMode(PullToRefreshBase.Mode.BOTH);
         _goodsOffshelfListview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
-                getData();
+                _type = OperateTypeEnum.REFRESH;
+                getData(_type);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
-                getData();
+                _type = OperateTypeEnum.LOADMORE;
+                getData(_type);
             }
         });
 
-        //_goodsOffshelfListview.setRefreshing();
+        firstGetData();
 
         return rootView;
     }
@@ -151,23 +159,34 @@ public class OffShelfFragment extends BaseFragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    protected void getData(){
-        HttpParaUtils httpParaUtils = new HttpParaUtils();
+    protected void firstGetData(){
+        if( _progressDialog !=null){
+            _progressDialog.dismiss();
+            _progressDialog=null;
+        }
+        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder( this.getActivity(), this.getActivity().getSupportFragmentManager())
+                .setMessage("正在获取数据，请稍等...")
+                .setCancelable(false)
+                .setCancelableOnTouchOutside(false);
+        _progressDialog = (ProgressDialogFragment) builder.show();
+
+        _type= OperateTypeEnum.REFRESH;
+        getData(_type);
+    }
+
+    protected void getData( OperateTypeEnum type ){
         Map<String,String> maps = new HashMap<>();
+        if( type == OperateTypeEnum.REFRESH){
+            //maps.put("lastProductId","");
+        }else {
+            String lastid = String.valueOf( _goodsList.get( _goodsList.size()-1).getGoodsId());
+            maps.put("lastProductId", lastid);
+        }
+
+        HttpParaUtils httpParaUtils = new HttpParaUtils();
         maps.put("type", "2");
         String url = Constant.GOODSLIST_INTERFACE;
         url = httpParaUtils.getHttpGetUrl(url,maps);
-
-//        if( _progressDialog !=null){
-//            _progressDialog.dismiss();
-//            _progressDialog=null;
-//        }
-
-//        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder( this.getActivity(), this.getActivity().getSupportFragmentManager())
-//                .setMessage("正在获取数据，请稍等...")
-//                .setCancelable(false)
-//                .setCancelableOnTouchOutside(false);
-//        _progressDialog = (ProgressDialogFragment) builder.show();
 
         GsonRequest<MJGoodModel> goodsListRequest=new GsonRequest<MJGoodModel>(Request.Method.GET,
                 url,
@@ -183,13 +202,20 @@ public class OffShelfFragment extends BaseFragment {
     Response.Listener<MJGoodModel> goodslistListener =new Response.Listener<MJGoodModel>() {
         @Override
         public void onResponse(MJGoodModel mjGoodModel) {
-//            if( _progressDialog !=null){
-//                _progressDialog.dismiss();
-//                _progressDialog=null;
-//            }
-
+            if( _progressDialog !=null){
+                _progressDialog.dismiss();
+                _progressDialog=null;
+            }
             _goodsOffshelfListview.onRefreshComplete();
 
+            if( mjGoodModel==null ){
+                SimpleDialogFragment.createBuilder(OffShelfFragment.this.getActivity(), OffShelfFragment.this.getActivity().getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage( "获取数据失败" )
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }
             if( mjGoodModel.getSystemResultCode()!=1){
                 SimpleDialogFragment.createBuilder(OffShelfFragment.this.getActivity(), OffShelfFragment.this.getActivity().getSupportFragmentManager())
                         .setTitle("错误信息")
@@ -206,9 +232,17 @@ public class OffShelfFragment extends BaseFragment {
                 return;
             }
 
-            _goodsList= mjGoodModel.getResultData().getList();
-            _goodsAdapter = new GoodsAdapter(OffShelfFragment.this.getActivity(), _goodsList);
-            _goodsOffshelfListview.getRefreshableView().setAdapter(_goodsAdapter);
+            if(mjGoodModel.getResultData()==null || mjGoodModel.getResultData().getList() ==null || mjGoodModel.getResultData().getList().size()<1){
+                return;
+            }
+
+            if( _type == OperateTypeEnum.REFRESH){
+                _goodsList.clear();
+                _goodsList.addAll(mjGoodModel.getResultData().getList());
+            }else{
+                _goodsList.addAll(mjGoodModel.getResultData().getList());
+            }
+            _goodsAdapter.notifyDataSetChanged();
         }
     };
 

@@ -91,7 +91,7 @@ public class SellerApplication extends Application{
         //欢迎提示
         PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_WELCOME_TIP, user.getWelcomeTip() );
         //操作者
-        PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_OPERATOR, user.getOperator () );
+        PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_OPERATOR, user.getOperatored () );
         //店铺名称
         PreferenceHelper.writeString(getApplicationContext(), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_SHOPNAME, user.getTitle());
     }

@@ -9,7 +9,7 @@
         android:id="@+id/goods_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/header_height">
-        <include layout="@layout/layout_header"
+        <include layout="@layout/layout_goods_header"
             ></include>
     </RelativeLayout>
 
@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/goods_header"
+        android:visibility="gone"
         android:layout_margin="@dimen/space_5"/>
 
     <android.support.v4.view.ViewPager

@@ -39,7 +39,7 @@ public class HttpParaUtils {
 
 
     public HttpParaUtils(){
-        timestamp ="1441762623123"; //String.valueOf(System.currentTimeMillis());
+        timestamp = String.valueOf(System.currentTimeMillis());
     }
 
     protected String getCommonPara(Uri.Builder builder ){

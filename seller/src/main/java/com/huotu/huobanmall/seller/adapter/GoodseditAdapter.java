@@ -67,9 +67,13 @@ public class GoodseditAdapter extends BaseAdapter {
         holder.goods_price.setText(String.valueOf(_list.get(position).getPrice()));
         //holder.goods_imageView.get(_list.get(position).getPictureUrl());
         holder.goods_imageView.setBackgroundResource(R.mipmap.ic_launcher);
+
+        if( _list.get(position).isSelected()){
+            holder.radioButton.setBackgroundResource(R.mipmap.xz);
+        }else {
+            holder.radioButton.setBackgroundResource(R.mipmap.wxz);
+        }
         return convertView;
-
-
     }
     class ViewHolder
 
