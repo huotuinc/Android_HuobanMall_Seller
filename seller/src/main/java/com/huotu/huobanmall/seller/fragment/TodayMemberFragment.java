@@ -8,9 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.huotu.huobanmall.seller.Interface.IIndexFragmentInteractionListener;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.MJNewTodayModel;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,17 +21,25 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TodayMemberFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link TodayMemberFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodayMemberFragment extends BaseFragment implements View.OnClickListener{
+public class TodayMemberFragment extends TodayFragment implements View.OnClickListener{
     private IIndexFragmentInteractionListener mListener;
     @Bind(R.id.ll_todayOrder_order)
     LinearLayout _ll_order;
     @Bind(R.id.ll_todayOrder_fxs)
     LinearLayout _ll_fxs;
+    @Bind(R.id.todayOrder_OrderCount)
+    TextView _orderCount;
+    @Bind(R.id.todayOrder_MemberCount)
+    TextView _memberCount;
+    @Bind(R.id.todayOrder_fxsCount)
+    TextView _fxsCount;
+    @Bind(R.id.todayMember_lineChart)
+    LineChart _memberLineChart;
+    MJNewTodayModel _data;
 
     /**
      * Use this factory method to create a new instance of
@@ -118,4 +129,36 @@ public class TodayMemberFragment extends BaseFragment implements View.OnClickLis
 //        public void onFragmentInteraction(Uri uri);
 //    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        setText();
+    }
+
+    protected void setText(){
+        if(_data==null) return;
+
+        _orderCount.setText( String .valueOf( _data.getResultData().getTodayOrderAmount() ));
+        _memberCount.setText( String.valueOf(_data.getResultData().getTodayMemberAmount()) );
+        _fxsCount.setText( String.valueOf( _data.getResultData().getTodayPartnerAmount() ) );
+
+        setLineChartData(_memberLineChart, _data.getResultData().getMemberHour(), _data.getResultData().getMemberAmount());
+    }
+
+    public void setData(MJNewTodayModel model ){
+        _data = model;
+
+        if( this.isResumed()){
+            setText();
+        }
+
+//        if(_data==null) return;
+//
+//        _orderCount.setText( String .valueOf( _data.getResultData().getTodayOrderAmount() ));
+//        _memberCount.setText( String.valueOf(_data.getResultData().getTodayMemberAmount()) );
+//        _fxsCount.setText( String.valueOf( _data.getResultData().getTodayPartnerAmount() ) );
+//
+//        setLineChartData(_memberLineChart, _data.getResultData().getMemberHour(),_data.getResultData().getMemberAmount() );
+    }
 }

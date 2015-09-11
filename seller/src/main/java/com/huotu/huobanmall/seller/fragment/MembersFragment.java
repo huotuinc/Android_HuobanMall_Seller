@@ -196,11 +196,10 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     }
 
 
-    class MemberLineChartFragment extends BaseFragment{
+    public class MemberLineChartFragment extends BaseFragment{
 
         @Bind(R.id.members_lineChart)
         LineChart _memberLineChart;
-
 
         public MemberLineChartFragment (){
         }

@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * @类名称：ForgetActivity
@@ -87,6 +88,7 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     }
 
     private void initView() {
+        ButterKnife.bind(this);
         titleName.setText("用户忘记密码");
         btnGet.setTag(Constant.SMS_TYPE_TEXT);
         btnGet.setText ( "获取验证码" );

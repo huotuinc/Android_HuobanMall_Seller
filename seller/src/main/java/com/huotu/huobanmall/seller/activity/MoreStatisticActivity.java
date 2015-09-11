@@ -8,8 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.BaseModel;
+import com.huotu.huobanmall.seller.bean.MJOtherStatisticModel;
+import com.huotu.huobanmall.seller.bean.OtherStatisticModel;
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.GsonRequest;
+import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,7 +59,45 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         moresta_xftj.setOnClickListener(this);
         moresta_xsetj.setOnClickListener(this);
         moresta_xsmx.setOnClickListener(this);
+
+        getData();
     }
+
+    protected void getData(){
+        String url = Constant.OTHERSTATISTIC_INTERFACE;
+        HttpParaUtils httpParaUtils =new HttpParaUtils();
+        url = httpParaUtils.getHttpGetUrl(url ,null);
+
+        GsonRequest<MJOtherStatisticModel> otherRequest = new GsonRequest<MJOtherStatisticModel>(
+                Request.Method.GET,
+                url,
+                MJOtherStatisticModel.class,
+                null,
+                otherListener,
+                errorListener
+        );
+
+        this.showProgressDialog("","正在获取数据，请稍等...");
+
+        VolleyRequestManager.getRequestQueue().add(otherRequest);
+    }
+
+    Response.Listener<MJOtherStatisticModel> otherListener=new Response.Listener<MJOtherStatisticModel>() {
+        @Override
+        public void onResponse(MJOtherStatisticModel  mjOtherStatisticModel ) {
+            MoreStatisticActivity.this.closeProgressDialog();
+            
+        }
+    };
+
+
+    Response.ErrorListener errorListener =new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            MoreStatisticActivity.this.closeProgressDialog();
+
+        }
+    };
 
     @Override
     public void onClick(View v) {

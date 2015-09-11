@@ -8,10 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.huotu.huobanmall.seller.Interface.IIndexFragmentInteractionListener;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.MJNewTodayModel;
+
+import org.w3c.dom.Text;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,12 +27,20 @@ import butterknife.ButterKnife;
  * Use the {@link TodayDistributorsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodayDistributorsFragment extends BaseFragment implements View.OnClickListener{
+public class TodayDistributorsFragment extends TodayFragment implements View.OnClickListener{
     private IIndexFragmentInteractionListener mListener;
     @Bind(R.id.ll_todayOrder_order)
     LinearLayout _ll_Order;
     @Bind(R.id.ll_todayOrder_member)
     LinearLayout _ll_member;
+    @Bind(R.id.todayOrder_OrderCount)
+    TextView _orderCount;
+    @Bind(R.id.todayOrder_MemberCount)
+    TextView _memberCount;
+    @Bind(R.id.todayOrder_fxsCount)
+    TextView _fxsCount;
+    @Bind(R.id.todayDistributer_lineChart)
+    LineChart _distributerLineChart;
 
     MJNewTodayModel _data=null;
 
@@ -67,6 +79,18 @@ public class TodayDistributorsFragment extends BaseFragment implements View.OnCl
         _ll_Order.setOnClickListener(this);
         _ll_member.setOnClickListener(this);
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if( _data ==null )return;
+        _orderCount.setText( String .valueOf( _data.getResultData().getTodayOrderAmount() ));
+        _memberCount.setText( String.valueOf(_data.getResultData().getTodayMemberAmount()) );
+        _fxsCount.setText( String.valueOf( _data.getResultData().getTodayPartnerAmount() ) );
+
+        setLineChartData( _distributerLineChart , _data.getResultData().getPartnerHour(),_data.getResultData().getPartnerAmount() );
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -119,5 +143,12 @@ public class TodayDistributorsFragment extends BaseFragment implements View.OnCl
 
     public void setData(MJNewTodayModel model){
         _data=model;
+        if( _data ==null) return;
+
+//        _orderCount.setText( String .valueOf( _data.getResultData().getTodayOrderAmount() ));
+//        _memberCount.setText( String.valueOf(_data.getResultData().getTodayMemberAmount()) );
+//        _fxsCount.setText( String.valueOf( _data.getResultData().getTodayPartnerAmount() ) );
+//
+//        setLineChartData( _distributerLineChart , _data.getResultData().getPartnerHour(),_data.getResultData().getPartnerAmount() );
     }
 }
