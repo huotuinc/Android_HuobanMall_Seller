@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -36,7 +38,7 @@ import butterknife.ButterKnife;
  * Use the {@link TodayOrderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TodayOrderFragment extends BaseFragment implements View.OnClickListener{
+public class TodayOrderFragment extends TodayFragment implements View.OnClickListener{
 
     @Bind(R.id.todayOrder_lineChart)
     LineChart _orderLineChart;
@@ -87,12 +89,13 @@ public class TodayOrderFragment extends BaseFragment implements View.OnClickList
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_today_order, container, false);
+
         ButterKnife.bind(this, rootView);
 
         _ll_members.setOnClickListener(this);
         _ll_fxs.setOnClickListener(this);
 
-        setLineChartData();
+        //setLineChartData();
 
         return rootView;
     }
@@ -147,54 +150,27 @@ public class TodayOrderFragment extends BaseFragment implements View.OnClickList
 //    }
 
 
-    private void setLineChartData(){
-        int bg=0x3B91DE;
-        int gridbg=0x56A5EA;
-        //_orderLineChart.setGridBackgroundColor( gridbg );
+    @Override
+    public void onResume() {
+        super.onResume();
 
-        _orderLineChart.setBackgroundColor(bg);
-        _orderLineChart.setDescription("暂无数据");
-        _orderLineChart.setNoDataText("暂无数据");
-        _orderLineChart.getAxisRight().setEnabled(false);
-        //_orderLineChart.getAxisLeft().setEnabled(false);
-
-        List<String> xValues= new ArrayList<String>();
-        //List<Integer> xValues = _data.getResultData().getOrderHour();
-        List<Entry> yValues=new ArrayList<>();
-        //Random r=new Random();
-        for(int i=0;i< xValues.size() ;i++){
-            //xValues.add( "7."+ i );
-            int x = _data.getResultData().getOrderHour().get(i);
-            //float y = r.nextFloat()*100;
-            int y = _data.getResultData().getOrderAmount().get(i);
-            Entry item=new Entry( y , x );
-            yValues.add(item);
-        }
-        LineDataSet dataset =new LineDataSet( yValues ,"");
-        dataset.setCircleColor(Color.WHITE);
-        dataset.setCircleSize(4);
-        dataset.setDrawCircleHole(true);
-        dataset.setDrawValues(false);
-        dataset.setLineWidth(2);
-        dataset.setColor(Color.WHITE);
-        dataset.setValueTextSize(14);
-        dataset.setValueTextColor(Color.GREEN);
-        dataset.setDrawCubic(true);
-
-        LineData data =new LineData(xValues ,dataset );
-
-        _orderLineChart.setData(data);
-
-        _orderLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
-    }
-
-    public void setData(MJNewTodayModel model){
-        _data=model;
+        if(_data==null)return;
 
         _orderCount.setText( String .valueOf( _data.getResultData().getTodayOrderAmount() ));
         _memberCount.setText( String.valueOf(_data.getResultData().getTodayMemberAmount()) );
         _fxsCount.setText( String.valueOf( _data.getResultData().getTodayPartnerAmount() ) );
 
-        setLineChartData();
+        setLineChartData(_orderLineChart, _data.getResultData().getOrderHour(), _data.getResultData().getOrderAmount());
+    }
+
+    public void setData(MJNewTodayModel model){
+        _data=model;
+       // if(_data ==null) return;
+
+//        _orderCount.setText( String .valueOf( _data.getResultData().getTodayOrderAmount() ));
+//        _memberCount.setText( String.valueOf(_data.getResultData().getTodayMemberAmount()) );
+//        _fxsCount.setText( String.valueOf( _data.getResultData().getTodayPartnerAmount() ) );
+//
+//        setLineChartData( _orderLineChart, _data.getResultData().getOrderHour() , _data.getResultData().getOrderAmount() );
     }
 }

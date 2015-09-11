@@ -35,7 +35,7 @@
 
             android:id="@+id/main_today"
             android:layout_alignTop="@id/main_todyMoney"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="23dp"
             android:layout_alignParentRight="true"
             android:textColor="@android:color/white"
             android:layout_width="wrap_content"
@@ -43,10 +43,10 @@
             android:text="今日"/>
         <TextView
             android:layout_marginLeft="15dp"
-            android:id="@+id/main_totalMoney"
+            android:id="@+id/main_todayMoneyLabel"
             android:layout_below="@id/main_todyMoney"
             android:textColor="@android:color/white"
-            android:text="总销售额(元)5354343.12"
+            android:text="总销售额(元)"
             android:textSize="@dimen/text_size_20"
             android:layout_centerHorizontal="true"
             android:layout_alignParentLeft="true"
@@ -54,6 +54,18 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_15"
             />
+        <TextView
+            android:id="@+id/main_totalMoney"
+            android:layout_below="@id/main_todyMoney"
+            android:layout_toRightOf="@id/main_todayMoneyLabel"
+            android:text="23232"
+            android:textSize="@dimen/text_size_20"
+            android:textColor="@android:color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/space_15"
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
     <!-- 线性图 -->
@@ -63,7 +75,6 @@
         android:layout_above="@+id/main_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <TextView
             android:id="@+id/main_TodayOrderText"
             android:layout_width="match_parent"
@@ -89,7 +100,7 @@
             android:layout_below="@id/main_todayLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <include layout="@layout/layout_main_data"></include>
+            <include layout="@layout/layout_main_chart"></include>
         </RelativeLayout>
 
     </RelativeLayout>
@@ -99,15 +110,6 @@
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content">
-        <include layout="@layout/layout_menuitem"
-           ></include>
+        <include layout="@layout/layout_menuitem"></include>
     </RelativeLayout>
-    <!--<GridView-->
-        <!--android:id="@+id/main_gridView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:numColumns="2"-->
-        <!--android:layout_marginTop="@dimen/space_5"-->
-        <!--android:layout_marginBottom="@dimen/space_5"-->
-        <!--android:layout_height="@dimen/main_menu_height"/>-->
 </RelativeLayout>

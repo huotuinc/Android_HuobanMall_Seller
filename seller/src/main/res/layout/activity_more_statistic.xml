@@ -5,7 +5,6 @@
     tools:context="com.huotu.huobanmall.seller.activity.MoreStatisticActivity">
     <RelativeLayout
         android:id="@+id/datastatistic_header"
-        android:layout_marginBottom="@dimen/space_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <include layout="@layout/layout_morestatistic_header"></include>
@@ -31,6 +30,7 @@
                 android:background="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
+                android:paddingTop="10dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:text="132"
@@ -46,11 +46,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center"
+                android:text="75"
+                android:paddingTop="10dp"
+                android:textColor="@color/main_header_bg"
                 />
 
             <Button
                 android:layout_margin="0.1dp"
                 style="@style/home_tab_bottom"
+                android:paddingTop="10dp"
                 android:id="@+id/morestatistic_menu_hytj"
                 android:drawableTop="@mipmap/hytj"
                 android:background="@color/white"
@@ -58,7 +62,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-
+                android:text="23"
+                android:textColor="@color/main_header_bg"
                />
 
         </LinearLayout>

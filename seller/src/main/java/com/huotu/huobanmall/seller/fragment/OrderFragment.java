@@ -25,21 +25,27 @@ import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.github.mikephil.charting.animation.Easing;
 //import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.activity.LoginActivity;
 import com.huotu.huobanmall.seller.activity.WebViewActivity;
 import com.huotu.huobanmall.seller.adapter.DataStatisticFragmentAdapter;
 import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
 import com.huotu.huobanmall.seller.adapter.PurchaseOfGoodsAdapter;
+import com.huotu.huobanmall.seller.bean.MJMemberStatisticModel;
 import com.huotu.huobanmall.seller.bean.PurchaseOfGoods;
 import com.huotu.huobanmall.seller.common.Constant;
 
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
+import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -85,6 +91,13 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
     List<PurchaseOfGoods> _purchaseOfGoods;
     PurchaseOfGoodsAdapter _purchaseAdapter;
 
+    MJMemberStatisticModel _data;
+
+    List<BaseFragment> _fragments;
+    FragmentManager _fragmentManager;
+    @Bind(R.id.order_indicator)
+    TabPageIndicator _indicator;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -123,6 +136,25 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         order_statis1.setOnClickListener(this);
 
         return rootView;
+    }
+
+    protected  void getData(){
+        String url = Constant.USERREPORT_INTERFACE;
+        HttpParaUtils httpParaUtils = new HttpParaUtils();
+        url = httpParaUtils.getHttpGetUrl(url ,null);
+
+        GsonRequest<MJMemberStatisticModel> userReportRequest = new GsonRequest<MJMemberStatisticModel>(
+                Request.Method.GET,
+                url,
+                MJMemberStatisticModel.class,
+                null,
+                userReportListner,
+                errorListener
+        );
+
+        this.showProgressDialog("","正在获取数据，请稍等...");
+
+        VolleyRequestManager.getRequestQueue().add(userReportRequest);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -180,9 +212,32 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         public void onFragmentInteraction(Uri uri);
     }
 
-    protected Response.Listener<PurchaseOfGoods> purchaseOfGoodsListner = new Response.Listener<PurchaseOfGoods>() {
+    protected Response.Listener<MJMemberStatisticModel> userReportListner = new Response.Listener<MJMemberStatisticModel>() {
         @Override
-        public void onResponse(PurchaseOfGoods purchaseOfGoods) {
+        public void onResponse(MJMemberStatisticModel mjMemberStatisticModel  ) {
+            OrderFragment.this.closeProgressDialog();
+
+            if( mjMemberStatisticModel==null){
+                DialogUtils.showDialog( OrderFragment.this.getActivity(), OrderFragment.this.getFragmentManager() ,"错误信息", "请求数据失败","关闭" );
+                return;
+            }
+            if( mjMemberStatisticModel.getSystemResultCode()!=1){
+                DialogUtils.showDialog( OrderFragment.this.getActivity(), OrderFragment.this.getFragmentManager() ,"错误信息", mjMemberStatisticModel.getSystemResultDescription(),"关闭" );
+                return;
+            }
+
+            if(mjMemberStatisticModel.getResultCode() == Constant.TOKEN_OVERDUE){
+                ActivityUtils.getInstance().showActivity(OrderFragment.this.getActivity(), LoginActivity.class);
+                return;
+            }
+            if( mjMemberStatisticModel.getResultCode() != 1){
+                DialogUtils.showDialog( OrderFragment.this.getActivity(), OrderFragment.this.getFragmentManager() ,"错误信息", mjMemberStatisticModel.getResultDescription() ,"关闭" );
+                return;
+            }
+
+            _data=mjMemberStatisticModel;
+
+            setLineChartData();
 
             //_orderPulltorefreshScrollView.onRefreshComplete();
 
@@ -204,12 +259,12 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         }
     };
 
-    protected void getData(){
-        String url = "http://www.baidu.com";
-        GsonRequest<PurchaseOfGoods> dataRequest=new GsonRequest<>(Request.Method.GET ,
-                url , PurchaseOfGoods.class , null , purchaseOfGoodsListner , errorListener);
-        VolleyRequestManager.getRequestQueue().add(dataRequest);
-    }
+//    protected void getData(){
+//        String url = "http://www.baidu.com";
+//        GsonRequest<PurchaseOfGoods> dataRequest=new GsonRequest<>(Request.Method.GET ,
+//                url , PurchaseOfGoods.class , null , purchaseOfGoodsListner , errorListener);
+//        VolleyRequestManager.getRequestQueue().add(dataRequest);
+//    }
 
     private void initData(){
 
@@ -222,13 +277,12 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
         initFragments();
 
-        setLineChartData();
+        //setLineChartData();
+
+        getData();
     }
 
-    List<BaseFragment> _fragments;
-    FragmentManager _fragmentManager;
-     @Bind(R.id.order_indicator)
-     TabPageIndicator _indicator;
+
 
     protected void initFragments(){
         LineChartFragment fragment1 = new LineChartFragment();
@@ -260,7 +314,8 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
 
     private void setLineChartData(){
-
+        int bg=0xFFFFFFFF;
+        int gridColor=0xFFD3D3D3;
         //_orderLineChart.setBackgroundColor(Color.WHITE);
         //_orderLineChart.setDescription("line chart description");
         //_orderLineChart.setNoDataText("no date to show chart");
@@ -294,11 +349,12 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
     }
 
 
-    class LineChartFragment extends BaseFragment{
+    public class LineChartFragment extends BaseFragment{
 
         @Bind(R.id.order_lineChart)
         LineChart _orderLineChart;
 
+        MJMemberStatisticModel _data=null;
 
         public LineChartFragment (){
         }
@@ -349,8 +405,71 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         @Override
         public void onResume() {
             super.onResume();
+        }
+
+        public void setData( MJMemberStatisticModel data ){
+            _data=data;
+
+
 
         }
+
+        protected void setLineChartData( LineChart lineChart , List<Integer> xData1 , List<Integer> yData1,
+                                         List<Integer> xData2,List<Integer> yData2
+        ){
+            if( xData1==null || yData1==null )return;
+
+            int bgColor=0xFFFFFFFF;
+            int gridColor=0xFFD3D3D3;
+            int lineColor1=0xFF0094FF;
+            int lineColor2 =0xFFFF3C00;
+            int circleColor=0xFFFFFFFF;
+
+            lineChart.setGridBackgroundColor(gridColor);
+            lineChart.setBackgroundColor(bgColor);
+            lineChart.setDescription("");
+            lineChart.setNoDataText("暂无数据");
+            lineChart.getAxisRight().setEnabled(false);
+
+
+            List<String> xValues1= new ArrayList<String>();
+            List<Entry> yValues1=new ArrayList<>();
+            int count = xData1.size();
+            for(int i=0;i< count ;i++){
+                int x = xData1.get(i);
+                xValues1.add( String.valueOf( x));
+                int y = yData1.get(i);
+                Entry item=new Entry( y , i );
+                yValues1.add(item);
+            }
+
+            ArrayList<LineDataSet> dataSets =new ArrayList<>();
+
+            LineDataSet dataSet =new LineDataSet( yValues1 ,"");
+            dataSet.setCircleColor(circleColor);
+            dataSet.setCircleSize(4);
+            dataSet.setDrawCircleHole(true);
+            dataSet.setDrawValues(false);
+            dataSet.setLineWidth(2);
+            dataSet.setColor(lineColor1);
+            dataSet.setValueTextSize(14);
+            dataSet.setValueTextColor(Color.GREEN);
+            dataSet.setDrawCubic(true);
+
+            XAxis xAxis = lineChart.getXAxis();
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xAxis.setTextColor(0xFFFFFFFF);
+
+            YAxis yAxis = lineChart.getAxisLeft();
+            yAxis.setTextColor(0xFFFFFFFF);
+
+            lineChart.getLegend().setEnabled(false);
+
+            LineData data =new LineData(xValues1 ,dataSet );
+            lineChart.setData(data);
+            lineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+        }
+
     }
 
 }

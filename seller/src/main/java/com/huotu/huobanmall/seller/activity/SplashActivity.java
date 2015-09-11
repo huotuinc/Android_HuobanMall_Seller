@@ -70,7 +70,6 @@ public class SplashActivity extends BaseFragmentActivity {
                 });
     }
 
-
     protected void callInit ( ) {
         String url = Constant.INIT_INTERFACE;
         HttpParaUtils utils = new HttpParaUtils();
@@ -117,34 +116,22 @@ public class SplashActivity extends BaseFragmentActivity {
         @Override
         public void onResponse(HTInitBean htInitBean) {
             if( htInitBean == null){
-                SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage("请求失败")
-                        .setNegativeButtonText("关闭")
-                        .show();
+                DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息","请求数据失败","关闭");
                 return;
             }
             if( htInitBean.getSystemResultCode() != 1 ){
-                SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage(htInitBean.getSystemResultDescription())
-                        .setNegativeButtonText("关闭")
-                        .show();
+                DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息",htInitBean.getSystemResultDescription(),"关闭");
                 return;
             }
             if( htInitBean.getResultCode() == Constant.TOKEN_OVERDUE ||
-                    htInitBean.getResultCode() == Constant.ERROR_USER_PASSWORD ){
+                htInitBean.getResultCode() == Constant.ERROR_USER_PASSWORD ){
                 //调转到登录界面
                 ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class);
                 return;
             }
 
             if( htInitBean.getResultCode() != 1){
-                SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage(htInitBean.getResultDescription())
-                        .setNegativeButtonText("关闭")
-                        .show();
+                DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息",htInitBean.getResultDescription(),"关闭");
                 return;
             }
 
@@ -182,6 +169,10 @@ public class SplashActivity extends BaseFragmentActivity {
             if( volleyError.networkResponse !=null){
                 message = new String( volleyError.networkResponse.data);
             }
+            else {
+                message = volleyError.getCause().getMessage();
+            }
+
             DialogUtils.showDialog( SplashActivity.this, SplashActivity.this.getSupportFragmentManager(),"错误信息",message,"关闭");
         }
     };
