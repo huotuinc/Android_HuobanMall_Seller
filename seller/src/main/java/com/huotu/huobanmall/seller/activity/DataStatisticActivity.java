@@ -1,6 +1,5 @@
 package com.huotu.huobanmall.seller.activity;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -16,8 +15,6 @@ import com.huotu.huobanmall.seller.fragment.BaseFragment;
 import com.huotu.huobanmall.seller.fragment.MembersFragment;
 import com.huotu.huobanmall.seller.fragment.OrderFragment;
 import com.huotu.huobanmall.seller.fragment.SalesFragment;
-import com.huotu.huobanmall.seller.activity.BaseFragmentActivity;
-import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;

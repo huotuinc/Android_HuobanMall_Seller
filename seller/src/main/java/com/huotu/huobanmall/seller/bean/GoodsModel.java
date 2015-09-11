@@ -37,6 +37,16 @@ public class GoodsModel {
         this.title = title;
     }
 
+    public Integer getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    private Integer goodsId;
+
     /**
      * 图片地址
      */
@@ -53,4 +63,14 @@ public class GoodsModel {
      * 商品标题
      */
     private String title;
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    private boolean selected;
 }

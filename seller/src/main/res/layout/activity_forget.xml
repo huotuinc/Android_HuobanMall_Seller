@@ -124,7 +124,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/shape_red"
+                        android:background="@drawable/shape_blue"
                         android:clickable="true"
                         android:gravity="center"
                         android:minWidth="120dp"

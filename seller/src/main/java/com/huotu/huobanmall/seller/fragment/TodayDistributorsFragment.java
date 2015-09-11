@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.huotu.huobanmall.seller.Interface.IIndexFragmentInteractionListener;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.MJNewTodayModel;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,13 +29,15 @@ public class TodayDistributorsFragment extends BaseFragment implements View.OnCl
     LinearLayout _ll_Order;
     @Bind(R.id.ll_todayOrder_member)
     LinearLayout _ll_member;
+
+    MJNewTodayModel _data=null;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @return A new instance of fragment TodayDistributorsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static TodayDistributorsFragment newInstance() {
         TodayDistributorsFragment fragment = new TodayDistributorsFragment();
         Bundle args = new Bundle();
@@ -114,4 +117,7 @@ public class TodayDistributorsFragment extends BaseFragment implements View.OnCl
 //        public void onFragmentInteraction(Uri uri);
 //    }
 
+    public void setData(MJNewTodayModel model){
+        _data=model;
+    }
 }

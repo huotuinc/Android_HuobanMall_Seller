@@ -1,6 +1,7 @@
 package com.huotu.huobanmall.seller.utils;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -11,6 +12,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.huotu.huobanmall.seller.common.Constant;
 
 import org.apache.http.client.methods.HttpHead;
 
@@ -47,6 +49,8 @@ public class GsonRequest<T> extends Request<T> {
 	private final Listener<T> mListener;
 
 	private static Map<String,String > mHeader = new HashMap<>();
+
+	private Map<String,String> mParams=new HashMap<>();
 	
 	/**
 	 * @param method
@@ -75,6 +79,8 @@ public class GsonRequest<T> extends Request<T> {
 			mHeader.putAll(headers);
 		}
 		mTypeToken=null;
+		mParams=null;
+		this.setRetryPolicy( new DefaultRetryPolicy(Constant.REQUEST_TIMEOUT,1,1.0f));
 	}
 
 	public GsonRequest(int method
@@ -92,6 +98,29 @@ public class GsonRequest<T> extends Request<T> {
 			mHeader.putAll(headers);
 		}
 		this.mClass=null;
+		this.mParams=null;
+		this.setRetryPolicy( new DefaultRetryPolicy(Constant.REQUEST_TIMEOUT,1,1.0f));
+	}
+
+	public GsonRequest(int method
+						,String url
+					   ,Class<T> objectClass
+					   ,Map<String,String> headers
+					   ,Map<String,String> paras
+					   ,Listener<T> listener
+					   ,ErrorListener errorListener
+	){
+		super(method, url, errorListener);
+		this.mClass = objectClass;
+		this.mListener = listener;
+		this.mGson = new Gson();
+		if( null != headers){
+			mHeader.putAll(headers);
+		}
+		this.mParams = paras;
+		this.mTypeToken=null;
+
+		this.setRetryPolicy( new DefaultRetryPolicy(Constant.REQUEST_TIMEOUT,1,1.0f));
 	}
 
 	@Override
@@ -121,5 +150,11 @@ public class GsonRequest<T> extends Request<T> {
 	public Map<String, String> getHeaders() throws AuthFailureError {
 		//return super.getHeaders();
 		return mHeader;
+	}
+
+	@Override
+	protected Map<String, String> getParams() throws AuthFailureError {
+		//return super.getParams();
+		return mParams;
 	}
 }

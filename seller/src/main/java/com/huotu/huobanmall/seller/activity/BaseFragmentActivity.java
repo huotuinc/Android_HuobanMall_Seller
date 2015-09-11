@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 
@@ -14,6 +15,8 @@ import com.huotu.huobanmall.seller.utils.ActivityUtils;
  * A placeholder fragment containing a simple view.
  */
 public class BaseFragmentActivity extends FragmentActivity implements View.OnClickListener {
+    ProgressDialogFragment _progressDialog=null;
+
     public BaseFragmentActivity() {
     }
 
@@ -32,5 +35,25 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    protected void showProgressDialog( String title , String message ){
+        if( _progressDialog !=null ) {
+            _progressDialog.dismiss();
+            _progressDialog=null;
+        }
+        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager())
+                .setTitle(title)
+                .setMessage( message )
+                .setCancelable(false)
+                .setCancelableOnTouchOutside(false);
+        _progressDialog = (ProgressDialogFragment) builder.show();
+    }
+
+    protected  void closeProgressDialog(){
+        if(_progressDialog!=null){
+            _progressDialog.dismiss();
+            _progressDialog=null;
+        }
     }
 }

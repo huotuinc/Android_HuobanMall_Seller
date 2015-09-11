@@ -45,8 +45,8 @@ public class Constant {
     // 城市码
     public final static String  PRE_LOCATION_CITY_CODE = "cityCode";
     // url请求前缀
-    public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
-    //public final static String BASE_ROOT_URL ="http://192.168.1.57:8080/huobanmall/";
+    //public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
+    public final static String BASE_ROOT_URL ="http://192.168.1.57:8080/huobanmall/";
     public static final String BASE_URL = BASE_ROOT_URL + "app/";// 基础URL
 
     public static final String GET_VD_INTERFACE = BASE_URL + "sendSMS";// 获取验证码
@@ -59,10 +59,11 @@ public class Constant {
 
     public static final String INIT_INTERFACE= BASE_URL+"init";//初始化接口
 
-    public static final String INDEX_INTERFACE=BASE_URL+"index";//app首页接口
+    public static final String NEWTODAY_INTERFACE=BASE_URL+"newToday";//今日新增接口
 
     public static final String UPDATEPROFILE_INTERFACE = BASE_URL + "updateProfile"; //更新商家信息
 
+    public static final String OPERGOODS_INTERFACE = BASE_URL +"operGoods";//操作商品接口
     /**
      * token添加的类型
      */
@@ -119,12 +120,14 @@ public class Constant {
     public final static int REQUEST_CODE_CLIENT_DOWNLOAD = 8000;
 
     //loading动画加载时间
-    public final static int ANIMATION_COUNT = 3000;
+    public final static int ANIMATION_COUNT = 2000;
 
     // token过期返回码
     public final static int TOKEN_OVERDUE = 56001;
     //用户名或密码错误
     public final static int ERROR_USER_PASSWORD=56000;
+    //请求超时时间
+    public final static int REQUEST_TIMEOUT=20*1000;
 }
 
 

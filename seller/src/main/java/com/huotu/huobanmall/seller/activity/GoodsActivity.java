@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.huotu.huobanmall.seller.R;
@@ -30,8 +32,6 @@ import butterknife.ButterKnife;
  * 商品管理
  */
 public class GoodsActivity extends BaseFragmentActivity {
-    @Bind(R.id.header_title)
-    TextView _header_title;
     @Bind(R.id.header_back)
     Button  _header_back;
     @Bind(R.id.goods_pager)
@@ -40,6 +40,8 @@ public class GoodsActivity extends BaseFragmentActivity {
     TabPageIndicator _goodIndicator;
     @Bind(R.id.header_operate)
     TextView _btnOperate;
+    @Bind(R.id.goods_title)
+    RadioGroup _rdGroup;
 
     SaleGoodsFragment _salesGoodsFragment;
     OffShelfFragment _offShelfFragments;
@@ -55,7 +57,18 @@ public class GoodsActivity extends BaseFragmentActivity {
         _header_back.setOnClickListener(this);
         _btnOperate.setOnClickListener(this);
         _btnOperate.setVisibility(View.VISIBLE);
-        _header_title.setText("产品列表");
+
+        _rdGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if( checkedId== R.id.saleing_btn){
+                    _goodIndicator.setCurrentItem(0);
+                }else if( checkedId==R.id.offshelf_btn){
+                    _goodIndicator.setCurrentItem(1);
+                }
+            }
+        });
+
         _salesGoodsFragment=SaleGoodsFragment.newInstance();
         _offShelfFragments=OffShelfFragment.newInstance();
         _fragments = new ArrayList<>();

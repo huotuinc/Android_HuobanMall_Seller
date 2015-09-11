@@ -7,8 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.huotu.huobanmall.seller.Interface.IIndexFragmentInteractionListener;
 import com.huotu.huobanmall.seller.adapter.TodayDataFragmentAdapter;
+import com.huotu.huobanmall.seller.bean.BaseModel;
+import com.huotu.huobanmall.seller.bean.MJNewTodayModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.fragment.BaseFragment;
 import com.huotu.huobanmall.seller.fragment.TodayDistributorsFragment;
@@ -16,10 +22,18 @@ import com.huotu.huobanmall.seller.fragment.TodayMemberFragment;
 import com.huotu.huobanmall.seller.fragment.TodayOrderFragment;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.utils.DialogUtils;
+import com.huotu.huobanmall.seller.utils.GsonRequest;
+import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.StringUtils;
+import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Manifest;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -27,6 +41,8 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
 
     @Bind(R.id.main_todyMoney)
     TextView main_TodayMoney;
+    @Bind(R.id.main_totalMoney)
+    TextView main_TotalMoney;
     @Bind(R.id.main_menu_cpgl)
     Button main_menu_cpgl;
     @Bind(R.id.main_menu_ddgl)
@@ -46,19 +62,19 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
     CirclePageIndicator _indicator;
     TodayDataFragmentAdapter _fragmentAdapter;
 
+    MJNewTodayModel _data=null;
+
+    //ProgressDialogFragment _progressDlg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
         //String formatText = "￥%.2f";
         //CountUpTimerView countUpView =new CountUpTimerView( main_todyMoney , formatText , 1000.33f,5000.45f, 3000,100);
         //countUpView.start();
-
-
-
 
         initTodayData();
 
@@ -67,34 +83,7 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         main_menu_gdtj.setOnClickListener(this);
         main_menu_szgl.setOnClickListener(this);
 
-//        mMenus=new ArrayList<>();
-//        final String[] menus = getResources().getStringArray(R.array.main_menu_name);
-//        TypedArray iconsTA = getResources().obtainTypedArray(R.array.main_menu_icon);
-//
-//        for( int i=0;i<menus.length;i++) {
-//            MenuModel item = new MenuModel();
-//            item.setName(menus[i]);
-//            item.setIcon( iconsTA.getResourceId( i,0 ));
-//            mMenus.add(item);
-//        }
-//        mAdapter = new MenuAdapter(mMenus,this);
-//        main_gridView.setAdapter(mAdapter);
-//        main_gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                MenuModel item = mMenus.get(position);
-//                if( item.getIcon()==R.mipmap.cpgl ) {
-//                    ActivityUtils.getInstance().showActivity(MainActivity.this, GoodsEditActivity.class);
-//                }else if( item.getIcon() == R.mipmap.ddgl){
-//                    //ActivityUtils.getInstance().showActivity(this , GoodsEditActivity.class);
-//                }else if( item.getIcon()==R.mipmap.zytj){
-//                    ActivityUtils.getInstance().showActivity(MainActivity.this,DataStatisticActivity.class);
-//                }else if( item.getIcon()==R.mipmap.setting){
-//
-//                }
-//            }
-//        });
-
+        getData();
     }
 
     @Override
@@ -103,12 +92,26 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         ButterKnife.unbind(this);
     }
 
+    protected void getData(){
+        String url = Constant.NEWTODAY_INTERFACE;
+        HttpParaUtils httpParaUtils =new HttpParaUtils();
+        url =  httpParaUtils.getHttpGetUrl(url,null);
+        GsonRequest<MJNewTodayModel> newTodayRequest=new GsonRequest<MJNewTodayModel>(
+                Request.Method.GET,
+                url,
+                MJNewTodayModel.class,
+                null,
+                newTodayModelListener,
+                errorListener
+        );
+
+        this.showProgressDialog("","正在获取数据，请稍等...");
+
+        VolleyRequestManager.getRequestQueue().add(newTodayRequest);
+    }
+
     @Override
     public void onClick(View v) {
-
-        switch (v.getId()) {
-        }
-
         super.onClick(v);
         if( v.getId() == R.id.main_menu_cpgl){
             ActivityUtils.getInstance().showActivity(this, GoodsActivity.class);
@@ -122,7 +125,6 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
             ActivityUtils.getInstance().showActivity(this, SettingActivity.class);
         }
     }
-
 
     protected void initTodayData(){
         _todayDistributorsFragments = new TodayDistributorsFragment();
@@ -142,4 +144,54 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
     public void switchFragment(int position) {
         _indicator.setCurrentItem(position);
     }
+
+    Response.Listener<MJNewTodayModel> newTodayModelListener = new Response.Listener<MJNewTodayModel>() {
+        @Override
+        public void onResponse(MJNewTodayModel mjNewTodayModel) {
+            MainActivity.this.closeProgressDialog();
+
+            if(null == mjNewTodayModel){
+                DialogUtils.showDialog(MainActivity.this, MainActivity.this.getSupportFragmentManager()
+                ,"错误信息","请求失败","关闭");
+                return;
+            }
+            if(mjNewTodayModel.getSystemResultCode()!=1){
+                DialogUtils.showDialog(MainActivity.this, MainActivity.this.getSupportFragmentManager()
+                        ,"错误信息",mjNewTodayModel.getSystemResultDescription(),"关闭");
+                return;
+            }else if( mjNewTodayModel.getResultCode()== Constant.TOKEN_OVERDUE){
+                ActivityUtils.getInstance().skipActivity(MainActivity.this,LoginActivity.class);
+                return;
+            }else if( mjNewTodayModel.getResultCode() != 1){
+                DialogUtils.showDialog(MainActivity.this, MainActivity.this.getSupportFragmentManager()
+                        ,"错误信息",mjNewTodayModel.getResultDescription(),"关闭");
+                return;
+            }
+
+
+            main_TodayMoney.setText(String.valueOf(mjNewTodayModel.getResultData().getTodaySales()));
+            main_TotalMoney.setText(String.valueOf(mjNewTodayModel.getResultData().getTotalSales()));
+
+            _data=mjNewTodayModel;
+
+//            Bundle bd = new Bundle();
+//            bd.putFloat("todayOrderAmount", mjNewTodayModel.getResultData().getTodayOrderAmount());
+//            bd.putFloat("todayMemberAmount",mjNewTodayModel.getResultData().getTodayMemberAmount());
+//            bd.putFloat("todayPartnerAmount",mjNewTodayModel.getResultData().getTodayPartnerAmount());
+//            bd.putIntegerArrayList("orderHour", (ArrayList)mjNewTodayModel.getResultData().getOrderHour());
+//            bd.putIntegerArrayList("OrderAmount",(ArrayList)mjNewTodayModel.getResultData().getOrderAmount());
+            _todayOrderFragments.setData(mjNewTodayModel);
+        }
+    };
+
+    Response.ErrorListener errorListener=new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            MainActivity.this.closeProgressDialog();
+            if( volleyError.networkResponse!=null) {
+                String message = new String(volleyError.networkResponse.data);
+                DialogUtils.showDialog(MainActivity.this,MainActivity.this.getSupportFragmentManager(),"错误信息",message,"关闭");
+            }
+        }
+    };
 }

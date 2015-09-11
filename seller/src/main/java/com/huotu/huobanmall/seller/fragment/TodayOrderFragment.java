@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
@@ -17,6 +18,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.Interface.IIndexFragmentInteractionListener;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.MJNewTodayModel;
 import com.huotu.huobanmall.seller.bean.PurchaseOfGoods;
 
 import java.util.ArrayList;
@@ -42,6 +44,14 @@ public class TodayOrderFragment extends BaseFragment implements View.OnClickList
     LinearLayout _ll_members;
     @Bind(R.id.ll_todayOrder_fxs)
     LinearLayout _ll_fxs;
+    @Bind(R.id.todayOrder_OrderCount)
+    TextView _orderCount;
+    @Bind(R.id.todayOrder_MemberCount)
+    TextView _memberCount;
+    @Bind(R.id.todayOrder_fxsCount)
+    TextView _fxsCount;
+
+    MJNewTodayModel _data=null;
 
     private IIndexFragmentInteractionListener mListener;
 
@@ -140,29 +150,31 @@ public class TodayOrderFragment extends BaseFragment implements View.OnClickList
     private void setLineChartData(){
         int bg=0x3B91DE;
         int gridbg=0x56A5EA;
-        _orderLineChart.setGridBackgroundColor( gridbg );
+        //_orderLineChart.setGridBackgroundColor( gridbg );
 
-        //_orderLineChart.setBackgroundColor(  bg );
+        _orderLineChart.setBackgroundColor(bg);
         _orderLineChart.setDescription("暂无数据");
         _orderLineChart.setNoDataText("暂无数据");
         _orderLineChart.getAxisRight().setEnabled(false);
         //_orderLineChart.getAxisLeft().setEnabled(false);
 
-
         List<String> xValues= new ArrayList<String>();
+        //List<Integer> xValues = _data.getResultData().getOrderHour();
         List<Entry> yValues=new ArrayList<>();
-        Random r=new Random();
-        for(int i=1;i<=7;i++){
-            xValues.add( "7."+ i );
-            float y = r.nextFloat()*100;
-            Entry item=new Entry( y ,i);
+        //Random r=new Random();
+        for(int i=0;i< xValues.size() ;i++){
+            //xValues.add( "7."+ i );
+            int x = _data.getResultData().getOrderHour().get(i);
+            //float y = r.nextFloat()*100;
+            int y = _data.getResultData().getOrderAmount().get(i);
+            Entry item=new Entry( y , x );
             yValues.add(item);
         }
         LineDataSet dataset =new LineDataSet( yValues ,"");
         dataset.setCircleColor(Color.WHITE);
         dataset.setCircleSize(4);
         dataset.setDrawCircleHole(true);
-        dataset.setDrawValues(true);
+        dataset.setDrawValues(false);
         dataset.setLineWidth(2);
         dataset.setColor(Color.WHITE);
         dataset.setValueTextSize(14);
@@ -176,5 +188,13 @@ public class TodayOrderFragment extends BaseFragment implements View.OnClickList
         _orderLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
     }
 
+    public void setData(MJNewTodayModel model){
+        _data=model;
 
+        _orderCount.setText( String .valueOf( _data.getResultData().getTodayOrderAmount() ));
+        _memberCount.setText( String.valueOf(_data.getResultData().getTodayMemberAmount()) );
+        _fxsCount.setText( String.valueOf( _data.getResultData().getTodayPartnerAmount() ) );
+
+        setLineChartData();
+    }
 }

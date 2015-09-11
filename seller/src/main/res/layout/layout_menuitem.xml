@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:background="@color/gray"
-        android:layout_marginRight="@dimen/space_2"
+        android:layout_marginRight="@dimen/space_1"
         android:layout_height="wrap_content">
             <Button
                 android:id="@+id/main_menu_cpgl"
@@ -22,7 +22,7 @@
                 android:layout_weight="1"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/space_2"
+                android:layout_marginBottom="@dimen/space_1"
                 android:text="产品管理"/>
 
             <Button
@@ -44,7 +44,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:background="@color/gray"
-        android:layout_marginRight="@dimen/space_2"
+        android:layout_marginRight="@dimen/space_1"
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/main_menu_ddgl"
@@ -56,7 +56,7 @@
             android:layout_weight="1"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/space_2"
+            android:layout_marginBottom="@dimen/space_1"
             android:text="订单管理"/>
 
         <Button

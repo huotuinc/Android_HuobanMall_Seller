@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,7 +22,9 @@ import com.huotu.huobanmall.seller.activity.LoginActivity;
 import com.huotu.huobanmall.seller.adapter.GoodsAdapter;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.bean.MJGoodModel;
+import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.common.Constant;
+import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
@@ -54,6 +57,7 @@ public class SaleGoodsFragment extends BaseFragment {
 
     ProgressDialogFragment _progressDialog=null;
 
+    OperateTypeEnum _type = OperateTypeEnum.REFRESH;
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -65,10 +69,6 @@ public class SaleGoodsFragment extends BaseFragment {
     // TODO: Rename and change types and number of parameters
     public static SaleGoodsFragment newInstance() {
         SaleGoodsFragment fragment = new SaleGoodsFragment();
-        //Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
-        //fragment.setArguments(args);
         return fragment;
     }
 
@@ -87,18 +87,27 @@ public class SaleGoodsFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_sale_goods, container, false);
         ButterKnife.bind(this, rootView);
 
+        _goodsList = new ArrayList<>();
+        _goodsAdapter = new GoodsAdapter(this.getActivity(), _goodsList);
+        _goodsSaleListView.getRefreshableView().setAdapter(_goodsAdapter);
+
+        _goodsSaleListView.setMode(PullToRefreshBase.Mode.BOTH);
         _listView = _goodsSaleListView.getRefreshableView();
         _goodsSaleListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
-                getData();
+                _type = OperateTypeEnum.REFRESH;
+                getData( _type );
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
-                getData();
+                _type = OperateTypeEnum.LOADMORE;
+                getData( _type );
             }
         });
+
+        firstGetData();
 
         return rootView;
     }
@@ -149,24 +158,35 @@ public class SaleGoodsFragment extends BaseFragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    protected void getData( ){
-        HttpParaUtils httpParaUtils = new HttpParaUtils();
-        Map<String,String> maps = new HashMap<>();
-        maps.put("type", "1");
-        maps.put("lastProductId","0");
-        String url = Constant.GOODSLIST_INTERFACE;
-        url = httpParaUtils.getHttpGetUrl(url,maps);
-
+    protected void firstGetData(){
         if( _progressDialog !=null){
             _progressDialog.dismiss();
             _progressDialog=null;
         }
-
         ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder( this.getActivity(), this.getActivity().getSupportFragmentManager())
                 .setMessage("正在获取数据，请稍等...")
                 .setCancelable(false)
                 .setCancelableOnTouchOutside(false);
         _progressDialog = (ProgressDialogFragment) builder.show();
+
+        _type= OperateTypeEnum.REFRESH;
+        getData(_type);
+    }
+
+
+    protected void getData( OperateTypeEnum type ){
+        Map<String,String> maps = new HashMap<>();
+        if( type == OperateTypeEnum.REFRESH){
+            //maps.put("lastProductId","");
+        }else {
+            String lastid = String.valueOf( _goodsList.get( _goodsList.size()-1).getGoodsId());
+            maps.put("lastProductId", lastid);
+        }
+
+        HttpParaUtils httpParaUtils = new HttpParaUtils();
+        maps.put("type", "1");
+        String url = Constant.GOODSLIST_INTERFACE;
+        url = httpParaUtils.getHttpGetUrl(url,maps);
 
         GsonRequest<MJGoodModel> goodsListRequest=new GsonRequest<MJGoodModel>(Request.Method.GET,
                 url,
@@ -175,6 +195,8 @@ public class SaleGoodsFragment extends BaseFragment {
                 goodslistListener,
                 errorListener
                 );
+
+        goodsListRequest.setRetryPolicy(new DefaultRetryPolicy( Constant.REQUEST_TIMEOUT ,1,1.0f));
 
         VolleyRequestManager.getRequestQueue().add(goodsListRequest);
     }
@@ -189,6 +211,14 @@ public class SaleGoodsFragment extends BaseFragment {
 
             _goodsSaleListView.onRefreshComplete();
 
+            if( mjGoodModel==null){
+                SimpleDialogFragment.createBuilder(SaleGoodsFragment.this.getActivity(), SaleGoodsFragment.this.getActivity().getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage( "获取数据失败" )
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }
             if( mjGoodModel.getSystemResultCode()!=1){
                 SimpleDialogFragment.createBuilder( SaleGoodsFragment.this.getActivity() , SaleGoodsFragment.this.getActivity().getSupportFragmentManager())
                         .setTitle("错误信息")
@@ -196,7 +226,11 @@ public class SaleGoodsFragment extends BaseFragment {
                         .setNegativeButtonText("关闭")
                         .show();
                 return;
-            }else if( mjGoodModel.getResultCode() != 1){
+            }else if( mjGoodModel.getResultCode()== Constant.TOKEN_OVERDUE){
+                ActivityUtils.getInstance().showActivity(SaleGoodsFragment.this.getActivity(), LoginActivity.class);
+                return;
+            }
+            else if( mjGoodModel.getResultCode() != 1){
                 SimpleDialogFragment.createBuilder( SaleGoodsFragment.this.getActivity() , SaleGoodsFragment.this.getActivity().getSupportFragmentManager())
                         .setTitle("错误信息")
                         .setMessage( mjGoodModel.getResultDescription() )
@@ -205,9 +239,17 @@ public class SaleGoodsFragment extends BaseFragment {
                 return;
             }
 
-            _goodsList= mjGoodModel.getResultData().getList();
-            _goodsAdapter = new GoodsAdapter(SaleGoodsFragment.this.getActivity(), _goodsList);
-            _goodsSaleListView.getRefreshableView().setAdapter(_goodsAdapter);
+            if( mjGoodModel.getResultData() ==null || mjGoodModel.getResultData().getList()==null||mjGoodModel.getResultData().getList().size()<1){
+                return;
+            }
+
+            if(_type == OperateTypeEnum.REFRESH){
+                _goodsList.clear();
+                _goodsList.addAll(mjGoodModel.getResultData().getList());
+            }else{
+                _goodsList.addAll(mjGoodModel.getResultData().getList());
+            }
+            _goodsAdapter.notifyDataSetChanged();
         }
     };
 
