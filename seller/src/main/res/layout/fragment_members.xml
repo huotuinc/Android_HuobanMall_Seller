@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:layout_margin="10dp"
     tools:context="com.huobanmall.seller.fragment.MembersFragment">
 
         <RelativeLayout
@@ -26,15 +27,17 @@
                     android:layout_toRightOf="@id/members_total_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_20"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16"
                     android:text="153" />
                 <TextView
                     android:id="@+id/members_title_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/members_total"
-                    android:textSize="@dimen/text_size_20"
+                    android:textSize="@dimen/text_size_16"
                     android:layout_toRightOf="@id/members_total_image"
+                    android:textColor="@android:color/black"
                     android:text="注册会员总人数"/>
 
                 <TextView
@@ -43,14 +46,16 @@
                     android:id="@+id/members_firend"
                     android:layout_alignTop="@id/members_total_image"
                     android:layout_toLeftOf="@+id/members_firendCount"
-                    android:textSize="@dimen/text_size_18"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16"
                     android:text="分销商："/>
                 <TextView
                     android:id="@+id/members_firendCount"
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_20"
+                    android:textSize="@dimen/text_size_16"
+                    android:textColor="@android:color/black"
                     android:text="1545"/>
                 <TextView
                     android:id="@+id/members_member"
@@ -58,7 +63,8 @@
                     android:layout_alignLeft="@id/members_firend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_20"
+                    android:textSize="@dimen/text_size_16"
+                    android:textColor="@android:color/black"
                     android:text="会员："/>
                 <TextView
                     android:id="@+id/members_memberCount"
@@ -66,7 +72,8 @@
                     android:layout_toRightOf="@id/members_member"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_18"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16"
                     android:text="1544"/>
 
             </RelativeLayout>
@@ -85,7 +92,7 @@
                 android:layout_below="@id/members_spaceLine"
                 android:padding="@dimen/space_5"
                 android:textColor="#AA000000"
-                android:textSize="@dimen/text_size_20"
+                android:textSize="@dimen/text_size_16"
                 ptr:footerColor="@color/indicator_footline_color"
                 ptr:selectedColor="#FE3C00"
                 />
@@ -102,7 +109,7 @@
                     android:id="@+id/members_info_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_16"
                     android:textColor="@android:color/black"
                     android:text="当前统计："/>
                 <TextView
@@ -110,7 +117,7 @@
                     android:layout_toRightOf="@id/members_info_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_16"
                     android:textColor="@android:color/black"
                     android:text="32"/>
 
@@ -129,7 +136,7 @@
                     android:textColor="@android:color/black"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/members_firend_color"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_16"
                     android:text="分销商："/>
                 <TextView
                     android:id="@+id/members_firendCount2"
@@ -137,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_16"
                     android:text="233"/>
 
                 <TextView
@@ -155,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/members_member_color"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_16"
                     android:textColor="@android:color/black"
                     android:text="会员："/>
                 <TextView
@@ -163,7 +170,7 @@
                     android:layout_toRightOf="@id/members_member_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_16"
                     android:textColor="@android:color/black"
                     android:text="877"/>
 
@@ -203,9 +210,10 @@
                     android:text="@string/members_jf_statistic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_16"
                     android:layout_marginLeft="@dimen/space_5"
                     android:layout_centerVertical="true"
+                    android:textColor="@android:color/black"
                     android:layout_toRightOf="@id/members_statis_icon1"
                     android:layout_toLeftOf="@+id/members_arrow1"/>
                 <ImageView
@@ -236,7 +244,8 @@
                     android:text="@string/members_xf_statistic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_16"
+                    android:textColor="@android:color/black"
                     android:layout_marginLeft="@dimen/space_5"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/members_statis_icon2"
