@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="#F0EFF4">
+    
+<RelativeLayout
+        android:id="@+id/title_login"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal" >
+
+        <include layout="@layout/title" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_login" >
+        <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+
+            <com.huotu.android.library.libedittext.EditText
+                android:id="@+id/edtOld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入旧密码"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:maxLength="12"
+                android:textColor="@color/black" />
+
+            <com.huotu.android.library.libedittext.EditText
+                android:id="@+id/edtNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="请输入新密码"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:maxLength="12"
+                android:textColor="@color/black" />
+
+            <com.huotu.android.library.libedittext.EditText
+                android:id="@+id/edtNewRes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="请再次输入新密码"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:maxLength="12"
+                android:textColor="@color/black" />
+            
+            <TextView
+                android:id="@+id/txtForget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:clickable="true"
+                android:onClick="onClickButton"
+                android:padding="10dp"
+                android:text="忘记密码?"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+        </RelativeLayout>
+
+</RelativeLayout>

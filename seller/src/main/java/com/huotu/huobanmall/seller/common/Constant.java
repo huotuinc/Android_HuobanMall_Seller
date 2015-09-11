@@ -40,6 +40,7 @@ public class Constant {
     public final static String LOGIN_USER_ACCOUNT = "account_name";
     // 登录信息文件
     public final static String LOGIN_USER_INFO = "login_user_info";
+
     // 用户Token
     public final static String PRE_USER_TOKEN="user_token";
     // 城市码
@@ -56,6 +57,8 @@ public class Constant {
     public static final String LOGIN_INTERFACE=BASE_URL+"login";//登录接口
 
     public static final String FORGET_INTERFACE=BASE_URL+"forgetPassword";//忘记密码接口
+
+    public final static String MODIFYPSW_INTEFACE = BASE_URL + "modifyPassword";// 修改密码
 
     public static final String INIT_INTERFACE= BASE_URL+"init";//初始化接口
 

@@ -4,20 +4,20 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:background="@color/gray"
-    android:layout_height="wrap_content">
+    android:layout_height="200dp">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:background="@color/gray"
         android:layout_marginRight="@dimen/space_1"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
             <Button
                 android:id="@+id/main_menu_cpgl"
                 android:drawableTop="@mipmap/cpgl"
                 android:drawablePadding="@dimen/space_10"
                 android:background="@color/white"
-                android:padding="@dimen/space_5"
+                android:padding="@dimen/space_15"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="0dp"
@@ -30,7 +30,7 @@
                 android:drawableTop="@mipmap/gdtj"
                 android:drawablePadding="@dimen/space_10"
                 android:background="@color/white"
-                android:padding="@dimen/space_5"
+                android:padding="@dimen/space_15"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -45,13 +45,13 @@
         android:layout_weight="1"
         android:background="@color/gray"
         android:layout_marginRight="@dimen/space_1"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <Button
             android:id="@+id/main_menu_ddgl"
             android:drawableTop="@mipmap/ddgl"
             android:drawablePadding="@dimen/space_10"
             android:background="@color/white"
-            android:padding="@dimen/space_5"
+            android:padding="@dimen/space_15"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="0dp"
@@ -64,7 +64,7 @@
             android:drawableTop="@mipmap/szgl"
             android:drawablePadding="@dimen/space_10"
             android:background="@color/white"
-            android:padding="@dimen/space_5"
+            android:padding="@dimen/space_15"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
