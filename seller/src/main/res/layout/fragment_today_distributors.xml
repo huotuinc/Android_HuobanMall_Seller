@@ -86,7 +86,7 @@
         android:layout_below="@id/todayDistributer_header"
         android:background="@color/gray"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_2" />
+        android:layout_height="@dimen/space_1" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/todayDistributer_lineChart"

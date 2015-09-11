@@ -11,6 +11,7 @@
         android:layout_centerVertical="true"
         android:background="@color/main_header_bg"
         android:textColor="@android:color/white"
+        android:layout_marginLeft="20dp"
         android:text="@string/back"
         android:drawableLeft="@drawable/btn_back"/>
 
@@ -34,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
-            android:text="订单"
+            android:text=" 订单 "
             android:textSize="@dimen/text_size_18"
             android:gravity="center"
             android:singleLine="true"
@@ -74,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
-            android:text="会员"
+            android:text=" 会员 "
             android:checked="false"
             android:paddingBottom="@dimen/space_5"
             android:paddingTop="@dimen/space_5"

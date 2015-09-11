@@ -29,8 +29,11 @@
                 android:button="@null"
                 android:id="@+id/goodsedit_all"
                 android:background="@mipmap/wsz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:layout_margin="10dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"/>
 
@@ -38,33 +41,38 @@
         <Button
             android:id="@+id/goodsedit_delete"
             android:text="@string/goodsedit_delete"
+
             android:layout_toRightOf="@id/goodsedit_all"
             android:background="@drawable/shape_white"
-            android:layout_marginLeft="@dimen/space_5"
-            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/space_15"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_size_20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_margin="20dp"
+            android:layout_width="60dp"
+            android:layout_height="30dp" />
         <Button
             android:id="@+id/goodsedit_onshelf"
             android:text="@string/goodsedit_onshelf"
             android:layout_toRightOf="@id/goodsedit_delete"
             android:background="@drawable/shape_white"
             android:textSize="@dimen/text_size_20"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="@dimen/space_5"
-            android:layout_height="wrap_content" />
+            android:layout_margin="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_width="60dp"
+            android:layout_height="30dp" />
         <Button
             android:id="@+id/goodsedit_offshelf"
             android:text="@string/goodsedit_offshelf"
             android:textSize="@dimen/text_size_20"
+            android:layout_margin="20dp"
             android:layout_toRightOf="@id/goodsedit_onshelf"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="@dimen/space_5"
             android:layout_marginRight="@dimen/space_5"
             android:background="@drawable/shape_white"
 
-            android:layout_height="wrap_content" />
+             />
 
     </RelativeLayout>
 

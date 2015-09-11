@@ -23,16 +23,13 @@
             android:id="@+id/ET"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-
             android:focusable="true"
-
             android:focusableInTouchMode="true"
             android:hint="请输入内容！"
-
             android:imeOptions="actionNext"
             android:inputType="textUri"
             android:maxLength="20"
-            cy:style="transparent" />
+             />
     </RelativeLayout>
 
     <Button

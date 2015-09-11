@@ -77,6 +77,7 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
         application = ( SellerApplication ) ForgetActivity.this.getApplication ();
         this.setContentView(R.layout.activity_forget);
         initView ( );
+
     }
 
     @Override

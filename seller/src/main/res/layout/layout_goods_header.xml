@@ -12,6 +12,7 @@
         android:layout_centerVertical="true"
         android:background="@color/main_header_bg"
         android:textColor="@android:color/white"
+        android:layout_marginRight="15dp"
         android:text="@string/back"
         android:drawableLeft="@drawable/btn_back"/>
 
@@ -74,9 +75,9 @@
 
     <TextView
         android:id="@+id/header_operate"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="5dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="15dp"
         android:textColor="@android:color/white"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"

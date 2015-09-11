@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:layout_margin="10dp"
+    android:layout_margin="20dp"
     tools:context="com.huobanmall.seller.fragment.OrderFragment">
 
     <!--<com.handmark.pulltorefresh.library.PullToRefreshScrollView-->
@@ -25,8 +25,11 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/order_total_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
                     android:background="@mipmap/ddzs"/>
                 <TextView
                     android:id="@+id/order_total"
@@ -41,7 +44,7 @@
                     android:id="@+id/order_title_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/order_total"
+                    android:layout_alignBottom="@id/order_total_image"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_16"
                     android:layout_toRightOf="@id/order_total_image"
@@ -80,6 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_16"
+                    android:layout_marginLeft="15dp"
                     android:textColor="@android:color/black"
                     android:text="当前统计："/>
                 <TextView
@@ -107,12 +111,13 @@
                 android:padding="@dimen/space_5"
                 android:background="@drawable/round_gray"
                 android:layout_margin="@dimen/space_5">
+                android:text="商品销量前10名排列"
                 <TextView
-                    android:text="商品销量前10名排列"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_16"
+                    android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/order_arrow1"
                     android:layout_toStartOf="@+id/order_arrow1" />
@@ -121,6 +126,7 @@
                     android:id="@+id/order_arrow1"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+
                     android:layout_centerVertical="true"
                     android:background="@mipmap/hsjt"/>
             </RelativeLayout>

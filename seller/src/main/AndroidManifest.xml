@@ -32,6 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ForgetActivity" />
+        <activity android:name=".activity.PswchangeActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.WebViewActivity" />
         <activity android:name=".activity.SettingActivity" />

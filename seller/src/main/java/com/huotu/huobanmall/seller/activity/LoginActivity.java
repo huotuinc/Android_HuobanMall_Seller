@@ -70,9 +70,6 @@ public class LoginActivity extends BaseFragmentActivity implements
 
         //userName.setText("wlf");
         //userName.setText("jxd");
-
-
-
         passWord.setText("123456");
         titleName.setText("用户登录");
         loginBtn.setOnClickListener(this);

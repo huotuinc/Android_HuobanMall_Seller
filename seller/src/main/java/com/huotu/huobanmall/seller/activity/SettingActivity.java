@@ -180,7 +180,7 @@ public class SettingActivity extends BaseFragmentActivity
             break;
 
             case R.id.changePswLabel: {
-                ActivityUtils.getInstance().showActivity ( SettingActivity.this, ForgetActivity.class );
+                ActivityUtils.getInstance().showActivity ( SettingActivity.this, PswchangeActivity.class );
 
             }
             break;

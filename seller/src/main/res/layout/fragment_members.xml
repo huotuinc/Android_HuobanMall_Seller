@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:layout_margin="10dp"
+    android:layout_margin="20dp"
     tools:context="com.huobanmall.seller.fragment.MembersFragment">
 
         <RelativeLayout
@@ -18,8 +18,11 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/members_total_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
                     android:background="@mipmap/zchyzrs"/>
                 <TextView
                     android:id="@+id/members_total"
@@ -34,7 +37,7 @@
                     android:id="@+id/members_title_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/members_total"
+                    android:layout_alignBottom="@id/members_total_image"
                     android:textSize="@dimen/text_size_16"
                     android:layout_toRightOf="@id/members_total_image"
                     android:textColor="@android:color/black"
@@ -51,12 +54,15 @@
                     android:text="分销商："/>
                 <TextView
                     android:id="@+id/members_firendCount"
-                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_16"
+                    android:layout_marginRight="15dp"
                     android:textColor="@android:color/black"
-                    android:text="1545"/>
+                    android:text="1545"
+                    android:layout_above="@+id/members_title_text"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
                 <TextView
                     android:id="@+id/members_member"
                     android:layout_below="@id/members_firend"
@@ -200,6 +206,7 @@
                 android:layout_margin="@dimen/space_5">
 
                 <ImageView
+                    android:layout_marginLeft="15dp"
                     android:id="@+id/members_statis_icon1"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -237,7 +244,7 @@
                     android:id="@+id/members_statis_icon2"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-
+                    android:layout_marginLeft="15dp"
                     android:layout_alignParentLeft="true"
                     android:background="@mipmap/hyxhbxftj"/>
                 <TextView
