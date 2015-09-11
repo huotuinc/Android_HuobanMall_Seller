@@ -67,6 +67,8 @@ public class Constant {
 
     public static final String USERREPORT_INTERFACE =BASE_URL +"userReport";//会员量统计报表
 
+    public static final String ORDERREPORT_INTERFACE = BASE_URL +"orderReport";//订单统计报表
+
     public static final String OTHERSTATISTIC_INTERFACE = BASE_URL + "otherStatistics"; //更多统计
     /**
      * token添加的类型

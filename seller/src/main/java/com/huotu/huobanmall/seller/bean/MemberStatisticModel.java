@@ -17,15 +17,15 @@ public class MemberStatisticModel {
     private List<Integer> weekMemberAmounts;
     private List<Date> monthMemberTimes;
     private List<Integer> monthMemberAmounts;
-    private Integer todayParnterAmount;
-    private Integer weekParnterAmount;
-    private Integer monthParnterAmount;
-    private List<Integer> todayParnterTimes;
-    private List<Integer> todayParnterAmounts;
-    private List<Date> weekParnterTimes;
-    private List<Integer> weekParnterAmounts;
-    private List<Date> monthParnterTimes;
-    private List<Integer> monthParnterAmounts;
+    private Integer todayPartnerAmount;
+    private Integer weekPartnerAmount;
+    private Integer monthPartnerAmount;
+    private List<Integer> todayPartnerTimes;
+    private List<Integer> todayPartnerAmounts;
+    private List<Date> weekPartnerTimes;
+    private List<Integer> weekPartnerAmounts;
+    private List<Date> monthPartnerTimes;
+    private List<Integer> monthPartnerAmounts;
 
     public void setTotal(Integer total) {
         this.total = total;
@@ -67,40 +67,40 @@ public class MemberStatisticModel {
         this.monthMemberAmounts = monthMemberAmounts;
     }
 
-    public void setTodayParnterAmount(Integer todayParnterAmount) {
-        this.todayParnterAmount = todayParnterAmount;
+    public void setTodayPartnerAmount(Integer todayPartnerAmount) {
+        this.todayPartnerAmount = todayPartnerAmount;
     }
 
-    public void setWeekParnterAmount(Integer weekParnterAmount) {
-        this.weekParnterAmount = weekParnterAmount;
+    public void setWeekPartnerAmount(Integer weekPartnerAmount) {
+        this.weekPartnerAmount = weekPartnerAmount;
     }
 
-    public void setMonthParnterAmount(Integer monthParnterAmount) {
-        this.monthParnterAmount = monthParnterAmount;
+    public void setMonthPartnerAmount(Integer monthPartnerAmount) {
+        this.monthPartnerAmount = monthPartnerAmount;
     }
 
-    public void setTodayParnterTimes(List<Integer> todayParnterTimes) {
-        this.todayParnterTimes = todayParnterTimes;
+    public void setTodayPartnerTimes(List<Integer> todayPartnerTimes) {
+        this.todayPartnerTimes = todayPartnerTimes;
     }
 
-    public void setTodayParnterAmounts(List<Integer> todayParnterAmounts) {
-        this.todayParnterAmounts = todayParnterAmounts;
+    public void setTodayPartnerAmounts(List<Integer> todayPartnerAmounts) {
+        this.todayPartnerAmounts = todayPartnerAmounts;
     }
 
-    public void setWeekParnterTimes(List<Date> weekParnterTimes) {
-        this.weekParnterTimes = weekParnterTimes;
+    public void setWeekPartnerTimes(List<Date> weekPartnerTimes) {
+        this.weekPartnerTimes = weekPartnerTimes;
     }
 
     public void setWeekParnterAmounts(List<Integer> weekParnterAmounts) {
-        this.weekParnterAmounts = weekParnterAmounts;
+        this.weekPartnerAmounts = weekParnterAmounts;
     }
 
-    public void setMonthParnterTimes(List<Date> monthParnterTimes) {
-        this.monthParnterTimes = monthParnterTimes;
+    public void setMonthPartnerTimes(List<Date> monthPartnerTimes) {
+        this.monthPartnerTimes = monthPartnerTimes;
     }
 
-    public void setMonthParnterAmounts(List<Integer> monthParnterAmounts) {
-        this.monthParnterAmounts = monthParnterAmounts;
+    public void setMonthPartnerAmounts(List<Integer> monthPartnerAmounts) {
+        this.monthPartnerAmounts = monthPartnerAmounts;
     }
 
 
@@ -145,40 +145,40 @@ public class MemberStatisticModel {
         return monthMemberAmounts;
     }
 
-    public Integer getTodayParnterAmount() {
-        return todayParnterAmount;
+    public Integer getTodayPartnerAmount() {
+        return todayPartnerAmount;
     }
 
-    public Integer getWeekParnterAmount() {
-        return weekParnterAmount;
+    public Integer getWeekPartnerAmount() {
+        return weekPartnerAmount;
     }
 
-    public Integer getMonthParnterAmount() {
-        return monthParnterAmount;
+    public Integer getMonthPartnerAmount() {
+        return monthPartnerAmount;
     }
 
-    public List<Integer> getTodayParnterTimes() {
-        return todayParnterTimes;
+    public List<Integer> getTodayPartnerTimes() {
+        return todayPartnerTimes;
     }
 
-    public List<Integer> getTodayParnterAmounts() {
-        return todayParnterAmounts;
+    public List<Integer> getTodayPartnerAmounts() {
+        return todayPartnerAmounts;
     }
 
-    public List<Date> getWeekParnterTimes() {
-        return weekParnterTimes;
+    public List<Date> getWeekPartnerTimes() {
+        return weekPartnerTimes;
     }
 
-    public List<Integer> getWeekParnterAmounts() {
-        return weekParnterAmounts;
+    public List<Integer> getWeekPartnerAmounts() {
+        return weekPartnerAmounts;
     }
 
-    public List<Date> getMonthParnterTimes() {
-        return monthParnterTimes;
+    public List<Date> getMonthPartnerTimes() {
+        return monthPartnerTimes;
     }
 
-    public List<Integer> getMonthParnterAmounts() {
-        return monthParnterAmounts;
+    public List<Integer> getMonthPartnerAmounts() {
+        return monthPartnerAmounts;
     }
 
 

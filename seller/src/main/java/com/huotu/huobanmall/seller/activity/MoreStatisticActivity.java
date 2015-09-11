@@ -2,11 +2,13 @@ package com.huotu.huobanmall.seller.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -17,6 +19,7 @@ import com.huotu.huobanmall.seller.bean.MJOtherStatisticModel;
 import com.huotu.huobanmall.seller.bean.OtherStatisticModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
@@ -29,6 +32,8 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
     Button btnBack;
     @Bind(R.id.morestatistic_title2)
     RelativeLayout morestatistic_title2;
+    @Bind(R.id.morestatistic_OrderCount)
+    TextView moresta_ordercount;
     @Bind(R.id.morestatistic_menu_fxs)
     Button moresta_fxs;
     @Bind(R.id.morestatistic_menu_sp)
@@ -86,15 +91,45 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         @Override
         public void onResponse(MJOtherStatisticModel  mjOtherStatisticModel ) {
             MoreStatisticActivity.this.closeProgressDialog();
-            
+
+            if( mjOtherStatisticModel==null){
+                DialogUtils.showDialog(MoreStatisticActivity.this, MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息","请求数据失败","关闭");
+                return;
+            }
+            if( mjOtherStatisticModel.getSystemResultCode()!=1){
+                DialogUtils.showDialog(MoreStatisticActivity.this,MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息", mjOtherStatisticModel.getSystemResultDescription(),"关闭");
+                return;
+            }
+            if( mjOtherStatisticModel.getResultCode() == Constant.TOKEN_OVERDUE){
+                ActivityUtils.getInstance().skipActivity(MoreStatisticActivity.this, LoginActivity.class);
+                return;
+            }
+            if( mjOtherStatisticModel.getResultCode() !=1){
+                DialogUtils.showDialog(MoreStatisticActivity.this,MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息",mjOtherStatisticModel.getResultDescription(),"关闭");
+                return;
+            }
+
+            String orderCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getBillAmount());
+            String spCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getGoodsAmount() );
+            String fxsCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getDiscributorAmount());
+            String memberCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getMemberAmount());
+
+            moresta_ordercount.setText(  orderCount );
+            moresta_sp.setText( spCount );
+            moresta_hytj.setText( memberCount );
+            moresta_fxs.setText( fxsCount );
         }
     };
-
 
     Response.ErrorListener errorListener =new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
             MoreStatisticActivity.this.closeProgressDialog();
+            String message ="";
+            if( volleyError.networkResponse !=null){
+                message = new String( volleyError.networkResponse.data );
+            }
+            DialogUtils.showDialog(MoreStatisticActivity.this,MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息",message,"关闭");
 
         }
     };

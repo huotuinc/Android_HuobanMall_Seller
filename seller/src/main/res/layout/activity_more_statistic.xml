@@ -5,7 +5,6 @@
     tools:context="com.huotu.huobanmall.seller.activity.MoreStatisticActivity">
     <RelativeLayout
         android:id="@+id/datastatistic_header"
-        android:layout_marginBottom="@dimen/space_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <include layout="@layout/layout_morestatistic_header"></include>
@@ -46,6 +45,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center"
+                android:text="75"
+                android:textColor="@color/main_header_bg"
                 />
 
             <Button
@@ -58,7 +59,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-
+                android:text="23"
+                android:textColor="@color/main_header_bg"
                />
 
         </LinearLayout>
