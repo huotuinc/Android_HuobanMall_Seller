@@ -2,7 +2,7 @@ package com.huotu.huobanmall.seller.widget;
 
 import android.os.CountDownTimer;
 import android.widget.TextView;
-import com.huotu.huobanmall.seller.R;
+
 
 
 public class CountDownTimerButton extends CountDownTimer

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:layout_margin="10dp"
     tools:context="com.huobanmall.seller.fragment.OrderFragment">
 
     <!--<com.handmark.pulltorefresh.library.PullToRefreshScrollView-->
@@ -33,14 +34,16 @@
                     android:layout_toRightOf="@id/order_total_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_20"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16"
                     android:text="153" />
                 <TextView
                     android:id="@+id/order_title_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/order_total"
-                    android:textSize="@dimen/text_size_20"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16"
                     android:layout_toRightOf="@id/order_total_image"
                     android:text="订单总数"/>
 
@@ -76,7 +79,7 @@
                     android:id="@+id/order_info_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_20"
+                    android:textSize="@dimen/text_size_16"
                     android:textColor="@android:color/black"
                     android:text="当前统计："/>
                 <TextView
@@ -84,7 +87,7 @@
                     android:layout_toRightOf="@id/order_info_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_20"
+                    android:textSize="@dimen/text_size_16"
                     android:textColor="@android:color/black"
                     android:text="32"/>
             </RelativeLayout>
@@ -108,15 +111,16 @@
                     android:text="商品销量前10名排列"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_18"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/order_arrow1"
                     android:layout_toStartOf="@+id/order_arrow1" />
                 <ImageView
                     android:layout_alignParentRight="true"
                     android:id="@+id/order_arrow1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:background="@mipmap/hsjt"/>
             </RelativeLayout>

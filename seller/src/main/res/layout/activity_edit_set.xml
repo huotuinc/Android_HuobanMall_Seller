@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/title_login"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <include layout="@layout/title" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_login"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/title_bg">
+
+        <com.huotu.android.library.libedittext.EditText
+            android:id="@+id/ET"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:focusable="true"
+
+            android:focusableInTouchMode="true"
+            android:hint="请输入内容！"
+
+            android:imeOptions="actionNext"
+            android:inputType="textUri"
+            android:maxLength="20"
+            cy:style="transparent" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/editBtn"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/btn_red_sel"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onClickButton"
+        android:text="修改"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+</RelativeLayout>

@@ -39,9 +39,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:layout_marginLeft="10dp"
             android:id="@+id/morestatistic_total_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@mipmap/ddtj"/>
         <TextView
             android:id="@+id/morestatistic_total"

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:layout_margin="10dp"
     tools:context="com.huobanmall.seller.fragment.SalesFragment">
 
     <!--<com.handmark.pulltorefresh.library.PullToRefreshScrollView-->
@@ -34,7 +35,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/space_5"
-                    android:textSize="@dimen/text_size_20"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16"
                     android:text="15234.33" />
                 <TextView
                     android:id="@+id/sales_title_text"
@@ -43,7 +45,8 @@
                     android:layout_below="@id/sales_total"
                     android:layout_toRightOf="@id/sales_total_image"
                     android:layout_marginLeft="@dimen/space_5"
-                    android:textSize="@dimen/text_size_20"
+                    android:textSize="@dimen/text_size_16"
+                    android:textColor="@android:color/black"
                     android:text="销售总数"/>
 
                 <ImageView
@@ -77,7 +80,7 @@
                     android:id="@+id/sales_info_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_20"
+                    android:textSize="@dimen/text_size_16"
                     android:textColor="@android:color/black"
                     android:text="当前统计："/>
                 <TextView
@@ -85,7 +88,7 @@
                     android:layout_toRightOf="@id/sales_info_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_20"
+                    android:textSize="@dimen/text_size_16"
                     android:textColor="@android:color/black"
                     android:text="32542.00"/>
             </RelativeLayout>
@@ -108,8 +111,8 @@
                 android:layout_margin="@dimen/space_5">
                 <ImageView
                     android:id="@+id/sales_statis_icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentLeft="true"
                     android:background="@mipmap/xsmxs"/>
                 <TextView
@@ -117,16 +120,17 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_16"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
+                    android:textColor="@android:color/black"
                     android:layout_toRightOf="@id/sales_statis_icon"
                     android:layout_toLeftOf="@+id/members_arrow1" />
                 <ImageView
                     android:layout_alignParentRight="true"
                     android:id="@+id/sales_arrow1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:background="@mipmap/hsjt"/>
             </RelativeLayout>
