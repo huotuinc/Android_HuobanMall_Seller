@@ -51,7 +51,6 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_statistic);
         ButterKnife.bind(this);
-
         initView();
         initFragments();
     }

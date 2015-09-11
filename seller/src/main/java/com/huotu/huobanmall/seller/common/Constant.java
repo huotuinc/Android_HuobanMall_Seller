@@ -45,8 +45,8 @@ public class Constant {
     // 城市码
     public final static String  PRE_LOCATION_CITY_CODE = "cityCode";
     // url请求前缀
-    //public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
-    public final static String BASE_ROOT_URL ="http://192.168.1.57:8080/huobanmall/";
+    public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
+    //public final static String BASE_ROOT_URL ="http://192.168.1.57:8080/huobanmall/";
     public static final String BASE_URL = BASE_ROOT_URL + "app/";// 基础URL
 
     public static final String GET_VD_INTERFACE = BASE_URL + "sendSMS";// 获取验证码
