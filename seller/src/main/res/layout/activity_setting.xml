@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     >
 
     <RelativeLayout
@@ -12,6 +13,10 @@
 
         <include layout="@layout/title" />
     </RelativeLayout>
+    <ScrollView
+        android:layout_below="@+id/title_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -19,10 +24,73 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/title_login" >
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+                <!-- 店铺logo -->
+
+                <LinearLayout
+                    android:id="@+id/imgLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/theme_color"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="店铺logo"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+
+
+                        <com.android.volley.toolbox.NetworkImageView
+                            android:id="@+id/logo"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@mipmap/ic_launcher"
+
+                            />
+                        <ImageView
+                            android:id="@+id/img"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@mipmap/menu_user_logo_bg"
+                            >
+                        </ImageView>
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/hsjt"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+                <!-- 店铺logo -->
+
                 <!-- 店铺名称 -->
                 <LinearLayout
                     android:id="@+id/shopNameLabel"
@@ -43,6 +111,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="店铺名称"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
                         />
 
                     <TextView
@@ -53,13 +123,15 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:text="火图"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
                         />
 
                     <ImageView
                         android:layout_width="@dimen/info_arrow_width"
                         android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
-                        android:background="@mipmap/info_arrow"
+                        android:background="@mipmap/hsjt"
                         />
                 </LinearLayout>
 
@@ -89,6 +161,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="店铺描述"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
                         />
 
                     <TextView
@@ -98,79 +172,30 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="火图hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+                        android:text="火图hhhhh"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
                         />
 
                     <ImageView
                         android:layout_width="@dimen/info_arrow_width"
                         android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
-                        android:background="@mipmap/info_arrow"
+                        android:background="@mipmap/hsjt"
                         />
                 </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/line_gray_shape" />
                 <!-- 店铺描述end -->
 
-                <!-- 店铺logo -->
-
-                <LinearLayout
-                    android:id="@+id/imgLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:gravity="center_vertical"
-                    android:onClick="onClick"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:background="@color/theme_color"
-                   >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="店铺logo"
-                        android:textSize="30sp"
-                         />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" >
-
-                        <ImageView
-                            android:id="@+id/img"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            >
-                        </ImageView>
-
-                        <com.android.volley.toolbox.NetworkImageView
-                            android:id="@+id/logo"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@mipmap/ic_launcher"
-                            />
-                    </RelativeLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                       />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@drawable/line_gray_shape" />
-                <!-- 店铺logo -->
 
 
                 <!-- 当前账号 -->
@@ -194,6 +219,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="当前账号"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
 
                          />
 
@@ -204,15 +231,17 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:maxLength="20"
+                        android:maxLength="11"
                         android:text="18767152078"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
                         />
 
                     <ImageView
                         android:layout_width="@dimen/info_arrow_width"
                         android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
-                        android:background="@mipmap/info_arrow"
+
                         />
                 </LinearLayout>
 
@@ -244,7 +273,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="昵称"
-                         />
+                        android:textSize="16sp"
+                        android:textColor="@color/black"/>
 
                     <TextView
                         android:id="@+id/txtName"
@@ -254,13 +284,15 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:text="开开"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
                         />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/info_arrow_width"
+                        android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
-                       />
+                        android:background="@mipmap/hsjt"></ImageView>
                 </LinearLayout>
 
                 <ImageView
@@ -285,12 +317,15 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:background="@color/theme_color"
+
                   >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="修改登录密码"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
                         />
                     <TextView
                         android:id="@+id/txtchangePsw"
@@ -306,13 +341,18 @@
                         android:layout_width="@dimen/info_arrow_width"
                         android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
-                        android:background="@mipmap/info_arrow"
+                        android:background="@mipmap/hsjt"
                         />
                 </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/line_gray_shape" />
                 <!-- 修改登录密码 -->
 
@@ -338,6 +378,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="推送设置"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
                         />
 
                     <TextView
@@ -354,13 +396,18 @@
                         android:layout_width="@dimen/info_arrow_width"
                         android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
-                        android:background="@mipmap/info_arrow"
+                        android:background="@mipmap/hsjt"
                        />
                 </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/line_gray_shape" />
                 <!-- 推送设置 -->
 
@@ -386,6 +433,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="关于我们"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
                        />
 
                     <TextView
@@ -402,7 +451,7 @@
                         android:layout_width="@dimen/info_arrow_width"
                         android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
-                        android:background="@mipmap/info_arrow"
+                        android:background="@mipmap/hsjt"
                         />
                 </LinearLayout>
 
@@ -434,6 +483,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="使用帮助"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
                          />
 
                     <TextView
@@ -449,7 +500,7 @@
                         android:layout_width="@dimen/info_arrow_width"
                         android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
-                        android:background="@mipmap/info_arrow"
+                        android:background="@mipmap/hsjt"
                         />
                 </LinearLayout>
 
@@ -479,6 +530,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="问题反馈"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
                         />
 
                     <TextView
@@ -495,7 +548,7 @@
                         android:layout_width="@dimen/info_arrow_width"
                         android:layout_height="@dimen/info_arrow_height"
                         android:layout_marginLeft="10dp"
-                        android:background="@mipmap/info_arrow"
+                        android:background="@mipmap/hsjt"
                         />
                 </LinearLayout>
 
@@ -510,7 +563,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_width="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:clickable="true"
                     android:gravity="center"
                     android:onClick="onClickButton"
@@ -521,9 +574,10 @@
                     android:layout_height="40dp"/>
 
 
-
             </LinearLayout>
 
 
     </RelativeLayout>
-</RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

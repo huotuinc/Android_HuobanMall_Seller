@@ -108,6 +108,8 @@ public class Constant {
 
     //Activity之间传递参数的参数名称
     public final static String Extra_Url="url";
+    public static final String UPDATE_PROFILE = BASE_URL + "updateProfile";// 修改资料
+    // ---POST
 
 
     public static final String BASE_IMAGE_PATH = Environment.getExternalStorageDirectory().toString() + File.separator + "hbimage";

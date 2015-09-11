@@ -5,7 +5,7 @@
     <color name="main_header_bg">#FE3C00</color>
     <color name="main_header_title_color">#FFFFFF</color>
     <color name="main_info_bg">#EDEDED</color>
-
+    <color name="black">#000000</color>
     <color name="pageindicator_circle_stoken_color">#000000</color>
     <color name="pageindicator_circle_fill_color">#000000</color>
     <color name="order_month_bg">#0066FF</color>

@@ -27,21 +27,23 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activity.ForgetActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.WebViewActivity" />
-        <activity android:name=".activity.SettingActivity"/>
-        <activity android:name=".activity.PushActivity"/>
-        <activity android:name=".activity.MainActivity"
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.PushActivity" />
+        <activity
+            android:name=".activity.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".activity.DataStatisticActivity"
-            android:theme="@style/Theme.PageIndicatorDefaults"
-            android:label="@string/title_activity_data_statistic" >
+            android:label="@string/title_activity_data_statistic"
+            android:theme="@style/Theme.PageIndicatorDefaults" >
         </activity>
         <activity
             android:name=".activity.GoodsActivity"
@@ -72,6 +74,10 @@
         <activity
             android:name=".activity.MoreStatisticActivity"
             android:label="@string/title_activity_more_statistic" >
+        </activity>
+        <activity
+            android:name=".activity.EditSetActivity"
+            android:label="@string/title_activity_edit_set" >
         </activity>
     </application>
 
