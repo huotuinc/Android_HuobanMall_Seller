@@ -7,9 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.DialogUtils;
+import com.huotu.huobanmall.seller.utils.GsonRequest;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -56,4 +61,19 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
             _progressDialog=null;
         }
     }
+
+
+    Response.ErrorListener errorListener = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            BaseFragmentActivity.this.closeProgressDialog();
+            String message="";
+            if( null != volleyError.networkResponse){
+                message=new String( volleyError.networkResponse.data);
+            }
+            DialogUtils.showDialog(BaseFragmentActivity.this, BaseFragmentActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
+        }
+    };
+
+
 }

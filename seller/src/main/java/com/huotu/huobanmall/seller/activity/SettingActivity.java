@@ -16,14 +16,20 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.JsonSyntaxException;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.EditSetTypeEnum;
 import com.huotu.huobanmall.seller.bean.HTMerchantModel;
 
+import com.huotu.huobanmall.seller.bean.RefreshSettingEvent;
+import com.huotu.huobanmall.seller.utils.DialogUtils;
+import com.huotu.huobanmall.seller.utils.GsonRequest;
+import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.HttpUtil;
 import com.huotu.huobanmall.seller.utils.JSONUtil;
-import com.huotu.huobanmall.seller.utils.KJLoger;
 import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
 import com.huotu.huobanmall.seller.utils.Util;
 
@@ -33,23 +39,24 @@ import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.BitmapLoader;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
+import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.huotu.huobanmall.seller.widget.PhotoSelectView;
 import com.huotu.huobanmall.seller.widget.PhotoSelectView.OnPhotoSelectBackListener;
 import com.huotu.huobanmall.seller.widget.PhotoSelectView.SelectType;
 import com.huotu.huobanmall.seller.widget.CropperView;
 import com.huotu.huobanmall.seller.widget.CropperView.OnCropperBackListener;
 
-
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/8/31.
@@ -57,11 +64,9 @@ import butterknife.ButterKnife;
 public class SettingActivity extends BaseFragmentActivity
         implements View.OnClickListener,OnPhotoSelectBackListener, OnCropperBackListener {
 
-    public
-    SellerApplication application;
+    public SellerApplication application;
     @Bind(R.id.title)
     public TextView titleName;
-
     @Bind(R.id.backImage)
     public Button backImage;
 
@@ -113,7 +118,6 @@ public class SettingActivity extends BaseFragmentActivity
     private PhotoSelectView pop;
     private CropperView cropperView;
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -124,8 +128,6 @@ public class SettingActivity extends BaseFragmentActivity
         initView();
     }
 
-
-
     private void initView() {
         pushLabel.setOnClickListener(this);
         titleName.setText("用户设置");
@@ -133,6 +135,14 @@ public class SettingActivity extends BaseFragmentActivity
         backImage.setOnClickListener(this);
         quitbtn.setOnClickListener(this);
 
+        if( EventBus.getDefault().isRegistered(this)==false) {
+            EventBus.getDefault().register(this);
+        }
+
+       setData();
+    }
+
+    protected void setData(){
         String shopNameStr = PreferenceHelper.readString( application , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_SHOPNAME );
         shopName.setText(shopNameStr);
         String shopDescription = PreferenceHelper.readString(application , Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_DISCRIPTION);
@@ -148,6 +158,10 @@ public class SettingActivity extends BaseFragmentActivity
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+
+        if( true == EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -157,8 +171,6 @@ public class SettingActivity extends BaseFragmentActivity
 
     @Override
     public void onClick(View v) {
-
-
         switch (v.getId()) {
             case R.id.imgLabel:{
                 if (null == pop)
@@ -167,26 +179,33 @@ public class SettingActivity extends BaseFragmentActivity
             }
             break;
             case R.id.shopNameLabel:{
-                ActivityUtils.getInstance().showActivity(SettingActivity.this, EditSetActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("type", EditSetTypeEnum.SHOPNAME.getIndex() );
+                bd.putString("text", shopName.getText().toString());
+                ActivityUtils.getInstance().showActivity(SettingActivity.this, EditSetActivity.class , bd);
             }
             break;
             case R.id.shopdescriptionLabel:{
-                ActivityUtils.getInstance().showActivity(SettingActivity.this, EditSetActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("type", EditSetTypeEnum.SHOPDESCRIPTION.getIndex());
+                bd.putString("text", ShopDescription.getText().toString());
+                ActivityUtils.getInstance().showActivity(SettingActivity.this, EditSetActivity.class,bd);
             }
             break;
             case R.id.nameLabel:{
-                ActivityUtils.getInstance().showActivity(SettingActivity.this, EditSetActivity.class);
+                Bundle bd = new Bundle();
+                bd.putInt("type", EditSetTypeEnum.NICKNAME.getIndex());
+                bd.putString("text", tvNickName.getText().toString());
+                ActivityUtils.getInstance().showActivity(SettingActivity.this, EditSetActivity.class,bd );
             }
             break;
 
             case R.id.changePswLabel: {
                 ActivityUtils.getInstance().showActivity ( SettingActivity.this, PswchangeActivity.class );
-
             }
             break;
             case R.id.pushLabel: {
                 ActivityUtils.getInstance().showActivity(SettingActivity.this, PushActivity.class);
-
             }
             break;
             case R.id.backtext: {
@@ -199,12 +218,19 @@ public class SettingActivity extends BaseFragmentActivity
             break;
 
             case R.id.aboutusLabel: {
-                 ActivityUtils.getInstance().showActivity(SettingActivity.this,"www.baidu.com");
-
+                String url = PreferenceHelper.readString(this.getApplicationContext(), Constant.LOGIN_GLOBAL_INFO,Constant.LOGIN_GLOBAL_ABOUTURL);
+                Intent intent=new Intent();
+                intent.setClass(SettingActivity.this,WebViewActivity.class);
+                intent.putExtra(Constant.Extra_Url, url);
+                ActivityUtils.getInstance().showActivity(SettingActivity.this, intent );
             }
             break;
             case R.id.helpLabel: {
-                 ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
+                String url = PreferenceHelper.readString(this.getApplicationContext(), Constant.LOGIN_GLOBAL_INFO,Constant.LOGIN_GLOBAL_HELPURL);
+                Intent intent=new Intent();
+                intent.setClass(SettingActivity.this,WebViewActivity.class);
+                intent.putExtra(Constant.Extra_Url, url);
+                 ActivityUtils.getInstance().showActivity(SettingActivity.this, intent );
 
             }
             break;
@@ -349,13 +375,66 @@ public class SettingActivity extends BaseFragmentActivity
         cropBitmap = bitmap;
 
         // 上传头像
-        new UserLogoAsyncTask().execute();
+        //new UserLogoAsyncTask().execute();
+
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        cropBitmap.compress(Bitmap.CompressFormat.PNG, 90, bao);
+        byte[] buffer = bao.toByteArray();
+        String imgStr = Base64.encodeToString(buffer, 0, buffer.length,
+                Base64.DEFAULT);
+        String profileData = imgStr;
+
+        String url = Constant.UPDATEPROFILE_INTERFACE;
+        Map<String,String> paras =new HashMap<>();
+        paras.put("profileType", String.valueOf(EditSetTypeEnum.LOGO.getIndex()));
+        paras.put("profileData", profileData );
+        HttpParaUtils httpParaUtils =new HttpParaUtils();
+        Map<String,String > maps = httpParaUtils.getHttpPost(paras);
+        GsonRequest<HTMerchantModel> request = new GsonRequest<HTMerchantModel>(
+                Request.Method.POST,
+                url ,
+                HTMerchantModel.class,
+                null,
+                maps,
+                updateListener,
+                errorListener
+        );
+
+        this.showProgressDialog("","正在上传，请稍等...");
+
+        VolleyRequestManager.getRequestQueue().add(request);
     }
+
+    Response.Listener<HTMerchantModel> updateListener = new Response.Listener<HTMerchantModel>() {
+        @Override
+        public void onResponse(HTMerchantModel htMerchantModel) {
+            SettingActivity.this.closeProgressDialog();
+            if( null == htMerchantModel){
+                DialogUtils.showDialog(SettingActivity.this, SettingActivity.this.getSupportFragmentManager(), "错误信息", "更新失败", "关闭");
+                return;
+            }
+            if( htMerchantModel.getSystemResultCode()!=1){
+                DialogUtils.showDialog(SettingActivity.this,SettingActivity.this.getSupportFragmentManager(),"错误信息",htMerchantModel.getSystemResultDescription(),"关闭");
+                return;
+            }
+            if( htMerchantModel.getResultCode() == Constant.TOKEN_OVERDUE){
+                ActivityUtils.getInstance().skipActivity(SettingActivity.this,LoginActivity.class);
+                return;
+            }
+            if( htMerchantModel.getResultCode() != 1){
+                DialogUtils.showDialog(SettingActivity.this,SettingActivity.this.getSupportFragmentManager(),"错误信息",htMerchantModel.getResultDescription(),"关闭");
+                return;
+            }
+            SellerApplication.getInstance().writeMerchantInfo(htMerchantModel.getResultData().getUser());
+            //刷新界面数据
+            EventBus.getDefault().post(new RefreshSettingEvent());
+        }
+    };
+
+
     public class UserLogoAsyncTask extends
     AsyncTask<Void, Void, HTMerchantModel>
-
     {
-
         private int profileType;
 
         private Object profileData;
@@ -413,4 +492,8 @@ public class SettingActivity extends BaseFragmentActivity
 
     }
 
+
+    public void onEventMainThread(RefreshSettingEvent event){
+        setData();
+    }
 }

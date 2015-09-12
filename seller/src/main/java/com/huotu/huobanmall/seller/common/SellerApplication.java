@@ -3,6 +3,7 @@ package com.huotu.huobanmall.seller.common;
 import android.app.Application;
 
 import com.baidu.location.LocationClient;
+import com.huotu.huobanmall.seller.bean.GlobalModel;
 import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
@@ -36,7 +37,7 @@ public class SellerApplication extends Application{
     }
 
     protected void initVolley(){
-        VolleyRequestManager.init ( this );
+        VolleyRequestManager.init(this);
     }
 
     public LocationClient getBaiduLocationClient(){
@@ -55,6 +56,16 @@ public class SellerApplication extends Application{
                 getApplicationContext ( ), Constant.LOGIN_USER_INFO, Constant
                         .PRE_USER_TOKEN
                                     );
+    }
+
+    public void writeGlobalInfo(GlobalModel globalModel){
+        if( globalModel==null)return;
+        //关于我们url
+        PreferenceHelper.writeString( getApplicationContext(), Constant.LOGIN_GLOBAL_INFO , Constant.LOGIN_GLOBAL_ABOUTURL , globalModel.getAboutURL() );
+        //
+        PreferenceHelper.writeString(this,Constant.LOGIN_GLOBAL_INFO,Constant.LOGIN_GLOBAL_SERVERURL,globalModel.getServerUrl());
+
+        PreferenceHelper.writeString(this,Constant.LOGIN_GLOBAL_INFO,Constant.LOGIN_GLOBAL_HELPURL,globalModel.getHelpURL());
     }
 
     public void writeMerchantInfo(MerchantModel user)
@@ -86,7 +97,7 @@ public class SellerApplication extends Application{
         //用户名
         PreferenceHelper.writeString(getApplicationContext(), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_NAME, user.getName());
         //昵称
-        PreferenceHelper.writeString(getApplicationContext(), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_NICKNAME, user.getName());
+        PreferenceHelper.writeString(getApplicationContext(), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_NICKNAME, user.getNickName());
         //夜间免打扰
         PreferenceHelper.writeInt(getApplicationContext(), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_NO_DISTURBD, user.isNoDisturbed());
         //欢迎提示

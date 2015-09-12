@@ -59,12 +59,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OrderFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link OrderFragment#newInstance} factory method to
- * create an instance of this fragment.
+ *
  */
 public class OrderFragment extends BaseFragment implements View.OnClickListener {
 
@@ -106,7 +101,6 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
      * this fragment using the provided parameters.
      * @return A new instance of fragment OrderFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static OrderFragment newInstance() {
         OrderFragment fragment = new OrderFragment();
         Bundle args = new Bundle();
@@ -194,16 +188,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
@@ -286,29 +271,20 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         _viewPager.setAdapter(_orderFragmentAdapter);
 
         _indicator.setViewPager(_viewPager);
-//        _orderFragment  = OrderFragment.newInstance();
-//        _salesFragments = SalesFragment.newInstance();
-//        _membersFragments = MembersFragment.newInstance();
-//        _fragments = new ArrayList<>();
-//        _fragments.add(_orderFragment);
-//        _fragments.add(_salesFragments);
-//        _fragments.add(_membersFragments);
-//        _fragmentManager = this.getSupportFragmentManager();
-//        _dataStatisticFragmentAdapter = new DataStatisticFragmentAdapter(_fragments,_fragmentManager);
-//
-//        _viewPager.setAdapter(_dataStatisticFragmentAdapter);
-//        _circlePageIndicator.setViewPager(_viewPager);
+
     }
 
 
-    public class LineChartFragment extends BaseFragment{
+    public static class LineChartFragment extends BaseFragment{
 
         @Bind(R.id.order_lineChart)
         LineChart _orderLineChart;
 
         MJBillStatisticModel _data=null;
+        int _type=1;
 
         public LineChartFragment (){
+
         }
 
         @Override
@@ -325,52 +301,34 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         }
 
         protected void initData(){
-            _orderLineChart.setBackgroundColor(Color.WHITE);
-            _orderLineChart.setDescription("line chart description");
-            _orderLineChart.setNoDataText("no date to show chart");
+            //_orderLineChart.setBackgroundColor(Color.WHITE);
+            _orderLineChart.setDescription("");
+            _orderLineChart.setNoDataText("暂无数据");
             _orderLineChart.getAxisRight().setEnabled(false);
 
-            List<String> xValues= new ArrayList<String>();
-            List<Entry> yValues=new ArrayList<>();
-            Random r=new Random();
-            for(int i=1;i<=7;i++){
-                xValues.add( "7."+ i );
-                float y = r.nextFloat()*100;
-                Entry item=new Entry( y ,i);
-                yValues.add(item);
-            }
-            LineDataSet dataset =new LineDataSet( yValues ,"");
-            dataset.setCircleColor(Color.RED);
-            dataset.setCircleSize(4);
-            dataset.setDrawCircleHole(false);
-            dataset.setDrawValues(true);
-            dataset.setLineWidth(1);
-            dataset.setColor(Color.BLUE);
-            dataset.setValueTextSize(14);
-            dataset.setValueTextColor(Color.GREEN);
-            dataset.setDrawCubic(true);
-            LineData data =new LineData(xValues ,dataset );
-            _orderLineChart.setData(data);
-            _orderLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
         }
 
         @Override
         public void onResume() {
             super.onResume();
+
+            setData(_data,_type);
         }
 
         public void setData( MJBillStatisticModel data ,int type ){
             _data=data;
+            _type=type;
             if( _data==null || _data.getResultData() == null ) return;
 
-            if( type == 1) {
-                setLineChartData(_orderLineChart, (ArrayList) _data.getResultData().getTodayTimes() , _data.getResultData().getTodayAmounts());
-            }else if( type == 2){
-                setLineChartData(_orderLineChart ,(ArrayList) _data.getResultData().getWeekTimes() , _data.getResultData().getWeekAmounts() );
-            }else if( type==3){
-                setLineChartData(_orderLineChart, (ArrayList)_data.getResultData().getMonthTimes(),_data.getResultData().getMonthAmounts());
+            if( this.isResumed()) {
+                if( type == 1) {
+                    setLineChartData(_orderLineChart, (ArrayList) _data.getResultData().getTodayTimes() , _data.getResultData().getTodayAmounts());
+                }else if( type == 2){
+                    setLineChartData(_orderLineChart ,(ArrayList) _data.getResultData().getWeekTimes() , _data.getResultData().getWeekAmounts() );
+                }else if( type==3){
+                    setLineChartData(_orderLineChart, (ArrayList)_data.getResultData().getMonthTimes(),_data.getResultData().getMonthAmounts());
+                }
             }
-
         }
 
         protected void setLineChartData( LineChart lineChart , List<Object> xData1 , List<Integer> yData1 ){
@@ -380,6 +338,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
             int gridColor=0xFFD3D3D3;
             int lineColor =0xFFFF3C00;
             int circleColor=0xFFFFFFFF;
+            int textColor = 0xFF000000;
 
             lineChart.setGridBackgroundColor(gridColor);
             lineChart.setBackgroundColor(bgColor);
@@ -394,20 +353,21 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
                 Object x = xData1.get(i);
                 xValues1.add( String.valueOf( x));
                 int y = yData1.get(i);
-                Entry item=new Entry( y , i );
+                Entry item=new Entry( y , i , "sss");
                 yValues1.add(item);
             }
 
             LineDataSet dataSet =new LineDataSet( yValues1 ,"");
-            dataSet.setCircleColor(circleColor);
-            dataSet.setCircleSize(4);
-            dataSet.setDrawCircleHole(true);
-            dataSet.setDrawValues(false);
+            //dataSet.setCircleColor(circleColor);
+            dataSet.setCircleColors(new int[]{Color.rgb(255, 60, 00)});
+            dataSet.setCircleSize(5);
+            //dataSet.setDrawCircleHole(true);
             dataSet.setLineWidth(2);
             dataSet.setColor(lineColor);
             dataSet.setValueTextSize(14);
-            dataSet.setValueTextColor(Color.GREEN);
+            dataSet.setValueTextColor(textColor);
             dataSet.setDrawCubic(true);
+            dataSet.setDrawValues(true);
 
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);

@@ -24,9 +24,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class DataStatisticActivity extends BaseFragmentActivity implements RadioGroup.OnCheckedChangeListener {
-    OrderFragment _orderFragment;
-    SalesFragment _salesFragments;
-    MembersFragment _membersFragments;
+    OrderFragment _orderFragment=null;
+    SalesFragment _salesFragments=null;
+    MembersFragment _membersFragments=null;
     List<BaseFragment> _fragments;
     FragmentManager _fragmentManager;
     @Bind(R.id.datastatistic_pager)
@@ -61,10 +61,18 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
     }
 
     protected void initFragments(){
-        _orderFragment = OrderFragment.newInstance();
-        _salesFragments = SalesFragment.newInstance();
-        _membersFragments = MembersFragment.newInstance();
-        _fragments = new ArrayList<>();
+        if(_orderFragment==null) {
+            _orderFragment = OrderFragment.newInstance();
+        }
+        if( _salesFragments==null) {
+            _salesFragments = SalesFragment.newInstance();
+        }
+        if( _membersFragments==null) {
+            _membersFragments = MembersFragment.newInstance();
+        }
+        if( _fragments ==null ) {
+            _fragments = new ArrayList<>();
+        }
         _fragments.add(_orderFragment);
         _fragments.add(_salesFragments);
         _fragments.add(_membersFragments);
@@ -114,7 +122,6 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-
         if( checkedId == R.id.tab_rb_a){
             _circlePageIndicator.setCurrentItem( 0 );
         }else if( checkedId == R.id.tab_rb_b){

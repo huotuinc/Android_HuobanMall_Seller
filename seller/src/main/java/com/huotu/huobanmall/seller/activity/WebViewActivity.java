@@ -31,6 +31,8 @@ public class WebViewActivity extends Activity implements View.OnClickListener{
     String _url;
     @Bind(R.id.header_back)
     Button btnBack;
+    @Bind(R.id.header_operate)
+    public TextView header_operate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class WebViewActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
 
+        header_operate.setVisibility(View.GONE);
         btnBack.setOnClickListener(this);
 
         _webView = _pullToRefreshWebViewPage.getRefreshableView();

@@ -42,7 +42,6 @@
         android:background="@drawable/btn_red_sel"
         android:clickable="true"
         android:gravity="center"
-        android:onClick="onClickButton"
         android:text="修改"
         android:textColor="@color/white"
         android:textSize="20sp" />

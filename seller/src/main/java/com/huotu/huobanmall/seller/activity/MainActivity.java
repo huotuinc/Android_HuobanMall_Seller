@@ -2,9 +2,7 @@ package com.huotu.huobanmall.seller.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -41,7 +39,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseFragmentActivity implements IIndexFragmentInteractionListener{
-
     @Bind(R.id.main_todyMoney)
     TextView main_TodayMoney;
     @Bind(R.id.main_totalMoney)
@@ -143,7 +140,7 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
             ActivityUtils.getInstance().showActivity(this, GoodsActivity.class);
         }else if( v.getId() == R.id.main_menu_ddgl){
             Intent intent = new Intent( this , WebViewActivity.class);
-            intent.putExtra(Constant.Extra_Url,"http://www.baidu.com");
+            intent.putExtra(Constant.Extra_Url, "http://www.baidu.com");
             ActivityUtils.getInstance().showActivity(this, WebViewActivity.class);
         }else if( v.getId() == R.id.main_menu_gdtj){
             ActivityUtils.getInstance().showActivity(this, MoreStatisticActivity.class);
@@ -209,12 +206,13 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
             yValues.add(item);
         }
         LineDataSet dataSet =new LineDataSet( yValues ,"");
-        dataSet.setCircleColor(Color.WHITE);
-        dataSet.setCircleSize(4);
-        dataSet.setDrawCircleHole(true);
+
+        dataSet.setCircleColors(new int[]{Color.rgb(255, 255, 255)});
+        dataSet.setCircleSize(5);
+        //dataSet.setDrawCircleHole(true);
         dataSet.setDrawValues(false);
-        dataSet.setLineWidth(2);
-        dataSet.setColor(Color.WHITE);
+        dataSet.setLineWidth(3);
+        dataSet.setColors( new int[]{Color.rgb(255,255,255)} );
         dataSet.setValueTextSize(14);
         dataSet.setValueTextColor(Color.GREEN);
         dataSet.setDrawCubic(true);

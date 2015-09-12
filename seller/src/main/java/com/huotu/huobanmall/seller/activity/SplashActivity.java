@@ -135,6 +135,9 @@ public class SplashActivity extends BaseFragmentActivity {
                 return;
             }
 
+
+            SellerApplication.getInstance().writeGlobalInfo(htInitBean.getResultData().getGlobal());
+
             //更新Token信息
             MerchantModel user = htInitBean.getResultData ().getUser ();
             if(null != user)

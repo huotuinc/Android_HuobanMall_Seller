@@ -80,6 +80,10 @@
             android:name=".activity.EditSetActivity"
             android:label="@string/title_activity_edit_set" >
         </activity>
+        <activity
+            android:name=".activity.BillActivity"
+            android:label="@string/title_activity_bill" >
+        </activity>
     </application>
 
 </manifest>
