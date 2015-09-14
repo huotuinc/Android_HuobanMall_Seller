@@ -2,8 +2,6 @@ package com.huotu.huobanmall.seller.activity;
 
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,7 +11,7 @@ import com.huotu.huobanmall.seller.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class EditSetActivity extends BaseFragmentActivity implements OnClickListener {
+public class EditSetActivity extends BaseFragmentActivity {
     @Bind(R.id.ET)
     public EditText ET;
     @Bind(R.id.backtext)
@@ -45,15 +43,4 @@ public class EditSetActivity extends BaseFragmentActivity implements OnClickList
     }
 
 
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.backtext: {
-                finish();
-                break;
-
-            }
-            default:
-                break;
-        }
-    }
 }
