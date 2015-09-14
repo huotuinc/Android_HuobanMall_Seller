@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -47,11 +48,6 @@ import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MembersFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MembersFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class MembersFragment extends BaseFragment implements View.OnClickListener{
     private OnFragmentInteractionListener mListener;
@@ -61,10 +57,21 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     @Bind(R.id.members_statis2)
     RelativeLayout _membersstatis2;
 
+    @Bind(R.id.members_firendCount2)
+    TextView _member_fxsCount2;
+    @Bind(R.id.members_memberCount2)
+    TextView _member_memberCount2;
     @Bind(R.id.members_viewPager)
     ViewPager _viewPager;
+    @Bind(R.id.members_indicator)
+    TabPageIndicator _indicator;
 
+    MemberLineChartFragment _fragment1=null;
+    MemberLineChartFragment _fragment2=null;
+    MemberLineChartFragment _fragment3=null;
+    List<BaseFragment> _fragments=null;
     MembersFragmentPageAdapter _membersFragmentAdapter;
+    FragmentManager _fragmentManager;
 
     MJMemberStatisticModel _data;
 
@@ -74,7 +81,6 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
      *
      * @return A new instance of fragment MembersFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MembersFragment newInstance() {
         MembersFragment fragment = new MembersFragment();
         Bundle args = new Bundle();
@@ -109,7 +115,55 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
         initFragments();
 
+        getData();
+
         return rootView;
+    }
+
+    protected void initData(){
+
+        initFragments();
+
+        _indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (_data == null || _data.getResultData() == null) return;
+                if (position == 0) {
+                    //Integer count = 0;
+                    Long fxsCount = _data.getResultData().getTodayPartnerAmount();
+                    Long memberCount = _data.getResultData().getTodayMemberAmount();
+                    //_members_info_count.setText(String.valueOf(count));
+                    _member_fxsCount2.setText(String.valueOf(fxsCount));
+                    _member_memberCount2.setText(String.valueOf(memberCount));
+                } else if (position == 1) {
+                    //Integer count = 0;
+                    Long fxsCount = _data.getResultData().getWeekPartnerAmount();
+                    Long memberCount = _data.getResultData().getWeekMemberAmount();
+                    //_members_info_count.setText(String.valueOf(count));
+                    _member_fxsCount2.setText(String.valueOf(fxsCount));
+                    _member_memberCount2.setText(String.valueOf(memberCount));
+                } else if (position == 2) {
+                    //Integer count = 0;
+                    Long fxsCount = _data.getResultData().getMonthPartnerAmount();
+                    Long memberCount = _data.getResultData().getMonthMemberAmount();
+                    //_members_info_count.setText(String.valueOf(count));
+                    _member_fxsCount2.setText(String.valueOf(fxsCount));
+                    _member_memberCount2.setText(String.valueOf(memberCount));
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        getData();
     }
 
     @Override
@@ -118,36 +172,22 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
     }
 
-    List<BaseFragment> _fragments;
-    FragmentManager _fragmentManager;
-    @Bind(R.id.members_indicator)
-    TabPageIndicator _indicator;
+
 
     protected void initFragments(){
-        MemberLineChartFragment fragment1 = new MemberLineChartFragment();
-        MemberLineChartFragment fragment2 = new MemberLineChartFragment();
-        MemberLineChartFragment fragment3 = new MemberLineChartFragment();
+        _fragment1 = new MemberLineChartFragment();
+        _fragment2 = new MemberLineChartFragment();
+        _fragment3 = new MemberLineChartFragment();
         _fragments = new ArrayList<>();
-        _fragments.add(fragment1);
-        _fragments.add(fragment2);
-        _fragments.add(fragment3);
+        _fragments.add(_fragment1);
+        _fragments.add(_fragment2);
+        _fragments.add(_fragment3);
         _fragmentManager = this.getActivity().getSupportFragmentManager();
         _membersFragmentAdapter = new MembersFragmentPageAdapter(_fragments, _fragmentManager);
         _viewPager.setAdapter(_membersFragmentAdapter);
 
         _indicator.setViewPager(_viewPager);
-//        _orderFragment  = OrderFragment.newInstance();
-//        _salesFragments = SalesFragment.newInstance();
-//        _membersFragments = MembersFragment.newInstance();
-//        _fragments = new ArrayList<>();
-//        _fragments.add(_orderFragment);
-//        _fragments.add(_salesFragments);
-//        _fragments.add(_membersFragments);
-//        _fragmentManager = this.getSupportFragmentManager();
-//        _dataStatisticFragmentAdapter = new DataStatisticFragmentAdapter(_fragments,_fragmentManager);
-//
-//        _viewPager.setAdapter(_dataStatisticFragmentAdapter);
-//        _circlePageIndicator.setViewPager(_viewPager);
+
     }
 
 
@@ -179,11 +219,6 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
@@ -251,11 +286,11 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
             _data=mjMemberStatisticModel;
 
+            _fragment1.setData(_data,1);
+            _fragment2.setData(_data,2);
+            _fragment3.setData(_data,3);
+            _membersFragmentAdapter.notifyDataSetChanged();
 
-            //_orderPulltorefreshScrollView.onRefreshComplete();
-
-            // SimpleDialogFragment.createBuilder(getActivity(), getFragmentManager())
-            // .setMessage("oooooooo").show();
         }
     };
 
@@ -263,6 +298,13 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
         @Override
         public void onErrorResponse(VolleyError volleyError) {
             MembersFragment.this.closeProgressDialog();
+            String message="";
+            if( volleyError.networkResponse !=null){
+                message = new String( volleyError.networkResponse.data);
+            }else if( volleyError.getCause() !=null ) {
+                message = volleyError.getCause().getMessage();
+            }
+            DialogUtils.showDialog(MembersFragment.this.getActivity(), MembersFragment.this.getFragmentManager(),"错误信息", message ,"关闭");
 
 ////           SimpleDialogFragment.createBuilder( getActivity() , getFragmentManager() )
 ////                    .setTitle("错误信息")
@@ -280,6 +322,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
         MJMemberStatisticModel _data=null;
 
+        int _type = 1;
 
         public MemberLineChartFragment (){
         }
@@ -293,50 +336,35 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
             View rootView = inflater.inflate(R.layout.layout_memberchart , container, false);
             ButterKnife.bind(this, rootView);
+            initData();
 
             return rootView;
         }
 
         protected void initData(){
+            int bgColor=0xFFFFFFFF;
 
-            _memberLineChart.setBackgroundColor(Color.WHITE);
-            _memberLineChart.setDescription("line chart description");
-            _memberLineChart.setNoDataText("no date to show chart");
-            _memberLineChart.getAxisRight().setEnabled(false);
+            _memberLineChart.setBackgroundColor(bgColor);
+            _memberLineChart.setDrawGridBackground(false);
+            _memberLineChart.setDescription("");
+            _memberLineChart.setNoDataText("暂无数据");
 
-            List<String> xValues= new ArrayList<String>();
-            List<Entry> yValues=new ArrayList<>();
-            Random r=new Random();
-            for(int i=1;i<=7;i++){
-                xValues.add( "7."+ i );
-                float y = r.nextFloat()*100;
-                Entry item=new Entry( y ,i);
-                yValues.add(item);
-            }
-            LineDataSet dataset =new LineDataSet( yValues ,"");
-            dataset.setCircleColor(Color.RED);
-            dataset.setCircleSize(4);
-            dataset.setDrawCircleHole(false);
-            dataset.setDrawValues(true);
-            dataset.setLineWidth(1);
-            dataset.setColor(Color.BLUE);
-            dataset.setValueTextSize(14);
-            dataset.setValueTextColor(Color.GREEN);
-            dataset.setDrawCubic(true);
-            LineData data =new LineData(xValues ,dataset );
-            _memberLineChart.setData(data);
-            _memberLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+
+
         }
 
         @Override
         public void onResume() {
             super.onResume();
-            initData();
+
+            setData(_data,_type);
         }
 
         public void setData( MJMemberStatisticModel data , int type ){
             _data=data;
+            _type= type;
             if( _data == null || _data.getResultData()==null ) return;
+            if( !this.isResumed() )return;
 
             List<Object> xData1=null;
             List<Object> xData2=null;
@@ -344,81 +372,100 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
             List<Object> yData2=null;
             if( type == 1 ){
                 xData1 = (ArrayList) _data.getResultData().getTodayMemberTimes();
-                yData1=(ArrayList)_data.getResultData().getTodayMemberAmounts();
-                xData2 =(ArrayList)_data.getResultData().getTodayPartnerTimes();
+                yData1 = (ArrayList)_data.getResultData().getTodayMemberAmounts();
+                xData2 = (ArrayList)_data.getResultData().getTodayPartnerTimes();
                 yData2 = (ArrayList)_data.getResultData().getTodayPartnerAmounts();
             }else if( type == 2){
-                xData1 =(ArrayList) _data.getResultData().getWeekMemberTimes();
-                yData1=(ArrayList)_data.getResultData().getTodayMemberAmounts();
-                xData2 =(ArrayList)_data.getResultData().getTodayPartnerTimes();
-                yData2 = (ArrayList)_data.getResultData().getTodayPartnerAmounts();
+                xData1 = (ArrayList) _data.getResultData().getWeekMemberTimes();
+                yData1 = (ArrayList)_data.getResultData().getWeekMemberAmounts();
+                xData2 = (ArrayList)_data.getResultData().getWeekPartnerTimes();
+                yData2 = (ArrayList)_data.getResultData().getWeekPartnerAmounts();
+            }else if( type == 3 ){
+                //if( _data.getResultData().getMonthMemberTimes() )
+                xData1 =  (ArrayList)_data.getResultData().getMonthMemberTimes();
+                yData1 =  (ArrayList)_data.getResultData().getMonthMemberAmounts();
+
+                xData2 =  (ArrayList)_data.getResultData().getMonthPartnerTimes();
+                yData2 =  (ArrayList)_data.getResultData().getMonthPartnerAmounts();
             }
+
             setLineChartData( _memberLineChart , xData1 , yData1,xData2,yData2 );
         }
 
         protected void setLineChartData( LineChart lineChart , List<Object> xData1 , List<Object> yData1,
                                          List<Object> xData2 , List<Object> yData2 ){
-            if( xData1==null || yData1==null )return;
+            //if( xData1==null || yData1==null )return;
 
             int bgColor=0xFFFFFFFF;
-            int gridColor=0xFFD3D3D3;
-            int lineColor1=0xFF0094FF;
+            //int gridColor=0xFFD3D3D3;
+            int lineColor1 = 0xFF0094FF;
             int lineColor2 =0xFFFF3C00;
-            int circleColor=0xFFFFFFFF;
-
-            lineChart.setGridBackgroundColor(gridColor);
-            lineChart.setBackgroundColor(bgColor);
-            lineChart.setDescription("");
-            lineChart.setNoDataText("暂无数据");
-            lineChart.getAxisRight().setEnabled(false);
-
-            List<String> xValues1= new ArrayList<String>();
-            List<Entry> yValues1=new ArrayList<>();
-            int count = xData1.size();
-            for(int i=0;i< count ;i++){
-                if( null == xData1.get(i)) continue;
-                Object x = xData1.get(i);
-                xValues1.add( String.valueOf( x));
-                Object y = yData1.get(i);
-                Entry item=new Entry( Float.valueOf( y.toString()) , i );
-                yValues1.add(item);
-            }
-            LineDataSet dataSet1 =new LineDataSet( yValues1 ,"");
-            dataSet1.setCircleColor(circleColor);
-            dataSet1.setCircleSize(4);
-            dataSet1.setDrawCircleHole(true);
-            dataSet1.setDrawValues(false);
-            dataSet1.setLineWidth(2);
-            dataSet1.setColor(lineColor1);
-            dataSet1.setValueTextSize(14);
-            dataSet1.setValueTextColor(Color.GREEN);
-            dataSet1.setDrawCubic(true);
-
-            List<String> xValues2 =new ArrayList<>();
-            List<Entry> yValues2 =new ArrayList<>();
-            count = xData2.size();
-            for(int i=0;i< count ;i++){
-                if( null == xData2.get(i))continue;
-                Object x = xData2.get(i);
-                xValues2.add( String.valueOf( x));
-                Object y = yData2.get(i);
-                Entry item=new Entry ( Float.valueOf(y.toString()) , i );
-                yValues2.add(item);
-            }
-            LineDataSet dataSet2 =new LineDataSet( yValues2 ,"");
-            dataSet2.setCircleColor(circleColor);
-            dataSet2.setCircleSize(4);
-            dataSet2.setDrawCircleHole(true);
-            dataSet2.setDrawValues(false);
-            dataSet2.setLineWidth(2);
-            dataSet2.setColor(lineColor2);
-            dataSet2.setValueTextSize(14);
-            dataSet2.setValueTextColor(Color.GREEN);
-            dataSet2.setDrawCubic(true);
+            //int circleColor=0xFFFFFFFF;
+            List<String> xValue = new ArrayList<>();
 
             ArrayList<LineDataSet> dataSets =new ArrayList<>();
-            dataSets.add(dataSet1);
-            dataSets.add(dataSet2);
+
+            if( xData1!=null && yData1 !=null ) {
+                List<String> xValues1 = new ArrayList<String>();
+                List<Entry> yValues1 = new ArrayList<>();
+                int count = xData1.size();
+                for (int i = 0; i < count; i++) {
+                    if (null == xData1.get(i)) continue;
+                    Object xObj = xData1.get(i);
+                    String x = String.valueOf( xObj);
+                    xValues1.add( x );
+                    if( !xValue.contains( x )){
+                        xValue.add(x);
+                    }
+                    Object y = yData1.get(i);
+                    Entry item = new Entry(Float.valueOf(y.toString()), i);
+                    yValues1.add(item);
+                }
+                LineDataSet dataSet1 = new LineDataSet(yValues1, "");
+                dataSet1.setCircleColor(lineColor1 );
+                dataSet1.setCircleSize(5);
+                dataSet1.setDrawCircleHole(true);
+                dataSet1.setDrawValues(false);
+                dataSet1.setLineWidth(2);
+                dataSet1.setColor(lineColor1);
+                dataSet1.setValueTextSize(14);
+                dataSet1.setValueTextColor(Color.GREEN);
+                dataSet1.setDrawCubic(true);
+                dataSet1.setCircleColorHole(Color.WHITE);
+
+                dataSets.add(dataSet1);
+            }
+
+            if( xData2!=null && yData2 !=null ) {
+                List<String> xValues2 = new ArrayList<>();
+                List<Entry> yValues2 = new ArrayList<>();
+                int count = xData2.size();
+                for (int i = 0; i < count; i++) {
+                    if (null == xData2.get(i)) continue;
+                    Object xObj = xData2.get(i);
+                    String x = String.valueOf(xObj);
+                    xValues2.add( x );
+                    if( !xValue.contains(x)){
+                        xValue.add(x);
+                    }
+                    Object y = yData2.get(i);
+                    Entry item = new Entry(Float.valueOf(y.toString()), i);
+                    yValues2.add(item);
+                }
+                LineDataSet dataSet2 = new LineDataSet(yValues2, "");
+                dataSet2.setCircleColor( lineColor2 );
+                dataSet2.setCircleSize(5);
+                dataSet2.setDrawCircleHole(true);
+                dataSet2.setDrawValues(false);
+                dataSet2.setLineWidth(2);
+                dataSet2.setColor(lineColor2);
+                dataSet2.setValueTextSize(14);
+                dataSet2.setValueTextColor(Color.GREEN);
+                dataSet2.setDrawCubic(true);
+                dataSet2.setCircleColorHole(Color.WHITE);
+
+                dataSets.add(dataSet2);
+            }
 
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -429,12 +476,10 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
             lineChart.getLegend().setEnabled(false);
 
-            LineData data =new LineData( xValues1 , dataSets );
+            LineData data =new LineData( xValue , dataSets );
             lineChart.setData(data);
             lineChart.animateX(2000, Easing.EasingOption.EaseInOutQuart);
         }
     }
-
-
 
 }

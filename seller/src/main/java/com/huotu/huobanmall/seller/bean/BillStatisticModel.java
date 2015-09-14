@@ -7,6 +7,7 @@ import java.util.List;
  * Created by Administrator on 2015/9/11.
  */
 public class BillStatisticModel {
+    private Long totalAmount;
     private Long todayAmount;
     private Long weekAmount;
     private Long monthAmount;
@@ -17,6 +18,13 @@ public class BillStatisticModel {
     private List<Date> monthTimes;
     private List<Integer> monthAmounts;
 
+    public Long getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Long totalAmount) {
+        this.totalAmount = totalAmount;
+    }
     public void setTodayAmount(Long todayAmount) {
         this.todayAmount = todayAmount;
     }

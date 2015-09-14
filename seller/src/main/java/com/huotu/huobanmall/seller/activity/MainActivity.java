@@ -216,6 +216,8 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         dataSet.setValueTextSize(14);
         dataSet.setValueTextColor(Color.GREEN);
         dataSet.setDrawCubic(true);
+        dataSet.setCircleColorHole(bg);
+        dataSet.setDrawCircleHole(true);
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);

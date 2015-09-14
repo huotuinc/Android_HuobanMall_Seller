@@ -51,6 +51,8 @@ import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -93,14 +95,14 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
     FragmentManager _fragmentManager;
     @Bind(R.id.order_indicator)
     TabPageIndicator _indicator;
+    @Bind(R.id.order_info_count)
+    TextView _order_info_count;
+    @Bind(R.id.order_total)
+    TextView _orderTotal;
 
     MJBillStatisticModel _data=null;
+    int _currentIdx = 0;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     * @return A new instance of fragment OrderFragment.
-     */
     public static OrderFragment newInstance() {
         OrderFragment fragment = new OrderFragment();
         Bundle args = new Bundle();
@@ -188,7 +190,6 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         }
     }
 
-
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
@@ -219,10 +220,22 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
             _data=mjBillStatisticModel;
 
-            //setLineChartData();
+            Long totalAmount = _data.getResultData().getTotalAmount();
+            _orderTotal.setText(String.valueOf(totalAmount));
+            if( _currentIdx== 0){
+                Long todayAmount = _data.getResultData().getTodayAmount();
+                _order_info_count.setText( String.valueOf( todayAmount ) );
+            }else if( _currentIdx==1){
+                Long weekAmount = _data.getResultData().getWeekAmount();
+                _order_info_count.setText( String.valueOf( weekAmount ) );
+            }else if( _currentIdx==2){
+                Long monthAmount = _data.getResultData().getMonthAmount();
+                _order_info_count.setText( String.valueOf(monthAmount) );
+            }
+
             _fragment1.setData( _data , 1 );
             _fragment2.setData(_data,2);
-            _fragment3.setData(_data,3);
+            _fragment3.setData(_data, 3);
             _orderFragmentAdapter.notifyDataSetChanged();
         }
     };
@@ -230,7 +243,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
     protected Response.ErrorListener errorListener = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
-            //_orderPulltorefreshScrollView.onRefreshComplete();
+
             OrderFragment.this.closeProgressDialog();
 
 ////           SimpleDialogFragment.createBuilder( getActivity() , getFragmentManager() )
@@ -241,6 +254,8 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         }
     };
 
+    protected void setData(){
+    }
 
     private void initData(){
 
@@ -250,6 +265,35 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         //        getData();
         //    }
         //});
+
+        _indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                _currentIdx=position;
+
+                if( _data==null || _data.getResultData()==null ) return;
+                if( position==0){
+                    Long count = _data.getResultData().getTodayAmount();
+                    _order_info_count.setText( String.valueOf( count ) );
+                }else if( position==1){
+                    Long count = _data.getResultData().getWeekAmount();
+                    _order_info_count.setText( String.valueOf( count ));
+                }else if( position==2){
+                    Long count = _data.getResultData().getMonthAmount();
+                    _order_info_count.setText( String.valueOf( count ));
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         initFragments();
 
@@ -301,7 +345,9 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         }
 
         protected void initData(){
-            //_orderLineChart.setBackgroundColor(Color.WHITE);
+            int bgColor=0xFFFFFFFF;
+            _orderLineChart.setBackgroundColor( bgColor );
+            _orderLineChart.setDrawGridBackground(false);
             _orderLineChart.setDescription("");
             _orderLineChart.setNoDataText("暂无数据");
             _orderLineChart.getAxisRight().setEnabled(false);
@@ -344,7 +390,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
             lineChart.setBackgroundColor(bgColor);
             lineChart.setDescription("");
             lineChart.setNoDataText("暂无数据");
-            lineChart.getAxisRight().setEnabled(false);
+            //lineChart.getAxisRight().setEnabled(false);
 
             List<String> xValues1= new ArrayList<String>();
             List<Entry> yValues1=new ArrayList<>();
@@ -371,10 +417,22 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setTextColor(0xFFFFFFFF);
+            xAxis.setTextColor(textColor);
+
+            YAxis yAxis1 = lineChart.getAxisRight();
+            yAxis1.setTextColor(0x34327882);
+            yAxis1.setEnabled(true);
+            yAxis1.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+
+            //lineChart.getXAxis().setEnabled(false);
 
             YAxis yAxis = lineChart.getAxisLeft();
-            yAxis.setTextColor(0xFFFFFFFF);
+            yAxis.setTextColor(0x34324222);
+
+
+            lineChart.setBorderColor( gridColor );
+            lineChart.setDrawBorders(true);
+            //lineChart.getAxisLeft().setEnabled(false);
 
             lineChart.getLegend().setEnabled(false);
 

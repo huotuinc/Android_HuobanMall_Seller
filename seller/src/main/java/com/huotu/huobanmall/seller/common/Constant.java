@@ -73,6 +73,8 @@ public class Constant {
 
     public static final String ORDERREPORT_INTERFACE = BASE_URL +"orderReport";//订单统计报表
 
+    public static final String SALESREPORT_INTERFACE =BASE_URL + "salesReport";//销售额统计报表
+
     public static final String OTHERSTATISTIC_INTERFACE = BASE_URL + "otherStatistics"; //更多统计
 
     /**
@@ -149,6 +151,18 @@ public class Constant {
     public final static int ERROR_USER_PASSWORD=56000;
     //请求超时时间
     public final static int REQUEST_TIMEOUT=20*1000;
+    /**
+     * 订单Tab页
+     */
+    public final static int TAB_ORDER=1;
+    /**
+     * 销售额Tab页
+     */
+    public final static int TAB_SALE =2;
+    /**
+     * 会员Tab页
+     */
+    public final static int TAB_MEMBER=3;
 }
 
 

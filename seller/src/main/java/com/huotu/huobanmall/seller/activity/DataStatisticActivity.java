@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.DataStatisticFragmentAdapter;
 
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.fragment.BaseFragment;
 import com.huotu.huobanmall.seller.fragment.MembersFragment;
 import com.huotu.huobanmall.seller.fragment.OrderFragment;
@@ -23,12 +24,17 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 订单，分销商，会员 的主页面
+ */
 public class DataStatisticActivity extends BaseFragmentActivity implements RadioGroup.OnCheckedChangeListener {
     OrderFragment _orderFragment=null;
     SalesFragment _salesFragments=null;
     MembersFragment _membersFragments=null;
     List<BaseFragment> _fragments;
     FragmentManager _fragmentManager;
+    //当前Tab页类型
+    Integer _currentTabType = Constant.TAB_ORDER;
     @Bind(R.id.datastatistic_pager)
     ViewPager _viewPager;
     @Bind(R.id.datastatistic_indicator)
@@ -56,6 +62,12 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
     }
 
     protected void initView(){
+        if( null != getIntent() && null != getIntent().getExtras() ){
+            if( getIntent().getExtras().containsKey("tabType")){
+                _currentTabType = getIntent().getExtras().getInt("tabType",Constant.TAB_ORDER);
+            }
+        }
+
         btnBack.setOnClickListener(this);
         statistic_title.setOnCheckedChangeListener(this);
     }
@@ -81,6 +93,8 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
 
         _viewPager.setAdapter(_dataStatisticFragmentAdapter);
         _circlePageIndicator.setViewPager(_viewPager);
+
+
         _circlePageIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -109,6 +123,8 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
 
             }
         });
+        //设置当前Tab
+        _circlePageIndicator.setCurrentItem( _currentTabType -1 );
     }
 
     protected void setCurrentFragment(){

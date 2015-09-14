@@ -116,12 +116,13 @@
                 android:padding="@dimen/space_5"
                 android:background="@drawable/round_gray"
                 android:layout_margin="@dimen/space_5">
-                android:text="商品销量前10名排列"
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_16"
+                    android:text="商品销量前10名排列"
                     android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/order_arrow1"
