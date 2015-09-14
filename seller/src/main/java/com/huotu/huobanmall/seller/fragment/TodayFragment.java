@@ -9,6 +9,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.DefaultValueFormatter;
+import com.github.mikephil.charting.utils.LargeValueFormatter;
+import com.github.mikephil.charting.utils.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +29,8 @@ public class TodayFragment extends  BaseFragment {
 
         int bg=0xFF2686DA;
         int gridBg=0x56A5EA;
-        lineChart.setGridBackgroundColor( gridBg );
+        lineChart.setDrawGridBackground(false);
+        lineChart.setGridBackgroundColor(gridBg);
         lineChart.setBackgroundColor(bg);
         lineChart.setDescription("");
         lineChart.setNoDataText("暂无数据");
@@ -42,16 +46,28 @@ public class TodayFragment extends  BaseFragment {
             Entry item=new Entry( y , i );
             yValues.add(item);
         }
-        LineDataSet dataSet =new LineDataSet( yValues ,"");
+        final LineDataSet dataSet =new LineDataSet( yValues ,"");
         dataSet.setCircleColor(Color.WHITE);
-        dataSet.setCircleSize(4);
-        dataSet.setDrawCircleHole(true);
+        dataSet.setCircleSize(5);
+        //dataSet.setDrawCircleHole(true);
         dataSet.setDrawValues(false);
         dataSet.setLineWidth(2);
         dataSet.setColor(Color.WHITE);
         dataSet.setValueTextSize(14);
         dataSet.setValueTextColor(Color.GREEN);
         dataSet.setDrawCubic(true);
+        dataSet.setCircleColorHole(Color.RED);
+        dataSet.setDrawCircleHole(true);
+
+
+        dataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                String formatString = String.valueOf( value ) +"单";
+                return  formatString;
+            }
+        });
+
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -59,6 +75,8 @@ public class TodayFragment extends  BaseFragment {
 
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setTextColor(0xFFFFFFFF);
+
+
 
         lineChart.getLegend().setEnabled(false);
 

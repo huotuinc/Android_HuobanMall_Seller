@@ -73,6 +73,8 @@ public class Constant {
 
     public static final String ORDERREPORT_INTERFACE = BASE_URL +"orderReport";//订单统计报表
 
+    public static final String SALESREPORT_INTERFACE =BASE_URL + "salesReport";//销售额统计报表
+
     public static final String OTHERSTATISTIC_INTERFACE = BASE_URL + "otherStatistics"; //更多统计
 
     /**

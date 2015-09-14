@@ -7,19 +7,20 @@ import java.util.List;
  * Created by Administrator on 2015/9/11.
  */
 public class MemberStatisticModel {
-    private Integer total;
-    private Integer todayMemberAmount;
-    private Integer weekMemberAmount;
-    private Integer monthMemberAmount;
+    private Long totalMember;
+    private Long totalPartner;
+    private Long todayMemberAmount;
+    private Long weekMemberAmount;
+    private Long monthMemberAmount;
     private List<Integer> todayMemberTimes;
     private List<Integer> todayMemberAmounts;
     private List<Date> weekMemberTimes;
     private List<Integer> weekMemberAmounts;
     private List<Date> monthMemberTimes;
     private List<Integer> monthMemberAmounts;
-    private Integer todayPartnerAmount;
-    private Integer weekPartnerAmount;
-    private Integer monthPartnerAmount;
+    private Long todayPartnerAmount;
+    private Long weekPartnerAmount;
+    private Long monthPartnerAmount;
     private List<Integer> todayPartnerTimes;
     private List<Integer> todayPartnerAmounts;
     private List<Date> weekPartnerTimes;
@@ -27,19 +28,35 @@ public class MemberStatisticModel {
     private List<Date> monthPartnerTimes;
     private List<Integer> monthPartnerAmounts;
 
-    public void setTotal(Integer total) {
-        this.total = total;
+    public Long getTotalMember() {
+        return totalMember;
     }
 
-    public void setTodayMemberAmount(Integer todayMemberAmount) {
+    public void setTotalMember(Long totalMember) {
+        this.totalMember = totalMember;
+    }
+
+    public Long getTotalPartner() {
+        return totalPartner;
+    }
+
+    public void setTotalPartner(Long totalPartner) {
+        this.totalPartner = totalPartner;
+    }
+
+    public void setWeekPartnerAmounts(List<Integer> weekPartnerAmounts) {
+        this.weekPartnerAmounts = weekPartnerAmounts;
+    }
+
+    public void setTodayMemberAmount(Long todayMemberAmount) {
         this.todayMemberAmount = todayMemberAmount;
     }
 
-    public void setWeekMemberAmount(Integer weekMemberAmount) {
+    public void setWeekMemberAmount(Long weekMemberAmount) {
         this.weekMemberAmount = weekMemberAmount;
     }
 
-    public void setMonthMemberAmount(Integer monthMemberAmount) {
+    public void setMonthMemberAmount(Long monthMemberAmount) {
         this.monthMemberAmount = monthMemberAmount;
     }
 
@@ -67,15 +84,15 @@ public class MemberStatisticModel {
         this.monthMemberAmounts = monthMemberAmounts;
     }
 
-    public void setTodayPartnerAmount(Integer todayPartnerAmount) {
+    public void setTodayPartnerAmount(Long todayPartnerAmount) {
         this.todayPartnerAmount = todayPartnerAmount;
     }
 
-    public void setWeekPartnerAmount(Integer weekPartnerAmount) {
+    public void setWeekPartnerAmount(Long weekPartnerAmount) {
         this.weekPartnerAmount = weekPartnerAmount;
     }
 
-    public void setMonthPartnerAmount(Integer monthPartnerAmount) {
+    public void setMonthPartnerAmount(Long monthPartnerAmount) {
         this.monthPartnerAmount = monthPartnerAmount;
     }
 
@@ -104,20 +121,15 @@ public class MemberStatisticModel {
     }
 
 
-
-    public Integer getTotal() {
-        return total;
-    }
-
-    public Integer getTodayMemberAmount() {
+    public Long getTodayMemberAmount() {
         return todayMemberAmount;
     }
 
-    public Integer getWeekMemberAmount() {
+    public Long getWeekMemberAmount() {
         return weekMemberAmount;
     }
 
-    public Integer getMonthMemberAmount() {
+    public Long getMonthMemberAmount() {
         return monthMemberAmount;
     }
 
@@ -145,15 +157,15 @@ public class MemberStatisticModel {
         return monthMemberAmounts;
     }
 
-    public Integer getTodayPartnerAmount() {
+    public Long getTodayPartnerAmount() {
         return todayPartnerAmount;
     }
 
-    public Integer getWeekPartnerAmount() {
+    public Long getWeekPartnerAmount() {
         return weekPartnerAmount;
     }
 
-    public Integer getMonthPartnerAmount() {
+    public Long getMonthPartnerAmount() {
         return monthPartnerAmount;
     }
 
@@ -180,6 +192,4 @@ public class MemberStatisticModel {
     public List<Integer> getMonthPartnerAmounts() {
         return monthPartnerAmounts;
     }
-
-
 }

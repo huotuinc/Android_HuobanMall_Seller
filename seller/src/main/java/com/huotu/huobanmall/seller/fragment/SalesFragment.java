@@ -10,15 +10,30 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.activity.LoginActivity;
 import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
 import com.huotu.huobanmall.seller.adapter.SalesFragmentPageAdapter;
+import com.huotu.huobanmall.seller.bean.MJBillStatisticModel;
+import com.huotu.huobanmall.seller.bean.MJSaleStatisticModel;
+import com.huotu.huobanmall.seller.common.Constant;
+import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.DialogUtils;
+import com.huotu.huobanmall.seller.utils.GsonRequest;
+import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -38,14 +53,22 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class SalesFragment extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    @Bind(R.id.sales_total)
+    TextView _sales_total;
+    @Bind(R.id.sales_info_count)
+    TextView _sales_info_count;
+    @Bind(R.id.sales_indicator)
+    TabPageIndicator _indicator;
+    @Bind(R.id.sales_viewPager)
+    ViewPager _viewPager;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    MJSaleStatisticModel _data;
+    SalesLineChartFragment _fragment1=null;
+    SalesLineChartFragment _fragment2=null;
+    SalesLineChartFragment _fragment3=null;
+    List<BaseFragment> _fragments;
+    FragmentManager _fragmentManager;
+    SalesFragmentPageAdapter _salesFragmentAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -53,16 +76,11 @@ public class SalesFragment extends BaseFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment SalesFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SalesFragment newInstance() {
         SalesFragment fragment = new SalesFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,20 +93,17 @@ public class SalesFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_sales, container, false);
 
         ButterKnife.bind(this, rootView);
 
-        initFragments();
+        initData();
 
         return rootView;
     }
@@ -138,69 +153,137 @@ public class SalesFragment extends BaseFragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    List<BaseFragment> _fragments;
-    FragmentManager _fragmentManager;
-    @Bind(R.id.sales_indicator)
-    TabPageIndicator _indicator;
-    SalesFragmentPageAdapter _salesFragmentAdapter;
-    @Bind(R.id.sales_viewPager)
-    ViewPager _viewPager;
+    protected void initData(){
+
+        initFragments();
+
+        _indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if( _data==null || _data.getResultData()==null ) return;
+                if( position==0){
+                    Float amount = _data.getResultData().getTotalAmount();
+                    Float todayAmount = _data.getResultData().getTodayAmount();
+                    _sales_total.setText( String.valueOf( amount ) );
+                    _sales_info_count.setText( String.valueOf( todayAmount) );
+                }else if( position==1){
+                    Float amount = _data.getResultData().getTotalAmount();
+                    Float weekAmount = _data.getResultData().getWeekAmount();
+                    _sales_total.setText( String.valueOf( amount ));
+                    _sales_info_count.setText( String.valueOf( weekAmount ));
+                }else if( position==2){
+                    Float amount = _data.getResultData().getTotalAmount();
+                    Float monthAmount = _data.getResultData().getMonthAmount();
+                    _sales_total.setText( String.valueOf( amount ));
+                    _sales_info_count.setText( String.valueOf( monthAmount ));
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        getData();
+    }
+
+    protected void getData(){
+        String url = Constant.SALESREPORT_INTERFACE;
+        HttpParaUtils httpParaUtils = new HttpParaUtils();
+        url = httpParaUtils.getHttpGetUrl(url ,null);
+
+        GsonRequest<MJSaleStatisticModel> saleReportRequest = new GsonRequest<MJSaleStatisticModel>(
+                Request.Method.GET,
+                url,
+                MJSaleStatisticModel.class,
+                null,
+                saleReportListner,
+                errorListener
+        );
+
+        this.showProgressDialog("","正在获取数据，请稍等...");
+
+        VolleyRequestManager.getRequestQueue().add(saleReportRequest);
+    }
 
     protected void initFragments(){
-        SalesLineChartFragment fragment1 = new SalesLineChartFragment();
-        SalesLineChartFragment fragment2 = new SalesLineChartFragment();
-        SalesLineChartFragment fragment3 = new SalesLineChartFragment();
+        _fragment1 = new SalesLineChartFragment();
+        _fragment2 = new SalesLineChartFragment();
+        _fragment3 = new SalesLineChartFragment();
         _fragments = new ArrayList<>();
-        _fragments.add(fragment1);
-        _fragments.add(fragment2);
-        _fragments.add(fragment3);
+        _fragments.add(_fragment1);
+        _fragments.add(_fragment2);
+        _fragments.add(_fragment3);
         _fragmentManager = this.getActivity().getSupportFragmentManager();
         _salesFragmentAdapter = new SalesFragmentPageAdapter(_fragments, _fragmentManager);
         _viewPager.setAdapter(_salesFragmentAdapter);
-
         _indicator.setViewPager(_viewPager);
     }
 
+    protected Response.Listener<MJSaleStatisticModel> saleReportListner = new Response.Listener<MJSaleStatisticModel>() {
+        @Override
+        public void onResponse(MJSaleStatisticModel mjSaleStatisticModel  ) {
+            SalesFragment.this.closeProgressDialog();
 
-    private void setLineChartData(){
+            if( mjSaleStatisticModel==null){
+                DialogUtils.showDialog(SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager(), "错误信息", "请求数据失败", "关闭");
+                return;
+            }
+            if( mjSaleStatisticModel.getSystemResultCode()!=1){
+                DialogUtils.showDialog( SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager() ,"错误信息", mjSaleStatisticModel.getSystemResultDescription(),"关闭" );
+                return;
+            }
 
-        //_orderLineChart.setBackgroundColor(Color.WHITE);
-        //_orderLineChart.setDescription("line chart description");
-        //_orderLineChart.setNoDataText("no date to show chart");
-        //_orderLineChart.getAxisRight().setEnabled(false);
+            if(mjSaleStatisticModel.getResultCode() == Constant.TOKEN_OVERDUE){
+                ActivityUtils.getInstance().showActivity(SalesFragment.this.getActivity(), LoginActivity.class);
+                return;
+            }
+            if( mjSaleStatisticModel.getResultCode() != 1){
+                DialogUtils.showDialog( SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager() ,"错误信息", mjSaleStatisticModel.getResultDescription() ,"关闭" );
+                return;
+            }
 
-        List<String> xValues= new ArrayList<String>();
-        List<Entry> yValues=new ArrayList<>();
-        Random r=new Random();
-        for(int i=1;i<=7;i++){
-            xValues.add( "7."+ i );
-            float y = r.nextFloat()*100;
-            Entry item=new Entry( y ,i);
-            yValues.add(item);
+            _data=mjSaleStatisticModel;
+
+            //setLineChartData();
+            _fragment1.setData(_data,1);
+            _fragment2.setData(_data,2);
+            _fragment3.setData(_data,3);
+            _salesFragmentAdapter.notifyDataSetChanged();
         }
-        LineDataSet dataset =new LineDataSet( yValues ,"");
-        dataset.setCircleColor(Color.RED);
-        dataset.setCircleSize(4);
-        dataset.setDrawCircleHole(false);
-        dataset.setDrawValues(true);
-        dataset.setLineWidth(1);
-        dataset.setColor(Color.BLUE);
-        dataset.setValueTextSize(14);
-        dataset.setValueTextColor(Color.GREEN);
-        dataset.setDrawCubic(true);
+    };
 
-        LineData data =new LineData(xValues ,dataset );
+    protected Response.ErrorListener errorListener = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
 
-        //_orderLineChart.setData(data);
+            SalesFragment.this.closeProgressDialog();
 
-        //_orderLineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
-    }
+            String message="";
+            if( volleyError.networkResponse !=null){
+                message = new String( volleyError.networkResponse.data);
+            }else if( volleyError.getCause() !=null ) {
+                message = volleyError.getCause().getMessage();
+            }
+            DialogUtils.showDialog(SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager(),"错误信息", message ,"关闭");
 
 
-    class SalesLineChartFragment extends BaseFragment{
+        }
+    };
+
+    public static class SalesLineChartFragment extends BaseFragment{
 
         @Bind(R.id.sales_lineChart)
         LineChart _saleslineChart;
+
+        MJSaleStatisticModel _data;
+        int _type=1;
 
         public SalesLineChartFragment (){
         }
@@ -219,40 +302,102 @@ public class SalesFragment extends BaseFragment {
         }
 
         protected void initData(){
-            _saleslineChart.setBackgroundColor(Color.WHITE);
-            _saleslineChart.setDescription("line chart description");
-            _saleslineChart.setNoDataText("no date to show chart");
-            _saleslineChart.getAxisRight().setEnabled(false);
+            int bgColor=0xFFFFFFFF;
+            _saleslineChart.setBackgroundColor(bgColor);
+            _saleslineChart.setDrawGridBackground(false);
+            _saleslineChart.setDescription("");
+            _saleslineChart.setNoDataText("暂无数据");
 
-            List<String> xValues= new ArrayList<String>();
-            List<Entry> yValues=new ArrayList<>();
-            Random r=new Random();
-            for(int i=1;i<=7;i++){
-                xValues.add( "7."+ i );
-                float y = r.nextFloat()*100;
-                Entry item=new Entry( y ,i);
-                yValues.add(item);
-            }
-            LineDataSet dataset =new LineDataSet( yValues ,"");
-            dataset.setCircleColor(Color.RED);
-            dataset.setCircleSize(4);
-            dataset.setDrawCircleHole(false);
-            dataset.setDrawValues(true);
-            dataset.setLineWidth(1);
-            dataset.setColor(Color.BLUE);
-            dataset.setValueTextSize(14);
-            dataset.setValueTextColor(Color.GREEN);
-            dataset.setDrawCubic(true);
-            LineData data =new LineData(xValues ,dataset );
-            _saleslineChart.setData(data);
-            _saleslineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
         }
 
         @Override
         public void onResume() {
             super.onResume();
 
+            setData(_data, _type);
         }
+
+        public void setData( MJSaleStatisticModel data ,int type ){
+            _data=data;
+            _type=type;
+            if( _data==null || _data.getResultData() == null ) return;
+
+            if( this.isResumed()) {
+                if( type == 1) {
+                    setLineChartData( _saleslineChart, (ArrayList) _data.getResultData().getTodayTimes() , _data.getResultData().getTodayAmounts());
+                }else if( type == 2){
+                    setLineChartData(_saleslineChart ,(ArrayList) _data.getResultData().getWeekTimes() , _data.getResultData().getWeekAmounts() );
+                }else if( type==3){
+                    setLineChartData(_saleslineChart, (ArrayList)_data.getResultData().getMonthTimes(),_data.getResultData().getMonthAmounts());
+                }
+            }
+        }
+
+        protected void setLineChartData( LineChart lineChart , List<Object> xData1 , List<Float> yData1 ){
+            if( xData1==null || yData1==null )return;
+
+            //int bgColor=0xFFFFFFFF;
+            int gridColor=0xFFD3D3D3;
+            int lineColor =0xFFFF3C00;
+            //int circleColor=0xFFFFFFFF;
+            int textColor = 0xFF000000;
+
+            //lineChart.setGridBackgroundColor(gridColor);
+            //lineChart.setBackgroundColor(bgColor);
+            //lineChart.setDescription("");
+            //lineChart.setNoDataText("暂无数据");
+            //lineChart.getAxisRight().setEnabled(false);
+
+            List<String> xValues1= new ArrayList<String>();
+            List<Entry> yValues1=new ArrayList<>();
+            int count = xData1.size();
+            for(int i=0;i< count ;i++){
+                Object x = xData1.get(i);
+                xValues1.add( String.valueOf( x));
+                Float y = yData1.get(i);
+                Entry item=new Entry( y , i );
+                yValues1.add(item);
+            }
+
+            LineDataSet dataSet =new LineDataSet( yValues1 ,"");
+            dataSet.setCircleColor(lineColor);
+            //dataSet.setCircleColors(new int[]{Color.rgb(255, 60, 00)});
+            dataSet.setCircleSize(5);
+            //dataSet.setDrawCircleHole(true);
+            dataSet.setLineWidth(3);
+            dataSet.setColor(lineColor);
+            dataSet.setValueTextSize(14);
+            dataSet.setValueTextColor(textColor);
+            dataSet.setDrawCubic(true);
+            dataSet.setDrawValues(true);
+            dataSet.setCircleColorHole(lineColor);
+            dataSet.setDrawCircleHole(true);
+
+            XAxis xAxis = lineChart.getXAxis();
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xAxis.setTextColor(textColor);
+
+            YAxis yAxis1 = lineChart.getAxisRight();
+            yAxis1.setTextColor(0x34327882);
+            yAxis1.setEnabled(true);
+            yAxis1.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+
+
+            YAxis yAxis = lineChart.getAxisLeft();
+            yAxis.setTextColor(0x34324222);
+
+
+            lineChart.setBorderColor( gridColor );
+            lineChart.setDrawBorders(true);
+            //lineChart.getAxisLeft().setEnabled(false);
+
+            lineChart.getLegend().setEnabled(false);
+
+            LineData data =new LineData(xValues1 , dataSet );
+            lineChart.setData(data);
+            lineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+        }
+
     }
 
 

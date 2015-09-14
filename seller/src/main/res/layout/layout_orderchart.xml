@@ -3,9 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.github.mikephil.charting.charts.LineChart
-    android:id="@+id/order_lineChart"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+        android:id="@+id/order_lineChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_lineChart_Color"
     >
     </com.github.mikephil.charting.charts.LineChart>
 
