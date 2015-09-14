@@ -69,6 +69,7 @@ public class SalesFragment extends BaseFragment {
     List<BaseFragment> _fragments;
     FragmentManager _fragmentManager;
     SalesFragmentPageAdapter _salesFragmentAdapter;
+    int _currentIndx = 0;
 
     private OnFragmentInteractionListener mListener;
 
@@ -165,6 +166,8 @@ public class SalesFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
+                _currentIndx = position;
+
                 if( _data==null || _data.getResultData()==null ) return;
                 if( position==0){
                     Float amount = _data.getResultData().getTotalAmount();
@@ -236,7 +239,7 @@ public class SalesFragment extends BaseFragment {
                 return;
             }
             if( mjSaleStatisticModel.getSystemResultCode()!=1){
-                DialogUtils.showDialog( SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager() ,"错误信息", mjSaleStatisticModel.getSystemResultDescription(),"关闭" );
+                DialogUtils.showDialog(SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager(), "错误信息", mjSaleStatisticModel.getSystemResultDescription(), "关闭");
                 return;
             }
 
@@ -250,7 +253,18 @@ public class SalesFragment extends BaseFragment {
             }
 
             _data=mjSaleStatisticModel;
-
+            Float total = _data.getResultData().getTotalAmount();
+            _sales_total.setText( String.valueOf( total ));
+            if(_currentIndx==0) {
+                Float todayAmount = _data.getResultData().getTodayAmount();
+                _sales_info_count.setText( String.valueOf( todayAmount ));
+            }else if( _currentIndx == 1){
+                Float weekAmount = _data.getResultData().getWeekAmount();
+                _sales_info_count.setText( String.valueOf( weekAmount ) );
+            }else if( _currentIndx==2){
+                Float monthAmount = _data.getResultData().getMonthAmount();
+                _sales_info_count.setText( String.valueOf( monthAmount ));
+            }
             //setLineChartData();
             _fragment1.setData(_data,1);
             _fragment2.setData(_data,2);
@@ -369,8 +383,8 @@ public class SalesFragment extends BaseFragment {
             dataSet.setValueTextSize(14);
             dataSet.setValueTextColor(textColor);
             dataSet.setDrawCubic(true);
-            dataSet.setDrawValues(true);
-            dataSet.setCircleColorHole(lineColor);
+            dataSet.setDrawValues(false);
+            dataSet.setCircleColorHole( Color.WHITE );
             dataSet.setDrawCircleHole(true);
 
             XAxis xAxis = lineChart.getXAxis();

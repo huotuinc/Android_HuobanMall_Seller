@@ -27,6 +27,9 @@ import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 更多统计 界面
+ */
 public class MoreStatisticActivity extends BaseFragmentActivity {
     @Bind(R.id.header_back)
     Button btnBack;
@@ -138,17 +141,23 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
     public void onClick(View v) {
         super.onClick(v);
         if(v.getId()==R.id.morestatistic_title2){
-            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class);
+            Bundle bd = new Bundle();
+            bd.putInt("tabType",Constant.TAB_ORDER);
+            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class,bd);
         }else if( v.getId() == R.id.morestatistic_menu_xftj){
 
         }else if( v.getId() == R.id.morestatistic_menu_xsmx){
 
         }else if( v.getId() == R.id.morestatistic_menu_hytj){
-            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class);
+            Bundle bd = new Bundle();
+            bd.putInt( "tabType" , Constant.TAB_MEMBER );
+            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class , bd );
         }else if( v.getId() == R.id.morestatistic_menu_fltj){
 
         }else if( v.getId() == R.id.morestatistic_menu_sxetj){
-
+            Bundle bd = new Bundle();
+            bd.putInt( "tabType" , Constant.TAB_SALE );
+            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class, bd );
         }else if( v.getId() == R.id.morestatistic_menu_fxs){
 
         }else if( v.getId() == R.id.morestatistic_menu_sp){

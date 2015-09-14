@@ -34,26 +34,23 @@ import butterknife.ButterKnife;
 public class LoginActivity extends BaseFragmentActivity implements
         View.OnClickListener , ISimpleDialogListener{
     private final static int REQUEST_UPDATE=2045;
-    @Bind(R.id.backImage)
-    public Button titleBack;
+    @Bind(R.id.header_back)
+    public Button header_back;
     // 用户名
     @Bind(R.id.edtUserName)
     public EditText userName;
     // 密码
     @Bind(R.id.edtPwd)
     public EditText passWord;
-    @Bind(R.id.btnLogin)
     // 登录按钮
+    @Bind(R.id.btnLogin)
     public Button loginBtn;
     // 忘记密码
-    @Bind(R.id.forgetpsw)
+    @Bind(R.id.header_operate)
     public TextView forgetPsw;
     // 界面名称
-    @Bind(R.id.title)
-    public TextView titleName;
-    // 返回文字事件
-    @Bind(R.id.backtext)
-    public TextView backText;
+    @Bind(R.id.header_title)
+    public TextView header_title;
     //public ProgressDialogFragment progressDialog;
     public SellerApplication application;
 
@@ -68,14 +65,14 @@ public class LoginActivity extends BaseFragmentActivity implements
     private void initView()
     {
 
-        //userName.setText("wlf");
+        userName.setText("wlf");
         //userName.setText("jxd");
         passWord.setText("123456");
-        titleName.setText("用户登录");
+        header_title.setText("用户登录");
         loginBtn.setOnClickListener(this);
         forgetPsw.setOnClickListener(this);
         forgetPsw.setText("忘记密码？");
-        backText.setOnClickListener(this);
+        header_back.setOnClickListener(this);
     }
 
     @Override
@@ -178,7 +175,7 @@ public class LoginActivity extends BaseFragmentActivity implements
                 login();
             }
             break;
-            case R.id.backtext: {
+            case R.id.header_back: {
                 finish();
             }
         }

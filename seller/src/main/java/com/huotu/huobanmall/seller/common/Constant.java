@@ -151,6 +151,18 @@ public class Constant {
     public final static int ERROR_USER_PASSWORD=56000;
     //请求超时时间
     public final static int REQUEST_TIMEOUT=20*1000;
+    /**
+     * 订单Tab页
+     */
+    public final static int TAB_ORDER=1;
+    /**
+     * 销售额Tab页
+     */
+    public final static int TAB_SALE =2;
+    /**
+     * 会员Tab页
+     */
+    public final static int TAB_MEMBER=3;
 }
 
 

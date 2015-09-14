@@ -65,13 +65,10 @@ public class SettingActivity extends BaseFragmentActivity
         implements View.OnClickListener,OnPhotoSelectBackListener, OnCropperBackListener {
 
     public SellerApplication application;
-    @Bind(R.id.title)
-    public TextView titleName;
-    @Bind(R.id.backImage)
-    public Button backImage;
-
-    @Bind(R.id.backtext)
-    public TextView backText;
+    @Bind(R.id.header_title)
+    public TextView header_title;
+    @Bind(R.id.header_back)
+    public Button header_back;
 
     @Bind(R.id.shopNameLabel)
     public LinearLayout shopNameLabel;
@@ -130,9 +127,8 @@ public class SettingActivity extends BaseFragmentActivity
 
     private void initView() {
         pushLabel.setOnClickListener(this);
-        titleName.setText("用户设置");
-        backText.setOnClickListener(this);
-        backImage.setOnClickListener(this);
+        header_title.setText("用户设置");
+        header_back.setOnClickListener(this);
         quitbtn.setOnClickListener(this);
 
         if( EventBus.getDefault().isRegistered(this)==false) {
@@ -208,11 +204,7 @@ public class SettingActivity extends BaseFragmentActivity
                 ActivityUtils.getInstance().showActivity(SettingActivity.this, PushActivity.class);
             }
             break;
-            case R.id.backtext: {
-                finish ( );
-            }
-            break;
-            case R.id.backImage: {
+            case R.id.header_back: {
                 finish();
             }
             break;
@@ -235,8 +227,11 @@ public class SettingActivity extends BaseFragmentActivity
             }
             break;
             case R.id.FeedbackLabel: {
-                 ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
-
+                String url = PreferenceHelper.readString(this.getApplicationContext(), Constant.LOGIN_GLOBAL_INFO,Constant.LOGIN_GLOBAL_HELPURL);
+                Intent intent=new Intent();
+                intent.setClass(SettingActivity.this,WebViewActivity.class);
+                intent.putExtra(Constant.Extra_Url, url);
+                ActivityUtils.getInstance().showActivity(SettingActivity.this, intent );
             }
             break;
             case R.id.quit: {

@@ -51,6 +51,8 @@ import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -95,8 +97,11 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
     TabPageIndicator _indicator;
     @Bind(R.id.order_info_count)
     TextView _order_info_count;
+    @Bind(R.id.order_total)
+    TextView _orderTotal;
 
     MJBillStatisticModel _data=null;
+    int _currentIdx = 0;
 
     public static OrderFragment newInstance() {
         OrderFragment fragment = new OrderFragment();
@@ -215,10 +220,22 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
             _data=mjBillStatisticModel;
 
-            //setLineChartData();
+            Long totalAmount = _data.getResultData().getTotalAmount();
+            _orderTotal.setText(String.valueOf(totalAmount));
+            if( _currentIdx== 0){
+                Long todayAmount = _data.getResultData().getTodayAmount();
+                _order_info_count.setText( String.valueOf( todayAmount ) );
+            }else if( _currentIdx==1){
+                Long weekAmount = _data.getResultData().getWeekAmount();
+                _order_info_count.setText( String.valueOf( weekAmount ) );
+            }else if( _currentIdx==2){
+                Long monthAmount = _data.getResultData().getMonthAmount();
+                _order_info_count.setText( String.valueOf(monthAmount) );
+            }
+
             _fragment1.setData( _data , 1 );
             _fragment2.setData(_data,2);
-            _fragment3.setData(_data,3);
+            _fragment3.setData(_data, 3);
             _orderFragmentAdapter.notifyDataSetChanged();
         }
     };
@@ -257,6 +274,8 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onPageSelected(int position) {
+                _currentIdx=position;
+
                 if( _data==null || _data.getResultData()==null ) return;
                 if( position==0){
                     Long count = _data.getResultData().getTodayAmount();
