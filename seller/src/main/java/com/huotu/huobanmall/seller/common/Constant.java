@@ -40,7 +40,8 @@ public class Constant {
     public final static String LOGIN_USER_ACCOUNT = "account_name";
     // 登录信息文件
     public final static String LOGIN_USER_INFO = "login_user_info";
-
+    //公共信息
+    public final static String LOGIN_GLOBAL_INFO="login_global_info";
     // 用户Token
     public final static String PRE_USER_TOKEN="user_token";
     // 城市码
@@ -64,7 +65,7 @@ public class Constant {
 
     public static final String NEWTODAY_INTERFACE=BASE_URL+"newToday";//今日新增接口
 
-    public static final String UPDATEPROFILE_INTERFACE = BASE_URL + "updateProfile"; //更新商家信息
+    public static final String UPDATEPROFILE_INTERFACE = BASE_URL + "updateMerchantProfile"; //更新商家信息
 
     public static final String OPERGOODS_INTERFACE = BASE_URL +"operGoods";//操作商品接口
 
@@ -73,6 +74,7 @@ public class Constant {
     public static final String ORDERREPORT_INTERFACE = BASE_URL +"orderReport";//订单统计报表
 
     public static final String OTHERSTATISTIC_INTERFACE = BASE_URL + "otherStatistics"; //更多统计
+
     /**
      * token添加的类型
      */
@@ -109,6 +111,16 @@ public class Constant {
     public final static String LOGIN_AUTH_OPERATOR = "operator";
     //商铺名称
     public final static String LOGIN_AUTH_SHOPNAME="title";
+    //关于我们
+    public final static String LOGIN_GLOBAL_ABOUTURL = "aboutURL";
+    //客服电话号码
+    public final static String LOGIN_GLOBAL_SERVICEPHONE = "customerServicePhone";
+    //帮助
+    public final static String LOGIN_GLOBAL_HELPURL = "helpURL";
+    //服务地址
+    public final static String LOGIN_GLOBAL_SERVERURL = "serverUrl";
+    //验证码是否支持语音播报
+    public final static String LOGIN_GLOBAL_VOICESUPPORTED="voiceSupported";
 
     // 短信获取方式:文本
     public final static String SMS_TYPE_TEXT = "0";

@@ -68,7 +68,7 @@ public class LoginActivity extends BaseFragmentActivity implements
     private void initView()
     {
 
-        //userName.setText("wlf");
+        userName.setText("wlf");
         //userName.setText("jxd");
         passWord.setText("123456");
         titleName.setText("用户登录");

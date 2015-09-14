@@ -12,7 +12,6 @@
         android:background="@color/main_header_bg"
         android:textColor="@android:color/white"
         android:layout_marginLeft="20dp"
-        android:text="@string/back"
         android:drawableLeft="@drawable/btn_back"/>
 
 

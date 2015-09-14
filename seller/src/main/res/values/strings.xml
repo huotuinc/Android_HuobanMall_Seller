@@ -61,5 +61,6 @@
     <string name="todayNewOrder">今日新增</string>
     <string name="title_activity_more_statistic">MoreStatisticActivity</string>
     <string name="title_activity_edit_set">EditSetActivity</string>
+    <string name="title_activity_bill">BillActivity</string>
 
 </resources>

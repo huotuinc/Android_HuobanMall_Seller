@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     >
 
     <RelativeLayout
@@ -10,11 +9,11 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:orientation="horizontal" >
-
         <include layout="@layout/title" />
     </RelativeLayout>
     <ScrollView
         android:layout_below="@+id/title_login"
+        android:layout_above="@+id/quit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -558,20 +557,6 @@
                     android:background="@drawable/line_gray_shape" />
                 <!-- 问题反馈 -->
 
-                <Button
-                    android:id="@+id/quit"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="match_parent"
-                    android:layout_margin="5dp"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:onClick="onClickButton"
-                    android:text="退出登录"
-                    android:background="@drawable/btn_red_sel"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:layout_height="40dp"/>
 
 
             </LinearLayout>
@@ -580,4 +565,20 @@
     </RelativeLayout>
     </ScrollView>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/quit"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onClickButton"
+        android:text="退出登录"
+        android:background="@drawable/btn_red_sel"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_height="40dp"/>
+
+
+</RelativeLayout>
