@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="#FFFFFF"
+    android:layout_marginLeft="@dimen/space_5"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/logistics_item_ll1"
+        android:layout_width="20dp"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/logistics_item_circle"
+            android:background="@drawable/logistic_circle"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="14dp"
+            android:layout_height="14dp" />
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="@dimen/space_2"
+            android:layout_height="match_parent"
+            android:background="#DDDDDD"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_toRightOf="@id/logistics_item_ll1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/logistics_item_context"
+            android:layout_margin="@dimen/space_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_18"
+            android:text="时光飞逝，安迪·鲁宾（Andy Rubin）依旧对三星放弃收购安卓耿耿于怀，而如今安卓依旧在市面上同苹果系统分庭抗礼。记得那是2004年的第一场雪，当时的国内智能手机市场主要占有者是诺基亚，改变世界的iPhone还没有到来，第一台安卓手机也是三年后才发布的。当时的智能手机远不像现在这般统一。各种杂牌手机盛行，而且每种系统都有对应的手机，互相之间是不兼容的，这也就为后来的故事埋下了伏笔。"/>
+
+        <TextView
+            android:layout_below="@id/logistics_item_context"
+            android:background="#DEDEDE"
+            android:layout_marginTop="@dimen/space_5"
+            android:layout_marginBottom="@dimen/space_5"
+            android:layout_marginRight="@dimen/space_5"
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_1" />
+    </RelativeLayout>
+
+</LinearLayout>

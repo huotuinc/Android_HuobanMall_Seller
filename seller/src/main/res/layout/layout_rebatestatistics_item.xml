@@ -26,7 +26,7 @@
         android:layout_alignTop="@+id/order"
         android:layout_toRightOf="@+id/order"
         android:layout_toEndOf="@+id/order"
-        android:id="@+id/mobile" />
+        android:id="@+id/moblie" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
         android:textColor="@color/statistic_check_color"
         android:id="@+id/money"
         android:layout_marginRight="15dp"
-        android:layout_alignTop="@+id/mobile"
+        android:layout_alignTop="@+id/moblie"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
     <TextView

@@ -65,6 +65,10 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     ViewPager _viewPager;
     @Bind(R.id.members_indicator)
     TabPageIndicator _indicator;
+    @Bind(R.id.members_total)
+    TextView _members_total;
+    @Bind(R.id.members_firendCount)
+    TextView _members_firendCount;
 
     MemberLineChartFragment _fragment1=null;
     MemberLineChartFragment _fragment2=null;
@@ -74,6 +78,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     FragmentManager _fragmentManager;
 
     MJMemberStatisticModel _data;
+    int _currentIndex = 0;
 
     /**
      * Use this factory method to create a new instance of
@@ -132,6 +137,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
             @Override
             public void onPageSelected(int position) {
+                _currentIndex = position;
                 if (_data == null || _data.getResultData() == null) return;
                 if (position == 0) {
                     //Integer count = 0;
@@ -286,9 +292,30 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
             _data=mjMemberStatisticModel;
 
+            Long total = _data.getResultData().getTotalMember();
+            _members_total.setText( String.valueOf( total) );
+            Long fxsAmount = _data.getResultData().getTotalPartner();
+            _members_firendCount.setText( String.valueOf( fxsAmount));
+            if(_currentIndex==0){
+                Long today_fxs = _data.getResultData().getTodayMemberAmount();
+                Long today_menber = _data.getResultData().getTodayPartnerAmount();
+                _member_fxsCount2.setText( String.valueOf( today_fxs) );
+                _member_memberCount2.setText( String.valueOf( today_menber ) );
+            }else if( _currentIndex==1){
+                Long week_fxsCount = _data.getResultData().getWeekPartnerAmount();
+                Long week_MemberCount = _data.getResultData().getWeekMemberAmount();
+                _member_fxsCount2.setText( String.valueOf( week_fxsCount ));
+                _member_memberCount2.setText( String.valueOf( week_MemberCount ));
+            }else if( _currentIndex==2){
+                Long month_fxs = _data.getResultData().getMonthPartnerAmount();
+                Long month_MemberCount = _data.getResultData().getMonthMemberAmount();
+                _member_fxsCount2.setText( String.valueOf( month_fxs ));
+                _member_memberCount2.setText( String.valueOf( month_MemberCount) );
+            }
+
             _fragment1.setData(_data,1);
             _fragment2.setData(_data,2);
-            _fragment3.setData(_data,3);
+            _fragment3.setData(_data, 3);
             _membersFragmentAdapter.notifyDataSetChanged();
 
         }

@@ -1,29 +1,28 @@
 package com.huotu.huobanmall.seller.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.huotu.huobanmall.seller.R;
-import com.huotu.huobanmall.seller.adapter.SalesDetailAdapter;
+import com.huotu.huobanmall.seller.adapter.ConsumeStatisticsAdapter;
 import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.bean.SalesListModel;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SalesDetailActivity extends BaseFragmentActivity implements CompoundButton.OnCheckedChangeListener, AdapterView.OnItemClickListener,View.OnClickListener {
+/**
+ * Created by Administrator on 2015/9/15.
+ */
+public class ConsumeStatisticsActivity extends BaseFragmentActivity implements View.OnClickListener {
     @Bind(R.id.header_title)
     TextView header_title;
     @Bind(R.id.header_back)
@@ -31,9 +30,9 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
     @Bind(R.id.header_operate)
     TextView header_operate;
     @Bind(R.id.salesdetail_listview)
-    PullToRefreshListView _salesDetail_listview;
-    SalesDetailAdapter salesDetailAdapter;
-    List<SalesListModel> _saledetailList = null;
+    PullToRefreshListView _consumStatistics_listview;
+    ConsumeStatisticsAdapter consumeStatisticsAdapter;
+    List<SalesListModel> _consumeStatisticsList = null;
     OperateTypeEnum _operateType = OperateTypeEnum.REFRESH;
 
 
@@ -42,34 +41,34 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_detail);
         ButterKnife.bind(this);
-        header_title.setText("销售明细");
+        header_title.setText("消费统计");
         header_back.setOnClickListener(this);
-        _saledetailList = new ArrayList<>();
-        SalesListModel saleslist= new SalesListModel();
-        saleslist.setTime(new Date(System.currentTimeMillis()));
-        saleslist.setMoney(Float.valueOf("1333"));
-        saleslist.setOrderNo(String.valueOf(111111));
-        _saledetailList.add(saleslist);
-        saleslist=new SalesListModel();
-        saleslist.setTime(new Date(System.currentTimeMillis()));
-        saleslist.setMoney(Float.valueOf("1333"));
-        saleslist.setOrderNo(String.valueOf(111111));
-        _saledetailList.add(saleslist);
-        saleslist=new SalesListModel();
-        saleslist.setTime(new Date(System.currentTimeMillis()));
-        saleslist.setMoney(Float.valueOf("1333"));
-        saleslist.setOrderNo(String.valueOf(111111));
-        _saledetailList.add(saleslist);
-        saleslist=new SalesListModel();
-        saleslist.setTime(new Date(System.currentTimeMillis()));
-        saleslist.setMoney(Float.valueOf("1333"));
-        saleslist.setOrderNo(String.valueOf(111111));
-        _saledetailList.add(saleslist);
-        salesDetailAdapter= new SalesDetailAdapter(this, _saledetailList );
-        _salesDetail_listview.getRefreshableView().setAdapter(salesDetailAdapter);
-        _salesDetail_listview.setMode(PullToRefreshBase.Mode.BOTH);
+        _consumeStatisticsList = new ArrayList<>();
+        SalesListModel saleslist = new SalesListModel();
 
-        _salesDetail_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+        saleslist.setMoney(Float.valueOf("1333"));
+
+        _consumeStatisticsList.add(saleslist);
+        saleslist = new SalesListModel();
+
+        saleslist.setMoney(Float.valueOf("1333"));
+
+        _consumeStatisticsList.add(saleslist);
+        saleslist = new SalesListModel();
+
+        saleslist.setMoney(Float.valueOf("1333"));
+
+        _consumeStatisticsList.add(saleslist);
+        saleslist = new SalesListModel();
+
+        saleslist.setMoney(Float.valueOf("1333"));
+
+        _consumeStatisticsList.add(saleslist);
+        consumeStatisticsAdapter = new ConsumeStatisticsAdapter(this, _consumeStatisticsList);
+        _consumStatistics_listview.getRefreshableView().setAdapter(consumeStatisticsAdapter);
+        _consumStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH);
+
+        _consumStatistics_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                 _operateType = OperateTypeEnum.REFRESH;
@@ -85,6 +84,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
 
         firstSaleGoodData();
     }
+
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
@@ -93,10 +93,6 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
     private void firstSaleGoodData() {
 
     }
-
-
-
-
 
 
     public void onClick(View v) {
@@ -112,13 +108,5 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-    }
 }

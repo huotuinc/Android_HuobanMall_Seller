@@ -3,6 +3,7 @@ package com.huotu.huobanmall.seller.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 
 import com.huotu.huobanmall.seller.fragment.BaseFragment;
 
@@ -33,5 +34,11 @@ public class MembersFragmentPageAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return  titles[position% titles.length];
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        //return super.getItemPosition(object);
+        return PagerAdapter.POSITION_NONE;
     }
 }

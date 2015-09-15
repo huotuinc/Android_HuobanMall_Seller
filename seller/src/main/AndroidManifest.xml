@@ -38,6 +38,8 @@
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.PushActivity" />
         <activity android:name=".activity.SalesDetailActivity"/>
+        <activity android:name=".activity.ConsumeStatisticsActivity"/>
+        <activity android:name=".activity.RebateStatisticsActivity"/>
 
         <activity
             android:name=".activity.MainActivity"
@@ -85,6 +87,11 @@
         <activity
             android:name=".activity.BillActivity"
             android:label="@string/title_activity_bill" >
+        </activity>
+
+        <activity
+            android:name=".activity.LogisticsActivity"
+            android:label="@string/title_activity_logistics" >
         </activity>
 
     </application>

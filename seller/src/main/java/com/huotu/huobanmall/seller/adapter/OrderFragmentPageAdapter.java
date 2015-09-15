@@ -3,6 +3,9 @@ package com.huotu.huobanmall.seller.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.huotu.huobanmall.seller.fragment.BaseFragment;
 
@@ -33,5 +36,21 @@ public class OrderFragmentPageAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return  titles[position% titles.length];
+    }
+
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        return super.isViewFromObject(view, object);
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        return super.instantiateItem(container, position);
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        //return super.getItemPosition(object);
+        return PagerAdapter.POSITION_NONE;
     }
 }

@@ -9,7 +9,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal">
 
-        <include layout="@layout/layout_header" />
+        <include layout="@layout/layout_ss_header" />
 
     </RelativeLayout>
     <com.handmark.pulltorefresh.library.PullToRefreshListView

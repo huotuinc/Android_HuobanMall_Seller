@@ -138,10 +138,11 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         super.onClick(v);
         if( v.getId() == R.id.main_menu_cpgl){
             ActivityUtils.getInstance().showActivity(this, GoodsActivity.class);
-        }else if( v.getId() == R.id.main_menu_ddgl){
-            Intent intent = new Intent( this , WebViewActivity.class);
-            intent.putExtra(Constant.Extra_Url, "http://www.baidu.com");
-            ActivityUtils.getInstance().showActivity(this, WebViewActivity.class);
+        }else if( v.getId() == R.id.main_menu_ddgl){//订单管理
+
+            Intent intent = new Intent( this , LogisticsActivity.class);
+            //intent.putExtra(Constant.Extra_Url, "http://www.baidu.com");
+            ActivityUtils.getInstance().showActivity(this, intent);
         }else if( v.getId() == R.id.main_menu_gdtj){
             ActivityUtils.getInstance().showActivity(this, MoreStatisticActivity.class);
         }else if( v.getId() ==R.id.main_menu_szgl){
