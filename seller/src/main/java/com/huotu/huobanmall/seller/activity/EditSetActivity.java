@@ -33,12 +33,10 @@ import de.greenrobot.event.EventBus;
 public class EditSetActivity extends BaseFragmentActivity {
     @Bind(R.id.ET)
     public EditText ET;
-    @Bind(R.id.backtext)
-    public TextView backtext;
-    @Bind(R.id.title)
-    public TextView title;
-    @Bind(R.id.backImage)
-    public Button backImage;
+    @Bind(R.id.header_title)
+    public TextView header_title;
+    @Bind(R.id.header_back)
+    public Button header_back;
 
     protected EditSetTypeEnum typeEnum;
 
@@ -53,7 +51,7 @@ public class EditSetActivity extends BaseFragmentActivity {
 
     private void initView() {
 
-        title.setText("修改");
+        header_title.setText("修改");
 
         if (getIntent().getExtras() == null) return;
 
@@ -61,7 +59,7 @@ public class EditSetActivity extends BaseFragmentActivity {
         int temp = getIntent().getIntExtra("type", 1);
         //String tempName = EditSetTypeEnum.getName(temp);
         typeEnum = EditSetTypeEnum.valueOf(temp);
-
+        header_back.setOnClickListener(this);
         String context = getIntent().getExtras().getString("text");
         ET.setText(context);
     }
@@ -141,11 +139,11 @@ public class EditSetActivity extends BaseFragmentActivity {
 
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.backtext: {
+            case R.id.header_back: {
                 commit();
-
             }
             break;
+
 
 
             default:

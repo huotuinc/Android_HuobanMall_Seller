@@ -1,12 +1,7 @@
 package com.huotu.huobanmall.seller.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Handler.Callback;
-import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,10 +12,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
-import com.google.gson.JsonSyntaxException;
 import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
-import com.huotu.huobanmall.seller.bean.HTForget;
 import com.huotu.huobanmall.seller.bean.HTMerchantModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
@@ -28,9 +21,6 @@ import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.DigestUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
-import com.huotu.huobanmall.seller.utils.HttpUtil;
-import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
-import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import java.io.UnsupportedEncodingException;
@@ -79,11 +69,10 @@ public class PswchangeActivity extends BaseFragmentActivity implements
     }
 
     private void initView() {
-        titleName = (TextView) this.findViewById(R.id.title);
-        backImage = (Button) this.findViewById(R.id.backImage);
-        commit = (TextView) this.findViewById(R.id.forgetpsw);
+        titleName = (TextView) this.findViewById(R.id.header_title);
+        backImage = (Button) this.findViewById(R.id.header_back);
+        commit =(TextView)this.findViewById(R.id.header_operate);
         forgetPsw = (TextView) this.findViewById(R.id.txtForget);
-
         edtOld = (EditText) this.findViewById(R.id.edtOld);
         edtNew = (EditText) this.findViewById(R.id.edtNew);
         edtNewRe = (EditText) this.findViewById(R.id.edtNewRes);
@@ -92,8 +81,6 @@ public class PswchangeActivity extends BaseFragmentActivity implements
         backImage.setOnClickListener(this);
         commit.setOnClickListener(this);
         forgetPsw.setOnClickListener(this);
-        backText = (TextView) this.findViewById(R.id.backtext);
-        backText.setOnClickListener(this);
     }
 
     @Override
@@ -101,14 +88,12 @@ public class PswchangeActivity extends BaseFragmentActivity implements
         // TODO Auto-generated method stub
 
         switch (v.getId()) {
-            case R.id.backtext: {
+            case R.id.header_operate: {
 
-                finish();
-            }
-            break;
-            case R.id.forgetpsw: {
+               if (canModifyPsw()==true){
+                   modifyPassword();
+               }
 
-                //saveNewPsw();
             }
             break;
             case R.id.txtForget: {
@@ -118,7 +103,7 @@ public class PswchangeActivity extends BaseFragmentActivity implements
                 finish();
             }
             break;
-            case R.id.backImage: {
+            case R.id.header_back: {
                 finish();
             }
             break;
@@ -127,17 +112,6 @@ public class PswchangeActivity extends BaseFragmentActivity implements
                 break;
         }
     }
-
-
-//    private void saveNewPsw()
-//    {
-//        // 判断数据完整性
-//        if (canModifyPsw())
-//        {
-//            String url = Constant.MODIFYPSW_INTEFACE;
-//           // new ModifyPswAsyncTask().execute(url);
-//        }
-//    }
 
 
     @Override
@@ -243,13 +217,15 @@ public class PswchangeActivity extends BaseFragmentActivity implements
                 return;
             }
 
-            SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
-                    .setTitle("找回密码")
-                    .setMessage("找回密码成功")
-                    .setNegativeButtonText("关闭")
-                    .setRequestCode(REQUEST_CODE)
-                    .show();
-            return;
+
+                SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
+                        .setTitle("修改密码")
+                        .setMessage("修改密码成功")
+                        .setNegativeButtonText("关闭")
+                        .setRequestCode(REQUEST_CODE)
+                        .show();
+                return;
+
         }
     };
     Response.ErrorListener errorListener = new Response.ErrorListener() {
@@ -265,117 +241,3 @@ public class PswchangeActivity extends BaseFragmentActivity implements
     };
 
 }
-
-//
-//        Map<String, String> paramMap = null;
-//
-//
-//        @Override
-//        protected FMModifyPsw doInBackground(String... params)
-//        {
-//            // TODO Auto-generated method stub
-//            FMModifyPsw modifyPswBean = new FMModifyPsw();
-//            JSONUtil<FMModifyPsw> jsonUtil = new JSONUtil<FMModifyPsw>();
-//            String url = params[0];
-//            String json =  HttpUtil.getInstance().doPost(url, paramMap);
-//            try
-//            {
-//                modifyPswBean =  jsonUtil.toBean(json, modifyPswBean);
-//            }
-//            catch(JsonSyntaxException e)
-//            {
-//               Log.e("JSON_ERROR", e.getMessage());
-//               modifyPswBean.setResultCode(0);
-//               modifyPswBean.setResultDescription("解析json出错");
-//            }
-//            return modifyPswBean;
-//        }
-//
-//        @Override
-//        protected void onPreExecute()
-//        {
-//            // TODO Auto-generated method stub
-//            super.onPreExecute();
-//            // 封转参数
-//            ObtainParamsMap obtainMap = new ObtainParamsMap(
-//                    PswchangeActivity.this);
-//            paramMap = obtainMap.obtainMap();
-//
-//            // 注册是POST提交
-//            paramMap.put(
-//                    "password",
-//                    EncryptUtil.getInstance().encryptMd532(
-//                            edtOld.getText().toString()));
-//            paramMap.put(
-//                    "newPassword",
-//                    EncryptUtil.getInstance().encryptMd532(
-//                            edtNew.getText().toString()));
-//            // 封装sign
-//            String signStr = obtainMap.getSign(paramMap);
-//            paramMap.put("sign", signStr);
-//        }
-//
-//        @Override
-//        protected void onPostExecute(FMModifyPsw result)
-//        {
-//            // TODO Auto-generated method stub
-//            super.onPostExecute(result);
-//
-//            if (1 == result.getResultCode())
-//            {
-//
-//                // 弹出注册成功提示框
-//                noticeDialog = new NoticeDialog(PswchangeActivity.this,
-//                        R.style.NoticeDialog, "修改密码", "修改成功",
-//                        new NoticeDialog.LeaveMyDialogListener()
-//                        {
-//
-//                            @Override
-//                            public void onClick(View view)
-//                            {
-//                                // TODO Auto-generated method stub
-//                                noticeDialog.dismiss();
-//                                noticeDialog = null;
-//                                finish();
-//                            }
-//                        });
-//                noticeDialog.show();
-//            }
-//            else if (Constant.TOKEN_OVERDUE == result.getResultCode())
-//            {
-//                // 提示账号异地登陆，强制用户退出
-//                // 并跳转到登录界面
-//                ToastUtils.showLongToast(PswchangeActivity.this, "账户登录过期，请重新登录");
-//                Handler mHandler = new Handler();
-//                mHandler.postDelayed(new Runnable()
-//                {
-//
-//                    @Override
-//                    public void run()
-//                    {
-//                        // TODO Auto-generated method stub
-//                        ActivityUtils.getInstance().LoginActivity((Activity) PswchangeActivity.this);
-//                    }
-//                }, 2000);
-//            }
-//            else
-//            {
-//                // 弹出注册失败提示框
-//                noticeDialog = new NoticeDialog(PswchangeActivity.this,
-//                        R.style.NoticeDialog, "修改密码", "修改失败",
-//                        new NoticeDialog.LeaveMyDialogListener()
-//                        {
-//
-//                            @Override
-//                            public void onClick(View view)
-//                            {
-//                                // TODO Auto-generated method stub
-//                                noticeDialog.dismiss();
-//                                noticeDialog = null;
-//                            }
-//                        });
-//                noticeDialog.show();
-//            }
-//        }
-//
-//    }
