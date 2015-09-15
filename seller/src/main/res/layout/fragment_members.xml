@@ -29,6 +29,7 @@
                     android:layout_toRightOf="@id/members_total_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_10"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_16"
                     android:text="153" />
@@ -36,6 +37,7 @@
                     android:id="@+id/members_title_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_10"
                     android:layout_alignBottom="@id/members_total_image"
                     android:textSize="@dimen/text_size_16"
                     android:layout_toRightOf="@id/members_total_image"

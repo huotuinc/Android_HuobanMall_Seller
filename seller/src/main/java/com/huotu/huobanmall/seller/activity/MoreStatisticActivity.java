@@ -147,6 +147,7 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         }else if( v.getId() == R.id.morestatistic_menu_xftj){
 
         }else if( v.getId() == R.id.morestatistic_menu_xsmx){
+            ActivityUtils.getInstance().showActivity(this, SalesDetailActivity.class );
 
         }else if( v.getId() == R.id.morestatistic_menu_hytj){
             Bundle bd = new Bundle();
