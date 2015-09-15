@@ -136,7 +136,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         HttpParaUtils httpParaUtils = new HttpParaUtils();
         url = httpParaUtils.getHttpGetUrl(url ,null);
 
-        GsonRequest<MJBillStatisticModel> userReportRequest = new GsonRequest<MJBillStatisticModel>(
+        GsonRequest<MJBillStatisticModel> orderReportRequest = new GsonRequest<MJBillStatisticModel>(
                 Request.Method.GET,
                 url,
                 MJBillStatisticModel.class,
@@ -147,7 +147,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
         this.showProgressDialog("","正在获取数据，请稍等...");
 
-        VolleyRequestManager.getRequestQueue().add(userReportRequest);
+        VolleyRequestManager.getRequestQueue().add(orderReportRequest);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -280,12 +280,18 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
                 if( position==0){
                     Long count = _data.getResultData().getTodayAmount();
                     _order_info_count.setText( String.valueOf( count ) );
+                    //_orderFragmentAdapter.notifyDataSetChanged();
+                    _fragment1.setData(_data,1);
                 }else if( position==1){
                     Long count = _data.getResultData().getWeekAmount();
                     _order_info_count.setText( String.valueOf( count ));
+                    _fragment2.setData(_data, 2 );
+                    //_orderFragmentAdapter.notifyDataSetChanged();
                 }else if( position==2){
                     Long count = _data.getResultData().getMonthAmount();
                     _order_info_count.setText( String.valueOf( count ));
+                    //_orderFragmentAdapter.notifyDataSetChanged();
+                    _fragment3.setData(_data,3);
                 }
             }
 
@@ -317,7 +323,6 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         _indicator.setViewPager(_viewPager);
 
     }
-
 
     public static class LineChartFragment extends BaseFragment{
 
@@ -366,7 +371,8 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
             _type=type;
             if( _data==null || _data.getResultData() == null ) return;
 
-            if( this.isResumed()) {
+            if( _orderLineChart==null) return;
+            //if( this.isResumed()) {
                 if( type == 1) {
                     setLineChartData(_orderLineChart, (ArrayList) _data.getResultData().getTodayTimes() , _data.getResultData().getTodayAmounts());
                 }else if( type == 2){
@@ -374,7 +380,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
                 }else if( type==3){
                     setLineChartData(_orderLineChart, (ArrayList)_data.getResultData().getMonthTimes(),_data.getResultData().getMonthAmounts());
                 }
-            }
+            //}
         }
 
         protected void setLineChartData( LineChart lineChart , List<Object> xData1 , List<Integer> yData1 ){
