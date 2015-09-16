@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.LogisticsAdapter;
@@ -23,6 +25,8 @@ import butterknife.ButterKnife;
 public class LogisticsActivity extends BaseFragmentActivity {
     @Bind(R.id.logistics_list)
     RecyclerView _logistics_list;
+    @Bind(R.id.header_back)
+    Button _headerBack;
 
     List<LogisticsDetailModel> _list=null;
     LogisticsAdapter _adapter;
@@ -57,6 +61,11 @@ public class LogisticsActivity extends BaseFragmentActivity {
         _adapter=new LogisticsAdapter(this, _list);
         _logistics_list.setLayoutManager(new LinearLayoutManager(this));
         _logistics_list.setAdapter(_adapter);
+        _headerBack.setOnClickListener(this);
     }
-    
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+    }
 }

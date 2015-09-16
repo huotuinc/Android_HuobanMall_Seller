@@ -140,7 +140,7 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
             ActivityUtils.getInstance().showActivity(this, GoodsActivity.class);
         }else if( v.getId() == R.id.main_menu_ddgl){//订单管理
 
-            Intent intent = new Intent( this , LogisticsActivity.class);
+            Intent intent = new Intent( this , BillActivity.class);
             //intent.putExtra(Constant.Extra_Url, "http://www.baidu.com");
             ActivityUtils.getInstance().showActivity(this, intent);
         }else if( v.getId() == R.id.main_menu_gdtj){
