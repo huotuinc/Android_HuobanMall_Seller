@@ -82,7 +82,8 @@
         </activity>
         <activity
             android:name=".activity.BillActivity"
-            android:label="@string/title_activity_bill" >
+            android:label="@string/title_activity_bill"
+            android:theme="@style/Theme.PageIndicatorDefaults">
         </activity>
         <activity
             android:name=".activity.LogisticsActivity"
