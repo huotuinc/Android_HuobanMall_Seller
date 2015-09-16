@@ -66,6 +66,7 @@
     <string name="title_activity_sales_detail">SalesDetailActivity</string>
 
     <string name="title_activity_logistics">LogisticsActivity</string>
+    <string name="title_activity_ordermanagement_details">OrdermanagementDetailsActivity</string>
 
 
 </resources>
