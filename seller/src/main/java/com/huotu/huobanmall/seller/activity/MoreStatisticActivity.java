@@ -145,14 +145,16 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
             bd.putInt("tabType",Constant.TAB_ORDER);
             ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class,bd);
         }else if( v.getId() == R.id.morestatistic_menu_xftj){
-
+            ActivityUtils.getInstance().showActivity(this, ConsumeStatisticsActivity.class );
         }else if( v.getId() == R.id.morestatistic_menu_xsmx){
+            ActivityUtils.getInstance().showActivity(this, SalesDetailActivity.class );
 
         }else if( v.getId() == R.id.morestatistic_menu_hytj){
             Bundle bd = new Bundle();
             bd.putInt( "tabType" , Constant.TAB_MEMBER );
             ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class , bd );
         }else if( v.getId() == R.id.morestatistic_menu_fltj){
+            ActivityUtils.getInstance().showActivity(this, RebateStatisticsActivity.class );
 
         }else if( v.getId() == R.id.morestatistic_menu_xsetj){
             Bundle bd = new Bundle();

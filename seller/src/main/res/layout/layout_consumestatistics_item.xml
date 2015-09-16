@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@mipmap/zchyzrs"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:id="@+id/salesdetail_imageView" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="姓名/昵称(18767152078)"
+        android:textColor="@color/black"
+        android:layout_alignTop="@+id/salesdetail_imageView"
+        android:layout_toRightOf="@+id/salesdetail_imageView"
+        android:id="@+id/moblic" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="购买"
+        android:textColor="@color/black"
+        android:layout_alignBottom="@+id/salesdetail_imageView"
+        android:layout_toRightOf="@+id/salesdetail_imageView"
+        android:id="@+id/buy" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2100单"
+        android:textColor="@color/black"
+        android:layout_alignTop="@+id/buy"
+        android:layout_toRightOf="@+id/buy"
+        android:layout_toEndOf="@+id/buy"
+        android:id="@+id/salesnum" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3100"
+        android:textSize="22sp"
+        android:textColor="@color/statistic_check_color"
+        android:layout_alignTop="@+id/moblic"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp"
+        android:id="@+id/money" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="总消费(元)"
+        android:textColor="@color/black"
+        android:layout_alignTop="@+id/salesnum"
+        android:layout_alignRight="@+id/money"
+        android:layout_alignEnd="@+id/money" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_below="@+id/salesdetail_imageView"/>
+
+</RelativeLayout>

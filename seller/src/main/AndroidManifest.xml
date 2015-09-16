@@ -37,6 +37,10 @@
         <activity android:name=".activity.WebViewActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.PushActivity" />
+        <activity android:name=".activity.SalesDetailActivity"/>
+        <activity android:name=".activity.ConsumeStatisticsActivity"/>
+        <activity android:name=".activity.RebateStatisticsActivity"/>
+
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
@@ -85,10 +89,12 @@
             android:label="@string/title_activity_bill"
             android:theme="@style/Theme.PageIndicatorDefaults">
         </activity>
+
         <activity
             android:name=".activity.LogisticsActivity"
             android:label="@string/title_activity_logistics" >
         </activity>
+
     </application>
 
 </manifest>

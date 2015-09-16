@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@mipmap/zchyzrs"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/consumestatistics_imageView" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="姓名/昵称"
+        android:textColor="@color/black"
+        android:layout_alignTop="@+id/consumestatistics_imageView"
+        android:layout_toRightOf="@+id/consumestatistics_imageView"
+        android:id="@+id/order" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(18767152078)"
+        android:textColor="@color/black"
+        android:layout_alignTop="@+id/order"
+        android:layout_toRightOf="@+id/order"
+        android:layout_toEndOf="@+id/order"
+        android:id="@+id/moblie" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TOP 1"
+        android:id="@+id/salesnum"
+        android:layout_alignBottom="@+id/consumestatistics_imageView"
+        android:layout_alignLeft="@+id/order"
+        android:layout_alignStart="@+id/order" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3100"
+        android:textSize="22sp"
+        android:textColor="@color/statistic_check_color"
+        android:id="@+id/money"
+        android:layout_marginRight="15dp"
+        android:layout_alignTop="@+id/moblie"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="总返利"
+        android:textColor="@color/black"
+        android:layout_alignTop="@+id/salesnum"
+        android:layout_alignLeft="@+id/money"
+        android:layout_alignStart="@+id/money" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_below="@+id/consumestatistics_imageView"/>
+
+</RelativeLayout>
