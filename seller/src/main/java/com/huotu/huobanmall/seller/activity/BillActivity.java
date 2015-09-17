@@ -1,8 +1,7 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -100,7 +99,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
         BillDataAdapter.ISeeOrderDetailListener _seeOrderDetailListener = new BillDataAdapter.ISeeOrderDetailListener() {
             @Override
             public void onSeeOrderDetail(View view, OrderListModel model) {
-                ActivityUtils.getInstance().showActivity( (Activity)_context , OrdermanagementDetailsActivity.class);
+                ActivityUtils.getInstance().showActivity((Activity) _context, OrdermanagementDetailsActivity.class);
             }
         };
 
