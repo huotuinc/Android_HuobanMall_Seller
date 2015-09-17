@@ -2,7 +2,6 @@ package com.huotu.huobanmall.seller.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -28,13 +27,15 @@ import butterknife.ButterKnife;
 /**
  * 订单管理 界面
  */
-public class BillActivity extends BaseFragmentActivity {
+public class BillActivity extends BaseFragmentActivity implements View.OnClickListener {
     @Bind(R.id.header_back)
     Button _headerBack;
     @Bind(R.id.bill_indicator)
     TabPageIndicator _indicator;
     @Bind(R.id.bill_ViewPager)
     ViewPager _bill_ViewPager;
+    @Bind(R.id.header_operate)
+    Button header_operate;
 
     BillAdapter _adapter;
 
@@ -55,6 +56,7 @@ public class BillActivity extends BaseFragmentActivity {
         _bill_ViewPager.setAdapter( _adapter );
 
         _indicator.setViewPager( _bill_ViewPager );
+        header_operate.setOnClickListener(this);
     }
 
     @Override
@@ -66,7 +68,13 @@ public class BillActivity extends BaseFragmentActivity {
 
     @Override
     public void onClick(View v) {
-        super.onClick(v);
+        switch (v.getId()){
+            case R.id.header_back: {
+                finish();
+            }
+            break;
+            }
+
 
     }
 
@@ -85,14 +93,13 @@ public class BillActivity extends BaseFragmentActivity {
         BillDataAdapter.ILogisticListener _seeLogisticListener = new BillDataAdapter.ILogisticListener() {
             @Override
             public void onClick(View view, OrderListModel model) {
-                //ToastUtils.showLongToast(_context, model.getOrderNo());
-                ActivityUtils.getInstance().showActivity( (Activity)_context, LogisticsActivity.class);
+                ToastUtils.showLongToast(_context, model.getOrderNo());
             }
         };
         BillDataAdapter.ISeeOrderDetailListener _seeOrderDetailListener = new BillDataAdapter.ISeeOrderDetailListener() {
             @Override
             public void onSeeOrderDetail(View view, OrderListModel model) {
-                ActivityUtils.getInstance().showActivity( (Activity)_context , OrdermanagementDetailsActivity.class);
+                ActivityUtils.getInstance().showActivity((Activity) _context, OrdermanagementDetailsActivity.class);
             }
         };
 
