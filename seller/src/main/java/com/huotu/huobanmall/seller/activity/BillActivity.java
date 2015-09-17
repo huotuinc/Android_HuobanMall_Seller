@@ -97,6 +97,12 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                 ToastUtils.showLongToast(_context, model.getOrderNo());
             }
         };
+        BillDataAdapter.ISeeOrderDetailListener _seeOrderDetailListener = new BillDataAdapter.ISeeOrderDetailListener() {
+            @Override
+            public void onSeeOrderDetail(View view, OrderListModel model) {
+                ActivityUtils.getInstance().showActivity( (Activity)_context , OrdermanagementDetailsActivity.class);
+            }
+        };
 
         public BillAdapter(Context context ){
             _context=context;
@@ -119,18 +125,22 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
             _data1 = new ArrayList<>();
             _adapter1 = new BillDataAdapter(_context,_data1);
             _adapter1.setLogisticsListener(_seeLogisticListener);
+            _adapter1.set_seeOrderDetailListener(_seeOrderDetailListener);
             _recycleLVs.get(0).setAdapter(_adapter1);
             _data2 = new ArrayList<>();
             _adapter2 = new BillDataAdapter(_context,_data2);
             _adapter2.setLogisticsListener(_seeLogisticListener);
+            _adapter2.set_seeOrderDetailListener(_seeOrderDetailListener);
             _recycleLVs.get(1).setAdapter(_adapter2);
             _data3 = new ArrayList<>();
             _adapter3 = new BillDataAdapter(_context, _data3);
             _adapter3.setLogisticsListener(_seeLogisticListener);
+            _adapter3.set_seeOrderDetailListener(_seeOrderDetailListener);
             _recycleLVs.get(2).setAdapter(_adapter3);
             _data4 = new ArrayList<>();
             _adapter4 = new BillDataAdapter(_context,_data4);
             _adapter4.setLogisticsListener(_seeLogisticListener);
+            _adapter4.set_seeOrderDetailListener(_seeOrderDetailListener);
             _recycleLVs.get(3).setAdapter(_adapter4);
         }
 

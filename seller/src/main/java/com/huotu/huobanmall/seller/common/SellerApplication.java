@@ -8,6 +8,8 @@ import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by Administrator on 2015/8/24.
  */
@@ -33,7 +35,14 @@ public class SellerApplication extends Application{
         super.onCreate();
         _baiduLocation =new BaiduLocation();
 
+        initJPush();
+
         initVolley();
+    }
+
+    protected void initJPush(){
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);     		// 初始化 JPush
     }
 
     protected void initVolley(){

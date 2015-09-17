@@ -16,6 +16,8 @@ import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -30,6 +32,20 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
         if( v.getId()== R.id.header_back){
             this.finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        JPushInterface.onResume(BaseFragmentActivity.this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        JPushInterface.onPause(BaseFragmentActivity.this);
     }
 
     @Override
