@@ -86,10 +86,15 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
             String message="";
             if( null != volleyError.networkResponse){
                 message=new String( volleyError.networkResponse.data);
+            }else{
+                message = volleyError.getMessage();
             }
+            if( message.length()<1){
+                message = "网络请求失败，请检查网络状态";
+            }
+
             DialogUtils.showDialog(BaseFragmentActivity.this, BaseFragmentActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
         }
     };
-
 
 }

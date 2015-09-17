@@ -4,12 +4,8 @@ import android.os.Bundle;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.RelativeLayout;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
-import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.baidu.location.LocationClientOption;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.HTInitBean;
@@ -22,9 +18,6 @@ import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.StringUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -74,7 +67,7 @@ public class SplashActivity extends BaseFragmentActivity {
         String url = Constant.INIT_INTERFACE;
         HttpParaUtils utils = new HttpParaUtils();
         url = utils.getHttpGetUrl(url, null);
-        GsonRequest<HTInitBean> initRequest = new GsonRequest<HTInitBean>(
+        GsonRequest<HTInitBean> initRequest = new GsonRequest<>(
                 Request.Method.GET,
                 url,
                 HTInitBean.class,
@@ -135,7 +128,6 @@ public class SplashActivity extends BaseFragmentActivity {
                 return;
             }
 
-
             SellerApplication.getInstance().writeGlobalInfo(htInitBean.getResultData().getGlobal());
 
             //更新Token信息
@@ -161,22 +153,6 @@ public class SplashActivity extends BaseFragmentActivity {
                 //跳转到登录界面
                 ActivityUtils.getInstance().skipActivity(SplashActivity.this, LoginActivity.class);
             }
-        }
-    };
-
-    Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            //提示初始化失败,服务器问题
-            String message ="";
-            if( volleyError.networkResponse !=null){
-                message = new String( volleyError.networkResponse.data);
-            }
-            else {
-                message = volleyError.getCause().getMessage();
-            }
-
-            DialogUtils.showDialog( SplashActivity.this, SplashActivity.this.getSupportFragmentManager(),"错误信息",message,"关闭");
         }
     };
 }

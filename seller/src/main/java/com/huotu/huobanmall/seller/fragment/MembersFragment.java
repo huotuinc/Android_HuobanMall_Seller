@@ -39,6 +39,7 @@ import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -439,11 +440,21 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                 for (int i = 0; i < count; i++) {
                     if (null == xData1.get(i)) continue;
                     Object xObj = xData1.get(i);
-                    String x = String.valueOf( xObj);
-                    xValues1.add( x );
+
+                    String x = "";
+                    if( xObj instanceof Date){
+                        int day = ((Date)xObj).getDate();
+                        x = String.valueOf(day)+"日";
+                        xValues1.add( x );
+                    }else {
+                        x = String.valueOf( xObj);
+                        xValues1.add(x);
+                    }
+
                     if( !xValue.contains( x )){
                         xValue.add(x);
                     }
+
                     Object y = yData1.get(i);
                     Entry item = new Entry(Float.valueOf(y.toString()), i);
                     yValues1.add(item);
@@ -470,8 +481,15 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                 for (int i = 0; i < count; i++) {
                     if (null == xData2.get(i)) continue;
                     Object xObj = xData2.get(i);
-                    String x = String.valueOf(xObj);
-                    xValues2.add( x );
+                    String x ="";
+                    if( xObj instanceof Date){
+                        int day=((Date)xObj).getDate();
+                        x = String.valueOf(day)+"日";
+                    }else{
+                        x= String.valueOf( xObj);
+                    }
+                    xValues2.add(x);
+
                     if( !xValue.contains(x)){
                         xValue.add(x);
                     }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.huotu.huobanmall.seller" >
+    package="com.huotu.huobanmall.seller"
+    android:versionCode="1"
+    android:versionName="1.0.0"
+    >
 
     <!-- JPUSH Required 自定义用来收发消息的相关权限 -->
     <permission
@@ -155,13 +158,11 @@
         </service>
 
         <!-- JPUSH Required SDK核心功能-->
-        <receiver
-            android:name="cn.jpush.android.service.PushReceiver"
+        <receiver android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-                <!--Required  显示通知栏 -->
                 <category android:name="com.huotu.huobanmall.seller" />
             </intent-filter>
             <intent-filter>
@@ -174,7 +175,6 @@
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
                 <data android:scheme="package" />
             </intent-filter>
-
         </receiver>
 
         <!-- JPUSH Required SDK核心功能-->
@@ -198,9 +198,7 @@
         </receiver>
 
         <!-- 百度定位 meta-data需要写在application中 -->
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="xIa1QGYszsjFs9C9kDANe7BR" />
+        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="xIa1QGYszsjFs9C9kDANe7BR" />
 
         <!-- JPUSH Required  . Enable it you can get statistics data with channel -->
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>

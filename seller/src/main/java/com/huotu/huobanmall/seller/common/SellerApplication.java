@@ -17,7 +17,7 @@ public class SellerApplication extends Application{
     private static SellerApplication app;
 
     private BaiduLocation _baiduLocation;
-    public MerchantModel personal = new MerchantModel();
+    //public MerchantModel personal = new MerchantModel();
 
     public SellerApplication() {
         app = this;

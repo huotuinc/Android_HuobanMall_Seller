@@ -34,6 +34,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.activity.LoginActivity;
+import com.huotu.huobanmall.seller.activity.SalesDetailActivity;
 import com.huotu.huobanmall.seller.activity.WebViewActivity;
 import com.huotu.huobanmall.seller.adapter.DataStatisticFragmentAdapter;
 import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
@@ -54,6 +55,7 @@ import com.viewpagerindicator.TitlePageIndicator;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -61,7 +63,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- *
+ * 订单统计
  */
 public class OrderFragment extends BaseFragment implements View.OnClickListener {
 
@@ -184,8 +186,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         if( v.getId()==R.id.order_statis1){
-            Intent intent = new Intent(this.getActivity(), WebViewActivity.class);
-            intent.putExtra(Constant.Extra_Url,"http://www.baidu.com");
+            Intent intent = new Intent(this.getActivity(), SalesDetailActivity.class);
             ActivityUtils.getInstance().showActivity(this.getActivity(),intent);
         }
     }
@@ -237,20 +238,6 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
             _fragment2.setData(_data,2);
             _fragment3.setData(_data, 3);
             _orderFragmentAdapter.notifyDataSetChanged();
-        }
-    };
-
-    protected Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-
-            OrderFragment.this.closeProgressDialog();
-
-////           SimpleDialogFragment.createBuilder( getActivity() , getFragmentManager() )
-////                    .setTitle("错误信息")
-//                    .setMessage( volleyError.getMessage())
-//                    .setNegativeButtonText("关闭")
-//                    .show();
         }
     };
 
@@ -403,7 +390,14 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
             int count = xData1.size();
             for(int i=0;i< count ;i++){
                 Object x = xData1.get(i);
-                xValues1.add( String.valueOf( x));
+
+                if( x instanceof Date){
+                    int day = ((Date)x).getDate();
+                    xValues1.add( String.valueOf( day ) + "日");
+                }else{
+                    xValues1.add( String.valueOf( x ) );
+                }
+
                 int y = yData1.get(i);
                 Entry item=new Entry( y , i , "sss");
                 yValues1.add(item);

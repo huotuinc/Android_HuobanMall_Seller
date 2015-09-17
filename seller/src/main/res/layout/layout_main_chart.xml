@@ -7,12 +7,12 @@
         android:id="@+id/todayOrder_header"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:background="@color/white"
         android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/ll_todayOrder_order"
             android:layout_width="0px"
             android:layout_weight="1"
+            android:background="@color/white"
             android:orientation="vertical"
             android:layout_height="wrap_content">
             <TextView
@@ -31,8 +31,9 @@
             <ImageView
                 android:id="@+id/main_order_space"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/space_5"
-                android:background="#2686DA"/>
+                android:layout_height="@dimen/space_4"
+                android:visibility="visible"
+                android:background="@color/main_header_bg"/>
         </LinearLayout>
 
         <LinearLayout
@@ -40,6 +41,7 @@
             android:layout_width="0px"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:background="@color/white"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/main_MemberCount"
@@ -57,9 +59,9 @@
             <ImageView
                 android:id="@+id/main_member_space"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/space_5"
+                android:layout_height="@dimen/space_4"
                 android:visibility="gone"
-                android:background="#2686DA"/>
+                android:background="@color/main_header_bg"/>
         </LinearLayout>
 
         <LinearLayout
@@ -67,6 +69,7 @@
             android:layout_width="0px"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:background="@color/white"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/main_fxsCount"
@@ -84,9 +87,9 @@
             <ImageView
                 android:id="@+id/main_fxs_space"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/space_5"
+                android:layout_height="@dimen/space_4"
                 android:visibility="gone"
-                android:background="#2686DA"/>
+                android:background="@color/main_header_bg"/>
         </LinearLayout>
 
     </LinearLayout>

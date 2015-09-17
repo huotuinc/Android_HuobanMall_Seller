@@ -38,6 +38,7 @@ import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -366,8 +367,16 @@ public class SalesFragment extends BaseFragment {
             List<Entry> yValues1=new ArrayList<>();
             int count = xData1.size();
             for(int i=0;i< count ;i++){
-                Object x = xData1.get(i);
-                xValues1.add( String.valueOf( x));
+                Object xObj = xData1.get(i);
+                String x ="";
+                if( xObj instanceof Date){
+                     int day = ((Date)xObj ).getDate();
+                     x = day+"日";
+                }else {
+                    x = xObj.toString();
+                }
+
+                xValues1.add( x );
                 Float y = yData1.get(i);
                 Entry item=new Entry( y , i );
                 yValues1.add(item);
@@ -396,10 +405,8 @@ public class SalesFragment extends BaseFragment {
             yAxis1.setEnabled(true);
             yAxis1.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
 
-
             YAxis yAxis = lineChart.getAxisLeft();
             yAxis.setTextColor(0x34324222);
-
 
             lineChart.setBorderColor( gridColor );
             lineChart.setDrawBorders(true);
@@ -409,7 +416,7 @@ public class SalesFragment extends BaseFragment {
 
             LineData data =new LineData(xValues1 , dataSet );
             lineChart.setData(data);
-            lineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+            lineChart.animateX(2000, Easing.EasingOption.EaseInOutQuart);
         }
 
     }

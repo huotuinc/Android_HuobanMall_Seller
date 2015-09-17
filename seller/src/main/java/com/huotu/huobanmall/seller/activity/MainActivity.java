@@ -96,7 +96,7 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         //CountUpTimerView countUpView =new CountUpTimerView( main_todyMoney , formatText , 1000.33f,5000.45f, 3000,100);
         //countUpView.start();
 
-        initTodayData();
+        //initTodayData();
 
         _llOrder.setOnClickListener(this);
         _llMember.setOnClickListener(this);
@@ -163,47 +163,59 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
     protected void setLineChart(){
         if(_data==null || _data.getResultData() ==null  )return;
 
-        _todayOrderCount.setText( "￥ " + String.valueOf( _data.getResultData().getTodayOrderAmount()));
+        _todayOrderCount.setText( String.valueOf( _data.getResultData().getTodayOrderAmount()));
         _todayMemberCount.setText(String.valueOf( _data.getResultData().getTodayMemberAmount() ));
         _todayFxsCount.setText( String.valueOf(_data.getResultData().getTodayPartnerAmount()));
 
         if(_currentIndex==0){
             _space1.setVisibility(View.VISIBLE);
+            //_space1.setBackgroundResource(R.color.main_header_bg);
             _space2.setVisibility(View.GONE);
+            //_space2.setBackgroundColor(Color.WHITE);
             _space3.setVisibility(View.GONE);
+            //_space3.setBackgroundColor(Color.WHITE);
             setLineChartData(_mainChart, _data.getResultData().getOrderHour(), _data.getResultData().getOrderAmount());
         }else if( _currentIndex==1){
             _space1.setVisibility(View.GONE);
+            //_space1.setBackgroundColor(Color.WHITE);
             _space2.setVisibility(View.VISIBLE);
+            //_space2.setBackgroundResource(R.color.main_header_bg);
             _space3.setVisibility(View.GONE);
+            //_space3.setBackgroundColor(Color.WHITE);
             setLineChartData(_mainChart, _data.getResultData().getMemberHour(), _data.getResultData().getMemberAmount());
         }else if(_currentIndex==2){
             _space1.setVisibility(View.GONE);
+            //_space1.setBackgroundColor(Color.WHITE);
             _space2.setVisibility(View.GONE);
+            //_space2.setBackgroundColor(Color.WHITE);
             _space3.setVisibility(View.VISIBLE);
-            setLineChartData(_mainChart,_data.getResultData().getPartnerHour(),_data.getResultData().getPartnerAmount());
+            //_space3.setBackgroundResource(R.color.main_header_bg);
+            setLineChartData(_mainChart, _data.getResultData().getPartnerHour(), _data.getResultData().getPartnerAmount());
         }
     }
 
     protected void setLineChartData( LineChart lineChart , List<Integer> xData , List<Integer> yData ){
         if( xData==null || yData==null )return;
 
-        int bg=0xFF2686DA;
+        int bg=0xFFFFFFFF;
         int gridBg=0x56A5EA;
-        lineChart.setGridBackgroundColor( gridBg );
+        int lineColor =0xFFFF3C00;
+
+        //lineChart.setGridBackgroundColor( gridBg );
+        lineChart.setDrawGridBackground(false);
         lineChart.setBackgroundColor(bg);
         lineChart.setDescription("");
         lineChart.setNoDataText("暂无数据");
-        lineChart.getAxisRight().setEnabled(false);
+        //lineChart.getAxisRight().setEnabled(false);
 
         List<String> xValues= new ArrayList<String>();
         List<Entry> yValues=new ArrayList<>();
-        int count = xData.size();// _data.getResultData().getMemberHour().size();
+        int count = xData.size();
         for(int i=0;i< count ;i++){
             if( null == xData.get(i) ) continue;
-            int x = xData.get(i);// _data.getResultData().getOrderHour().get(i);
+            int x = xData.get(i);
             xValues.add( String.valueOf( x));
-            int y = yData.get(i); //_data.getResultData().getOrderAmount().get(i);
+            int y = yData.get(i);
             Entry item=new Entry( y , i );
             yValues.add(item);
         }
@@ -213,29 +225,39 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         dataSet.setCircleSize(5);
         //dataSet.setDrawCircleHole(true);
         dataSet.setDrawValues(false);
-        dataSet.setLineWidth(3);
-        dataSet.setColors( new int[]{Color.rgb(255,255,255)} );
+        dataSet.setLineWidth(4);
+        dataSet.setColor(lineColor);
         dataSet.setValueTextSize(14);
         dataSet.setValueTextColor(Color.GREEN);
         dataSet.setDrawCubic(true);
+        dataSet.setCircleColor(lineColor);
         dataSet.setCircleColorHole(bg);
         dataSet.setDrawCircleHole(true);
 
         XAxis xAxis = lineChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(0xFFFFFFFF);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+        //xAxis.setDrawGridLines(false);
+
+        //xAxis.setTextColor(0xFFFFFFFF);
 
         YAxis yAxis = lineChart.getAxisLeft();
-        yAxis.setTextColor(0xFFFFFFFF);
+        yAxis.setStartAtZero(true);
+        yAxis.setLabelCount(4, false);
+        yAxis.setDrawGridLines(false);
+        //yAxis.setTextColor(0xFFFFFFFF);
+
+        //lineChart.getAxisRight().setDrawGridLines(false);
+
+        lineChart.getAxisRight().setDrawLabels(false);
 
         lineChart.getLegend().setEnabled(false);
 
         LineData data =new LineData(xValues ,dataSet );
         lineChart.setData(data);
-        lineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+        lineChart.animateX(2000, Easing.EasingOption.EaseInOutQuart);
     }
 
-    protected void initTodayData(){
+//    protected void initTodayData(){
 //        _todayDistributorsFragments = new TodayDistributorsFragment();
 //        _todayMemberFragments = new TodayMemberFragment();
 //        _todayOrderFragments = new TodayOrderFragment();
@@ -247,7 +269,7 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
 //        _viewPager.setAdapter(_fragmentAdapter);
 //        _indicator.setViewPager(_viewPager);
 
-    }
+//    }
 
     @Override
     public void switchFragment(int position) {
@@ -277,7 +299,7 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
                 return;
             }
 
-            main_TodayMoney.setText(String.valueOf(mjNewTodayModel.getResultData().getTodaySales()));
+            main_TodayMoney.setText("￥"+String.valueOf(mjNewTodayModel.getResultData().getTodaySales()));
             main_TotalMoney.setText(String.valueOf(mjNewTodayModel.getResultData().getTotalSales()));
 
             _data=mjNewTodayModel;
@@ -288,16 +310,16 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         }
     };
 
-    Response.ErrorListener errorListener=new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            MainActivity.this.closeProgressDialog();
-            if( volleyError.networkResponse!=null) {
-                String message = new String(volleyError.networkResponse.data);
-                DialogUtils.showDialog(MainActivity.this,MainActivity.this.getSupportFragmentManager(),"错误信息",message,"关闭");
-            }
-        }
-    };
+//    Response.ErrorListener errorListener=new Response.ErrorListener() {
+//        @Override
+//        public void onErrorResponse(VolleyError volleyError) {
+//            MainActivity.this.closeProgressDialog();
+//            if( volleyError.networkResponse!=null) {
+//                String message = new String(volleyError.networkResponse.data);
+//                DialogUtils.showDialog(MainActivity.this,MainActivity.this.getSupportFragmentManager(),"错误信息",message,"关闭");
+//            }
+//        }
+//    };
 
 
 }

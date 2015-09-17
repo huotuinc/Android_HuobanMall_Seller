@@ -175,7 +175,9 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
     }
 
     private void firstSaleGoodData() {
-
+        this.showProgressDialog("","正在获取数据，请稍等...");
+        _operateType= OperateTypeEnum.REFRESH;
+        getData(_operateType);
     }
 
     public void onClick(View v) {

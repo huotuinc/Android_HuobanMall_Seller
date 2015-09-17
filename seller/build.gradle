@@ -3,15 +3,13 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
-
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
         }
     }
-
     defaultConfig {
-        applicationId "com.huobanmall.seller"
+        applicationId 'com.huotu.huobanmall.seller'
         minSdkVersion 8
         targetSdkVersion 19
         versionCode 1
@@ -22,6 +20,8 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    productFlavors {
     }
 }
 
@@ -38,5 +38,4 @@ dependencies {
     compile 'com.android.support:support-v4:22.1.1'
     compile 'com.android.support:recyclerview-v7:22.1.1'
     //compile files('libs/eventbus-2.4.1.jar')
-    compile files('libs/jpush-sdk-release1.8.1.jar')
 }
