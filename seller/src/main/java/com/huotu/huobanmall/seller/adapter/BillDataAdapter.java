@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -29,6 +30,7 @@ public class BillDataAdapter extends RecyclerView.Adapter< BillDataAdapter.Order
     private List<OrderListModel> _list;
     private LayoutInflater _inflater;
     private ILogisticListener _seeLogisticsListener = null;
+    private ISeeOrderDetailListener _seeOrderDetailListener=null;
     private OrderGoodsAdapter _goodsAdapter=null;
     private List<GoodsModel> _goodsList=null;
 
@@ -36,11 +38,22 @@ public class BillDataAdapter extends RecyclerView.Adapter< BillDataAdapter.Order
         _seeLogisticsListener = listener;
     }
 
+    public void set_seeOrderDetailListener(ISeeOrderDetailListener listener){
+        _seeOrderDetailListener = listener;
+    }
+
     protected void onLogisticListener( View view , OrderListModel model ){
         if( _seeLogisticsListener!=null){
             _seeLogisticsListener.onClick(view , model);
         }
     }
+
+    protected void onSeeOrderDetailListener(View view , OrderListModel model){
+        if(_seeOrderDetailListener!=null){
+            _seeOrderDetailListener.onSeeOrderDetail(view, model);
+        }
+    }
+
 
     public BillDataAdapter( Context context , List<OrderListModel> list  ){
         _context= context;
@@ -116,6 +129,12 @@ public class BillDataAdapter extends RecyclerView.Adapter< BillDataAdapter.Order
             tvOrderNo = (TextView)view.findViewById(R.id.bill_item_orderNo);
             tvStatus = (TextView) view.findViewById(R.id.bill_item_status);
             lv = (MJListView) view.findViewById(R.id.bill_item_goodsList);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    onSeeOrderDetailListener(view , _list.get(position));
+                }
+            });
             lv.setAdapter(_goodsAdapter);
             btnSeeLogistics =(Button)view.findViewById(R.id.bill_item_logistics);
             btnSeeLogistics.setOnClickListener(new View.OnClickListener() {
@@ -129,5 +148,8 @@ public class BillDataAdapter extends RecyclerView.Adapter< BillDataAdapter.Order
 
     public interface ILogisticListener {
         void onClick(View view , OrderListModel model );
+    }
+    public interface ISeeOrderDetailListener{
+        void onSeeOrderDetail(View view, OrderListModel model);
     }
 }
