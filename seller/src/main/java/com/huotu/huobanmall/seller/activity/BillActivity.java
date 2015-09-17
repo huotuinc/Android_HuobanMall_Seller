@@ -1,6 +1,7 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v4.view.PagerAdapter;
@@ -15,6 +16,7 @@ import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.BillDataAdapter;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.bean.OrderListModel;
+import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.viewpagerindicator.TabPageIndicator;
 
@@ -26,13 +28,15 @@ import butterknife.ButterKnife;
 /**
  * 订单管理 界面
  */
-public class BillActivity extends BaseFragmentActivity {
+public class BillActivity extends BaseFragmentActivity implements View.OnClickListener {
     @Bind(R.id.header_back)
     Button _headerBack;
     @Bind(R.id.bill_indicator)
     TabPageIndicator _indicator;
     @Bind(R.id.bill_ViewPager)
     ViewPager _bill_ViewPager;
+    @Bind(R.id.header_operate)
+    Button header_operate;
 
     BillAdapter _adapter;
 
@@ -53,6 +57,7 @@ public class BillActivity extends BaseFragmentActivity {
         _bill_ViewPager.setAdapter( _adapter );
 
         _indicator.setViewPager( _bill_ViewPager );
+        header_operate.setOnClickListener(this);
     }
 
     @Override
@@ -64,7 +69,10 @@ public class BillActivity extends BaseFragmentActivity {
 
     @Override
     public void onClick(View v) {
-        super.onClick(v);
+        switch (v.getId()){
+
+            }
+
 
     }
 
