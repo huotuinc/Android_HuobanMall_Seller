@@ -43,7 +43,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#494D50"
+                android:layout_marginRight="@dimen/space_5"
                 android:maxLines="3"
+                android:textSize="@dimen/text_size_16"
                 android:ellipsize="end"
                 android:text="阿斯顿飞阿斯顿法师地方的萨芬阿斯顿飞阿斯顿飞阿斯顿飞阿斯蒂芬撒旦法撒旦法阿是打发受到发阿斯顿飞"
                 android:layout_toLeftOf="@id/bill_item_price"/>
@@ -55,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:ellipsize="end"
+                android:textSize="@dimen/text_size_14"
                 android:text="颜色分类：--;尺码：--"/>
 
         </RelativeLayout>

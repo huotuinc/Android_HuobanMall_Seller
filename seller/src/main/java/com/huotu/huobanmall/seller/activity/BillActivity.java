@@ -1,5 +1,6 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
@@ -91,7 +92,8 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
         BillDataAdapter.ILogisticListener _seeLogisticListener = new BillDataAdapter.ILogisticListener() {
             @Override
             public void onClick(View view, OrderListModel model) {
-                ToastUtils.showLongToast(_context, model.getOrderNo());
+                //ToastUtils.showLongToast(_context, model.getOrderNo());
+                ActivityUtils.getInstance().showActivity( (Activity)_context, LogisticsActivity.class);
             }
         };
 

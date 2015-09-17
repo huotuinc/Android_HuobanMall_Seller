@@ -86,16 +86,18 @@
         <activity
             android:name=".activity.BillActivity"
             android:label="@string/title_activity_bill"
-            android:theme="@style/Theme.PageIndicatorDefaults">
+            android:theme="@style/Theme.PageIndicatorDefaults" >
         </activity>
         <activity
             android:name=".activity.LogisticsActivity"
             android:label="@string/title_activity_logistics" >
         </activity>
+        <activity android:name=".activity.TestActivity"></activity>
         <activity
             android:name=".activity.OrdermanagementDetailsActivity"
             android:label="@string/title_activity_ordermanagement_details" >
         </activity>
+
     </application>
 
 </manifest>
