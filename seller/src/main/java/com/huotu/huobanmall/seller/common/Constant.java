@@ -80,6 +80,10 @@ public class Constant {
 
     public static final String SALESLIST_INTERFACE = BASE_URL+"salesList";//销售明细
 
+    public static final String TOPSCORE_INTERFACE =BASE_URL+"topScore";//返利积分统计
+
+    public static final String TOPCONSUME_INTERFACE =BASE_URL +"topConsume";//消费统计
+
     public static final String LOGISTICSDETAIL_INTERFACE = BASE_URL +"logisticsDetail";//物流详情
 
     /**

@@ -29,6 +29,8 @@ import com.huotu.huobanmall.seller.activity.LoginActivity;
 import com.huotu.huobanmall.seller.activity.WebViewActivity;
 import com.huotu.huobanmall.seller.adapter.MembersFragmentPageAdapter;
 import com.huotu.huobanmall.seller.bean.MJMemberStatisticModel;
+import com.huotu.huobanmall.seller.bean.TopConsumeModel;
+import com.huotu.huobanmall.seller.bean.TopScoreModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
@@ -235,16 +237,16 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if( v.getId() == R.id.members_statis1){
-            String url = "http://m.cnblogs.com";
+            //String url = "http://m.cnblogs.com";
             Intent intent = new Intent();
-            intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra(Constant.Extra_Url, url);
+            intent.setClass(getActivity(), TopScoreModel.class);
+            //intent.putExtra(Constant.Extra_Url, url);
             ActivityUtils.getInstance().showActivity(getActivity(), intent);
         }else if( v.getId()==R.id.members_statis2){
-            String url = "http://www.baidu.com";
+            //String url = "http://www.baidu.com";
             Intent intent = new Intent();
-            intent.setClass(getActivity(), WebViewActivity.class);
-            intent.putExtra(Constant.Extra_Url, url);
+            intent.setClass(getActivity(), TopConsumeModel.class);
+            //intent.putExtra(Constant.Extra_Url, url);
             ActivityUtils.getInstance().showActivity(getActivity(), intent);
         }
     }

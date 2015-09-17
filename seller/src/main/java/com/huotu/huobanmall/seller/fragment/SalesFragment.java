@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -24,6 +25,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.activity.LoginActivity;
+import com.huotu.huobanmall.seller.activity.SalesDetailActivity;
 import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
 import com.huotu.huobanmall.seller.adapter.SalesFragmentPageAdapter;
 import com.huotu.huobanmall.seller.bean.MJBillStatisticModel;
@@ -53,7 +55,7 @@ import butterknife.ButterKnife;
  * Use the {@link SalesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SalesFragment extends BaseFragment {
+public class SalesFragment extends BaseFragment implements View.OnClickListener{
     @Bind(R.id.sales_total)
     TextView _sales_total;
     @Bind(R.id.sales_info_count)
@@ -62,6 +64,8 @@ public class SalesFragment extends BaseFragment {
     TabPageIndicator _indicator;
     @Bind(R.id.sales_viewPager)
     ViewPager _viewPager;
+    @Bind(R.id.sales_statis1)
+    RelativeLayout _sales_statis1;
 
     MJSaleStatisticModel _data;
     SalesLineChartFragment _fragment1=null;
@@ -140,6 +144,13 @@ public class SalesFragment extends BaseFragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View v) {
+        if( v.getId() == R.id.sales_statis1){
+            ActivityUtils.getInstance().showActivity(this.getActivity(), SalesDetailActivity.class);
+        }
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -156,6 +167,7 @@ public class SalesFragment extends BaseFragment {
     }
 
     protected void initData(){
+        _sales_statis1.setOnClickListener(this);
 
         initFragments();
 

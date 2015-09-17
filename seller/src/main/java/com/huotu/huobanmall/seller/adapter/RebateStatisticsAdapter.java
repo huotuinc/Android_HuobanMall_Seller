@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.SalesListModel;
+import com.huotu.huobanmall.seller.bean.TopScoreModel;
 
 import java.util.List;
 
@@ -16,10 +17,10 @@ import java.util.List;
  */
 public class RebateStatisticsAdapter extends BaseAdapter {
 
-    private List<SalesListModel> _list;
+    private List<TopScoreModel> _list;
     private Context _context;
 
-    public RebateStatisticsAdapter(Context context, List<SalesListModel> list) {
+    public RebateStatisticsAdapter(Context context, List<TopScoreModel> list) {
         _list = list;
         _context = context;
     }
@@ -51,7 +52,7 @@ public class RebateStatisticsAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.moblie.setText(String.valueOf(_list.get(position).getMoblie()));
+        holder.moblie.setText(_list.get(position).getMobile());
         return convertView;
 
     }
