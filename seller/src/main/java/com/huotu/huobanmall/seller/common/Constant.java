@@ -47,8 +47,9 @@ public class Constant {
     // 城市码
     public final static String  PRE_LOCATION_CITY_CODE = "cityCode";
     // url请求前缀
-    public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
+    //public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
     //public final static String BASE_ROOT_URL ="http://192.168.1.57:8080/huobanmall/";
+    public final static String BASE_ROOT_URL ="http://192.168.1.48:8080/huobanmall/";
     public static final String BASE_URL = BASE_ROOT_URL + "app/";// 基础URL
 
     public static final String GET_VD_INTERFACE = BASE_URL + "sendSMS";// 获取验证码
@@ -76,6 +77,10 @@ public class Constant {
     public static final String SALESREPORT_INTERFACE =BASE_URL + "salesReport";//销售额统计报表
 
     public static final String OTHERSTATISTIC_INTERFACE = BASE_URL + "otherStatistics"; //更多统计
+
+    public static final String SALESLIST_INTERFACE = BASE_URL+"salesList";//销售明细
+
+    public static final String LOGISTICSDETAIL_INTERFACE = BASE_URL +"logisticsDetail";//物流详情
 
     /**
      * token添加的类型

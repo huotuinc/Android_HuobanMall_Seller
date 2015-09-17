@@ -1,16 +1,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#FFFFFF"
     tools:context="com.huotu.huobanmall.seller.activity.LogisticsActivity">
 
-   <RelativeLayout
-       android:id="@+id/logistics_header"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
-       <include layout="@layout/layout_logistics_header" />
-   </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/logistics_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/layout_logistics_header" />
+    </RelativeLayout>
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/logistics_pullScrollView"
+        android:layout_below="@id/logistics_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/logistics_ll1"
@@ -95,8 +104,9 @@
             android:layout_height="match_parent" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/logistics_ll3"
+        android:orientation="vertical"
         android:layout_below="@id/logistics_ll2"
         android:background="#FFFFFF"
         android:layout_width="match_parent"
@@ -115,75 +125,14 @@
             android:layout_marginRight="@dimen/text_size_10"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_1" />
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/logistics_goodsLogo"
+
+        <com.huotu.huobanmall.seller.widget.MJListView
+            android:id="@+id/logistics_goodsList"
             android:layout_below="@id/logistics_label4"
-            android:layout_margin="@dimen/space_10"
-            android:background="@mipmap/ic_launcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <RelativeLayout
-            android:id="@+id/logistics_goods"
-            android:layout_alignTop="@id/logistics_goodsLogo"
-            android:layout_toRightOf="@id/logistics_goodsLogo"
-            android:layout_marginBottom="@dimen/space_10"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/logistics_price"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="￥685.00"/>
-            <TextView
-                android:id="@+id/logistics_count"
-                android:layout_below="@id/logistics_price"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="X 10"/>
-            <TextView
-                android:id="@+id/logistics_goodsName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:text="阿斯顿飞阿斯顿法师地方的萨芬阿斯顿飞阿斯顿飞阿斯顿飞阿斯蒂芬撒旦法撒旦法阿是打发受到发阿斯顿飞"
-                android:layout_toLeftOf="@id/logistics_price"/>
-            <TextView
-                android:id="@+id/logistics_label5"
-                android:layout_below="@id/logistics_goodsName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="颜色分类："/>
-            <TextView
-                android:id="@+id/logistics_color"
-                android:layout_alignTop="@id/logistics_label5"
-                android:layout_toRightOf="@id/logistics_label5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="--"/>
-            <TextView
-                android:id="@+id/logistics_label6"
-                android:layout_alignTop="@id/logistics_color"
-                android:layout_toRightOf="@id/logistics_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=";尺码："/>
-            <TextView
-                android:id="@+id/logistics_size"
-                android:layout_alignTop="@id/logistics_label6"
-                android:layout_toRightOf="@id/logistics_label6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="--"/>
+            android:layout_height="50dp"/>
 
-        </RelativeLayout>
-
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/logistics_ll4"
@@ -199,9 +148,10 @@
             android:layout_height="match_parent" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/logistics_ll5"
         android:layout_below="@id/logistics_ll4"
+        android:orientation="vertical"
         android:background="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -222,15 +172,21 @@
             android:layout_marginBottom="@dimen/space_1"
             android:background="#F5F5F5"
             android:layout_height="@dimen/space_1" />
-        <android.support.v7.widget.RecyclerView
+        <com.huotu.huobanmall.seller.widget.MJListView
             android:id="@+id/logistics_list"
             android:layout_below="@id/logistics_label8"
             android:layout_marginTop="@dimen/space_5"
             android:layout_marginLeft="@dimen/space_5"
+            android:dividerHeight="0dp"
+            android:divider="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
+        </com.huotu.huobanmall.seller.widget.MJListView>
 
-    </RelativeLayout>
+    </LinearLayout>
 
+
+        </RelativeLayout>
+
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 </RelativeLayout>

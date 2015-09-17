@@ -161,7 +161,9 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
             bd.putInt( "tabType" , Constant.TAB_SALE );
             ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class, bd );
         }else if( v.getId() == R.id.morestatistic_menu_fxs){
-
+            Bundle bd = new Bundle();
+            bd.putInt( "tabType" , Constant.TAB_MEMBER );
+            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class , bd );
         }else if( v.getId() == R.id.morestatistic_menu_sp){
 
         }

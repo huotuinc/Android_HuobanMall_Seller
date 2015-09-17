@@ -1,5 +1,6 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -15,6 +16,7 @@ import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.BillDataAdapter;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.bean.OrderListModel;
+import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.viewpagerindicator.TabPageIndicator;
 
@@ -83,7 +85,8 @@ public class BillActivity extends BaseFragmentActivity {
         BillDataAdapter.ILogisticListener _seeLogisticListener = new BillDataAdapter.ILogisticListener() {
             @Override
             public void onClick(View view, OrderListModel model) {
-                ToastUtils.showLongToast(_context, model.getOrderNo());
+                //ToastUtils.showLongToast(_context, model.getOrderNo());
+                ActivityUtils.getInstance().showActivity( (Activity)_context, LogisticsActivity.class);
             }
         };
 

@@ -1,17 +1,58 @@
 package com.huotu.huobanmall.seller.bean;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2015/9/15.
  */
 public class LogisticsDetailModel {
-    public String get_context() {
-        return _context;
+
+
+    public String getNo() {
+        return no;
     }
 
-    public void set_context(String _context) {
-        this._context = _context;
+    public void setNo(String no) {
+        this.no = no;
     }
 
-    private String _context;
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTrack() {
+        return track;
+    }
+
+    public void setTrack(String track) {
+        this.track = track;
+    }
+
+    public List<OrderListProductModel> getList() {
+        return list;
+    }
+
+    public void setList(List<OrderListProductModel> list) {
+        this.list = list;
+    }
+
+    private String no;
+    private String source;
+    private String status;
+    private String track;
+    private List<OrderListProductModel> list;
+
 
 }

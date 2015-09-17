@@ -156,6 +156,7 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         }else if(v.getId()==R.id.ll_todayOrder_fxs){
             _currentIndex=2;
             setLineChart();
+
         }
     }
 
