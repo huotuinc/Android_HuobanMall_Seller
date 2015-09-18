@@ -52,28 +52,8 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/bill_item_ll2"
-        android:layout_below="@id/bill_item_ll4"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:paddingRight="@dimen/space_10"
-        android:paddingLeft="@dimen/space_10"
-        android:layout_height="@dimen/space_40">
-        <TextView
-            android:id="@+id/bill_item_rebate"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_height="wrap_content"
-            android:textColor="#FC0E0E"
-            android:textSize="@dimen/text_size_20"
-            android:text="返:￥100积分"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/bill_item_ll3"
-        android:layout_below="@id/bill_item_ll2"
+        android:layout_below="@id/bill_item_ll4"
         android:background="@color/white"
         android:layout_marginTop="@dimen/space_1"
         android:layout_marginBottom="@dimen/space_1"

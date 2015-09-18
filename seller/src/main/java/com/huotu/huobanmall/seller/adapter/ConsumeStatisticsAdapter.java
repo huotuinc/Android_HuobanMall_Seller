@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.SalesListModel;
+import com.huotu.huobanmall.seller.bean.TopConsumeModel;
 
 import java.util.List;
 
@@ -16,10 +17,10 @@ import java.util.List;
  */
 public class ConsumeStatisticsAdapter extends BaseAdapter {
 
-    private List<SalesListModel> _list;
+    private List<TopConsumeModel> _list;
     private Context _context;
 
-    public ConsumeStatisticsAdapter(Context context, List<SalesListModel> list) {
+    public ConsumeStatisticsAdapter(Context context, List<TopConsumeModel> list) {
         _list = list;
         _context = context;
     }
