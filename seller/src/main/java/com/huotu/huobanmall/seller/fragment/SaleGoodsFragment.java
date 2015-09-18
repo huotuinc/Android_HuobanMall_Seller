@@ -29,6 +29,7 @@ import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,11 +39,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SaleGoodsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SaleGoodsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class SaleGoodsFragment extends BaseFragment {
@@ -55,10 +52,13 @@ public class SaleGoodsFragment extends BaseFragment {
     List<GoodsModel> _goodsList = null;
     GoodsAdapter _goodsAdapter = null;
 
-    ProgressDialogFragment _progressDialog=null;
-
     OperateTypeEnum _type = OperateTypeEnum.REFRESH;
-    private OnFragmentInteractionListener mListener;
+    //这个标识位，代表Fragment是否可见
+    boolean _isVisiable =false;
+    //这个标识位，代表UI是否初始化完成
+    boolean _isPrepared = false;
+
+    boolean _isFirst = true;
 
     /**
      * Use this factory method to create a new instance of
@@ -66,7 +66,6 @@ public class SaleGoodsFragment extends BaseFragment {
      *
      * @return A new instance of fragment SaleGoodsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SaleGoodsFragment newInstance() {
         SaleGoodsFragment fragment = new SaleGoodsFragment();
         return fragment;
@@ -74,6 +73,17 @@ public class SaleGoodsFragment extends BaseFragment {
 
     public SaleGoodsFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if( _goodsList !=null ){
+            outState.putSerializable("goodsList", (Serializable) _goodsList);
+        }else{
+            outState.putSerializable("goodsList",null);
+        }
     }
 
     @Override
@@ -107,17 +117,20 @@ public class SaleGoodsFragment extends BaseFragment {
             }
         });
 
-        firstGetData();
+        _isPrepared=true;
+
+        if( savedInstanceState !=null && savedInstanceState.containsKey("goodsList") &&  savedInstanceState.getSerializable("goodsList") !=null ){
+            _goodsList.clear();
+            _isFirst=false;
+            _goodsList.addAll((List<GoodsModel>) savedInstanceState.getSerializable("goodsList"));
+            _goodsAdapter.notifyDataSetChanged();
+        }else {
+            firstGetData();
+        }
 
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -138,39 +151,41 @@ public class SaleGoodsFragment extends BaseFragment {
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onResume() {
+        super.onResume();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+    }
+
+    @Override
+    public boolean getUserVisibleHint() {
+        return super.getUserVisibleHint();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if( getUserVisibleHint()){
+            _isVisiable=true;
+            firstGetData();
+        }else {
+            _isVisiable=false;
+        }
     }
 
     protected void firstGetData(){
-        if( _progressDialog !=null){
-            _progressDialog.dismiss();
-            _progressDialog=null;
-        }
-        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder( this.getActivity(), this.getActivity().getSupportFragmentManager())
-                .setMessage("正在获取数据，请稍等...")
-                .setCancelable(false)
-                .setCancelableOnTouchOutside(false);
-        _progressDialog = (ProgressDialogFragment) builder.show();
 
-        _type= OperateTypeEnum.REFRESH;
-        getData(_type);
+        if( _isPrepared && _isVisiable && _isFirst ) {
+            this.showProgressDialog("", "正在获取数据，请稍等...");
+            _type = OperateTypeEnum.REFRESH;
+            _isFirst=false;
+            getData(_type);
+        }
     }
 
 
@@ -179,8 +194,8 @@ public class SaleGoodsFragment extends BaseFragment {
         if( type == OperateTypeEnum.REFRESH){
             //maps.put("lastProductId","");
         }else {
-            String lastid = String.valueOf( _goodsList.get( _goodsList.size()-1).getGoodsId());
-            maps.put("lastProductId", lastid);
+            String lastId = String.valueOf( _goodsList.get( _goodsList.size()-1).getGoodsId());
+            maps.put("lastProductId", lastId);
         }
 
         HttpParaUtils httpParaUtils = new HttpParaUtils();
@@ -193,22 +208,15 @@ public class SaleGoodsFragment extends BaseFragment {
                 MJGoodModel.class,
                 null,
                 goodslistListener,
-                errorListener
+                this
                 );
-
-        goodsListRequest.setRetryPolicy(new DefaultRetryPolicy( Constant.REQUEST_TIMEOUT ,1,1.0f));
-
         VolleyRequestManager.getRequestQueue().add(goodsListRequest);
     }
 
     Response.Listener<MJGoodModel> goodslistListener =new Response.Listener<MJGoodModel>() {
         @Override
         public void onResponse(MJGoodModel mjGoodModel) {
-            if( _progressDialog !=null){
-                _progressDialog.dismiss();
-                _progressDialog=null;
-            }
-
+            SaleGoodsFragment.this.closeProgressDialog();
             _goodsSaleListView.onRefreshComplete();
 
             if( mjGoodModel==null){
@@ -253,24 +261,10 @@ public class SaleGoodsFragment extends BaseFragment {
         }
     };
 
-    Response.ErrorListener errorListener=new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            if(_progressDialog!=null){
-                _progressDialog.dismiss();
-                _progressDialog=null;
-            }
 
-            _goodsSaleListView.onRefreshComplete();
-
-            volleyError.printStackTrace();
-
-            SimpleDialogFragment.createBuilder( SaleGoodsFragment.this.getActivity() , SaleGoodsFragment.this.getActivity().getSupportFragmentManager())
-                    .setTitle("错误信息")
-                    .setMessage( volleyError.getMessage() )
-                    .setNegativeButtonText("关闭")
-                    .show();
-        }
-    };
-
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        _goodsSaleListView.onRefreshComplete();
+        super.onErrorResponse(volleyError);
+    }
 }

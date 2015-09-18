@@ -1,10 +1,12 @@
 package com.huotu.huobanmall.seller.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2015/8/27.
  * 商品列表实体类
  */
-public class GoodsModel {
+public class GoodsModel implements Serializable {
     public String getPictureUrl() {
         return pictureUrl;
     }

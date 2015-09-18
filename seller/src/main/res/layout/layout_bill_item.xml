@@ -41,6 +41,7 @@
 
     <LinearLayout
         android:id="@+id/bill_item_ll4"
+        android:orientation="vertical"
         android:layout_below="@id/bill_item_ll1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

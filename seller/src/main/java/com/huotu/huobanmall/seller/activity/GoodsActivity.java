@@ -29,19 +29,23 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * 商品管理
+ * 商品管理 界面
  */
 public class GoodsActivity extends BaseFragmentActivity {
     @Bind(R.id.header_back)
     Button  _header_back;
     @Bind(R.id.goods_pager)
     ViewPager _goodsViewPager;
-    @Bind(R.id.goods_indicator)
-    TabPageIndicator _goodIndicator;
+    //@Bind(R.id.goods_indicator)
+    //TabPageIndicator _goodIndicator;
     @Bind(R.id.header_operate)
     TextView _btnOperate;
     @Bind(R.id.goods_title)
     RadioGroup _rdGroup;
+    @Bind(R.id.saleing_btn)
+    RadioButton _rdbSales;
+    @Bind(R.id.offshelf_btn)
+    RadioButton _rdbOffShelf;
 
     SaleGoodsFragment _salesGoodsFragment;
     OffShelfFragment _offShelfFragments;
@@ -58,13 +62,17 @@ public class GoodsActivity extends BaseFragmentActivity {
         _btnOperate.setOnClickListener(this);
         _btnOperate.setVisibility(View.VISIBLE);
 
+        _goodsViewPager.setOffscreenPageLimit(2);
+
         _rdGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if( checkedId== R.id.saleing_btn){
-                    _goodIndicator.setCurrentItem(0);
-                }else if( checkedId==R.id.offshelf_btn){
-                    _goodIndicator.setCurrentItem(1);
+                if (checkedId == R.id.saleing_btn) {
+                    //_goodIndicator.setCurrentItem(0);
+                    _goodsViewPager.setCurrentItem(0);
+                } else if (checkedId == R.id.offshelf_btn) {
+                    //_goodIndicator.setCurrentItem(1);
+                    _goodsViewPager.setCurrentItem(1);
                 }
             }
         });
@@ -77,7 +85,29 @@ public class GoodsActivity extends BaseFragmentActivity {
         _fragmentManager = this.getSupportFragmentManager();
         _goodsFragmentAdapter = new GoodsFragmentAdapter(_fragments,_fragmentManager);
         _goodsViewPager.setAdapter(_goodsFragmentAdapter);
-        _goodIndicator.setViewPager(_goodsViewPager);
+        _goodsViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position==0){
+                    _rdbSales.setChecked(true);
+                    _rdbOffShelf.setChecked(false);
+                }else if( position==1){
+                    _rdbSales.setChecked(false);
+                    _rdbOffShelf.setChecked(true);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        //_goodIndicator.setViewPager(_goodsViewPager);
     }
 
     @Override

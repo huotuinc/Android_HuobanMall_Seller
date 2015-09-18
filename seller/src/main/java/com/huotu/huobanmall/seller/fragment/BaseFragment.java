@@ -18,7 +18,7 @@ import com.huotu.huobanmall.seller.utils.DialogUtils;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BaseFragment extends Fragment {
+public class BaseFragment extends Fragment implements Response.ErrorListener{
 
     ProgressDialogFragment _progressDialog=null;
 
@@ -48,23 +48,18 @@ public class BaseFragment extends Fragment {
         }
     }
 
-    protected Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            BaseFragment.this.closeProgressDialog();
-
-            String message="";
-            if( null != volleyError.networkResponse){
-                message=new String( volleyError.networkResponse.data);
-            }else{
-                message = volleyError.getMessage();
-            }
-            if( message.length()<1){
-                message = "网络请求失败，请检查网络状态";
-            }
-
-            DialogUtils.showDialog(BaseFragment.this.getActivity(), BaseFragment.this.getFragmentManager() , "错误信息", message, "关闭");
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        BaseFragment.this.closeProgressDialog();
+        String message="";
+        if( null != volleyError.networkResponse){
+            message=new String( volleyError.networkResponse.data);
+        }else{
+            message = volleyError.getMessage();
         }
-    };
-
+        if( message.length()<1){
+            message = "网络请求失败，请检查网络状态";
+        }
+        DialogUtils.showDialog(BaseFragment.this.getActivity(), BaseFragment.this.getFragmentManager() , "错误信息", message, "关闭");
+    }
 }

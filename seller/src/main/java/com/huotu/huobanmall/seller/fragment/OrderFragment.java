@@ -144,7 +144,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
                 MJBillStatisticModel.class,
                 null,
                 billReportListner,
-                errorListener
+                this
         );
 
         this.showProgressDialog("","正在获取数据，请稍等...");

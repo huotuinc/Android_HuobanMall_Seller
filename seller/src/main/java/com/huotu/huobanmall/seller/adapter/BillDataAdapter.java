@@ -7,15 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.activity.BillActivity;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.bean.OrderListModel;
+import com.huotu.huobanmall.seller.bean.OrderListProductModel;
 import com.huotu.huobanmall.seller.bean.OrderStatusEnum;
+import com.huotu.huobanmall.seller.utils.BitmapLoader;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.widget.MJListView;
 
@@ -85,7 +89,7 @@ public class BillDataAdapter extends RecyclerView.Adapter< BillDataAdapter.Order
 
     @Override
     public OrderListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = _inflater.inflate(R.layout.layout_bill_item,null);
+        View view = _inflater.inflate(R.layout.layout_bill_item, null);
         OrderListViewHolder holder=new OrderListViewHolder( view );
 
         return holder;
@@ -98,12 +102,32 @@ public class BillDataAdapter extends RecyclerView.Adapter< BillDataAdapter.Order
         _goodsList.clear();
         _goodsList.addAll( model.getGoods());
         _goodsAdapter.notifyDataSetChanged();
-        //holder.lv.setAdapter( _goodsAdapter );
+        holder.lv.setAdapter( _goodsAdapter );
         //setListViewHeightBasedOnChildren( holder.lv );
 
         holder.tvOrderNo.setText(model.getOrderNo());
         holder.tvStatus.setText(OrderStatusEnum.getName(model.getStatus()) );
         holder.position = position;
+
+        //addGoods( holder.llGoods , model.getGoods() );
+    }
+
+    protected void addGoods( LinearLayout ll , List<GoodsModel> list){
+        ll.removeAllViews();
+        for( int i=0;i<list.size();i++){
+            View view = View.inflate(_context, R.layout.layout_bill_goods_item,null);
+            TextView tvTitle = (TextView)view.findViewById(R.id.bill_item_goodsName);
+            TextView tvPrice =  (TextView)view.findViewById(R.id.bill_item_price);
+            TextView tvCount =  (TextView)view.findViewById(R.id.bill_item_count);
+            TextView tvSpec =  (TextView)view.findViewById(R.id.bill_item_ColorSize);
+            NetworkImageView iv = (NetworkImageView)view.findViewById(R.id.bill_item_picture);
+            tvTitle.setText( list.get(i).getTitle());
+            tvCount.setText( String.valueOf(list.get(i).getStock()));
+            tvPrice.setText( String.valueOf(list.get(i).getPrice()) );
+            //tvSpec.setText( list.get(i).get() );
+            BitmapLoader.create().displayUrl(_context, iv, list.get(i).getPictureUrl());
+            ll.addView(view);
+        }
     }
 
     @Override
@@ -122,12 +146,21 @@ public class BillDataAdapter extends RecyclerView.Adapter< BillDataAdapter.Order
         private MJListView lv;
         private Button btnSeeLogistics;
         private int position;
+        private LinearLayout llGoods;
 
         public OrderListViewHolder(View view ){
             super(view );
 
+            llGoods = (LinearLayout)view.findViewById(R.id.bill_item_ll4);
+//            llGoods.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    onSeeOrderDetailListener(v , _list.get(position));
+//                }
+//            });
             tvOrderNo = (TextView)view.findViewById(R.id.bill_item_orderNo);
             tvStatus = (TextView) view.findViewById(R.id.bill_item_status);
+
             lv = (MJListView) view.findViewById(R.id.bill_item_goodsList);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

@@ -37,9 +37,6 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OffShelfFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link OffShelfFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class OffShelfFragment extends BaseFragment {
@@ -48,26 +45,22 @@ public class OffShelfFragment extends BaseFragment {
     PullToRefreshListView _goodsOffshelfListview;
     List<GoodsModel> _goodsList = null;
     GoodsAdapter _goodsAdapter = null;
-
     ListView _listView =null;
-
     OperateTypeEnum _type = OperateTypeEnum.REFRESH;
     private OnFragmentInteractionListener mListener;
 
-    ProgressDialogFragment _progressDialog=null;
+    boolean _isVisiable=false;
+    boolean _isPrepared = false;
+    boolean _isFirst =true;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @return A new instance of fragment OffShelfFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static OffShelfFragment newInstance() {
         OffShelfFragment fragment = new OffShelfFragment();
-        //Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
-        //fragment.setArguments(args);
         return fragment;
     }
 
@@ -107,7 +100,16 @@ public class OffShelfFragment extends BaseFragment {
             }
         });
 
-        firstGetData();
+        _isPrepared=true;
+
+        if( savedInstanceState !=null && savedInstanceState.containsKey("goodsList") &&  savedInstanceState.getSerializable("goodsList") !=null ){
+            _isFirst=false;
+            _goodsList.clear();
+            _goodsList.addAll((List<GoodsModel>) savedInstanceState.getSerializable("goodsList"));
+            _goodsAdapter.notifyDataSetChanged();
+        }else {
+            firstGetData();
+        }
 
         return rootView;
     }
@@ -115,16 +117,6 @@ public class OffShelfFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        //_goodsOffshelfListview.setRefreshing();
-        //_goodsOffshelfListview.setRefreshing(true);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -139,9 +131,25 @@ public class OffShelfFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if( getUserVisibleHint()){
+            _isVisiable=true;
+            firstGetData();
+        }else{
+            _isVisiable=false;
+        }
     }
 
     /**
@@ -160,18 +168,12 @@ public class OffShelfFragment extends BaseFragment {
     }
 
     protected void firstGetData(){
-        if( _progressDialog !=null){
-            _progressDialog.dismiss();
-            _progressDialog=null;
+        if(_isVisiable && _isPrepared && _isFirst ) {
+            OffShelfFragment.this.showProgressDialog("", "正在获取数据，请稍等...");
+            _type = OperateTypeEnum.REFRESH;
+            _isFirst = false;
+            getData(_type);
         }
-        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder( this.getActivity(), this.getActivity().getSupportFragmentManager())
-                .setMessage("正在获取数据，请稍等...")
-                .setCancelable(false)
-                .setCancelableOnTouchOutside(false);
-        _progressDialog = (ProgressDialogFragment) builder.show();
-
-        _type= OperateTypeEnum.REFRESH;
-        getData(_type);
     }
 
     protected void getData( OperateTypeEnum type ){
@@ -193,7 +195,7 @@ public class OffShelfFragment extends BaseFragment {
                 MJGoodModel.class,
                 null,
                 goodslistListener,
-                errorListener
+                this
         );
 
         VolleyRequestManager.getRequestQueue().add(goodsListRequest);
@@ -202,10 +204,7 @@ public class OffShelfFragment extends BaseFragment {
     Response.Listener<MJGoodModel> goodslistListener =new Response.Listener<MJGoodModel>() {
         @Override
         public void onResponse(MJGoodModel mjGoodModel) {
-            if( _progressDialog !=null){
-                _progressDialog.dismiss();
-                _progressDialog=null;
-            }
+            OffShelfFragment.this.closeProgressDialog();
             _goodsOffshelfListview.onRefreshComplete();
 
             if( mjGoodModel==null ){
@@ -243,26 +242,6 @@ public class OffShelfFragment extends BaseFragment {
                 _goodsList.addAll(mjGoodModel.getResultData().getList());
             }
             _goodsAdapter.notifyDataSetChanged();
-        }
-    };
-
-    Response.ErrorListener errorListener=new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-//            if(_progressDialog!=null){
-//                _progressDialog.dismiss();
-//                _progressDialog=null;
-//            }
-
-            _goodsOffshelfListview.onRefreshComplete();
-
-            volleyError.printStackTrace();
-
-            SimpleDialogFragment.createBuilder( OffShelfFragment.this.getActivity() , OffShelfFragment.this.getActivity().getSupportFragmentManager())
-                    .setTitle("错误信息")
-                    .setMessage( volleyError.getMessage() )
-                    .setNegativeButtonText("关闭")
-                    .show();
         }
     };
 }
