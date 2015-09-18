@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.huotu.huobanmall.seller.activity.BillActivity">
+
+    <RelativeLayout
+        android:id="@+id/topsales_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <include layout="@layout/layout_header"></include>
+    </RelativeLayout>
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/topsales_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topsales_header"
+        />
+</RelativeLayout>

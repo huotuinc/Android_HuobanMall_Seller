@@ -125,13 +125,14 @@
 
                     <TextView
                         android:id="@+id/moblic"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:text="联系方式：18767152078"
-                        android:textColor="@color/black"
+                        android:textColor="@color/ring_color"
                         android:textSize="@dimen/text_size_16" />
                 </RelativeLayout>
 
@@ -167,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:text="订单号："
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/orderNo"
@@ -175,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:text="243158997"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
 
             </LinearLayout>
