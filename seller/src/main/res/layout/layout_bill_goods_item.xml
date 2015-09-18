@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="X 10"
-                android:layout_below="@+id/bill_item_goodsName"
+                android:layout_above="@+id/bill_item_ColorSize"
                 android:layout_alignRight="@+id/bill_item_price"
                 android:layout_alignEnd="@+id/bill_item_price" />
             <TextView
