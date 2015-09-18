@@ -21,7 +21,7 @@ import cn.jpush.android.api.JPushInterface;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class BaseFragmentActivity extends FragmentActivity implements View.OnClickListener {
+public class BaseFragmentActivity extends FragmentActivity implements View.OnClickListener , Response.ErrorListener {
     ProgressDialogFragment _progressDialog=null;
 
     public BaseFragmentActivity() {
@@ -79,22 +79,36 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
     }
 
 
-    Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            BaseFragmentActivity.this.closeProgressDialog();
-            String message="";
-            if( null != volleyError.networkResponse){
-                message=new String( volleyError.networkResponse.data);
-            }else{
-                message = volleyError.getMessage();
-            }
-            if( message.length()<1){
-                message = "网络请求失败，请检查网络状态";
-            }
+//    Response.ErrorListener errorListener = new Response.ErrorListener() {
+//        @Override
+//        public void onErrorResponse(VolleyError volleyError) {
+//            BaseFragmentActivity.this.closeProgressDialog();
+//            String message="";
+//            if( null != volleyError.networkResponse){
+//                message=new String( volleyError.networkResponse.data);
+//            }else{
+//                message = volleyError.getMessage();
+//            }
+//            if( message.length()<1){
+//                message = "网络请求失败，请检查网络状态";
+//            }
+//
+//            DialogUtils.showDialog(BaseFragmentActivity.this, BaseFragmentActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
+//        }
+//    };
 
-            DialogUtils.showDialog(BaseFragmentActivity.this, BaseFragmentActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        BaseFragmentActivity.this.closeProgressDialog();
+        String message="";
+        if( null != volleyError.networkResponse){
+            message=new String( volleyError.networkResponse.data);
+        }else{
+            message = volleyError.getMessage();
         }
-    };
-
+        if( message.length()<1){
+            message = "网络请求失败，请检查网络状态";
+        }
+        DialogUtils.showDialog(BaseFragmentActivity.this, BaseFragmentActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
+    }
 }

@@ -1,16 +1,17 @@
 package com.huotu.huobanmall.seller.activity;
 
-
-
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.LogisticsGoodsAdapter;
+import com.huotu.huobanmall.seller.adapter.ScoreExpandableAdapter;
 import com.huotu.huobanmall.seller.bean.OrderListProductModel;
+import com.huotu.huobanmall.seller.bean.OrderScoreModel;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 订单详情页面
+ */
 public class OrdermanagementDetailsActivity extends BaseFragmentActivity implements View.OnClickListener {
 
     @Bind(R.id.header_back)
@@ -35,16 +39,21 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
     ListView order_item_goodsList;
     @Bind(R.id.orderscrollview)
     ScrollView  orderscrollview;
+    @Bind(R.id.order_detail_scoreList)
+    ExpandableListView _orderScoreList;
+
+    LogisticsGoodsAdapter orderGoodsAdapter;
     List<OrderListProductModel> _list=null;
 
-
-
+    ScoreExpandableAdapter _scoreAdapter=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ordermanagement_details);
         initView();
+
+        demoData();
     }
 
     @Override
@@ -102,9 +111,33 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
 
     }
 
-    public LogisticsGoodsAdapter orderGoodsAdapter;
+    protected void demoData(){
+        List< OrderScoreModel> data=new ArrayList<>();
+        for( int i=0;i<4;i++){
+            OrderScoreModel item =new OrderScoreModel();
+            item.setOrderNo("阿斯顿飞阿斯顿飞");
+            item.setType(1);
+            List<OrderScoreModel> list= new ArrayList<>();
+            for( int k=0;k<5;k++){
+                OrderScoreModel child=new OrderScoreModel();
+                child.setType(2);
+                child.setOrderNo("1111111111" + i);
+                child.setGetTime(System.currentTimeMillis());
+                child.setScore(i);
+                child.setStatus("斯蒂芬打的费的发大阿是打发岁的发放");
+                child.setZzTime(System.currentTimeMillis());
+                list.add(child);
+            }
+            item.setList(list);
+            data.add(item);
+        }
 
-
+        _scoreAdapter=new ScoreExpandableAdapter(this, data);
+        _orderScoreList.setAdapter(_scoreAdapter);
+        if( _scoreAdapter.getGroupCount()>0) {
+            _orderScoreList.expandGroup(0);
+        }
+    }
 
     public void onClick(View v) {
         switch (v.getId()){

@@ -26,6 +26,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.activity.LoginActivity;
+import com.huotu.huobanmall.seller.activity.RebateStatisticsActivity;
 import com.huotu.huobanmall.seller.activity.WebViewActivity;
 import com.huotu.huobanmall.seller.adapter.MembersFragmentPageAdapter;
 import com.huotu.huobanmall.seller.bean.MJMemberStatisticModel;
@@ -239,7 +240,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
         if( v.getId() == R.id.members_statis1){
             //String url = "http://m.cnblogs.com";
             Intent intent = new Intent();
-            intent.setClass(getActivity(), TopScoreModel.class);
+            intent.setClass(getActivity(), RebateStatisticsActivity.class);
             //intent.putExtra(Constant.Extra_Url, url);
             ActivityUtils.getInstance().showActivity(getActivity(), intent);
         }else if( v.getId()==R.id.members_statis2){

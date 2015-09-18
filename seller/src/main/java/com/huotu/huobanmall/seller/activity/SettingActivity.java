@@ -392,7 +392,7 @@ public class SettingActivity extends BaseFragmentActivity
                 null,
                 maps,
                 updateListener,
-                errorListener
+                this
         );
 
         this.showProgressDialog("","正在上传，请稍等...");

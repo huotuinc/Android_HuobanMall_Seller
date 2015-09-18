@@ -9,6 +9,9 @@
     <dimen name="main_summary_height">100dip</dimen>
     <dimen name="main_menu_height">250dip</dimen>
 
+    <dimen name="header_icon_height">30dp</dimen>
+    <dimen name="header_icon_width">30dp</dimen>
+
     <dimen name="order_statistic_height">60dip</dimen>
     <dimen name="order_lineChart_height">200dip</dimen>
     <dimen name="order_goods_height">350dip</dimen>

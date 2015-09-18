@@ -117,7 +117,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
                 MJSaleListModel.class,
                 null,
                 listener,
-                errorListener
+                this
         );
 
         VolleyRequestManager.getRequestQueue().add( request);

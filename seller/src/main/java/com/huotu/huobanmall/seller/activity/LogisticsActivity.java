@@ -149,7 +149,7 @@ public class LogisticsActivity extends BaseFragmentActivity {
                 MJLogisticsDetailModel.class,
                 null,
                 requestListener,
-                errorListener
+                this
         );
         VolleyRequestManager.getRequestQueue().add(request);
     }

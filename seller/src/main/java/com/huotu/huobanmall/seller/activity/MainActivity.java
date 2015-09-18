@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -28,9 +30,11 @@ import com.huotu.huobanmall.seller.fragment.TodayMemberFragment;
 import com.huotu.huobanmall.seller.fragment.TodayOrderFragment;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.utils.BitmapLoader;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.viewpagerindicator.CirclePageIndicator;
 import java.util.ArrayList;
@@ -81,6 +85,10 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
     ImageView _space2;
     @Bind(R.id.main_fxs_space)
     ImageView _space3;
+    @Bind(R.id.header_logo)
+    NetworkImageView _ivLogo;
+    @Bind(R.id.header_operate)
+    ImageButton _ibShop;
 
     MJNewTodayModel _data=null;
     //当前选中的位置
@@ -105,6 +113,10 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         main_menu_ddgl.setOnClickListener(this);
         main_menu_gdtj.setOnClickListener(this);
         main_menu_szgl.setOnClickListener(this);
+        _ibShop.setOnClickListener(this);
+
+        String logoUrl = PreferenceHelper.readString( this, Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_LOGO,"");
+        BitmapLoader.create().displayUrl(this, _ivLogo , logoUrl);
 
         getData();
     }
@@ -125,7 +137,7 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
                 MJNewTodayModel.class,
                 null,
                 newTodayModelListener,
-                errorListener
+                this
         );
 
         this.showProgressDialog("", "正在获取数据，请稍等...");
@@ -153,10 +165,11 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         }else if(v.getId() == R.id.ll_todayOrder_member){
             _currentIndex=1;
             setLineChart();
-        }else if(v.getId()==R.id.ll_todayOrder_fxs){
+        }else if(v.getId()==R.id.ll_todayOrder_fxs){//分销商
             _currentIndex=2;
             setLineChart();
-
+        }else if( v.getId() == R.id.header_operate){//导航到商户首页
+            ActivityUtils.getInstance().showActivity(this, WebViewActivity.class);
         }
     }
 

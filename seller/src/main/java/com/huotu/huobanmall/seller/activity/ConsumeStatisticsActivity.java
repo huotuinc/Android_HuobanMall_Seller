@@ -3,6 +3,7 @@ package com.huotu.huobanmall.seller.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
     TextView header_operate;
     @Bind(R.id.salesdetail_listview)
     PullToRefreshListView _consumStatistics_listview;
+
     ConsumeStatisticsAdapter _consumeStatisticsAdapter;
     List<TopConsumeModel> _consumeStatisticsList = null;
     OperateTypeEnum _operateType = OperateTypeEnum.REFRESH;
@@ -111,7 +113,7 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                 MJTopConsumeModel.class,
                 null,
                 listener,
-                errorListener
+                this
         );
 
         VolleyRequestManager.getRequestQueue().add( request);

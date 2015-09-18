@@ -55,6 +55,12 @@ public class SystemTools
         SimpleDateFormat df = new SimpleDateFormat(format);
         return df.format(new Date());
     }
+
+    public static String getDataTime( Long date ,  String format) {
+        SimpleDateFormat df = new SimpleDateFormat(format);
+        return df.format( date );
+    }
+
     
     /**
     *

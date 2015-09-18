@@ -10,6 +10,7 @@ import com.baidu.location.LocationClientOption;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.HTInitBean;
 import com.huotu.huobanmall.seller.bean.MerchantModel;
+import com.huotu.huobanmall.seller.bean.UpdateModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
@@ -73,7 +74,7 @@ public class SplashActivity extends BaseFragmentActivity {
                 HTInitBean.class,
                 null,
                 htInitBeanListener,
-                errorListener
+                this
         );
         VolleyRequestManager.getRequestQueue().add(initRequest);
     }
@@ -155,4 +156,9 @@ public class SplashActivity extends BaseFragmentActivity {
             }
         }
     };
+
+    protected void updateApp( UpdateModel updateInfo ){
+        if( updateInfo == null )return;
+        //if( updateInfo.getUpdateType() ==  )
+    }
 }

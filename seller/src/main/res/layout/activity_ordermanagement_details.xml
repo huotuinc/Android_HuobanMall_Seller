@@ -214,7 +214,6 @@
                 android:layout_marginRight="15dp"
                 android:background="@drawable/line_gray_shape" />
 
-
             <LinearLayout
                 android:id="@+id/payLabel"
                 android:layout_width="match_parent"
@@ -290,9 +289,16 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/order_detail_space10"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@drawable/line_gray_shape" />
+            
+            <com.huotu.huobanmall.seller.widget.MJExpandableListView
+                android:id="@+id/order_detail_scoreList"
+                android:groupIndicator="@null"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 </ScrollView>
 

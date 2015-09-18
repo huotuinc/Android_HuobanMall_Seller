@@ -5,6 +5,7 @@ import android.view.View;
 
 import android.widget.Button;
 
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -61,21 +62,10 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_detail);
         ButterKnife.bind(this);
+
         header_title.setText("返利统计");
         header_back.setOnClickListener(this);
         _rebateStatisticsList = new ArrayList<>();
-//        SalesListModel saleslist = new SalesListModel();
-//        saleslist.setMoblie("(" + "18767152078" + ")");
-//        _srebateStatisticsList.add(saleslist);
-//        saleslist = new SalesListModel();
-//        saleslist.setMoblie("(" + "18767152078" + ")");
-//        _srebateStatisticsList.add(saleslist);
-//        saleslist = new SalesListModel();
-//        saleslist.setMoblie("(" + "18767152078" + ")");
-//        _srebateStatisticsList.add(saleslist);
-//        saleslist = new SalesListModel();
-//        saleslist.setMoblie("(" + "18767152078" + ")");
-//        _srebateStatisticsList.add(saleslist);
         _rebateStatisticsAdapter = new RebateStatisticsAdapter(this, _rebateStatisticsList);
         _rebateStatistics_listview.getRefreshableView().setAdapter(_rebateStatisticsAdapter);
 
@@ -110,7 +100,7 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                 MJTopScoreModel.class,
                 null,
                 listener,
-                errorListener
+                this
         );
 
 
@@ -151,7 +141,6 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
             if( mjTopScoreModel.getResultData() ==null || mjTopScoreModel.getResultData().getList()==null||mjTopScoreModel.getResultData().getList().size()<1){
                 return;
             }
-
 
             _rebateStatisticsList.addAll(mjTopScoreModel.getResultData().getList());
 

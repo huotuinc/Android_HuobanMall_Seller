@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/space_10"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/order_score_item_no"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/text_size_20"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content"
+        android:text="12451554554"/>
+    <TextView
+        android:id="@+id/order_score_item_label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="获得时间："
+        android:layout_below="@id/order_score_item_no"
+        />
+    <TextView
+        android:layout_alignTop="@id/order_score_item_label1"
+        android:layout_toRightOf="@id/order_score_item_label1"
+        android:id="@+id/order_score_item_getTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2015/09/16"/>
+    <TextView
+        android:id="@+id/order_score_item_label2"
+        android:layout_below="@id/order_score_item_getTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="目前状态："/>
+    <TextView
+        android:id="@+id/order_score_item_status"
+        android:layout_toRightOf="@id/order_score_item_label2"
+        android:layout_alignTop="@id/order_score_item_label2"
+        android:text="待转正状态下被拙夫了啊把"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/order_score_item_label3"
+            android:text="共获得"
+            android:textSize="@dimen/text_size_20"
+            android:layout_alignTop="@id/order_score_item_no"
+            android:layout_toLeftOf="@+id/order_score_item_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/order_score_item_score"
+            android:layout_alignParentRight="true"
+            android:text="1000积分"
+            android:textColor="#FE3D00"
+            android:textSize="@dimen/text_size_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/order_score_item_label4"
+            android:layout_below="@id/order_score_item_label3"
+            android:layout_toLeftOf="@+id/order_score_item_zzTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_12"
+            android:text="转正时间："/>
+        <TextView
+            android:id="@+id/order_score_item_zzTime"
+            android:layout_below="@id/order_score_item_label3"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2015/09/18"/>
+    </RelativeLayout>
+
+</LinearLayout>

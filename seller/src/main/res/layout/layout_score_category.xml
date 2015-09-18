@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#FBFBFB"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/order_score_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_20"
+        android:textColor="#FE3D00"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/space_15"
+        android:text="购买人返利积分"/>
+
+    <TextView
+        android:id="@+id/order_score_category_arrow"
+        android:layout_width="25dp"
+        android:layout_height="12dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/space_10"
+        android:layout_marginTop="@dimen/space_15"
+        android:layout_marginBottom="@dimen/space_15"
+        android:background="@mipmap/xjt"/>
+
+</RelativeLayout>
