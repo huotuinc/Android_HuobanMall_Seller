@@ -35,6 +35,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.activity.LoginActivity;
 import com.huotu.huobanmall.seller.activity.SalesDetailActivity;
+import com.huotu.huobanmall.seller.activity.TopSalesActivity;
 import com.huotu.huobanmall.seller.activity.WebViewActivity;
 import com.huotu.huobanmall.seller.adapter.DataStatisticFragmentAdapter;
 import com.huotu.huobanmall.seller.adapter.OrderFragmentPageAdapter;
@@ -186,7 +187,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         if( v.getId()==R.id.order_statis1){
-            Intent intent = new Intent(this.getActivity(), SalesDetailActivity.class);
+            Intent intent = new Intent(this.getActivity(), TopSalesActivity.class);
             ActivityUtils.getInstance().showActivity(this.getActivity(),intent);
         }
     }
