@@ -12,6 +12,7 @@
             android:id="@+id/bill_item_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15"
             android:background="@mipmap/ic_launcher"/>
 
         <RelativeLayout
@@ -30,14 +31,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
+                android:layout_marginRight="@dimen/space_15"
                 android:text="￥685.00"/>
             <TextView
                 android:id="@+id/bill_item_count"
-                android:layout_below="@id/bill_item_price"
-                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="X 10"/>
+                android:text="X 10"
+                android:layout_below="@+id/bill_item_goodsName"
+                android:layout_alignRight="@+id/bill_item_price"
+                android:layout_alignEnd="@+id/bill_item_price" />
             <TextView
                 android:id="@+id/bill_item_goodsName"
                 android:layout_width="wrap_content"

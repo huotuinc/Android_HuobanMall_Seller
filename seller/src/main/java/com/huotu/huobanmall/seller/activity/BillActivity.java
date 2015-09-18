@@ -37,7 +37,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
     @Bind(R.id.bill_ViewPager)
     ViewPager _bill_ViewPager;
     @Bind(R.id.header_operate)
-    Button header_operate;
+    TextView header_operate;
     @Bind(R.id.header_title)
     TextView header_title;
 
@@ -54,11 +54,11 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
     protected void initView(){
         ButterKnife.bind(this);
         _headerBack.setOnClickListener(this);
-
+        header_title.setText("订单管理");
         _adapter = new BillAdapter(this);
 
         _bill_ViewPager.setAdapter( _adapter );
-        header_title.setText("订单管理");
+
 
         _indicator.setViewPager( _bill_ViewPager );
         header_operate.setOnClickListener(this);
