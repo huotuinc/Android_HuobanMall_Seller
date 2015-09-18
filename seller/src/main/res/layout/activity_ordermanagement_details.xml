@@ -196,10 +196,7 @@
                 android:gravity="center_vertical"
                 android:onClick="onClick"
                 android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp">
+                >
 
                 <com.huotu.huobanmall.seller.widget.MJListView
                     android:id="@+id/order_item_goodsList"
@@ -217,34 +214,6 @@
                 android:layout_marginRight="15dp"
                 android:background="@drawable/line_gray_shape" />
 
-            <LinearLayout
-                android:id="@+id/rebateLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/theme_color"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/bill_item_rebate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:text="返:￥100积分"
-                        android:textColor="#FC0E0E"
-                        android:textSize="@dimen/text_size_20" />
-                </RelativeLayout>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/payLabel"
@@ -257,7 +226,8 @@
                 android:orientation="horizontal"
                 android:paddingBottom="15dp"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingRight="15dp"
+                android:paddingTop="15dp">>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
