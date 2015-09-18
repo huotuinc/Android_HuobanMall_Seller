@@ -36,14 +36,11 @@ import de.greenrobot.event.EventBus;
 public class PushActivity extends BaseFragmentActivity implements View.OnClickListener {
 
     // 界面名称
-    @Bind(R.id.title)
-    public TextView titleName;
+    @Bind(R.id.header_title)
+    public TextView header_title;
 
-    @Bind(R.id.backImage)
-    public Button titleBack;
-
-    @Bind(R.id.backtext)
-    public TextView backtext;
+    @Bind(R.id.header_back)
+    public TextView header_back;
 
     @Bind(R.id.RLnotice)
     public RelativeLayout RLnotice;
@@ -76,9 +73,8 @@ public class PushActivity extends BaseFragmentActivity implements View.OnClickLi
     }
 
     private void initView() {
-        titleName.setText("推送设置");
-        titleBack.setOnClickListener(this);
-        backtext.setOnClickListener(this);
+        header_title.setText("推送设置");
+        header_back.setOnClickListener(this);
         swit1.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean b) {
@@ -127,13 +123,11 @@ public class PushActivity extends BaseFragmentActivity implements View.OnClickLi
     }
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.backtext:{
+            case R.id.header_back:{
                 finish();
             }
             break;
-            case R.id.backImage:{
-                finish();
-            }
+           default:
             break;
         }
     }
