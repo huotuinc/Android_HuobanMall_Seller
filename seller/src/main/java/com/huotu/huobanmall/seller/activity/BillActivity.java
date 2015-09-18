@@ -2,6 +2,7 @@ package com.huotu.huobanmall.seller.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -98,7 +99,10 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
         BillDataAdapter.ILogisticListener _seeLogisticListener = new BillDataAdapter.ILogisticListener() {
             @Override
             public void onClick(View view, OrderListModel model) {
-                ToastUtils.showLongToast(_context, model.getOrderNo());
+                Intent intent = new Intent();
+                intent.putExtra("orderNo", model.getOrderNo());
+                intent.setClass( _context , LogisticsActivity.class );
+                ActivityUtils.getInstance().showActivity((Activity)_context, intent);
             }
         };
         BillDataAdapter.ISeeOrderDetailListener _seeOrderDetailListener = new BillDataAdapter.ISeeOrderDetailListener() {
