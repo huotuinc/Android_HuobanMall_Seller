@@ -9,7 +9,7 @@
         android:id="@+id/bill_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <include layout="@layout/layout_bill_header"></include>
+        <include layout="@layout/layout_ss_header"></include>
     </RelativeLayout>
 
     <com.viewpagerindicator.TabPageIndicator

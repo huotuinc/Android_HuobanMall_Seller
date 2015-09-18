@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.BillDataAdapter;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
@@ -36,6 +38,8 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
     ViewPager _bill_ViewPager;
     @Bind(R.id.header_operate)
     Button header_operate;
+    @Bind(R.id.header_title)
+    TextView header_title;
 
     BillAdapter _adapter;
 
@@ -54,6 +58,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
         _adapter = new BillAdapter(this);
 
         _bill_ViewPager.setAdapter( _adapter );
+        header_title.setText("订单管理");
 
         _indicator.setViewPager( _bill_ViewPager );
         header_operate.setOnClickListener(this);
