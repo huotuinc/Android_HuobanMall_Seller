@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -37,14 +38,17 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class SalesDetailActivity extends BaseFragmentActivity implements CompoundButton.OnCheckedChangeListener, AdapterView.OnItemClickListener,View.OnClickListener {
-    @Bind(R.id.header_title)
-    TextView header_title;
+
     @Bind(R.id.header_back)
     Button header_back;
     @Bind(R.id.header_operate)
     TextView header_operate;
     @Bind(R.id.salesdetail_listview)
     PullToRefreshListView _salesDetail_listview;
+    @Bind(R.id.detail_btn)
+    RadioButton detail_btn;
+    @Bind(R.id.statistic_btn)
+    RadioButton statistic_btn;
     SalesDetailAdapter _salesDetailAdapter;
     List<SalesListModel> _saledetailList = null;
     OperateTypeEnum _operateType = OperateTypeEnum.REFRESH;
@@ -55,7 +59,6 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_detail);
         ButterKnife.bind(this);
-        header_title.setText("销售明细");
         header_back.setOnClickListener(this);
         _saledetailList = new ArrayList<>();
 //        SalesListModel saleslist= new SalesListModel();

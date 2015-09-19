@@ -114,4 +114,11 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         String yyy1 = SystemTools.getDateTime(y1,"yyyy-MM-dd");
         String yyy2 = SystemTools.getDateTime(y2,"yyyy-MM-dd");
     }
+
+    public void test()  {
+
+        Date date = new Date(1442419200000L
+        );
+        System.out.print(date);
+    }
 }
