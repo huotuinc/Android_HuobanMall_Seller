@@ -83,7 +83,7 @@
                 android:background="@color/order_info_bg"
                 android:layout_below="@id/order_indicator"
                 android:layout_width="match_parent"
-                android:padding="@dimen/space_5"
+                android:padding="@dimen/space_10"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/order_info_name"
@@ -102,22 +102,30 @@
                     android:textColor="@android:color/black"
                     android:text="32"/>
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/order_info"
+                android:layout_marginTop="10dp"
+                android:layout_above="@+id/order_statis1">
             <android.support.v4.view.ViewPager
                 android:id="@+id/order_viewPager"
-                android:layout_below="@id/order_info"
-                android:layout_above="@+id/order_statis1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </android.support.v4.view.ViewPager>
-
+            </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/order_statis1"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentBottom="true"
                 android:padding="@dimen/space_5"
+
                 android:background="@drawable/round_gray"
-                android:layout_margin="@dimen/space_5">
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -134,10 +142,13 @@
                     android:id="@+id/order_arrow1"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-
                     android:layout_centerVertical="true"
                     android:background="@mipmap/hsjt"/>
             </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_below="@+id/order_statis1"/>
 
         </RelativeLayout>
     <!--</com.handmark.pulltorefresh.library.PullToRefreshScrollView>-->

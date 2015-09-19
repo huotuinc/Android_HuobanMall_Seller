@@ -83,7 +83,7 @@
                 android:background="@color/sales_info_bg"
                 android:layout_below="@id/sales_indicator"
                 android:layout_width="match_parent"
-                android:padding="@dimen/space_5"
+                android:padding="@dimen/space_10"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_marginLeft="15dp"
@@ -102,23 +102,28 @@
                     android:textColor="@android:color/black"
                     android:text="32542.00"/>
             </RelativeLayout>
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_below="@id/sales_info"
+              android:layout_marginTop="10dp"
+              android:layout_above="@+id/sales_statis1">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/sales_viewPager"
-                android:layout_below="@id/sales_info"
-                android:layout_above="@+id/sales_statis1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </android.support.v4.view.ViewPager>
+          </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/sales_statis1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
                 android:padding="@dimen/space_5"
                 android:background="@drawable/round_gray"
-                android:layout_margin="@dimen/space_5">
+                android:layout_margin="@dimen/space_15">
                 <ImageView
                     android:layout_marginLeft="15dp"
                     android:id="@+id/sales_statis_icon"
@@ -145,6 +150,10 @@
                     android:layout_centerVertical="true"
                     android:background="@mipmap/hsjt"/>
             </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_below="@+id/sales_statis1"/>
 
         </RelativeLayout>
 
