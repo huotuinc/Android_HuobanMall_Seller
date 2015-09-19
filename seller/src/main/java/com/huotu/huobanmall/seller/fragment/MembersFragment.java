@@ -402,21 +402,21 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
             List<Object> yData1=null;
             List<Object> yData2=null;
             if( type == 1 ){
-                xData1 = (ArrayList) _data.getResultData().getTodayMemberTimes();
+                xData1 = (ArrayList) _data.getResultData().getTodayTimes();
                 yData1 = (ArrayList)_data.getResultData().getTodayMemberAmounts();
-                xData2 = (ArrayList)_data.getResultData().getTodayPartnerTimes();
+                xData2 = (ArrayList)_data.getResultData().getTodayTimes();
                 yData2 = (ArrayList)_data.getResultData().getTodayPartnerAmounts();
             }else if( type == 2){
-                xData1 = (ArrayList) _data.getResultData().getWeekMemberTimes();
+                xData1 = (ArrayList) _data.getResultData().getWeekTimes();
                 yData1 = (ArrayList)_data.getResultData().getWeekMemberAmounts();
-                xData2 = (ArrayList)_data.getResultData().getWeekPartnerTimes();
+                xData2 = (ArrayList)_data.getResultData().getWeekTimes();
                 yData2 = (ArrayList)_data.getResultData().getWeekPartnerAmounts();
             }else if( type == 3 ){
                 //if( _data.getResultData().getMonthMemberTimes() )
-                xData1 =  (ArrayList)_data.getResultData().getMonthMemberTimes();
+                xData1 =  (ArrayList)_data.getResultData().getMonthTimes();
                 yData1 =  (ArrayList)_data.getResultData().getMonthMemberAmounts();
 
-                xData2 =  (ArrayList)_data.getResultData().getMonthPartnerTimes();
+                xData2 =  (ArrayList)_data.getResultData().getMonthTimes();
                 yData2 =  (ArrayList)_data.getResultData().getMonthPartnerAmounts();
             }
 
@@ -431,6 +431,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
             //int gridColor=0xFFD3D3D3;
             int lineColor1 = 0xFF0094FF;
             int lineColor2 =0xFFFF3C00;
+            int textColor = 0xFF000000;
             //int circleColor=0xFFFFFFFF;
             List<String> xValue = new ArrayList<>();
 
@@ -454,9 +455,9 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                         xValues1.add(x);
                     }
 
-                    if( !xValue.contains( x )){
+                    //if( !xValue.contains( x )){
                         xValue.add(x);
-                    }
+                    //}
 
                     Object y = yData1.get(i);
                     Entry item = new Entry(Float.valueOf(y.toString()), i);
@@ -493,9 +494,9 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                     }
                     xValues2.add(x);
 
-                    if( !xValue.contains(x)){
-                        xValue.add(x);
-                    }
+                    //if( !xValue.contains(x)){
+                    //    xValue.add(x);
+                    //}
                     Object y = yData2.get(i);
                     Entry item = new Entry(Float.valueOf(y.toString()), i);
                     yValues2.add(item);
@@ -517,7 +518,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setTextColor(0xFFFFFFFF);
+            xAxis.setTextColor( textColor );
 
             YAxis yAxis = lineChart.getAxisLeft();
             yAxis.setTextColor(0xFFFFFFFF);

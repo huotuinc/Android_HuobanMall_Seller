@@ -40,6 +40,7 @@
 
                 <com.huotu.android.library.libedittext.EditText
                     android:id="@+id/edtUserName"
+                    style="@style/CyEditTextStyle"
                     cy:style="transparent"
                     android:focusable="true"
                     android:focusableInTouchMode="true"

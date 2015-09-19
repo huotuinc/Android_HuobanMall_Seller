@@ -24,6 +24,7 @@ import com.huotu.huobanmall.seller.utils.DigestUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
+import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -110,7 +111,7 @@ public class LoginActivity extends BaseFragmentActivity implements
                 HTMerchantModel.class,
                 null,
                 loginListener,
-                errorListener
+                this
                 );
 
         VolleyRequestManager.getRequestQueue().add(loginRequest);
@@ -249,21 +250,8 @@ public class LoginActivity extends BaseFragmentActivity implements
             }
             else
             {
-                Toast.makeText ( LoginActivity.this, "未请求到数据", Toast.LENGTH_SHORT ).show ();
+                ToastUtils.showShort( "未请求到数据");
             }
-        }
-    };
-
-    Response.ErrorListener errorListener=new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            LoginActivity.this.closeProgressDialog();
-
-            SimpleDialogFragment.createBuilder( LoginActivity.this , LoginActivity.this.getSupportFragmentManager())
-                    .setTitle("错误信息")
-                    .setMessage(volleyError.getMessage())
-                    .setNegativeButtonText("关闭")
-                    .show();
         }
     };
 }

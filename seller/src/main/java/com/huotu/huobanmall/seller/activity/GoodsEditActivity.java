@@ -23,6 +23,7 @@ import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.GoodseditAdapter;
 import com.huotu.huobanmall.seller.bean.BaseModel;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
+import com.huotu.huobanmall.seller.bean.GoodsOpeTypeEnum;
 import com.huotu.huobanmall.seller.bean.MJGoodModel;
 import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.common.Constant;
@@ -44,10 +45,10 @@ import butterknife.ButterKnife;
 /**
  * 商品编辑页面
  */
-public class GoodsEditActivity extends BaseFragmentActivity implements  RadioGroup.OnCheckedChangeListener ,
+public class GoodsEditActivity extends BaseFragmentActivity implements
+        RadioGroup.OnCheckedChangeListener ,
         CompoundButton.OnCheckedChangeListener,
-        AdapterView.OnItemClickListener
-{
+        AdapterView.OnItemClickListener{
     @Bind(R.id.saleing_btn)
     RadioButton saleing_btn;
     @Bind(R.id.offshelf_btn)
@@ -74,7 +75,6 @@ public class GoodsEditActivity extends BaseFragmentActivity implements  RadioGro
     List<GoodsModel> _offShelfList=null;
     OperateTypeEnum _operateType = OperateTypeEnum.REFRESH;
     int _type = 1;
-    //ProgressDialogFragment  _progressDialog=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,24 +154,13 @@ public class GoodsEditActivity extends BaseFragmentActivity implements  RadioGro
                         MJGoodModel.class,
                         null,
                         goodsListListener,
-                        errorListener);
+                        this);
 
         VolleyRequestManager.getRequestQueue().add(goodsListRequest);
     }
 
     protected void firstSaleGoodData(){
-//        if( _progressDialog !=null){
-//            _progressDialog.dismiss();
-//            _progressDialog=null;
-//        }
-//        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder( this, this.getSupportFragmentManager())
-//                .setMessage("正在获取数据，请稍等...")
-//                .setCancelable(false)
-//                .setCancelableOnTouchOutside(false);
-//        _progressDialog = (ProgressDialogFragment) builder.show();
-
         this.showProgressDialog("","正在获取数据，请稍等...");
-
         _type=1;
         _operateType= OperateTypeEnum.REFRESH;
         getSaleGoodsData(_operateType);
@@ -182,8 +171,10 @@ public class GoodsEditActivity extends BaseFragmentActivity implements  RadioGro
         if( operateType == OperateTypeEnum.REFRESH){
             //maps.put("lastProductId","");
         }else {
-            String lastid = String.valueOf( _saleGoodsList.get( _saleGoodsList.size()-1).getGoodsId());
-            paras.put("lastProductId", lastid);
+            if( _saleGoodsList !=null && _saleGoodsList.size()>0) {
+                String lastid = String.valueOf(_saleGoodsList.get(_saleGoodsList.size() - 1).getGoodsId());
+                paras.put("lastProductId", lastid);
+            }
         }
 
         String url = Constant.GOODSLIST_INTERFACE;
@@ -199,7 +190,7 @@ public class GoodsEditActivity extends BaseFragmentActivity implements  RadioGro
                         MJGoodModel.class,
                         null,
                         goodsListListener,
-                        errorListener);
+                        this);
 
         VolleyRequestManager.getRequestQueue().add(goodsListRequest);
     }
@@ -247,47 +238,44 @@ public class GoodsEditActivity extends BaseFragmentActivity implements  RadioGro
                 return;
             }
 
-            if( mjGoodModel.getResultData() ==null || mjGoodModel.getResultData().getList()==null||mjGoodModel.getResultData().getList().size()<1){
-                return;
-            }
+//            if( mjGoodModel.getResultData() ==null || mjGoodModel.getResultData().getList()==null||mjGoodModel.getResultData().getList().size()<1){
+//                return;
+//            }
 
             _goodsedit_all.setBackgroundResource(R.mipmap.wsz);
             if( _type == 1 && _operateType == OperateTypeEnum.REFRESH){
                 _saleGoodsList.clear();
-
-                _saleGoodsList.addAll(mjGoodModel.getResultData().getList());
+                if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList()!=null) {
+                    _saleGoodsList.addAll(mjGoodModel.getResultData().getList());
+                }
                 //_saleGoodsAdapter.notifyDataSetChanged();
                 _goodsedit_listview.getRefreshableView().setAdapter(_saleGoodsAdapter);
             }else if( _type==1 && _operateType == OperateTypeEnum.LOADMORE){
-                _saleGoodsList.addAll(mjGoodModel.getResultData().getList());
+                if( mjGoodModel.getResultData() !=null && mjGoodModel.getResultData().getList() !=null ) {
+                    _saleGoodsList.addAll(mjGoodModel.getResultData().getList());
+                }
                 _saleGoodsAdapter.notifyDataSetChanged();
-                //_goodsedit_listview.getRefreshableView().setAdapter(_saleGoodsAdapter);
             }else if( _type==2 && _operateType==OperateTypeEnum.REFRESH){
                 _offShelfList.clear();
-                _offShelfList.addAll( mjGoodModel.getResultData().getList());
+                if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList() !=null ) {
+                    _offShelfList.addAll(mjGoodModel.getResultData().getList());
+                }
                 _goodsedit_listview.getRefreshableView().setAdapter(_offShelfAdapter);
             }else if( _type==2 && _operateType==OperateTypeEnum.LOADMORE){
-                _offShelfList.addAll(mjGoodModel.getResultData().getList());
+                if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList()!=null ) {
+                    _offShelfList.addAll(mjGoodModel.getResultData().getList());
+                }
                 //_goodsedit_listview.setAdapter(_offShelfAdapter);
                 _offShelfAdapter.notifyDataSetChanged();
             }
         }
     };
 
-    private Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            GoodsEditActivity.this.closeProgressDialog();
-            _goodsedit_listview.onRefreshComplete();
-
-            String message="";
-            if(null != volleyError.networkResponse){
-                message= new String(volleyError.networkResponse.data);
-            }
-            DialogUtils.showDialog(GoodsEditActivity.this,GoodsEditActivity.this.getSupportFragmentManager()
-            ,"错误信息", message , "关闭");
-        }
-    };
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        _goodsedit_listview.onRefreshComplete();
+        super.onErrorResponse(volleyError);
+    }
 
     @Override
     public void onClick(View v) {
@@ -295,11 +283,11 @@ public class GoodsEditActivity extends BaseFragmentActivity implements  RadioGro
         if (v.getId() == R.id.header_back) {
             finish();
         }else if( v.getId()==R.id.goodsedit_delete){
-            operGoods("1");
+            operGoods( GoodsOpeTypeEnum.DELETEGOODS );
         }else if(v.getId()==R.id.goodsedit_onshelf){
-            operGoods("2");
+            operGoods( GoodsOpeTypeEnum.ONSHELF );
         }else if(v.getId()==R.id.goodsedit_offshelf){
-            operGoods("3");
+            operGoods( GoodsOpeTypeEnum.OFFSHELF );
         }else if(v.getId()==R.id.goodsedit_all){
             selectGoods();
         }
@@ -341,7 +329,7 @@ public class GoodsEditActivity extends BaseFragmentActivity implements  RadioGro
     }
 
 
-    protected void operGoods( String type ){
+    protected void operGoods( GoodsOpeTypeEnum type ){
         String url = Constant.OPERGOODS_INTERFACE;
 
         int count =0;
@@ -379,7 +367,7 @@ public class GoodsEditActivity extends BaseFragmentActivity implements  RadioGro
         }
 
         Map<String,String> paras = new HashMap<>();
-        paras.put("type",type );
+        paras.put("type", String.valueOf( type.getIndex() ));
         paras.put("goods",ids);
 
         HttpParaUtils httpParaUtils =new HttpParaUtils();
@@ -391,7 +379,7 @@ public class GoodsEditActivity extends BaseFragmentActivity implements  RadioGro
                 null,
                 maps,
                 operGoodsListener,
-                errorListener
+                this
         );
 
         if( _progressDialog!=null){

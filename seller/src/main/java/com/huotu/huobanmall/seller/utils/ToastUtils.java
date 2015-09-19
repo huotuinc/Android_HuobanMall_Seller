@@ -3,6 +3,7 @@ package com.huotu.huobanmall.seller.utils;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.widget.AlarmDailog;
 
 
@@ -40,5 +41,31 @@ public class ToastUtils
         }
         alarmDialog = new AlarmDailog(context, showMsg,singleLine);
         alarmDialog.show();
+    }
+
+    private static Toast  mToast=null;
+    public static void showLong(  String msg){
+        if( mToast ==null){
+            mToast = Toast.makeText( SellerApplication.getInstance() , msg , Toast.LENGTH_LONG );
+        }
+        else{
+            mToast.setText(msg);
+        }
+        mToast.show();
+    }
+    public static void showShort( String msg){
+        if( mToast ==null){
+            mToast = Toast.makeText( SellerApplication.getInstance() , msg , Toast.LENGTH_SHORT );
+        }
+        else{
+            mToast.setText(msg);
+        }
+        mToast.show();
+    }
+
+    public  static void cancel(){
+        if( mToast !=null){
+            mToast.cancel();
+        }
     }
 }

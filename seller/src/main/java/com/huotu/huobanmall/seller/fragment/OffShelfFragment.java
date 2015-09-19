@@ -181,8 +181,10 @@ public class OffShelfFragment extends BaseFragment {
         if( type == OperateTypeEnum.REFRESH){
             //maps.put("lastProductId","");
         }else {
-            String lastid = String.valueOf( _goodsList.get( _goodsList.size()-1).getGoodsId());
-            maps.put("lastProductId", lastid);
+            if( _goodsList !=null && _goodsList.size() >0 ) {
+                String lastid = String.valueOf(_goodsList.get(_goodsList.size() - 1).getGoodsId());
+                maps.put("lastProductId", lastid);
+            }
         }
 
         HttpParaUtils httpParaUtils = new HttpParaUtils();

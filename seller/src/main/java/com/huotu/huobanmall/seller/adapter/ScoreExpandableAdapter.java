@@ -129,8 +129,8 @@ public class ScoreExpandableAdapter extends BaseExpandableListAdapter {
         holder.tvTitle.setText( model.getOrderNo() );
         holder.tvScore.setText( model.getScore() +"积分" );
         holder.tvStatus.setText( model.getStatus() );
-        holder.tvZZTime.setText( String.valueOf( SystemTools.getDataTime( model.getZzTime() , "yyyy/MM/dd")) );
-        holder.tvGetTime.setText( String.valueOf(SystemTools.getDataTime(model.getGetTime(), "yyyy/MM/dd")) );
+        holder.tvZZTime.setText( String.valueOf( SystemTools.getDateTime( model.getZzTime() , "yyyy/MM/dd")) );
+        holder.tvGetTime.setText( String.valueOf(SystemTools.getDateTime(model.getGetTime(), "yyyy/MM/dd")) );
 
         return convertView;
     }

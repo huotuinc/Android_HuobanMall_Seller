@@ -3,6 +3,7 @@ package com.huotu.huobanmall.seller.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,6 +36,7 @@ import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
+import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.viewpagerindicator.CirclePageIndicator;
 import java.util.ArrayList;
@@ -55,6 +57,9 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
     Button main_menu_gdtj;
     @Bind(R.id.main_menu_szgl)
     Button main_menu_szgl;
+
+    Long existTime=0L;
+    Integer waitForExistSecond=2000;
 
     //TodayDistributorsFragment _todayDistributorsFragments;
     //TodayMemberFragment _todayMemberFragments;
@@ -323,16 +328,23 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         }
     };
 
-//    Response.ErrorListener errorListener=new Response.ErrorListener() {
-//        @Override
-//        public void onErrorResponse(VolleyError volleyError) {
-//            MainActivity.this.closeProgressDialog();
-//            if( volleyError.networkResponse!=null) {
-//                String message = new String(volleyError.networkResponse.data);
-//                DialogUtils.showDialog(MainActivity.this,MainActivity.this.getSupportFragmentManager(),"错误信息",message,"关闭");
-//            }
-//        }
-//    };
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if( event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK){
+            long currentTime = System.currentTimeMillis();
+            if( currentTime - existTime > waitForExistSecond ){
+                ToastUtils.showLong("再按一次退出程序");
+                existTime = currentTime;
+            }else{
+                try {
+                    this.finish();
+                }finally {
+                    System.exit(0);
+                }
+            }
+            return true;
+        }
 
-
+        return super.onKeyDown(keyCode, event);
+    }
 }

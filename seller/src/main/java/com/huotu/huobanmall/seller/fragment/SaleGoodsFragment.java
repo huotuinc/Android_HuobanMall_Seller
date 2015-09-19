@@ -194,8 +194,10 @@ public class SaleGoodsFragment extends BaseFragment {
         if( type == OperateTypeEnum.REFRESH){
             //maps.put("lastProductId","");
         }else {
-            String lastId = String.valueOf( _goodsList.get( _goodsList.size()-1).getGoodsId());
-            maps.put("lastProductId", lastId);
+            if( _goodsList !=null && _goodsList.size()>0 ) {
+                String lastId = String.valueOf(_goodsList.get(_goodsList.size() - 1).getGoodsId());
+                maps.put("lastProductId", lastId);
+            }
         }
 
         HttpParaUtils httpParaUtils = new HttpParaUtils();

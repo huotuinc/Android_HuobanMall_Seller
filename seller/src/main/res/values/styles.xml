@@ -52,5 +52,6 @@
     <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
         <item name="android:typeface">monospace</item>
     </style>
-
+    <!-- parent="android:Theme.Light"解决自定义style，光标变白问题 -->
+    <style name="CyEditTextStyle" parent="android:Theme.Light"></style>
 </resources>

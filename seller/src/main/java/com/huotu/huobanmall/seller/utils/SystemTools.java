@@ -56,11 +56,15 @@ public class SystemTools
         return df.format(new Date());
     }
 
-    public static String getDataTime( Long date ,  String format) {
+    public static String getDateTime( Long date ,  String format) {
         SimpleDateFormat df = new SimpleDateFormat(format);
         return df.format( date );
     }
 
+    public static String getDateTime( Date date , String format){
+        SimpleDateFormat df = new SimpleDateFormat(format);
+        return df.format( date );
+    }
     
     /**
     *

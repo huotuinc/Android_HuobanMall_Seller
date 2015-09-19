@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Administrator on 2015/9/2.
  */
 public class SalesFragmentPageAdapter extends FragmentPagerAdapter {
-    public static final String[] titles=new String[]{"今天","7日","30天"};
+    public static final String[] titles=new String[]{"今天","本周","本月"};
 
     List<BaseFragment> _fragments;
     public SalesFragmentPageAdapter(List<BaseFragment> fragments, FragmentManager fragmentManager){

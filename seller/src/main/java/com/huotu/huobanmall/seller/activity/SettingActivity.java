@@ -60,6 +60,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/8/31.
+ * 设置界面
  */
 public class SettingActivity extends BaseFragmentActivity
         implements View.OnClickListener,OnPhotoSelectBackListener, OnCropperBackListener {
@@ -235,7 +236,7 @@ public class SettingActivity extends BaseFragmentActivity
             }
             break;
             case R.id.quit: {
-                 ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
+                 //ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
 
                 //清空token等用户信息
                 application.cleanMerchantInfo ();
