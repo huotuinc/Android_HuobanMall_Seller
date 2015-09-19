@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_header_bg">
+
+    <Button
+        android:layout_marginLeft="20dp"
+        android:id="@+id/header_back"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/main_header_bg"
+        android:textColor="@android:color/white"
+        android:drawableLeft="@drawable/btn_back"/>
+
+    <TextView
+        android:id="@+id/header_operate"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="15dp"
+        android:background="@mipmap/ss"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        />
+    <RadioGroup
+        android:id="@+id/goods_title"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_margin="0dp"
+        >
+        <RadioButton
+            android:id="@+id/detail_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text=" 明细 "
+            android:textSize="@dimen/text_size_16"
+            android:gravity="center"
+            android:singleLine="true"
+            android:checked="true"
+            android:background="@drawable/radiobutton_left"
+            android:textColor="@drawable/check_text"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="@dimen/space_5"
+            android:paddingRight="@dimen/space_5"
+            android:paddingLeft="@dimen/space_5"
+            android:paddingTop="@dimen/space_5"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="0dp"
+            />
+
+        <RadioButton
+            android:id="@+id/statistic_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text=" 统计 "
+            android:checked="false"
+            android:paddingBottom="@dimen/space_5"
+            android:paddingTop="@dimen/space_5"
+            android:paddingRight="@dimen/space_5"
+            android:paddingLeft="@dimen/space_5"
+            android:textSize="@dimen/text_size_16"
+            android:gravity="center"
+            android:singleLine="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/radiobutton_right"
+            android:textColor="@drawable/check_text"
+            />
+    </RadioGroup>
+
+</RelativeLayout>

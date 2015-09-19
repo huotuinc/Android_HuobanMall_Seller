@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -37,8 +38,10 @@ import butterknife.ButterKnife;
  * 消费统计 界面
  */
 public class ConsumeStatisticsActivity extends BaseFragmentActivity implements View.OnClickListener {
-    @Bind(R.id.header_title)
-    TextView header_title;
+    @Bind(R.id.detail_btn)
+    RadioButton detail_btn;
+    @Bind(R.id.statistic_btn)
+    RadioButton statistic_btn;
     @Bind(R.id.header_back)
     Button header_back;
     @Bind(R.id.header_operate)
@@ -55,7 +58,7 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_detail);
         ButterKnife.bind(this);
-        header_title.setText("消费统计");
+
         header_back.setOnClickListener(this);
         _consumeStatisticsList = new ArrayList<>();
 //        SalesListModel saleslist = new SalesListModel();
