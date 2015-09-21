@@ -137,10 +137,11 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
     private void getOffShelfGoodsData(OperateTypeEnum operateType){
         Map<String,String> paras = new HashMap<>();
         if( operateType == OperateTypeEnum.REFRESH){
-            //maps.put("lastProductId","");
         }else {
-            String lastid = String.valueOf( _offShelfList.get( _offShelfList.size()-1).getGoodsId());
-            paras.put("lastProductId", lastid);
+            if( _offShelfList !=null && _offShelfList.size()>0 ) {
+                String lastId = String.valueOf(_offShelfList.get(_offShelfList.size() - 1).getGoodsId());
+                paras.put("lastProductId", lastId);
+            }
         }
         String url = Constant.GOODSLIST_INTERFACE;
         paras.put("type", "2" );
@@ -169,11 +170,10 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
     private void getSaleGoodsData( OperateTypeEnum operateType ) {
         Map<String,String> paras = new HashMap<>();
         if( operateType == OperateTypeEnum.REFRESH){
-            //maps.put("lastProductId","");
         }else {
             if( _saleGoodsList !=null && _saleGoodsList.size()>0) {
-                String lastid = String.valueOf(_saleGoodsList.get(_saleGoodsList.size() - 1).getGoodsId());
-                paras.put("lastProductId", lastid);
+                String lastId = String.valueOf(_saleGoodsList.get(_saleGoodsList.size() - 1).getGoodsId());
+                paras.put("lastProductId", lastId);
             }
         }
 
@@ -199,9 +199,7 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
         @Override
         public void onResponse( MJGoodModel mjGoodModel ) {
             GoodsEditActivity.this.closeProgressDialog();
-
             _goodsedit_listview.onRefreshComplete();
-
             if(_type==1) {
                 _goodsedit_offshelf.setVisibility(View.VISIBLE);
                 _goodsedit_onshelf.setVisibility(View.GONE);
@@ -237,10 +235,6 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                         .show();
                 return;
             }
-
-//            if( mjGoodModel.getResultData() ==null || mjGoodModel.getResultData().getList()==null||mjGoodModel.getResultData().getList().size()<1){
-//                return;
-//            }
 
             _goodsedit_all.setBackgroundResource(R.mipmap.wsz);
             if( _type == 1 && _operateType == OperateTypeEnum.REFRESH){
@@ -382,15 +376,16 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                 this
         );
 
-        if( _progressDialog!=null){
-            _progressDialog.dismiss();
-            _progressDialog=null;
-        }
-        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder( this, this.getSupportFragmentManager())
-                .setMessage("正在获取数据，请稍等...")
-                .setCancelable(false)
-                .setCancelableOnTouchOutside(false);
-        _progressDialog = (ProgressDialogFragment) builder.show();
+//        if( _progressDialog!=null){
+//            _progressDialog.dismiss();
+//            _progressDialog=null;
+//        }
+//        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder( this, this.getSupportFragmentManager())
+//                .setMessage("正在获取数据，请稍等...")
+//                .setCancelable(false)
+//                .setCancelableOnTouchOutside(false);
+//        _progressDialog = (ProgressDialogFragment) builder.show();
+        GoodsEditActivity.this.showProgressDialog("","请稍等...");
 
         VolleyRequestManager.getRequestQueue().add(operGoodsRequest);
     }
@@ -398,10 +393,7 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
     protected Response.Listener<BaseModel> operGoodsListener=new Response.Listener<BaseModel>() {
         @Override
         public void onResponse(BaseModel baseModel) {
-            if(_progressDialog!=null){
-                _progressDialog.dismiss();
-                _progressDialog=null;
-            }
+           GoodsEditActivity.this.closeProgressDialog();
 
             if( null == baseModel){
                 SimpleDialogFragment.createBuilder( GoodsEditActivity.this , GoodsEditActivity.this.getSupportFragmentManager())
@@ -460,17 +452,17 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
         if (checkedId == R.id.saleing_btn) {
             _type=1;
             _operateType = OperateTypeEnum.REFRESH;
-            getSaleGoodsData( _operateType );
-
             _goodsedit_offshelf.setVisibility(View.VISIBLE);
             _goodsedit_onshelf.setVisibility(View.GONE);
+
+            getSaleGoodsData(_operateType);
         } else if (checkedId == R.id.offshelf_btn) {
             _type=2;
             _operateType = OperateTypeEnum.REFRESH;
-           getOffShelfGoodsData( _operateType );
-
             _goodsedit_offshelf.setVisibility(View.GONE);
             _goodsedit_onshelf.setVisibility(View.VISIBLE);
+
+            getOffShelfGoodsData( _operateType );
         }
     }
 

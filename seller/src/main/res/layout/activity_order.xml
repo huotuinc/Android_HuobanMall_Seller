@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.huotu.huobanmall.seller.activity.BillActivity">
+
+    <RelativeLayout
+        android:id="@+id/order_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <include layout="@layout/layout_ss_header"></include>
+    </RelativeLayout>
+
+    <com.viewpagerindicator.TabPageIndicator
+        android:id="@+id/order_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/order_header"
+        android:textColor="#AA000000"
+        android:textSize="@dimen/text_size_20"
+        ptr:footerColor="@color/indicator_footline_color"
+        ptr:selectedColor="#FE3C00"
+        />
+
+    <android.support.v4.view.ViewPager android:id="@+id/order_ViewPager"
+        android:layout_below="@id/order_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

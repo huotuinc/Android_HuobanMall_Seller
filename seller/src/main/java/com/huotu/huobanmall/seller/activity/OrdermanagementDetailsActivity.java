@@ -118,15 +118,17 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
             item.setOrderNo("阿斯顿飞阿斯顿飞");
             item.setType(1);
             List<OrderScoreModel> list= new ArrayList<>();
-            for( int k=0;k<5;k++){
-                OrderScoreModel child=new OrderScoreModel();
-                child.setType(2);
-                child.setOrderNo("1111111111" + i);
-                child.setGetTime(System.currentTimeMillis());
-                child.setScore(i);
-                child.setStatus("斯蒂芬打的费的发大阿是打发岁的发放");
-                child.setZzTime(System.currentTimeMillis());
-                list.add(child);
+            if( i != 0 ) {
+                for (int k = 0; k < 5; k++) {
+                    OrderScoreModel child = new OrderScoreModel();
+                    child.setType(2);
+                    child.setOrderNo("1111111111" + i);
+                    child.setGetTime(System.currentTimeMillis());
+                    child.setScore(i);
+                    child.setStatus("斯蒂芬打的费的发大阿是打发岁的发放");
+                    child.setZzTime(System.currentTimeMillis());
+                    list.add(child);
+                }
             }
             item.setList(list);
             data.add(item);

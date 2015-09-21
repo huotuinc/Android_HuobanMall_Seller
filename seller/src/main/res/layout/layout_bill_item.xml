@@ -53,6 +53,12 @@
             android:divider="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+        <ExpandableListView
+            android:id="@+id/bill_item_childOrder"
+            android:groupIndicator="@null"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ExpandableListView>
     </LinearLayout>
 
     <RelativeLayout

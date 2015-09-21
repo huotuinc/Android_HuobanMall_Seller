@@ -7,6 +7,7 @@ import java.util.List;
  * Created by Administrator on 2015/9/15.
  */
 public class OrderListModel {
+
     private Integer amount;
     private Float money;
     private String orderNo;
@@ -16,6 +17,26 @@ public class OrderListModel {
     private Integer status;
     private Date time;
     private List<GoodsModel> goods;
+    private List<OrderListModel> childOrders;
+    private boolean hasChildOrder =false;
+
+    public List<OrderListModel> getChildOrders() {
+        return childOrders;
+    }
+
+    public void setChildOrders(List<OrderListModel> childOrders) {
+        this.childOrders = childOrders;
+    }
+
+    public boolean getHasChildOrder() {
+        return hasChildOrder;
+    }
+
+    public void setHasChildOrder(boolean hasChildOrder) {
+        this.hasChildOrder = hasChildOrder;
+    }
+
+
 
     public List<GoodsModel> getGoods() {
         return goods;

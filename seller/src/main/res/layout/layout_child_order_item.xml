@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/child_order_item_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_15"
+        android:background="@mipmap/ic_launcher"/>
+
+    <RelativeLayout
+        android:id="@+id/child_order_item_goods"
+        android:layout_alignTop="@id/child_order_item_picture"
+        android:layout_toRightOf="@id/child_order_item_picture"
+        android:paddingRight="@dimen/space_10"
+        android:paddingLeft="@dimen/space_10"
+        android:layout_marginBottom="@dimen/space_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/child_order_item_count"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_15"
+            android:layout_marginRight="@dimen/space_15"
+            android:text="X 44"/>
+        <TextView
+            android:id="@+id/child_order_item_goodsName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginRight="@dimen/space_5"
+            android:maxLines="2"
+            android:textSize="@dimen/text_size_15"
+            android:ellipsize="end"
+            android:text="阿斯顿飞阿斯顿法师地方的萨芬阿斯顿飞阿斯顿飞阿斯顿飞阿斯蒂芬撒旦法撒旦法阿是打发受到发阿斯顿飞"
+            android:layout_toLeftOf="@id/child_order_item_count"/>
+    </RelativeLayout>
+</RelativeLayout>

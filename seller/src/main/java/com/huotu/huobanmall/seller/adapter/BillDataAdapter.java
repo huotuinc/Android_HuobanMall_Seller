@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -21,6 +22,7 @@ import com.huotu.huobanmall.seller.bean.OrderListProductModel;
 import com.huotu.huobanmall.seller.bean.OrderStatusEnum;
 import com.huotu.huobanmall.seller.utils.BitmapLoader;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
+import com.huotu.huobanmall.seller.widget.MJExpandableListView;
 import com.huotu.huobanmall.seller.widget.MJListView;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/9/15.
  */
-public class BillDataAdapter extends RecyclerView.Adapter< BillDataAdapter.OrderListViewHolder> {
+public class BillDataAdapter extends RecyclerView.Adapter<BillDataAdapter.OrderListViewHolder> {
     private Context _context;
     private List<OrderListModel> _list;
     private LayoutInflater _inflater;
@@ -37,6 +39,7 @@ public class BillDataAdapter extends RecyclerView.Adapter< BillDataAdapter.Order
     private ISeeOrderDetailListener _seeOrderDetailListener=null;
     private OrderGoodsAdapter _goodsAdapter=null;
     private List<GoodsModel> _goodsList=null;
+    private ChildOrderExpandableAdapter _childOrderAdapter=null;
 
     public void setLogisticsListener(ILogisticListener listener ){
         _seeLogisticsListener = listener;
@@ -99,17 +102,39 @@ public class BillDataAdapter extends RecyclerView.Adapter< BillDataAdapter.Order
     public void onBindViewHolder(OrderListViewHolder holder, int position) {
         OrderListModel model = _list.get(position);
         //OrderGoodsAdapter goodsAdapter = new OrderGoodsAdapter( _context , model.getGoods() );
-        _goodsList.clear();
-        _goodsList.addAll( model.getGoods());
-        _goodsAdapter.notifyDataSetChanged();
-        holder.lv.setAdapter( _goodsAdapter );
+        //_goodsList.clear();
+        //_goodsList.addAll( model.getGoods());
+        //_goodsAdapter.notifyDataSetChanged();
+        //holder.lv.setAdapter( _goodsAdapter );
         //setListViewHeightBasedOnChildren( holder.lv );
 
         holder.tvOrderNo.setText(model.getOrderNo());
         holder.tvStatus.setText(OrderStatusEnum.getName(model.getStatus()) );
         holder.position = position;
 
+        if( false == model.getHasChildOrder() ){
+            holder.lv.setVisibility(View.VISIBLE);
+            holder.lvChildOrder.setVisibility(View.GONE);
+            _goodsList.clear();
+            _goodsList.addAll(model.getGoods());
+            _goodsAdapter.notifyDataSetChanged();
+            //holder.lv.setAdapter(_goodsAdapter);
+        }else {
+            holder.lv.setVisibility(View.GONE);
+            holder.lvChildOrder.setVisibility(View.VISIBLE);
+
+            List<OrderListModel> childOrders = model.getChildOrders();
+            _childOrderAdapter = new ChildOrderExpandableAdapter(_context, childOrders );
+            holder.lvChildOrder.setAdapter( _childOrderAdapter);
+        }
+
         //addGoods( holder.llGoods , model.getGoods() );
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        //return super.getItemViewType(position);
+        return _goodsList.get(position).getViewType();
     }
 
     protected void addGoods( LinearLayout ll , List<GoodsModel> list){
@@ -144,6 +169,7 @@ public class BillDataAdapter extends RecyclerView.Adapter< BillDataAdapter.Order
         private TextView tvOrderNo;
         private TextView tvStatus;
         private MJListView lv;
+        private ExpandableListView lvChildOrder;
         private Button btnSeeLogistics;
         private int position;
         private LinearLayout llGoods;
@@ -176,6 +202,10 @@ public class BillDataAdapter extends RecyclerView.Adapter< BillDataAdapter.Order
                     onLogisticListener( v , _list.get(position));
                 }
             });
+
+            //
+            lvChildOrder = (ExpandableListView) view.findViewById(R.id.bill_item_childOrder);
+
         }
     }
 

@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.huotu.huobanmall.seller.R;
@@ -152,6 +153,12 @@ public class LogisticsActivity extends BaseFragmentActivity {
                 this
         );
         VolleyRequestManager.getRequestQueue().add(request);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        _scrollView.onRefreshComplete();
+        super.onErrorResponse(volleyError);
     }
 
     Response.Listener<MJLogisticsDetailModel> requestListener = new Response.Listener<MJLogisticsDetailModel>() {

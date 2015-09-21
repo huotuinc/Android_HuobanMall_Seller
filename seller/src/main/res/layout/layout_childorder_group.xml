@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingBottom="@dimen/space_10"
+    android:paddingTop="@dimen/space_10"
+    android:paddingLeft="@dimen/space_10"
+    android:paddingRight="@dimen/space_10"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/child_order_group_label1"
+        android:text="子订单号："
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/child_order_group_orderno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="234234234"
+        android:layout_toRightOf="@id/child_order_group_label1"
+        android:layout_toLeftOf="@+id/child_order_group_status"
+        />
+    <TextView
+        android:id="@+id/child_order_group_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="未支付"/>
+</RelativeLayout>

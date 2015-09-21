@@ -7,6 +7,43 @@ import java.io.Serializable;
  * 商品列表实体类
  */
 public class GoodsModel implements Serializable {
+    /**
+     *
+     */
+    private Integer goodsId;
+    /**
+     * 图片地址
+     */
+    private String pictureUrl;
+    /**
+     * 销售价格(元)
+     */
+    private float price;
+    /**
+     * 库存量
+     */
+    private int stock;
+    /**
+     * 商品标题
+     */
+    private String title;
+    /**
+     *
+     */
+    private boolean selected;
+    /**
+     *
+     */
+    private int viewType;
+
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
+    }
+
     public String getPictureUrl() {
         return pictureUrl;
     }
@@ -47,25 +84,6 @@ public class GoodsModel implements Serializable {
         this.goodsId = goodsId;
     }
 
-    private Integer goodsId;
-
-    /**
-     * 图片地址
-     */
-    private String pictureUrl;
-    /**
-     * 销售价格(元)
-     */
-    private float price;
-    /**
-     * 库存量
-     */
-    private int stock;
-    /**
-     * 商品标题
-     */
-    private String title;
-
     public boolean isSelected() {
         return selected;
     }
@@ -74,5 +92,4 @@ public class GoodsModel implements Serializable {
         this.selected = selected;
     }
 
-    private boolean selected;
 }

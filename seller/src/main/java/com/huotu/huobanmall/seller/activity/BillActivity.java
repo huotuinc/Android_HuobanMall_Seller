@@ -60,7 +60,6 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
 
         _bill_ViewPager.setAdapter( _adapter );
 
-
         _indicator.setViewPager( _bill_ViewPager );
         header_operate.setOnClickListener(this);
     }
@@ -80,8 +79,6 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
             }
             break;
             }
-
-
     }
 
     public class BillAdapter extends PagerAdapter{
@@ -152,6 +149,26 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
             _recycleLVs.get(3).setAdapter(_adapter4);
         }
 
+        protected void demoAddChild(OrderListModel model){
+            model.setHasChildOrder(true);
+            model.setChildOrders(new ArrayList<OrderListModel>());
+            for( int i=0;i<2;i++){
+                OrderListModel child = new OrderListModel();
+                child.setOrderNo("AAAAAAA"+i);
+                child.setStatus(0);
+                child.setGoods( new ArrayList<GoodsModel>());
+                for( int k=0;k<4;k++){
+                    GoodsModel good = new GoodsModel();
+                    good.setGoodsId(i);
+                    good.setPrice(22.22F);
+                    good.setStock(2);
+                    good.setTitle("法规和司法受到犯规地方噶是受到犯规");
+                    child.getGoods().add(good);
+                }
+                model.getChildOrders().add(child);
+            }
+        }
+
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             //return super.instantiateItem(container, position);
@@ -163,7 +180,12 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                     item.setOrderNo("333"+i);
                     item.setStatus(1);
                     List<GoodsModel> items= new ArrayList<>();
-                    for(int k=0;k<5;k++){
+                    item.setHasChildOrder(false);
+                    if(i%2==0){
+                        demoAddChild( item );
+                    }
+
+                    for(int k=0;k<3;k++){
                         GoodsModel g=new GoodsModel();
                         g.setGoodsId(k);
                         g.setPrice(234.33f);

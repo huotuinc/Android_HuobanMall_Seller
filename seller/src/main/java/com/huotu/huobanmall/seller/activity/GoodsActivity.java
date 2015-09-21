@@ -120,7 +120,7 @@ public class GoodsActivity extends BaseFragmentActivity {
     public void onClick(View v) {
         super.onClick(v);
         if( v.getId() == R.id.header_operate){
-            ActivityUtils.getInstance().showActivity(this, GoodsEditActivity.class);
+            ActivityUtils.getInstance().skipActivity(this, GoodsEditActivity.class);
         }
         if( v.getId() == R.id.header_back){
             finish();
