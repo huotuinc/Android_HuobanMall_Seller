@@ -69,7 +69,9 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         _rebateStatisticsList = new ArrayList<>();
         _rebateStatisticsAdapter = new RebateStatisticsAdapter(this, _rebateStatisticsList);
         _rebateStatistics_listview.getRefreshableView().setAdapter(_rebateStatisticsAdapter);
-
+        View entmyview= new View(this);
+        entmyview.setBackgroundResource(R.mipmap.tpzw);
+        _rebateStatistics_listview.setEmptyView(entmyview);
         _rebateStatistics_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
