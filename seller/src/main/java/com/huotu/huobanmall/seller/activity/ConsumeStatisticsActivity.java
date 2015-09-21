@@ -61,6 +61,9 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
 
         header_back.setOnClickListener(this);
         _consumeStatisticsList = new ArrayList<>();
+        View entmyview= new View(this);
+        entmyview.setBackgroundResource(R.mipmap.tpzw);
+        _consumStatistics_listview.setEmptyView(entmyview);
 //        SalesListModel saleslist = new SalesListModel();
 //
 //        saleslist.setMoney(Float.valueOf("1333"));

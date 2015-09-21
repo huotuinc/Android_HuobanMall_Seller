@@ -84,7 +84,9 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
         _salesDetailAdapter= new SalesDetailAdapter(this, _saledetailList );
         _salesDetail_listview.getRefreshableView().setAdapter(_salesDetailAdapter);
         _salesDetail_listview.setMode(PullToRefreshBase.Mode.BOTH);
-
+        View entmyview= new View(this);
+        entmyview.setBackgroundResource(R.mipmap.tpzw);
+        _salesDetail_listview.setEmptyView(entmyview);
         _salesDetail_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {

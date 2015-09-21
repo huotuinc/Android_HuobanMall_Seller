@@ -82,6 +82,8 @@ public class Constant {
 
     public static final String TOPSCORE_INTERFACE =BASE_URL+"topScore";//返利积分统计
 
+    public static final String TOPSALES_INTERFACE =BASE_URL+"topsales";//商品销售前10排行
+
     public static final String TOPCONSUME_INTERFACE =BASE_URL +"topConsume";//消费统计
 
     public static final String LOGISTICSDETAIL_INTERFACE = BASE_URL +"logisticsDetail";//物流详情
