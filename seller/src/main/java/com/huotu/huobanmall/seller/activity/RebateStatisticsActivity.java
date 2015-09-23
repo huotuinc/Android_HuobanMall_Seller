@@ -1,13 +1,17 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
 import android.widget.Button;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -15,6 +19,7 @@ import com.android.volley.Response;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.RebateStatisticsAdapter;
 
@@ -159,11 +164,66 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
 
             }
             break;
-            default:
-                break;
+            case R.id.header_operate: {
+               search();
+
+            }
+            break;
+
         }
 
     }
+protected void search(){
+    AlertDialog.Builder dialog = new AlertDialog.Builder(RebateStatisticsActivity.this);
+
+    LinearLayout llContent = new LinearLayout(this);
+    LinearLayout.LayoutParams params =new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT);
+    llContent.setOrientation(LinearLayout.HORIZONTAL);
+    params.setMargins(5, 5, 5, 5);
+    llContent.setPadding(8,10,8,0);
+    llContent.setLayoutParams(params);
+    //发送提示信息
+    final EditText etMessage=new EditText(this);
+    etMessage.setHint("请输入搜索内容");
+    etMessage.setLayoutParams(params);
+    etMessage.setSingleLine(true);
+
+    llContent.addView(etMessage);
+
+    dialog.setView(llContent);
+
+    dialog.setTitle("搜索框");
+
+    dialog.setPositiveButton("搜索", new DialogInterface.OnClickListener() {
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+//            // TODO Auto-generated method stub
+//            // 送流量接口
+//            String mobile="";
+//            if( bundle.containsKey("originMobile")) {
+//                mobile = bundle.getString("originMobile");
+//            }
+//            String message=etMessage.getText().toString().trim();//"朕赏你点流量,还不谢恩";
+//            int flow = Integer.parseInt(flowText.getText().toString());
+//            String flowStr= String.valueOf(flow);
+//            new MakeProvideAsyncTask(SendFlowActivity.this , mHandler , mobile , flowStr , message ).execute();
+        }
+    });
+    dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            // TODO Auto-generated method stub
+
+        }
+    });
+
+    dialog.show();
+
+}
+
 
 
 }
