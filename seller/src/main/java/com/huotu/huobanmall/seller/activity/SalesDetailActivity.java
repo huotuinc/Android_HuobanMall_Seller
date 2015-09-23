@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -18,9 +19,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.SalesDetailAdapter;
+import com.huotu.huobanmall.seller.adapter.TopsalesAdapter;
 import com.huotu.huobanmall.seller.bean.MJSaleListModel;
+import com.huotu.huobanmall.seller.bean.MJTopSalesModel;
+import com.huotu.huobanmall.seller.bean.MJTopScoreModel;
 import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.bean.SalesListModel;
+import com.huotu.huobanmall.seller.bean.TopSalesModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.fragment.SaleGoodsFragment;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
@@ -53,8 +58,17 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
     RadioButton detail_btn;
     @Bind(R.id.statistic_btn)
     RadioButton statistic_btn;
+    @Bind(R.id.salesdetail_title)
+    RadioGroup salesdetail_title;
+
     SalesDetailAdapter _salesDetailAdapter;
+
+    TopsalesAdapter _topSalesAdapter;
+
     List<SalesListModel> _saledetailList = null;
+
+    List<TopSalesModel> _topSalesList=null;
+
     OperateTypeEnum _operateType = OperateTypeEnum.REFRESH;
 
 
@@ -64,77 +78,146 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
         setContentView(R.layout.activity_sales_detail);
         ButterKnife.bind(this);
         _header_back.setOnClickListener(this);
+
+        salesdetail_title.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.detail_btn) {
+                    _salesDetail_ListView.setMode(PullToRefreshBase.Mode.BOTH);
+                    _operateType = OperateTypeEnum.REFRESH;
+                    getData_MX(_operateType, "");
+                } else if (checkedId == R.id.statistic_btn) {
+                    _salesDetail_ListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                    _operateType = OperateTypeEnum.REFRESH;
+                    getData_TJ();
+                }
+            }
+        });
+
+        _topSalesList =new ArrayList<>();
+        _topSalesAdapter =new TopsalesAdapter(this , _topSalesList);
+
         _saledetailList = new ArrayList<>();
-//        SalesListModel saleslist= new SalesListModel();
-//        saleslist.setTime(new Date(System.currentTimeMillis()));
-//        saleslist.setMoney(Float.valueOf("1333"));
-//        saleslist.setOrderNo(String.valueOf(111111));
-//        _saledetailList.add(saleslist);
-//        saleslist=new SalesListModel();
-//        saleslist.setTime(new Date(System.currentTimeMillis()));
-//        saleslist.setMoney(Float.valueOf("1333"));
-//        saleslist.setOrderNo(String.valueOf(111111));
-//        _saledetailList.add(saleslist);
-//        saleslist=new SalesListModel();
-//        saleslist.setTime(new Date(System.currentTimeMillis()));
-//        saleslist.setMoney(Float.valueOf("1333"));
-//        saleslist.setOrderNo(String.valueOf(111111));
-//        _saledetailList.add(saleslist);
-//        saleslist=new SalesListModel();
-//        saleslist.setTime(new Date(System.currentTimeMillis()));
-//        saleslist.setMoney(Float.valueOf("1333"));
-//        saleslist.setOrderNo(String.valueOf(111111));
-//        _saledetailList.add(saleslist);
         _salesDetailAdapter= new SalesDetailAdapter(this, _saledetailList );
         _salesDetail_ListView.getRefreshableView().setAdapter(_salesDetailAdapter);
         _salesDetail_ListView.setMode(PullToRefreshBase.Mode.BOTH);
         View emptyView= new View(this);
         emptyView.setBackgroundResource(R.mipmap.tpzw);
         _salesDetail_ListView.setEmptyView(emptyView);
+
         _salesDetail_ListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
-                _operateType = OperateTypeEnum.REFRESH;
-                getData( _operateType);
+                if (detail_btn.isChecked()) {
+                    _operateType = OperateTypeEnum.REFRESH;
+                    getData_MX(_operateType,"");
+                }else {
+                    _operateType = OperateTypeEnum.REFRESH;
+                    getData_TJ();
+                }
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                 _operateType = OperateTypeEnum.LOADMORE;
-                getData(_operateType);
+                if (detail_btn.isChecked()) {
+                    getData_MX(_operateType,"");
+                }
             }
         });
 
         firstSaleGoodData();
     }
 
-    protected void getData( OperateTypeEnum type ){
+    protected void getData_MX( OperateTypeEnum type ,String key ){
         String url = Constant.SALESLIST_INTERFACE;
+        Map<String,String> paras = new HashMap<>();
         HttpParaUtils httpParaUtils = new HttpParaUtils();
         if( type == OperateTypeEnum.REFRESH ) {
-            url = httpParaUtils.getHttpGetUrl(url, null);
+            //url = httpParaUtils.getHttpGetUrl(url, null);
         }else {
-            Map<String, String> paras = new HashMap<>();
+
             if( _saledetailList !=null && _saledetailList.size() >0 ) {
                 Date lastDate = _saledetailList.get(_saledetailList.size() - 1).getTime();
                 paras.put("lastDate", String.valueOf(lastDate.getTime()));
             }
-            url= httpParaUtils.getHttpGetUrl(url , paras);
         }
 
+        if( key!=null && key.length()>0){
+            paras.put("key",key);
+        }
+
+        url= httpParaUtils.getHttpGetUrl(url , paras);
         GsonRequest<MJSaleListModel> request = new GsonRequest<>(
                 Request.Method.GET,
                 url ,
                 MJSaleListModel.class,
                 null,
-                listener,
+                listener_MX,
+                this
+        );
+
+        VolleyRequestManager.getRequestQueue().add(request);
+    }
+
+    protected void getData_TJ(){
+        String url = Constant.TOPSALES_INTERFACE;
+        HttpParaUtils httpParaUtils = new HttpParaUtils();
+        url = httpParaUtils.getHttpGetUrl(url, null);
+
+        GsonRequest<MJTopSalesModel> request = new GsonRequest<MJTopSalesModel>(
+                Request.Method.GET,
+                url ,
+                MJTopSalesModel.class,
+                null,
+                listener_TJ,
                 this
         );
 
         VolleyRequestManager.getRequestQueue().add( request);
     }
 
-    Response.Listener<MJSaleListModel> listener =new Response.Listener<MJSaleListModel>() {
+    Response.Listener<MJTopSalesModel> listener_TJ =new Response.Listener<MJTopSalesModel>() {
+        @Override
+        public void onResponse(MJTopSalesModel mjTopSalesModel ) {
+            SalesDetailActivity.this.closeProgressDialog();
+            _salesDetail_ListView.onRefreshComplete();
+
+            if( mjTopSalesModel==null){
+                DialogUtils.showDialog(SalesDetailActivity.this, SalesDetailActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
+                return;
+            }
+            if( mjTopSalesModel.getSystemResultCode()!=1){
+                SimpleDialogFragment.createBuilder(SalesDetailActivity.this, SalesDetailActivity.this.getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage( mjTopSalesModel.getSystemResultDescription() )
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }else if( mjTopSalesModel.getResultCode()== Constant.TOKEN_OVERDUE){
+                ActivityUtils.getInstance().showActivity(SalesDetailActivity.this, LoginActivity.class);
+                return;
+            }
+            else if( mjTopSalesModel.getResultCode() != 1){
+                SimpleDialogFragment.createBuilder( SalesDetailActivity.this , SalesDetailActivity.this.getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage( mjTopSalesModel.getResultDescription() )
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }
+
+            _topSalesList.clear();
+            if( mjTopSalesModel.getResultData() !=null && mjTopSalesModel.getResultData().getList() !=null
+                    && mjTopSalesModel.getResultData().getList().size()>0){
+                _topSalesList.addAll(mjTopSalesModel.getResultData().getList());
+            }
+            _salesDetail_ListView.setAdapter( _topSalesAdapter );
+        }
+    };
+
+
+    Response.Listener<MJSaleListModel> listener_MX =new Response.Listener<MJSaleListModel>() {
         @Override
         public void onResponse(MJSaleListModel mjSaleListModel) {
             SalesDetailActivity.this.closeProgressDialog();
@@ -167,12 +250,13 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
                 if( mjSaleListModel.getResultData() !=null && mjSaleListModel.getResultData().getList() !=null && mjSaleListModel.getResultData().getList().size()>0) {
                     _saledetailList.addAll(mjSaleListModel.getResultData().getList());
                 }
+                _salesDetail_ListView.setAdapter( _salesDetailAdapter );
             }else{
                 if( mjSaleListModel.getResultData() !=null && mjSaleListModel.getResultData().getList() !=null && mjSaleListModel.getResultData().getList().size()>0) {
                     _saledetailList.addAll(mjSaleListModel.getResultData().getList());
                 }
+                _salesDetailAdapter.notifyDataSetChanged();
             }
-            _salesDetailAdapter.notifyDataSetChanged();
         }
     };
 
@@ -190,7 +274,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
     private void firstSaleGoodData() {
         this.showProgressDialog("","正在获取数据，请稍等...");
         _operateType= OperateTypeEnum.REFRESH;
-        getData(_operateType);
+        getData_MX(_operateType, "");
     }
 
     public void onClick(View v) {

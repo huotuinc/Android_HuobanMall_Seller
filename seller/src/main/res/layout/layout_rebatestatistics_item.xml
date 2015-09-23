@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@mipmap/zchyzrs"
@@ -13,38 +13,38 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="姓名/昵称"
+        android:text=""
         android:textColor="@color/black"
         android:layout_alignTop="@+id/consumestatistics_imageView"
         android:layout_toRightOf="@+id/consumestatistics_imageView"
-        android:id="@+id/order" />
+        android:id="@+id/consumestatistics_name" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(18767152078)"
+        android:text=""
         android:textColor="@color/black"
-        android:layout_alignTop="@+id/order"
-        android:layout_toRightOf="@+id/order"
-        android:layout_toEndOf="@+id/order"
-        android:id="@+id/moblie" />
+        android:layout_alignTop="@+id/consumestatistics_name"
+        android:layout_toRightOf="@+id/consumestatistics_name"
+        android:layout_toEndOf="@+id/consumestatistics_name"
+        android:id="@+id/consumestatistics_moblie" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TOP 1"
-        android:id="@+id/salesnum"
+        android:text=""
+        android:id="@+id/consumestatistics_time"
         android:layout_alignBottom="@+id/consumestatistics_imageView"
-        android:layout_alignLeft="@+id/order"
-        android:layout_alignStart="@+id/order" />
+        android:layout_alignLeft="@+id/consumestatistics_name"
+        android:layout_alignStart="@+id/consumestatistics_name" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="3100"
+        android:text=""
         android:textSize="22sp"
         android:textColor="@color/statistic_check_color"
-        android:id="@+id/money"
+        android:id="@+id/consumestatistics_score"
         android:layout_marginRight="15dp"
-        android:layout_alignTop="@+id/moblie"
+        android:layout_alignTop="@+id/consumestatistics_moblie"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
     <TextView
@@ -52,9 +52,9 @@
         android:layout_height="wrap_content"
         android:text="总返利"
         android:textColor="@color/black"
-        android:layout_alignTop="@+id/salesnum"
-        android:layout_alignLeft="@+id/money"
-        android:layout_alignStart="@+id/money" />
+        android:layout_alignTop="@+id/consumestatistics_time"
+        android:layout_alignLeft="@+id/consumestatistics_score"
+        android:layout_alignStart="@+id/consumestatistics_score" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="15dp"

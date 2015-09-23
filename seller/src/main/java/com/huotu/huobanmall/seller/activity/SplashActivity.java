@@ -7,6 +7,7 @@ import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.baidu.location.LocationClientOption;
@@ -185,6 +186,14 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
             }
         }
     };
+
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        //super.onErrorResponse(volleyError);
+        ToastUtils.showLong("访问失败，请重试");
+        SplashActivity.this.finish();
+    }
 
     @Override
     public void onNegativeButtonClicked(int i) {

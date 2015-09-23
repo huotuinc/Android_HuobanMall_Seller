@@ -5,30 +5,36 @@ package com.huotu.huobanmall.seller.bean;
  * 商品销售前10排名
  */
 public class TopSalesModel {
-    /**
-     * 购买单数
-     */
-    private Integer amount;
+
     /**
      * 单价
      */
-    private Float price;
+    private Float money;
     /**
-     * 商品图片地址
+     * 图片地址
      */
     private String pictureUrl;
-    /**
-     * 商品名称
-     */
-    private String name;
 
-
-    public Float getPrice() {
-        return price;
+    public String getOrderNo() {
+        return orderNo;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    /**
+     * 订单号
+     */
+    private String orderNo;
+
+
+    public Float getMoney() {
+        return money;
+    }
+
+    public void setMoney(Float money) {
+        this.money = money;
     }
 
     public String getPictureUrl() {
@@ -39,19 +45,5 @@ public class TopSalesModel {
         this.pictureUrl = pictureUrl;
     }
 
-    public Integer getAmount() {
-        return amount;
-    }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

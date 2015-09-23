@@ -5,10 +5,9 @@ package com.huotu.huobanmall.seller.bean;
  */
 public class TopConsumeModel {
     private Integer amount;
-    private String mobile;
     private Float money;
     private String name;
-    private String nickName;
+    private String pictureUrl;
 
     public Integer getAmount() {
         return amount;
@@ -16,14 +15,6 @@ public class TopConsumeModel {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
     }
 
     public Float getMoney() {
@@ -42,14 +33,6 @@ public class TopConsumeModel {
         this.name = name;
     }
 
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
     public String getPictureUrl() {
         return pictureUrl;
     }
@@ -57,7 +40,5 @@ public class TopConsumeModel {
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
     }
-
-    private String pictureUrl;
 
 }

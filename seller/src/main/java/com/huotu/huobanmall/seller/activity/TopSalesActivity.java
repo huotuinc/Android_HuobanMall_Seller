@@ -14,8 +14,11 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.adapter.TopGoodsAdapter;
 import com.huotu.huobanmall.seller.adapter.TopsalesAdapter;
+import com.huotu.huobanmall.seller.bean.MJTopGoodsModel;
 import com.huotu.huobanmall.seller.bean.MJTopSalesModel;
+import com.huotu.huobanmall.seller.bean.TopGoodsModel;
 import com.huotu.huobanmall.seller.bean.TopSalesModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
@@ -40,9 +43,9 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
     @Bind(R.id.header_back)
     Button _headerBack;
     @Bind(R.id.topsales_listview)
-    PullToRefreshListView topsales_listview;
-    TopsalesAdapter topsalesAdapter;
-    List<TopSalesModel> topsalesList = null;
+    PullToRefreshListView topGoods_listview;
+    TopGoodsAdapter topGoodsAdapter;
+    List<TopGoodsModel> topGoodsList = null;
     @Bind(R.id.header_title)
     TextView header_title;
 
@@ -57,15 +60,15 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
         _headerBack.setOnClickListener(this);
         header_title.setText("商品销量前十");
 
-        topsalesList = new ArrayList<>();
-        topsalesAdapter = new TopsalesAdapter(this, topsalesList);
-        topsales_listview.getRefreshableView().setAdapter(topsalesAdapter);
+        topGoodsList = new ArrayList<>();
+        topGoodsAdapter = new TopGoodsAdapter(this, topGoodsList);
+        topGoods_listview.getRefreshableView().setAdapter(topGoodsAdapter);
 
 
         View emptyView= new View(this);
         emptyView.setBackgroundResource(R.mipmap.tpzw);
-        topsales_listview.setEmptyView(emptyView);
-        topsales_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+        topGoods_listview.setEmptyView(emptyView);
+        topGoods_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                getData();
@@ -85,14 +88,14 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
          getData();
     }
     protected void getData(){
-        String url = Constant.TOPSALES_INTERFACE;
+        String url = Constant.TOPGOODS_INTERFACE;
         HttpParaUtils httpParaUtils = new HttpParaUtils();
         url = httpParaUtils.getHttpGetUrl(url, null);
 
-        GsonRequest<MJTopSalesModel> request = new GsonRequest<MJTopSalesModel>(
+        GsonRequest<MJTopGoodsModel> request = new GsonRequest<MJTopGoodsModel>(
                 Request.Method.GET,
                 url ,
-                MJTopSalesModel.class,
+                MJTopGoodsModel.class,
                 null,
                 listener,
                 this
@@ -102,45 +105,45 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
 
         VolleyRequestManager.getRequestQueue().add(request);
     }
-    Response.Listener<MJTopSalesModel> listener =new Response.Listener<MJTopSalesModel>() {
+    Response.Listener<MJTopGoodsModel> listener =new Response.Listener<MJTopGoodsModel>() {
         @Override
-        public void onResponse(MJTopSalesModel mjTopSalesModel ) {
+        public void onResponse(MJTopGoodsModel mjTopGoodsModel ) {
             TopSalesActivity.this.closeProgressDialog();
-            topsales_listview.onRefreshComplete();
+            topGoods_listview.onRefreshComplete();
 
-            if( mjTopSalesModel==null){
+            if( mjTopGoodsModel==null){
                 DialogUtils.showDialog(TopSalesActivity.this, TopSalesActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
                 return;
             }
-            if( mjTopSalesModel.getSystemResultCode()!=1){
+            if( mjTopGoodsModel.getSystemResultCode()!=1){
                 SimpleDialogFragment.createBuilder(TopSalesActivity.this, TopSalesActivity.this.getSupportFragmentManager())
                         .setTitle("错误信息")
-                        .setMessage( mjTopSalesModel.getSystemResultDescription() )
+                        .setMessage( mjTopGoodsModel.getSystemResultDescription() )
                         .setNegativeButtonText("关闭")
                         .show();
                 return;
-            }else if( mjTopSalesModel.getResultCode()== Constant.TOKEN_OVERDUE){
+            }else if( mjTopGoodsModel.getResultCode()== Constant.TOKEN_OVERDUE){
                 ActivityUtils.getInstance().showActivity(TopSalesActivity.this, LoginActivity.class);
                 return;
             }
-            else if( mjTopSalesModel.getResultCode() != 1){
+            else if( mjTopGoodsModel.getResultCode() != 1){
                 SimpleDialogFragment.createBuilder( TopSalesActivity.this , TopSalesActivity.this.getSupportFragmentManager())
                         .setTitle("错误信息")
-                        .setMessage( mjTopSalesModel.getResultDescription() )
+                        .setMessage( mjTopGoodsModel.getResultDescription() )
                         .setNegativeButtonText("关闭")
                         .show();
                 return;
             }
 
-            topsalesList.clear();
+            topGoodsList.clear();
 
-            if( mjTopSalesModel.getResultData() !=null
-                    && mjTopSalesModel.getResultData().getList() !=null
-                    && mjTopSalesModel.getResultData().getList().size()>0){
-                topsalesList.addAll(mjTopSalesModel.getResultData().getList());
+            if( mjTopGoodsModel.getResultData() !=null
+                    && mjTopGoodsModel.getResultData().getList() !=null
+                    && mjTopGoodsModel.getResultData().getList().size()>0){
+                topGoodsList.addAll(mjTopGoodsModel.getResultData().getList());
             }
 
-            topsalesAdapter.notifyDataSetChanged();
+            topGoodsAdapter.notifyDataSetChanged();
         }
     };
 

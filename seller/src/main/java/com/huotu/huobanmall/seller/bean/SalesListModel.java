@@ -13,6 +13,16 @@ public class SalesListModel {
     private Float money;
     private Date time;
 
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
+    private String pictureUrl;
+
     public String getOrderNo() {
         return orderNo;
     }

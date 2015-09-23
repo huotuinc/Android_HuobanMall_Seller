@@ -2,61 +2,69 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@mipmap/zchyzrs"
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
-        android:id="@+id/salesdetail_imageView" />
+        android:id="@+id/consumestatistics_imageView" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="姓名/昵称(18767152078)"
+        android:text=""
         android:textColor="@color/black"
-        android:layout_alignTop="@+id/salesdetail_imageView"
-        android:layout_toRightOf="@+id/salesdetail_imageView"
-        android:id="@+id/moblic" />
+        android:layout_alignTop="@+id/consumestatistics_imageView"
+        android:layout_toRightOf="@+id/consumestatistics_imageView"
+        android:id="@+id/consumestatistics_name" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="购买"
         android:textColor="@color/black"
-        android:layout_alignBottom="@+id/salesdetail_imageView"
-        android:layout_toRightOf="@+id/salesdetail_imageView"
-        android:id="@+id/buy" />
+        android:layout_marginTop="@dimen/space_5"
+        android:layout_below="@+id/consumestatistics_name"
+        android:layout_toRightOf="@+id/consumestatistics_imageView"
+        android:id="@+id/consumestatistics_label1" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2100单"
         android:textColor="@color/black"
-        android:layout_alignTop="@+id/buy"
-        android:layout_toRightOf="@+id/buy"
-        android:layout_toEndOf="@+id/buy"
-        android:id="@+id/salesnum" />
+        android:layout_alignTop="@+id/consumestatistics_label1"
+        android:layout_toRightOf="@+id/consumestatistics_label1"
+        android:layout_toEndOf="@+id/consumestatistics_label1"
+        android:id="@+id/consumestatistics_amount" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="3100"
         android:textSize="22sp"
         android:textColor="@color/statistic_check_color"
-        android:layout_alignTop="@+id/moblic"
+        android:layout_alignTop="@+id/consumestatistics_name"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="15dp"
-        android:id="@+id/money" />
+        android:id="@+id/consumestatistics_money" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="总消费(元)"
         android:textColor="@color/black"
-        android:layout_alignTop="@+id/salesnum"
-        android:layout_alignRight="@+id/money"
-        android:layout_alignEnd="@+id/money" />
+        android:layout_alignTop="@+id/consumestatistics_amount"
+        android:layout_alignRight="@+id/consumestatistics_money"
+        android:layout_alignEnd="@+id/consumestatistics_money" />
+
+    <TextView
+        android:id="@+id/consumestatistics_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/consumestatistics_label1"
+        android:layout_below="@id/consumestatistics_amount"/>
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_below="@+id/salesdetail_imageView"/>
-
+        android:layout_height="10dp"
+        android:layout_below="@+id/consumestatistics_time"/>
 </RelativeLayout>

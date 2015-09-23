@@ -24,7 +24,7 @@
         android:layout_alignParentRight="true"
         />
     <RadioGroup
-        android:id="@+id/goods_title"
+        android:id="@+id/salesdetail_title"
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"

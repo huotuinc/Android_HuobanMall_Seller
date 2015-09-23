@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@mipmap/ddzs"
@@ -27,13 +27,13 @@
         android:layout_alignTop="@+id/order"
         android:layout_toRightOf="@+id/order"
         android:layout_toEndOf="@+id/order"
-        android:id="@+id/orderNo" />
+        android:id="@+id/salesdetail_orderNo" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2015-10-12 12:00:00"
-        android:id="@+id/salestime"
+        android:id="@+id/salesdetail_salestime"
         android:maxEms="10"
         android:singleLine="true"
         android:ellipsize="end"
@@ -47,8 +47,8 @@
         android:textSize="22sp"
         android:textColor="@color/statistic_check_color"
         android:layout_marginRight="20dp"
-        android:id="@+id/money"
-        android:layout_alignTop="@+id/orderNo"
+        android:id="@+id/salesdetail_money"
+        android:layout_alignTop="@+id/salesdetail_orderNo"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="15dp" />
@@ -58,9 +58,9 @@
         android:text="消费额(元)"
         android:id="@+id/pay"
         android:textColor="@color/black"
-        android:layout_alignTop="@+id/salestime"
-        android:layout_alignRight="@+id/money"
-        android:layout_alignEnd="@+id/money" />
+        android:layout_alignTop="@+id/salesdetail_salestime"
+        android:layout_alignRight="@+id/salesdetail_money"
+        android:layout_alignEnd="@+id/salesdetail_money" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="15dp"
