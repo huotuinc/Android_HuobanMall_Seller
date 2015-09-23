@@ -14,6 +14,7 @@ import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.common.BaseService;
 import com.huotu.huobanmall.seller.common.Constant;
+import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.widget.CircleProgressBar;
 
 import android.content.Intent;
@@ -123,6 +124,8 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 			txtTips.setText(tips);
 
 			new ApkDownloadThread(handler, clientURL).start();
+		}else{
+			ToastUtils.showLong("升级需要的参数不能为空");
 		}
 	}
 	@Override
@@ -225,117 +228,117 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 		startActivityForResult(intent, 0);
 	}
 
-	class ClientDownLoadTask extends AsyncTask<String, Integer, Integer>{
-		private ClientDownLoadHttpService service;
-		public ClientDownLoadTask(){
-			service = new ClientDownLoadHttpService();
-		}
-		@Override
-		protected Integer doInBackground(String... params) {
-			HttpURLConnection hc = service.download(params[0]);
+//	class ClientDownLoadTask extends AsyncTask<String, Integer, Integer>{
+//		private ClientDownLoadHttpService service;
+//		public ClientDownLoadTask(){
+//			service = new ClientDownLoadHttpService();
+//		}
+//		@Override
+//		protected Integer doInBackground(String... params) {
+//			HttpURLConnection hc = service.download(params[0]);
+//
+//			if(hc != null){
+//				InputStream update_is = null;
+//				BufferedInputStream update_bis = null;
+//				FileOutputStream update_os = null;
+//				BufferedOutputStream update_bos = null;
+//				byte[] buffer = null;
+//				try{
+//					if(hc.getResponseCode() != 200){
+//						return null;
+//					}
+//					int contentLen = hc.getContentLength();
+//					if(contentLen == 0){
+//						return null;
+//					}
+//					update_is = hc.getInputStream();
+//					update_bis = new BufferedInputStream(update_is, 1024);
+//
+//					File cityMapFile = new File(softwarePath);
+//					if(cityMapFile.exists()){
+//						cityMapFile.delete();
+//					}
+//
+//					cityMapFile.createNewFile();
+//
+//					update_os = new FileOutputStream(cityMapFile,false);
+//					update_bos = new BufferedOutputStream(update_os, 1024);
+//
+//					buffer = new byte[1024];
+//					int readed = 0;
+//					int step = 0;
+//					while((step = update_bis.read(buffer)) != -1 && !isCancel){
+//						readed += step;
+//						update_bos.write(buffer,0,step);
+//						update_bos.flush();
+//						publishProgress((int) ((readed / (float)contentLen) * 100), readed ,contentLen);
+//					}
+//					update_os.flush();
+//					return contentLen;
+//				}catch(IOException e){
+//					e.printStackTrace();
+//					return null;
+//				}finally{
+//					try{
+//						if(update_bis != null)
+//							update_bis.close();
+//						if(update_is != null)
+//							update_is.close();
+//						if(update_bos != null)
+//							update_bos.close();
+//						if(update_os != null)
+//							update_os.close();
+//					}catch(IOException e){
+//						e.printStackTrace();
+//					}
+//				}
+//			}else{
+//				//下载失败
+//				return null;
+//			}
+//		}
+//
+//		@Override
+//		protected void onProgressUpdate(Integer... values) {
+//			super.onProgressUpdate(values);
+//			String des = String.format("%s/%s", formatterSize(values[1]), formatterSize(values[2]));
+//			//mTasksView.setProgress(values[0], des);
+//			progressWithArrow.setProgress( values[0] );
+//			txtTips.setText( des );
+//		}
+//
+//		@Override
+//		protected void onPostExecute(Integer result) {
+//			super.onPostExecute(result);
+//			taskIsComplete = true;
+//			if(result != null && !isCancel){
+//				String des = String.format("%s/%s", formatterSize(result), formatterSize(result));
+//				//mTasksView.setProgress(100, des);
+//				progressWithArrow.setProgress(100);
+//				//下载完成
+//				downloadClientSuccess();
+//			}else{
+//				//下载失败
+//				downloadClientFailed();
+//			}
+//		}
+//	}
 
-			if(hc != null){
-				InputStream update_is = null;
-				BufferedInputStream update_bis = null;
-				FileOutputStream update_os = null;
-				BufferedOutputStream update_bos = null;
-				byte[] buffer = null;
-				try{
-					if(hc.getResponseCode() != 200){
-						return null;
-					}
-					int contentLen = hc.getContentLength();
-					if(contentLen == 0){
-						return null;
-					}
-					update_is = hc.getInputStream();
-					update_bis = new BufferedInputStream(update_is, 1024);
+//	private String formatterSize(int size){
+//		return Formatter.formatFileSize(AppUpdateActivity.this, size);
+//	}
 
-					File cityMapFile = new File(softwarePath);
-					if(cityMapFile.exists()){
-						cityMapFile.delete();
-					}
-
-					cityMapFile.createNewFile();
-
-					update_os = new FileOutputStream(cityMapFile,false);
-					update_bos = new BufferedOutputStream(update_os, 1024);
-
-					buffer = new byte[1024];
-					int readed = 0;
-					int step = 0;
-					while((step = update_bis.read(buffer)) != -1 && !isCancel){
-						readed += step;
-						update_bos.write(buffer,0,step);
-						update_bos.flush();
-						publishProgress((int) ((readed / (float)contentLen) * 100), readed ,contentLen);
-					}
-					update_os.flush();
-					return contentLen;
-				}catch(IOException e){
-					e.printStackTrace();
-					return null;
-				}finally{
-					try{
-						if(update_bis != null)
-							update_bis.close();
-						if(update_is != null)
-							update_is.close();
-						if(update_bos != null)
-							update_bos.close();
-						if(update_os != null)
-							update_os.close();
-					}catch(IOException e){
-						e.printStackTrace();
-					}
-				}
-			}else{
-				//下载失败
-				return null;
-			}
-		}
-
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			super.onProgressUpdate(values);
-			String des = String.format("%s/%s", formatterSize(values[1]), formatterSize(values[2]));
-			//mTasksView.setProgress(values[0], des);
-			progressWithArrow.setProgress( values[0] );
-			txtTips.setText( des );
-		}
-
-		@Override
-		protected void onPostExecute(Integer result) {
-			super.onPostExecute(result);
-			taskIsComplete = true;
-			if(result != null && !isCancel){
-				String des = String.format("%s/%s", formatterSize(result), formatterSize(result));
-				//mTasksView.setProgress(100, des);
-				progressWithArrow.setProgress(100);
-				//下载完成
-				downloadClientSuccess();
-			}else{
-				//下载失败
-				downloadClientFailed();
-			}
-		}
-	}
-
-	private String formatterSize(int size){
-		return Formatter.formatFileSize(AppUpdateActivity.this, size);
-	}
-
-	class ClientDownLoadHttpService extends BaseService {
-		HttpURLConnection download(String url){
-			try{
-				HttpURLConnection hc = openMyConnection(url);
-				return hc;
-			}catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-	}
+//	class ClientDownLoadHttpService extends BaseService {
+//		HttpURLConnection download(String url){
+//			try{
+//				HttpURLConnection hc = openMyConnection(url);
+//				return hc;
+//			}catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			return null;
+//		}
+//	}
 
 	class ApkDownloadThread extends Thread {
 		Handler mHandler;

@@ -80,4 +80,6 @@ public class LogisticsDetailModel {
     public void setList(List<OrderListProductModel> list) {
         this.list = list;
     }
+
+
 }

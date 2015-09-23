@@ -7,9 +7,9 @@
     <RelativeLayout
         android:id="@+id/title_login"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:orientation="horizontal" >
-        <include layout="@layout/title" />
+        <include layout="@layout/layout_header" />
     </RelativeLayout>
     <ScrollView
         android:id="@+id/scrollLayout2"
@@ -52,7 +52,7 @@
 
                     <com.huotu.android.library.libedittext.EditText
                         android:id="@+id/edtPhone"
-
+                        style="@style/CyEditTextStyle"
                         cy:style="transparent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
 
                     <com.huotu.android.library.libedittext.EditText
                         android:id="@+id/edtCode"
-
+                        style="@style/CyEditTextStyle"
                         cy:style="transparent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -165,6 +165,7 @@
                     <com.huotu.android.library.libedittext.EditText
                         android:id="@+id/edtPwd"
                         cy:style="transparent"
+                        style="@style/CyEditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="13dp"
@@ -205,6 +206,7 @@
 
                     <com.huotu.android.library.libedittext.EditText
                         android:id="@+id/edtRePwd"
+                        style="@style/CyEditTextStyle"
                         cy:style="transparent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

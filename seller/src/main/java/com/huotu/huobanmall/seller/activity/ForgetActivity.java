@@ -46,7 +46,7 @@ import butterknife.ButterKnife;
  */
 public class ForgetActivity extends BaseFragmentActivity implements OnClickListener, ISimpleDialogListener {
     private final int REQUEST_CODE = 3001;
-    @Bind(R.id.title)
+    @Bind(R.id.header_title)
     TextView titleName;
     @Bind(R.id.edtPhone)
     EditText edtPhone;
@@ -61,8 +61,8 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     @Bind(R.id.btnComplete)
     Button btnComplete;
     //返回文字事件
-    @Bind(R.id.backtext)
-    TextView backText;
+    @Bind(R.id.header_back)
+    Button header_back;
 
     public SellerApplication application;
 
@@ -89,10 +89,10 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
 
     private void initView() {
         ButterKnife.bind(this);
-        titleName.setText("用户忘记密码");
+        titleName.setText("忘记密码");
         btnGet.setTag(Constant.SMS_TYPE_TEXT);
         btnGet.setText("获取验证码");
-        backText.setOnClickListener(this);
+        header_back.setOnClickListener(this);
         btnGet.setOnClickListener(this);
         btnComplete.setOnClickListener(this);
     }
@@ -100,7 +100,7 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.backtext: {
+            case R.id.header_back: {
                 finish();
             }
             break;

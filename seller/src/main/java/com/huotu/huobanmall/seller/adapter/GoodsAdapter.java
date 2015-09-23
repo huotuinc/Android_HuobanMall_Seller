@@ -9,8 +9,10 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
+import com.huotu.huobanmall.seller.utils.BitmapLoader;
 
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class GoodsAdapter extends BaseAdapter{
             holder = new ViewHolder();
             convertView = View.inflate(_context,
                     R.layout.layout_goodsedit_item, null);
-            holder.goods_imageView = (ImageView) convertView
+            holder.goods_imageView = (NetworkImageView) convertView
                     .findViewById(R.id.goods_imageView);
             holder.goods_name = (TextView) convertView
                     .findViewById(R.id.goods_name);
@@ -62,14 +64,11 @@ public class GoodsAdapter extends BaseAdapter{
         }
         holder.goods_cplx.setText("干果");
         holder.goods_name.setText(String.valueOf(_list.get(position).getTitle()));
-        holder.goods_num.setText(String.valueOf(_list.get(position)
-                .getStock()));
+        holder.goods_num.setText(String.valueOf(_list.get(position).getStock()));
         holder.goods_price.setText(String.valueOf(_list.get(position).getPrice()));
-        //holder.goods_imageView.get(_list.get(position).getPictureUrl());
-        holder.goods_imageView.setBackgroundResource(R.mipmap.ic_launcher);
+        BitmapLoader.create().displayUrl( _context , holder.goods_imageView , _list.get(position).getPictureUrl() );
+
         return convertView;
-
-
     }
 
     @Override
@@ -77,9 +76,8 @@ public class GoodsAdapter extends BaseAdapter{
         return position;
     }
     class ViewHolder
-
     {
-        ImageView goods_imageView;
+        NetworkImageView goods_imageView;
         TextView goods_cplx;
 
         TextView goods_name;

@@ -78,6 +78,7 @@
                 <com.huotu.android.library.libedittext.EditText
                     android:layout_toRightOf="@id/imgUser1"
                     android:id="@+id/edtPwd"
+                    style="@style/CyEditTextStyle"
                     cy:style="transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

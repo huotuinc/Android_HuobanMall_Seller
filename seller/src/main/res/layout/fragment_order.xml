@@ -122,8 +122,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_alignParentBottom="true"
                 android:padding="@dimen/space_5"
-
-                android:background="@drawable/round_gray"
+                android:descendantFocusability="blocksDescendants"
+                android:background="@drawable/btn_botton_menu"
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp">
 

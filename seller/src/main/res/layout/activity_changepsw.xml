@@ -33,6 +33,7 @@
 
             <com.huotu.android.library.libedittext.EditText
                 android:id="@+id/edtOld"
+                style="@style/CyEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="请输入旧密码"
@@ -43,6 +44,7 @@
 
             <com.huotu.android.library.libedittext.EditText
                 android:id="@+id/edtNew"
+                style="@style/CyEditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -58,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:hint="请再次输入新密码"
+                style="@style/CyEditTextStyle"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLength="12"

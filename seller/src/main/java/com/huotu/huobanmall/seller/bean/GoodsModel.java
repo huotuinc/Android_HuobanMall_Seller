@@ -36,6 +36,20 @@ public class GoodsModel implements Serializable {
      */
     private int viewType;
 
+    /**
+     *
+     * 产品分类
+     */
+    private String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public int getViewType() {
         return viewType;
     }

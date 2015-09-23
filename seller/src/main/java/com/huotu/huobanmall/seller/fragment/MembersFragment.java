@@ -25,6 +25,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.activity.ConsumeStatisticsActivity;
 import com.huotu.huobanmall.seller.activity.LoginActivity;
 import com.huotu.huobanmall.seller.activity.RebateStatisticsActivity;
 import com.huotu.huobanmall.seller.activity.WebViewActivity;
@@ -246,7 +247,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
         }else if( v.getId()==R.id.members_statis2){
             //String url = "http://www.baidu.com";
             Intent intent = new Intent();
-            intent.setClass(getActivity(), TopConsumeModel.class);
+            intent.setClass(getActivity(), ConsumeStatisticsActivity.class);
             //intent.putExtra(Constant.Extra_Url, url);
             ActivityUtils.getInstance().showActivity(getActivity(), intent);
         }

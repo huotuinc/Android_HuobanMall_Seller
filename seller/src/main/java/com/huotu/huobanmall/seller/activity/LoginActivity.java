@@ -6,11 +6,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.huotu.android.library.libedittext.EditText;
@@ -53,20 +50,18 @@ public class LoginActivity extends BaseFragmentActivity implements
     // 界面名称
     @Bind(R.id.header_title)
     public TextView header_title;
-    //public SellerApplication application;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        //application = ( SellerApplication ) LoginActivity.this.getApplication ();
         initView();
     }
     private void initView()
     {
         ButterKnife.bind(this);
         userName.setText("wlf");
+        //userName.setText("18767152078");
         //userName.setText("jxd");
         passWord.setText("123456");
         header_title.setText("用户登录");
@@ -87,7 +82,6 @@ public class LoginActivity extends BaseFragmentActivity implements
 
         //调用登录接口之前，先清空一下Token的值
         PreferenceHelper.writeString( this.getApplicationContext() , Constant.LOGIN_USER_INFO, Constant.PRE_USER_TOKEN , "");
-        //String token = PreferenceHelper.readString(this.getApplicationContext(),Constant.LOGIN_USER_INFO, Constant.PRE_USER_TOKEN);
 
         String url = Constant.LOGIN_INTERFACE;
         HttpParaUtils httpUtils = new HttpParaUtils();
@@ -162,12 +156,8 @@ public class LoginActivity extends BaseFragmentActivity implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.forgetpsw: {
+            case R.id.header_operate: {
                 ActivityUtils.getInstance().showActivity(LoginActivity.this, ForgetActivity.class);
-
-//                Intent intent=new Intent(this, ForgetActivity.class);
-//                startActivity(intent);
-                // testAppUpdate();
             }
             break;
             case R.id.btnLogin: {
@@ -177,6 +167,7 @@ public class LoginActivity extends BaseFragmentActivity implements
             case R.id.header_back: {
                 finish();
             }
+            break;
         }
     }
 
@@ -205,10 +196,8 @@ public class LoginActivity extends BaseFragmentActivity implements
             LoginActivity.this.finish();
             return true;
         }
-        // TODO Auto-generated method stub
         return super.onKeyDown(keyCode, event);
     }
-
 
     Response.Listener<HTMerchantModel> loginListener = new Response.Listener<HTMerchantModel>() {
         @Override
