@@ -20,6 +20,7 @@ import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.DigestUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
@@ -52,20 +53,19 @@ public class LoginActivity extends BaseFragmentActivity implements
     // 界面名称
     @Bind(R.id.header_title)
     public TextView header_title;
-    //public ProgressDialogFragment progressDialog;
-    public SellerApplication application;
+    //public SellerApplication application;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
-        application = ( SellerApplication ) LoginActivity.this.getApplication ();
+
+        //application = ( SellerApplication ) LoginActivity.this.getApplication ();
         initView();
     }
     private void initView()
     {
-
+        ButterKnife.bind(this);
         userName.setText("wlf");
         //userName.setText("jxd");
         passWord.setText("123456");
@@ -100,8 +100,7 @@ public class LoginActivity extends BaseFragmentActivity implements
         }catch (UnsupportedEncodingException ex){
         }
 
-        //String pwdEncy= EncryptUtil.getInstance().encryptMd532(pwd);
-        paras.put("username", userName.getText().toString());
+        paras.put("username", userName.getText().toString().trim());
         paras.put("password", pwdEncy);
         url = httpUtils.getHttpGetUrl(url , paras);
 
@@ -111,8 +110,7 @@ public class LoginActivity extends BaseFragmentActivity implements
                 HTMerchantModel.class,
                 null,
                 loginListener,
-                this
-                );
+                this);
 
         VolleyRequestManager.getRequestQueue().add(loginRequest);
     }
@@ -240,12 +238,17 @@ public class LoginActivity extends BaseFragmentActivity implements
                         .show();
                 return;
             }
+            if( htMerchantModel.getResultData() ==null ){
+                DialogUtils.showDialog( LoginActivity.this , LoginActivity.this.getSupportFragmentManager(),
+                        "错误信息","请求的数据有问题","关闭");
+                return;
+            }
 
             MerchantModel user = htMerchantModel.getResultData().getUser();
             if(null != user)
             {
                 //记录token
-                application.writeMerchantInfo ( user );
+                SellerApplication.getInstance().writeMerchantInfo ( user );
                 ActivityUtils.getInstance().skipActivity(LoginActivity.this, MainActivity.class);
             }
             else

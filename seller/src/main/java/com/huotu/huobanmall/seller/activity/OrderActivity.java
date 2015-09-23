@@ -98,14 +98,16 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
     public class OrderPagerAdapter extends PagerAdapter{
         private final String[] Titles = new String[] { "全部", "待付款","待收货","已完成"};
         List<PullToRefreshListView> _lv;
-        List<OrderTestModel> _data1;
-        List<OrderTestModel> _data2;
-        List<OrderTestModel> _data3;
-        List<OrderTestModel> _data4;
-        OrderDataAdapter _adapter1=null;
-        OrderDataAdapter _adapter2=null;
-        OrderDataAdapter _adapter3=null;
-        OrderDataAdapter _adapter4=null;
+        List<List<OrderTestModel>> _datas;
+//        List<OrderTestModel> _data1;
+//        List<OrderTestModel> _data2;
+//        List<OrderTestModel> _data3;
+//        List<OrderTestModel> _data4;
+        List<OrderDataAdapter> _adapters=null;
+//        OrderDataAdapter _adapter1=null;
+//        OrderDataAdapter _adapter2=null;
+//        OrderDataAdapter _adapter3=null;
+//        OrderDataAdapter _adapter4=null;
         Context _context;
         OrderDataAdapter.ILogisticListener _seeLogisticListener = new OrderDataAdapter.ILogisticListener() {
             @Override
@@ -129,53 +131,73 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         public OrderPagerAdapter(Context context ){
             _context=context;
             _lv = new ArrayList<>();
+            _datas = new ArrayList<>();
+            _adapters =new ArrayList<>();
             for( int i =0;i<4;i++) {
-                //RecyclerView lv = new RecyclerView(context);
-                //lv.setLayoutManager(new LinearLayoutManager(_context));
                 PullToRefreshListView lv=new PullToRefreshListView(_context);
+
+                View emptyView = new View(_context);
+                emptyView.setBackgroundResource(R.mipmap.tpzw);
+                lv.setEmptyView(emptyView);
+
                 lv.setMode(PullToRefreshBase.Mode.BOTH);
-                lv.setTag( i );
+                lv.setTag(i);
                 lv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
                     @Override
                     public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
-
+                        int tabIndex = (Integer) pullToRefreshBase.getTag();
+                        getData(tabIndex, OperateTypeEnum.REFRESH);
                     }
 
                     @Override
                     public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
-
+                        int tabIndex = (Integer) pullToRefreshBase.getTag();
+                        getData(tabIndex, OperateTypeEnum.LOADMORE);
                     }
                 });
                 _lv.add(lv);
+
+                List<OrderTestModel> data = new ArrayList<>();
+                OrderDataAdapter adapter = new OrderDataAdapter(_context , data);
+                adapter.setLogisticsListener(_seeLogisticListener);
+                adapter.set_seeOrderDetailListener(_seeOrderDetailListener);
+                lv.setAdapter(adapter);
+
+                _datas.add(data);
+
+                _adapters.add(adapter);
             }
 
-            _data1 = new ArrayList<>();
-            _adapter1 = new OrderDataAdapter(_context,_data1);
-            _adapter1.setLogisticsListener(_seeLogisticListener);
-            _adapter1.set_seeOrderDetailListener(_seeOrderDetailListener);
-            _lv.get(0).setAdapter(_adapter1);
-            _data2 = new ArrayList<>();
-            _adapter2 = new OrderDataAdapter(_context,_data2);
-            _adapter2.setLogisticsListener(_seeLogisticListener);
-            _adapter2.set_seeOrderDetailListener(_seeOrderDetailListener);
-            _lv.get(1).setAdapter(_adapter2);
-            _data3 = new ArrayList<>();
-            _adapter3 = new OrderDataAdapter(_context, _data3);
-            _adapter3.setLogisticsListener(_seeLogisticListener);
-            _adapter3.set_seeOrderDetailListener(_seeOrderDetailListener);
-            _lv.get(2).setAdapter(_adapter3);
-            _data4 = new ArrayList<>();
-            _adapter4 = new OrderDataAdapter(_context,_data4);
-            _adapter4.setLogisticsListener(_seeLogisticListener);
-            _adapter4.set_seeOrderDetailListener(_seeOrderDetailListener);
-            _lv.get(3).setAdapter(_adapter4);
+//            _data1 = new ArrayList<>();
+//            _adapter1 = new OrderDataAdapter(_context,_data1);
+//            _adapter1.setLogisticsListener(_seeLogisticListener);
+//            _adapter1.set_seeOrderDetailListener(_seeOrderDetailListener);
+//            _lv.get(0).setAdapter(_adapter1);
+//            _data2 = new ArrayList<>();
+//            _adapter2 = new OrderDataAdapter(_context,_data2);
+//            _adapter2.setLogisticsListener(_seeLogisticListener);
+//            _adapter2.set_seeOrderDetailListener(_seeOrderDetailListener);
+//            _lv.get(1).setAdapter(_adapter2);
+//            _data3 = new ArrayList<>();
+//            _adapter3 = new OrderDataAdapter(_context, _data3);
+//            _adapter3.setLogisticsListener(_seeLogisticListener);
+//            _adapter3.set_seeOrderDetailListener(_seeOrderDetailListener);
+//            _lv.get(2).setAdapter(_adapter3);
+//            _data4 = new ArrayList<>();
+//            _adapter4 = new OrderDataAdapter(_context,_data4);
+//            _adapter4.setLogisticsListener(_seeLogisticListener);
+//            _adapter4.set_seeOrderDetailListener(_seeOrderDetailListener);
+//            _lv.get(3).setAdapter(_adapter4);
         }
 
         protected void getData( int tabIndex , OperateTypeEnum operateType ){
             String url = Constant.ORDERLIST_INTERFACE;
             Map<String,String> paras = new HashMap<>();
             paras.put("status", String.valueOf( tabIndex));
-            //paras.put()
+            if( operateType == OperateTypeEnum.REFRESH ){
+            }else {
+                //paras.put("lastDate",)
+            }
 
             GsonRequest<MJOrderListModel> request=new GsonRequest<MJOrderListModel>(
                     Request.Method.GET,
@@ -242,7 +264,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     item.setChildOrderNO("3333331111" + i);
                     item.setStatus("1");
                     item.setViewType(1);
-                    _data1.add(item);
+                    _datas.get(position).add(item);
                     for( int k=0;k<6;k++) {
                         OrderTestModel g = new OrderTestModel();
                         g.setGoodsName("他人阿的发放阿斯顿飞撒旦法师地方撒旦法是的斯顿飞艾丝凡");
@@ -251,24 +273,24 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                         g.setSpec("会碰上艾丝凡啊");
                         g.setPictureUrl("http://images0.cnblogs.com/news_topic/20150202125808578.png");
                         g.setViewType(2);
-                        _data1.add(g);
+                        _datas.get(position).add(g);
                     }
 
                     item =new OrderTestModel();
                     item.setViewType(3);
-                    _data1.add(item);
+                    _datas.get(position).add(item);
                     item = new OrderTestModel();
                     item.setMainOrderNO("3223332233" + i);
                     item.setStatus("1");
                     item.setTotalPrice("34343.44");
                     item.setOrderTime("2015-09-22 10:11:44");
                     item.setViewType(0);
-                    _data1.add(item);
+                    _datas.get(position).add(item);
                 }
                 //_adapter1 = new BillDataAdapter(_context, _data1);
                 //_adapter1.setLogisticsListener(_seeLogisticListener);
                 //_recycleLVs.get(0).setAdapter(_adapter1);
-                _adapter1.notifyDataSetChanged();
+                _adapters.get(position).notifyDataSetChanged();
             }else if(position==1){
 
                 for( int i=0;i<10;i++){
@@ -276,7 +298,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     item.setChildOrderNO("44444"+i);
                     item.setStatus("1");
                     item.setViewType(1);
-                    _data2.add(item);
+                    _datas.get(position).add(item);
                     for(int k=0;k<8;k++){
                         OrderTestModel g=new OrderTestModel();
                         g.setSpec("阿迪沙发阿斯顿飞是的");
@@ -284,22 +306,22 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                         g.setCount("111");
                         g.setGoodsName("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
                         g.setViewType(2);
-                        _data2.add(g);
+                        _datas.get(position).add(g);
                     }
                     item =new OrderTestModel();
                     item.setViewType(3);
-                    _data2.add(item);
+                    _datas.get(position).add(item);
                     item = new OrderTestModel();
                     item.setMainOrderNO("444444" + i);
                     item.setStatus("1");
                     item.setOrderTime("2015-09-22 10:11:44");
                     item.setTotalPrice("34343.44");
                     item.setViewType(0);
-                    _data2.add(item);
+                    _datas.get(position).add(item);
 
                 }
 
-                _adapter2.notifyDataSetChanged();
+                _adapters.get(position).notifyDataSetChanged();
             }else if(position ==2 ){
 
 //                for( int i=0;i<10;i++){

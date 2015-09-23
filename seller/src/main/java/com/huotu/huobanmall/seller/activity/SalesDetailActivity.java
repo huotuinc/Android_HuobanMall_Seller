@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -37,14 +38,17 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 销售明细 界面
+ */
 public class SalesDetailActivity extends BaseFragmentActivity implements CompoundButton.OnCheckedChangeListener, AdapterView.OnItemClickListener,View.OnClickListener {
 
     @Bind(R.id.header_back)
-    Button header_back;
+    Button _header_back;
     @Bind(R.id.header_operate)
     TextView header_operate;
     @Bind(R.id.salesdetail_listview)
-    PullToRefreshListView _salesDetail_listview;
+    PullToRefreshListView _salesDetail_ListView;
     @Bind(R.id.detail_btn)
     RadioButton detail_btn;
     @Bind(R.id.statistic_btn)
@@ -59,7 +63,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_detail);
         ButterKnife.bind(this);
-        header_back.setOnClickListener(this);
+        _header_back.setOnClickListener(this);
         _saledetailList = new ArrayList<>();
 //        SalesListModel saleslist= new SalesListModel();
 //        saleslist.setTime(new Date(System.currentTimeMillis()));
@@ -82,12 +86,12 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
 //        saleslist.setOrderNo(String.valueOf(111111));
 //        _saledetailList.add(saleslist);
         _salesDetailAdapter= new SalesDetailAdapter(this, _saledetailList );
-        _salesDetail_listview.getRefreshableView().setAdapter(_salesDetailAdapter);
-        _salesDetail_listview.setMode(PullToRefreshBase.Mode.BOTH);
-        View entmyview= new View(this);
-        entmyview.setBackgroundResource(R.mipmap.tpzw);
-        _salesDetail_listview.setEmptyView(entmyview);
-        _salesDetail_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+        _salesDetail_ListView.getRefreshableView().setAdapter(_salesDetailAdapter);
+        _salesDetail_ListView.setMode(PullToRefreshBase.Mode.BOTH);
+        View emptyView= new View(this);
+        emptyView.setBackgroundResource(R.mipmap.tpzw);
+        _salesDetail_ListView.setEmptyView(emptyView);
+        _salesDetail_ListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                 _operateType = OperateTypeEnum.REFRESH;
@@ -110,9 +114,11 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
         if( type == OperateTypeEnum.REFRESH ) {
             url = httpParaUtils.getHttpGetUrl(url, null);
         }else {
-            Date lastDate = _saledetailList.get( _saledetailList.size()-1 ).getTime();
-            Map<String,String> paras = new HashMap<>();
-            paras.put("lastDate", String.valueOf( lastDate.getTime() ));
+            Map<String, String> paras = new HashMap<>();
+            if( _saledetailList !=null && _saledetailList.size() >0 ) {
+                Date lastDate = _saledetailList.get(_saledetailList.size() - 1).getTime();
+                paras.put("lastDate", String.valueOf(lastDate.getTime()));
+            }
             url= httpParaUtils.getHttpGetUrl(url , paras);
         }
 
@@ -131,48 +137,50 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
     Response.Listener<MJSaleListModel> listener =new Response.Listener<MJSaleListModel>() {
         @Override
         public void onResponse(MJSaleListModel mjSaleListModel) {
-            if( _progressDialog !=null){
-                _progressDialog.dismiss();
-                _progressDialog=null;
-            }
-            _salesDetail_listview.onRefreshComplete();
+            SalesDetailActivity.this.closeProgressDialog();
+            _salesDetail_ListView.onRefreshComplete();
+
             if( mjSaleListModel==null){
                 DialogUtils.showDialog(SalesDetailActivity.this, SalesDetailActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
                 return;
             }
             if( mjSaleListModel.getSystemResultCode()!=1){
-                SimpleDialogFragment.createBuilder( SalesDetailActivity.this , SalesDetailActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage( mjSaleListModel.getSystemResultDescription() )
-                        .setNegativeButtonText("关闭")
-                        .show();
+                DialogUtils.showDialog(SalesDetailActivity.this, SalesDetailActivity.this.getSupportFragmentManager()
+                        ,"错误信息"
+                        , mjSaleListModel.getSystemResultDescription()
+                        ,"关闭");
                 return;
             }else if( mjSaleListModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().showActivity(SalesDetailActivity.this, LoginActivity.class);
+                ActivityUtils.getInstance().skipActivity(SalesDetailActivity.this, LoginActivity.class);
                 return;
             }
             else if( mjSaleListModel.getResultCode() != 1){
-                SimpleDialogFragment.createBuilder( SalesDetailActivity.this , SalesDetailActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage( mjSaleListModel.getResultDescription() )
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }
-
-            if( mjSaleListModel.getResultData() ==null || mjSaleListModel.getResultData().getList()==null||mjSaleListModel.getResultData().getList().size()<1){
+                DialogUtils.showDialog(SalesDetailActivity.this, SalesDetailActivity.this.getSupportFragmentManager()
+                        ,"错误信息"
+                        , mjSaleListModel.getResultDescription()
+                        ,"关闭");
                 return;
             }
 
             if(_operateType == OperateTypeEnum.REFRESH){
                 _saledetailList.clear();
-                _saledetailList.addAll(mjSaleListModel.getResultData().getList());
+                if( mjSaleListModel.getResultData() !=null && mjSaleListModel.getResultData().getList() !=null && mjSaleListModel.getResultData().getList().size()>0) {
+                    _saledetailList.addAll(mjSaleListModel.getResultData().getList());
+                }
             }else{
-                _saledetailList.addAll(mjSaleListModel.getResultData().getList());
+                if( mjSaleListModel.getResultData() !=null && mjSaleListModel.getResultData().getList() !=null && mjSaleListModel.getResultData().getList().size()>0) {
+                    _saledetailList.addAll(mjSaleListModel.getResultData().getList());
+                }
             }
             _salesDetailAdapter.notifyDataSetChanged();
         }
     };
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        _salesDetail_ListView.onRefreshComplete();
+        super.onErrorResponse(volleyError);
+    }
 
     protected void onDestroy() {
         super.onDestroy();
@@ -189,7 +197,6 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
         switch (v.getId()) {
             case R.id.header_back: {
                 finish();
-
             }
             break;
             default:

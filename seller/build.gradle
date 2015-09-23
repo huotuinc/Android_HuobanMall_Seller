@@ -27,7 +27,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    //compile files('libs/eventbus-2.4.1.jar')
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.huotu.android.library:libcropper:1.0'
     compile 'com.github.mikephil.charting:MPAndroidChart:1.0-SNAPSHOT'
