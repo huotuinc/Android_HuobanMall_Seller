@@ -82,11 +82,15 @@ public class Constant {
 
     public static final String TOPSCORE_INTERFACE =BASE_URL+"topScore";//返利积分统计
 
-    public static final String TOPSALES_INTERFACE =BASE_URL+"topsales";//商品销售前10排行
+    public static final String TOPSALES_INTERFACE =BASE_URL+"topSales";//商品销售前10排行
 
     public static final String TOPCONSUME_INTERFACE =BASE_URL +"topConsume";//消费统计
 
     public static final String LOGISTICSDETAIL_INTERFACE = BASE_URL +"logisticsDetail";//物流详情
+
+    public static final String ORDERDETAIL_INTERFACE = BASE_URL +"orderDetail";//订单详情
+
+    public static final String ORDERLIST_INTERFACE=BASE_URL+"orderList";//订单列表
 
     /**
      * token添加的类型
@@ -143,6 +147,8 @@ public class Constant {
 
     //Activity之间传递参数的参数名称
     public final static String Extra_Url="url";
+    //
+    public final static String Extra_OrderNo="orderNo";
     public static final String UPDATE_PROFILE = BASE_URL + "updateProfile";// 修改资料
     // ---POST
 

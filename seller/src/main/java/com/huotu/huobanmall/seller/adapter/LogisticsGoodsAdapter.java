@@ -68,8 +68,6 @@ public class LogisticsGoodsAdapter extends BaseAdapter {//RecyclerView.Adapter< 
 
         BitmapLoader.create().displayUrl( _context , holder.ivPicture , model.getPictureUrl()  );
 
-
-
         return convertView;
     }
 

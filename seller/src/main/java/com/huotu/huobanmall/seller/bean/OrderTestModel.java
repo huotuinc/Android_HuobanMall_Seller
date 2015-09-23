@@ -1,5 +1,7 @@
 package com.huotu.huobanmall.seller.bean;
 
+import java.util.Date;
+
 /**
  * Created by Administrator on 2015/9/21.
  */

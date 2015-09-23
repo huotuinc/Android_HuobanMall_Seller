@@ -51,7 +51,7 @@ public class BitmapLoader
     public void displayUrl(Context context, NetworkImageView imageView,
             String imageUrl)
     {
-        displayUrl(context, imageView, imageUrl , R.mipmap.ic_launcher ,R.mipmap.ic_launcher );
+        displayUrl(context, imageView, imageUrl , R.mipmap.icon ,R.mipmap.icon );
     }
     
     /**

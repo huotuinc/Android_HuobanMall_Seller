@@ -13,19 +13,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.BillDataAdapter;
 import com.huotu.huobanmall.seller.adapter.OrderDataAdapter;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
+import com.huotu.huobanmall.seller.bean.MJOrderListModel;
+import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.bean.OrderListModel;
 import com.huotu.huobanmall.seller.bean.OrderTestModel;
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.DialogUtils;
+import com.huotu.huobanmall.seller.utils.GsonRequest;
+import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.viewpagerindicator.TabPageIndicator;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,11 +56,11 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
     @Bind(R.id.order_ViewPager)
     ViewPager _ViewPager;
     @Bind(R.id.header_operate)
-    TextView header_operate;
+    TextView _header_operate;
     @Bind(R.id.header_title)
     TextView _header_title;
 
-    OrderAdapter _adapter;
+    OrderPagerAdapter _pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +73,10 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         ButterKnife.bind(this);
         _headerBack.setOnClickListener(this);
         _header_title.setText("订单管理");
-        _adapter = new OrderAdapter(this);
-        _ViewPager.setAdapter( _adapter );
+        _pagerAdapter = new OrderPagerAdapter(this);
+        _ViewPager.setAdapter( _pagerAdapter );
         _indicator.setViewPager( _ViewPager );
-        header_operate.setOnClickListener(this);
+        _header_operate.setOnClickListener(this);
     }
 
     @Override
@@ -80,9 +95,9 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             }
     }
 
-    public class OrderAdapter extends PagerAdapter{
+    public class OrderPagerAdapter extends PagerAdapter{
         private final String[] Titles = new String[] { "全部", "待付款","待收货","已完成"};
-        List<RecyclerView> _recyclerLs;
+        List<PullToRefreshListView> _lv;
         List<OrderTestModel> _data1;
         List<OrderTestModel> _data2;
         List<OrderTestModel> _data3;
@@ -96,48 +111,106 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             @Override
             public void onClick(View view, OrderTestModel model) {
                 Intent intent = new Intent();
-                intent.putExtra("orderNo", model.getChildOrderNO());
-                intent.setClass( _context , LogisticsActivity.class );
+                intent.putExtra(Constant.Extra_OrderNo , model.getChildOrderNO());
+                intent.setClass(_context, LogisticsActivity.class);
                 ActivityUtils.getInstance().showActivity((Activity)_context, intent);
             }
         };
         OrderDataAdapter.ISeeOrderDetailListener _seeOrderDetailListener = new OrderDataAdapter.ISeeOrderDetailListener() {
             @Override
             public void onSeeOrderDetail(View view, OrderTestModel model) {
-                ActivityUtils.getInstance().showActivity((Activity) _context, OrdermanagementDetailsActivity.class);
+                Intent intent=new Intent();
+                intent.putExtra( Constant.Extra_OrderNo , model.getChildOrderNO());
+                intent.setClass(_context, OrdermanagementDetailsActivity.class);
+                ActivityUtils.getInstance().showActivity((Activity) _context, intent );
             }
         };
 
-        public OrderAdapter(Context context ){
+        public OrderPagerAdapter(Context context ){
             _context=context;
-            _recyclerLs = new ArrayList<>();
+            _lv = new ArrayList<>();
             for( int i =0;i<4;i++) {
-                RecyclerView lv = new RecyclerView(context);
-                lv.setLayoutManager(new LinearLayoutManager(_context));
-                _recyclerLs.add(lv);
+                //RecyclerView lv = new RecyclerView(context);
+                //lv.setLayoutManager(new LinearLayoutManager(_context));
+                PullToRefreshListView lv=new PullToRefreshListView(_context);
+                lv.setMode(PullToRefreshBase.Mode.BOTH);
+                lv.setTag( i );
+                lv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+                    @Override
+                    public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
+
+                    }
+
+                    @Override
+                    public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
+
+                    }
+                });
+                _lv.add(lv);
             }
 
             _data1 = new ArrayList<>();
             _adapter1 = new OrderDataAdapter(_context,_data1);
             _adapter1.setLogisticsListener(_seeLogisticListener);
             _adapter1.set_seeOrderDetailListener(_seeOrderDetailListener);
-            _recyclerLs.get(0).setAdapter(_adapter1);
+            _lv.get(0).setAdapter(_adapter1);
             _data2 = new ArrayList<>();
             _adapter2 = new OrderDataAdapter(_context,_data2);
             _adapter2.setLogisticsListener(_seeLogisticListener);
             _adapter2.set_seeOrderDetailListener(_seeOrderDetailListener);
-            _recyclerLs.get(1).setAdapter(_adapter2);
+            _lv.get(1).setAdapter(_adapter2);
             _data3 = new ArrayList<>();
             _adapter3 = new OrderDataAdapter(_context, _data3);
             _adapter3.setLogisticsListener(_seeLogisticListener);
             _adapter3.set_seeOrderDetailListener(_seeOrderDetailListener);
-            _recyclerLs.get(2).setAdapter(_adapter3);
+            _lv.get(2).setAdapter(_adapter3);
             _data4 = new ArrayList<>();
             _adapter4 = new OrderDataAdapter(_context,_data4);
             _adapter4.setLogisticsListener(_seeLogisticListener);
             _adapter4.set_seeOrderDetailListener(_seeOrderDetailListener);
-            _recyclerLs.get(3).setAdapter(_adapter4);
+            _lv.get(3).setAdapter(_adapter4);
         }
+
+        protected void getData( int tabIndex , OperateTypeEnum operateType ){
+            String url = Constant.ORDERLIST_INTERFACE;
+            Map<String,String> paras = new HashMap<>();
+            paras.put("status", String.valueOf( tabIndex));
+            //paras.put()
+
+            GsonRequest<MJOrderListModel> request=new GsonRequest<MJOrderListModel>(
+                    Request.Method.GET,
+                    url,
+                    MJOrderListModel.class,
+                    null,
+                    listener,
+                    OrderActivity.this
+            );
+            VolleyRequestManager.getRequestQueue().add(request);
+        }
+
+        Response.Listener<MJOrderListModel> listener =new Response.Listener<MJOrderListModel>() {
+            @Override
+            public void onResponse(MJOrderListModel mjOrderListModel) {
+
+            }
+        };
+
+//        Response.ErrorListener errorListener=new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//                //this.closeProgressDialog();
+//                String message="";
+//                if( null != volleyError.networkResponse){
+//                    message=new String( volleyError.networkResponse.data);
+//                }else{
+//                    message = volleyError.getMessage();
+//                }
+//                if( message.length()<1){
+//                    message = "网络请求失败，请检查网络状态";
+//                }
+//                DialogUtils.showDialog(OrderActivity.this, OrderActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
+//            }
+//        };
 
         protected void demoAddChild(OrderListModel model){
             model.setHasChildOrder(true);
@@ -188,6 +261,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     item.setMainOrderNO("3223332233" + i);
                     item.setStatus("1");
                     item.setTotalPrice("34343.44");
+                    item.setOrderTime("2015-09-22 10:11:44");
                     item.setViewType(0);
                     _data1.add(item);
                 }
@@ -218,6 +292,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     item = new OrderTestModel();
                     item.setMainOrderNO("444444" + i);
                     item.setStatus("1");
+                    item.setOrderTime("2015-09-22 10:11:44");
                     item.setTotalPrice("34343.44");
                     item.setViewType(0);
                     _data2.add(item);
@@ -264,15 +339,14 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
 //                _adapter4.notifyDataSetChanged();
             }
 
-            container.addView(_recyclerLs.get(position));
-            return _recyclerLs.get(position);
+            container.addView(_lv.get(position));
+            return _lv.get(position);
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             //super.destroyItem(container, position, object);
-            container.removeView(_recyclerLs.get(position));
-            //container.removeView();
+            container.removeView(_lv.get(position));
         }
 
         @Override

@@ -23,7 +23,6 @@
 
     <RelativeLayout
         android:id="@+id/logistics_ll1"
-        android:layout_below="@id/logistics_header"
         android:layout_marginTop="@dimen/space_5"
         android:layout_marginBottom="@dimen/space_5"
         android:layout_width="match_parent"

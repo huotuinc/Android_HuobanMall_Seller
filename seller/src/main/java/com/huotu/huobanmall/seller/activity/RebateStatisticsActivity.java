@@ -69,9 +69,9 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         _rebateStatisticsList = new ArrayList<>();
         _rebateStatisticsAdapter = new RebateStatisticsAdapter(this, _rebateStatisticsList);
         _rebateStatistics_listview.getRefreshableView().setAdapter(_rebateStatisticsAdapter);
-        View entmyview= new View(this);
-        entmyview.setBackgroundResource(R.mipmap.tpzw);
-        _rebateStatistics_listview.setEmptyView(entmyview);
+        View emptyView= new View(this);
+        emptyView.setBackgroundResource(R.mipmap.tpzw);
+        _rebateStatistics_listview.setEmptyView(emptyView);
         _rebateStatistics_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
@@ -141,11 +141,12 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                 return;
             }
 
-            if( mjTopScoreModel.getResultData() ==null || mjTopScoreModel.getResultData().getList()==null||mjTopScoreModel.getResultData().getList().size()<1){
-                return;
-            }
+            _rebateStatisticsList.clear();
 
-            _rebateStatisticsList.addAll(mjTopScoreModel.getResultData().getList());
+            if( mjTopScoreModel.getResultData() !=null && mjTopScoreModel.getResultData().getList() !=null
+                    && mjTopScoreModel.getResultData().getList().size()>0){
+                _rebateStatisticsList.addAll(mjTopScoreModel.getResultData().getList());
+            }
 
             _rebateStatisticsAdapter.notifyDataSetChanged();
         }

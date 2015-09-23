@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.LogisticsDataModel;
 import com.huotu.huobanmall.seller.bean.LogisticsDetailModel;
 
 import org.w3c.dom.Text;
@@ -19,7 +20,7 @@ import java.util.List;
  * Created by Administrator on 2015/9/15.
  */
 public class LogisticsAdapter extends BaseAdapter{//RecyclerView.Adapter<LogisticsAdapter.LogisticsDetailViewHolder> {
-    private List<LogisticsDetailModel> _list=null;
+    private List<LogisticsDataModel> _list=null;
     private LayoutInflater _inflater=null;
     private Context _context;
 
@@ -50,12 +51,12 @@ public class LogisticsAdapter extends BaseAdapter{//RecyclerView.Adapter<Logisti
             holder = (LogisticsDetailViewHolder)convertView.getTag();
         }
 
-        holder.tvLogistics_Context.setText( _list.get(position).getSource() );
+        holder.tvLogistics_Context.setText( _list.get(position).getContext() );
 
         return convertView;
     }
 
-    public LogisticsAdapter(Context context , List<LogisticsDetailModel> list){
+    public LogisticsAdapter(Context context , List<LogisticsDataModel> list){
         _list=list;
         _context=context;
         _inflater = LayoutInflater.from(context);
