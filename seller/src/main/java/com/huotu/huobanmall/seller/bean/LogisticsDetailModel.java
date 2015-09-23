@@ -49,6 +49,16 @@ public class LogisticsDetailModel {
     }
 
     private String no;
+
+    public String getPictureURL() {
+        return pictureURL;
+    }
+
+    public void setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
+    }
+
+    private String pictureURL;
     private String source;
     private String status;
     private String track;

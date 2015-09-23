@@ -6,11 +6,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.huotu.android.library.libedittext.EditText;
@@ -66,7 +63,7 @@ public class LoginActivity extends BaseFragmentActivity implements
     private void initView()
     {
 
-        userName.setText("wlf");
+        userName.setText("18767152078");
         //userName.setText("jxd");
         passWord.setText("123456");
         header_title.setText("用户登录");
@@ -164,7 +161,7 @@ public class LoginActivity extends BaseFragmentActivity implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.forgetpsw: {
+            case R.id.header_operate: {
                 ActivityUtils.getInstance().showActivity(LoginActivity.this, ForgetActivity.class);
 
 //                Intent intent=new Intent(this, ForgetActivity.class);
@@ -179,6 +176,7 @@ public class LoginActivity extends BaseFragmentActivity implements
             case R.id.header_back: {
                 finish();
             }
+            break;
         }
     }
 
