@@ -33,6 +33,7 @@ import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
+import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.viewpagerindicator.TabPageIndicator;
 
@@ -74,8 +75,8 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         _headerBack.setOnClickListener(this);
         _header_title.setText("订单管理");
         _pagerAdapter = new OrderPagerAdapter(this);
-        _ViewPager.setAdapter( _pagerAdapter );
-        _indicator.setViewPager( _ViewPager );
+        _ViewPager.setAdapter(_pagerAdapter);
+        _indicator.setViewPager(_ViewPager);
         _header_operate.setOnClickListener(this);
     }
 
@@ -87,12 +88,20 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.header_back: {
                 finish();
             }
             break;
+            case R.id.header_operate: {
+                queryOrder();
+                break;
             }
+        }
+    }
+
+    protected void queryOrder(){
+
     }
 
     public class OrderPagerAdapter extends PagerAdapter{
@@ -146,13 +155,29 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     @Override
                     public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                         int tabIndex = (Integer) pullToRefreshBase.getTag();
-                        getData(tabIndex, OperateTypeEnum.REFRESH);
+                        if( tabIndex == 0) {
+                            getData_0( OperateTypeEnum.REFRESH);
+                        }else if( tabIndex ==1){
+                            getData_1( OperateTypeEnum.REFRESH);
+                        }else if( tabIndex==2){
+                            getData_2(OperateTypeEnum.REFRESH);
+                        }else if(tabIndex==3){
+                            getData_3(OperateTypeEnum.REFRESH);
+                        }
                     }
 
                     @Override
                     public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                         int tabIndex = (Integer) pullToRefreshBase.getTag();
-                        getData(tabIndex, OperateTypeEnum.LOADMORE);
+                        if( tabIndex == 0) {
+                            getData_0( OperateTypeEnum.LOADMORE);
+                        }else if( tabIndex ==1){
+                            getData_1( OperateTypeEnum.LOADMORE);
+                        }else if( tabIndex==2){
+                            getData_2(OperateTypeEnum.LOADMORE);
+                        }else if(tabIndex==3){
+                            getData_3(OperateTypeEnum.LOADMORE);
+                        }
                     }
                 });
                 _lv.add(lv);
@@ -164,7 +189,6 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                 lv.setAdapter(adapter);
 
                 _datas.add(data);
-
                 _adapters.add(adapter);
             }
 
@@ -190,14 +214,21 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
 //            _lv.get(3).setAdapter(_adapter4);
         }
 
-        protected void getData( int tabIndex , OperateTypeEnum operateType ){
+        protected void getData( int tabIndex ,
+                                String lastDate ,
+                                String keyword,
+                                OperateTypeEnum operateType ,
+                                Response.Listener<MJOrderListModel> listener ){
             String url = Constant.ORDERLIST_INTERFACE;
             Map<String,String> paras = new HashMap<>();
             paras.put("status", String.valueOf( tabIndex));
             if( operateType == OperateTypeEnum.REFRESH ){
             }else {
-                //paras.put("lastDate",)
+                paras.put("lastDate", lastDate);
             }
+
+            HttpParaUtils httpParaUtils =new HttpParaUtils();
+            url = httpParaUtils.getHttpGetUrl( url , paras);
 
             GsonRequest<MJOrderListModel> request=new GsonRequest<MJOrderListModel>(
                     Request.Method.GET,
@@ -205,34 +236,76 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     MJOrderListModel.class,
                     null,
                     listener,
-                    OrderActivity.this
+                    errorListener
             );
             VolleyRequestManager.getRequestQueue().add(request);
         }
 
-        Response.Listener<MJOrderListModel> listener =new Response.Listener<MJOrderListModel>() {
+        Response.Listener<MJOrderListModel> listener_0 =new Response.Listener<MJOrderListModel>() {
             @Override
             public void onResponse(MJOrderListModel mjOrderListModel) {
+                _lv.get(0).onRefreshComplete();
 
             }
         };
 
-//        Response.ErrorListener errorListener=new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                //this.closeProgressDialog();
-//                String message="";
-//                if( null != volleyError.networkResponse){
-//                    message=new String( volleyError.networkResponse.data);
-//                }else{
-//                    message = volleyError.getMessage();
-//                }
-//                if( message.length()<1){
-//                    message = "网络请求失败，请检查网络状态";
-//                }
-//                DialogUtils.showDialog(OrderActivity.this, OrderActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
-//            }
-//        };
+        Response.Listener<MJOrderListModel> listener_1 =new Response.Listener<MJOrderListModel>() {
+            @Override
+            public void onResponse(MJOrderListModel mjOrderListModel) {
+                _lv.get(1).onRefreshComplete();
+
+            }
+        };
+
+        Response.Listener<MJOrderListModel> listener_2 =new Response.Listener<MJOrderListModel>() {
+            @Override
+            public void onResponse(MJOrderListModel mjOrderListModel) {
+                _lv.get(2).onRefreshComplete();
+
+            }
+        };
+
+        Response.Listener<MJOrderListModel> listener_3 =new Response.Listener<MJOrderListModel>() {
+            @Override
+            public void onResponse(MJOrderListModel mjOrderListModel) {
+                _lv.get(3).onRefreshComplete();
+
+            }
+        };
+
+        protected void getData_0( OperateTypeEnum operateType){
+            String lastDate="";
+            getData( 0 , lastDate , "" , operateType , listener_0 );
+        }
+        protected void getData_1(OperateTypeEnum operateType){
+            getData( 1 , "" ,"", operateType , listener_1 );
+        }
+        protected void getData_2(OperateTypeEnum operateType){
+            getData( 2 ,"","", operateType , listener_2 );
+        }
+        protected void getData_3(OperateTypeEnum operateType){
+            getData( 3 ,"","", operateType, listener_3 );
+        }
+
+        Response.ErrorListener errorListener=new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                //this.closeProgressDialog();
+
+
+
+                String message="";
+                if( null != volleyError.networkResponse){
+                    message=new String( volleyError.networkResponse.data);
+                }else{
+                    message = volleyError.getMessage();
+                }
+                if( message.length()<1){
+                    message = "网络请求失败，请检查网络状态";
+                }
+                DialogUtils.showDialog(OrderActivity.this, OrderActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
+            }
+        };
 
         protected void demoAddChild(OrderListModel model){
             model.setHasChildOrder(true);
@@ -254,11 +327,15 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             }
         }
 
+
+
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             //return super.instantiateItem(container, position);
 
             if( position == 0 ) {
+                getData_0(OperateTypeEnum.REFRESH);
+
                 for( int i=0;i<20;i++){
                     OrderTestModel item = new OrderTestModel();
                     item.setChildOrderNO("3333331111" + i);

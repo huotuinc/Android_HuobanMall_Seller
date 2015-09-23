@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -18,11 +19,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.RebateStatisticsAdapter;
 
+import com.huotu.huobanmall.seller.adapter.UserScoreAdapter;
 import com.huotu.huobanmall.seller.bean.MJSaleListModel;
 import com.huotu.huobanmall.seller.bean.MJTopScoreModel;
+import com.huotu.huobanmall.seller.bean.MJUserScoreModel;
 import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.bean.SalesListModel;
 import com.huotu.huobanmall.seller.bean.TopScoreModel;
+import com.huotu.huobanmall.seller.bean.UserScoreModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
@@ -45,7 +49,8 @@ import butterknife.ButterKnife;
  * 返利积分 界面
  */
 public class RebateStatisticsActivity extends BaseFragmentActivity {
-
+    @Bind(R.id.salesdetail_title)
+    RadioGroup goods_title;
     @Bind(R.id.detail_btn)
     RadioButton detail_btn;
     @Bind(R.id.statistic_btn)
@@ -56,30 +61,72 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
     TextView header_operate;
     @Bind(R.id.salesdetail_listview)
     PullToRefreshListView _rebateStatistics_listview;
-    RebateStatisticsAdapter _rebateStatisticsAdapter;
-    List<TopScoreModel> _rebateStatisticsList = null;
-
+    RebateStatisticsAdapter _topScoreAdapter;
+    UserScoreAdapter _userScoreAdapter;
+    List<TopScoreModel> _topScoreList = null;
+    List<UserScoreModel> _userScoreList =null;
+    OperateTypeEnum _operateType = OperateTypeEnum.REFRESH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_detail);
         ButterKnife.bind(this);
-        header_back.setOnClickListener(this);
-        _rebateStatisticsList = new ArrayList<>();
-        _rebateStatisticsAdapter = new RebateStatisticsAdapter(this, _rebateStatisticsList);
-        _rebateStatistics_listview.getRefreshableView().setAdapter(_rebateStatisticsAdapter);
-        View emptyView= new View(this);
-        emptyView.setBackgroundResource(R.mipmap.tpzw);
-        _rebateStatistics_listview.setEmptyView(emptyView);
-        _rebateStatistics_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+
+        PullToRefreshListView.Mode m = _rebateStatistics_listview.getMode();
+
+        goods_title.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
-                getData();
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.detail_btn) {
+                    _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH );
+                    _operateType = OperateTypeEnum.REFRESH;
+                    getData_MX(_operateType, "");
+                } else if (checkedId == R.id.statistic_btn) {
+                    _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                    _operateType = OperateTypeEnum.REFRESH;
+                    getData_TJ();
+                }
             }
         });
 
-        firstSaleGoodData();
+        header_back.setOnClickListener(this);
+
+        View emptyView= new View(this);
+        emptyView.setBackgroundResource(R.mipmap.tpzw);
+        _rebateStatistics_listview.setEmptyView(emptyView);
+
+        _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH);
+
+        _userScoreList = new ArrayList<>();
+        _userScoreAdapter = new UserScoreAdapter(this,_userScoreList);
+        _rebateStatistics_listview.setAdapter(_userScoreAdapter);
+
+        _topScoreList = new ArrayList<>();
+        _topScoreAdapter = new RebateStatisticsAdapter(this, _topScoreList );
+
+        _rebateStatistics_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
+                if (detail_btn.isChecked()) {
+                    _operateType = OperateTypeEnum.REFRESH;
+                    getData_MX(OperateTypeEnum.REFRESH, "");
+                } else {
+                    _operateType = OperateTypeEnum.REFRESH;
+                    getData_TJ();
+                }
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
+                if (detail_btn.isChecked()) {
+                    _operateType = OperateTypeEnum.LOADMORE;
+                    getData_MX(OperateTypeEnum.LOADMORE, "");
+                }
+            }
+        });
+
+        firstGetData();
     }
 
     protected void onDestroy() {
@@ -87,12 +134,42 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         ButterKnife.unbind(this);
     }
 
-    private void firstSaleGoodData() {
-        this.showProgressDialog("","正在获取数据，请稍等...");
-        getData();
+    private void firstGetData() {
+        this.showProgressDialog("", "正在获取数据，请稍等...");
+        _operateType = OperateTypeEnum.REFRESH;
+        getData_MX( OperateTypeEnum.REFRESH, "");
     }
 
-    protected void getData(){
+    protected void getData_MX( OperateTypeEnum operateType ,String key ){
+        String url = Constant.USERSCORELIST_INTERFACE;
+        Map<String,String> paras = new HashMap<>();
+        if( operateType== OperateTypeEnum.LOADMORE ){
+            if( _userScoreList !=null && _userScoreList.size() > 0 ) {
+                String lastId = String.valueOf( _userScoreList.get( _userScoreList.size()-1 ).getPid() );
+                paras.put("lastId",lastId);
+            }
+        }
+
+        if( key!=null && key.length()>0){
+            paras.put("key",key);
+        }
+
+        HttpParaUtils httpParaUtils = new HttpParaUtils();
+        url = httpParaUtils.getHttpGetUrl(url, paras);
+
+        GsonRequest<MJUserScoreModel> request = new GsonRequest<MJUserScoreModel>(
+                Request.Method.GET,
+                url ,
+                MJUserScoreModel.class,
+                null,
+                listener_MX,
+                this
+        );
+
+        VolleyRequestManager.getRequestQueue().add(request);
+    }
+
+    protected void getData_TJ(){
         String url = Constant.TOPSCORE_INTERFACE;
         HttpParaUtils httpParaUtils = new HttpParaUtils();
         url = httpParaUtils.getHttpGetUrl(url, null);
@@ -102,16 +179,63 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                 url ,
                 MJTopScoreModel.class,
                 null,
-                listener,
+                listener_TJ,
                 this
         );
-
-
 
         VolleyRequestManager.getRequestQueue().add( request);
     }
 
-    Response.Listener<MJTopScoreModel> listener =new Response.Listener<MJTopScoreModel>() {
+    Response.Listener<MJUserScoreModel> listener_MX =new Response.Listener<MJUserScoreModel>() {
+        @Override
+        public void onResponse(MJUserScoreModel mjUserScoreModel ) {
+            RebateStatisticsActivity.this.closeProgressDialog();
+            _rebateStatistics_listview.onRefreshComplete();
+
+            if( mjUserScoreModel==null){
+                DialogUtils.showDialog(RebateStatisticsActivity.this, RebateStatisticsActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
+                return;
+            }
+            if( mjUserScoreModel.getSystemResultCode()!=1){
+                SimpleDialogFragment.createBuilder(RebateStatisticsActivity.this, RebateStatisticsActivity.this.getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage( mjUserScoreModel.getSystemResultDescription() )
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }else if( mjUserScoreModel.getResultCode()== Constant.TOKEN_OVERDUE){
+                ActivityUtils.getInstance().skipActivity(RebateStatisticsActivity.this, LoginActivity.class);
+                return;
+            }
+            else if( mjUserScoreModel.getResultCode() != 1){
+                SimpleDialogFragment.createBuilder( RebateStatisticsActivity.this , RebateStatisticsActivity.this.getSupportFragmentManager())
+                        .setTitle("错误信息")
+                        .setMessage( mjUserScoreModel.getResultDescription() )
+                        .setNegativeButtonText("关闭")
+                        .show();
+                return;
+            }
+
+            if( _operateType == OperateTypeEnum.REFRESH ) {
+
+                _userScoreList.clear();
+
+                if (mjUserScoreModel.getResultData() != null && mjUserScoreModel.getResultData().getList() != null
+                        && mjUserScoreModel.getResultData().getList().size() > 0) {
+                    _userScoreList.addAll(mjUserScoreModel.getResultData().getList());
+                }
+                _rebateStatistics_listview.setAdapter( _userScoreAdapter );
+            }else if( _operateType == OperateTypeEnum.LOADMORE){
+                if (mjUserScoreModel.getResultData() != null && mjUserScoreModel.getResultData().getList() != null
+                        && mjUserScoreModel.getResultData().getList().size() > 0) {
+                    _userScoreList.addAll(mjUserScoreModel.getResultData().getList());
+                }
+                _userScoreAdapter.notifyDataSetChanged();
+            }
+        }
+    };
+
+    Response.Listener<MJTopScoreModel> listener_TJ =new Response.Listener<MJTopScoreModel>() {
         @Override
         public void onResponse(MJTopScoreModel mjTopScoreModel ) {
              RebateStatisticsActivity.this.closeProgressDialog();
@@ -141,14 +265,12 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                 return;
             }
 
-            _rebateStatisticsList.clear();
-
+            _topScoreList.clear();
             if( mjTopScoreModel.getResultData() !=null && mjTopScoreModel.getResultData().getList() !=null
                     && mjTopScoreModel.getResultData().getList().size()>0){
-                _rebateStatisticsList.addAll(mjTopScoreModel.getResultData().getList());
+                _topScoreList.addAll(mjTopScoreModel.getResultData().getList());
             }
-
-            _rebateStatisticsAdapter.notifyDataSetChanged();
+            _rebateStatistics_listview.setAdapter( _topScoreAdapter );
         }
     };
 
@@ -156,7 +278,6 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         switch (v.getId()) {
             case R.id.header_back: {
                 finish();
-
             }
             break;
             default:

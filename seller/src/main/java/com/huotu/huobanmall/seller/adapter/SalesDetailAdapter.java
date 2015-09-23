@@ -7,8 +7,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.SalesListModel;
+import com.huotu.huobanmall.seller.utils.BitmapLoader;
+import com.huotu.huobanmall.seller.utils.SystemTools;
 
 import java.util.List;
 
@@ -47,31 +50,37 @@ public class SalesDetailAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = View.inflate(_context,
                     R.layout.layout_salesdetail_item, null);
-            holder.orderNo = (TextView) convertView
-                    .findViewById(R.id.orderNo);
-            holder.time = (TextView) convertView.findViewById(R.id.salestime);
-            holder.money = (TextView) convertView.findViewById(R.id.money);
+            holder.tvOrderNo = (TextView) convertView
+                    .findViewById(R.id.salesdetail_orderNo);
+            holder.tvTime = (TextView) convertView.findViewById(R.id.salesdetail_salestime);
+            holder.tvMoney = (TextView) convertView.findViewById(R.id.salesdetail_money);
+            holder.ivPicture =(NetworkImageView) convertView.findViewById(R.id.salesdetail_imageView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.money.setText(String.valueOf(_list.get(position).getMoney()));
-        holder.orderNo.setText(String.valueOf(_list.get(position)
-                .getOrderNo()));
-        holder.time.setText(String.valueOf(_list.get(position).getTime()));
+        holder.tvMoney.setText(String.valueOf(_list.get(position).getMoney()));
+        holder.tvOrderNo.setText(String.valueOf(_list.get(position).getOrderNo()));
+        String dateStr="";
+        dateStr = SystemTools.getDateTime( _list.get(position).getTime() ,"yyyy-MM-dd HH:mm:ss" );
+        holder.tvTime.setText( dateStr );
+
+        BitmapLoader.create().displayUrl(_context, holder.ivPicture , _list.get(position).getPictureUrl());
+
         return convertView;
 
     }
 
     class ViewHolder
-
     {
+        TextView tvMoney;
 
-        TextView money;
+        TextView tvOrderNo;
 
-        TextView orderNo;
+        TextView tvTime;
 
-        TextView time;
+        NetworkImageView ivPicture;
+
     }
 }
 
