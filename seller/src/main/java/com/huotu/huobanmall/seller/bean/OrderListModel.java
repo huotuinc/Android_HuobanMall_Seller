@@ -7,14 +7,31 @@ import java.util.List;
  * Created by Administrator on 2015/9/15.
  */
 public class OrderListModel {
-
+    /**
+     * 商品数量
+     */
     private Integer amount;
-    private Float money;
+    /**
+     * 实付金额
+     */
+    private Float paid;
+    /**
+     * 订单号
+     */
     private String orderNo;
     private String pictureUrl;
     private String receiver;
+    /**
+     * 返利积分
+     */
     private Integer score;
+    /**
+     * 订单状态
+     */
     private Integer status;
+    /**
+     * 下单时间
+     */
     private Date time;
     private List<GoodsModel> goods;
     private List<OrderListModel> childOrders;
@@ -54,12 +71,12 @@ public class OrderListModel {
         this.amount = amount;
     }
 
-    public Float getMoney() {
-        return money;
+    public Float getPaid() {
+        return this.paid;
     }
 
-    public void setMoney(Float money) {
-        this.money = money;
+    public void setPaid(Float paid) {
+        this.paid = paid;
     }
 
     public String getOrderNo() {

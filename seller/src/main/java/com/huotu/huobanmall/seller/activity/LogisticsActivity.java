@@ -11,10 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.huotu.huobanmall.seller.R;
@@ -22,11 +24,13 @@ import com.huotu.huobanmall.seller.adapter.GoodsAdapter;
 import com.huotu.huobanmall.seller.adapter.LogisticsAdapter;
 import com.huotu.huobanmall.seller.adapter.LogisticsGoodsAdapter;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
+import com.huotu.huobanmall.seller.bean.LogisticsDataModel;
 import com.huotu.huobanmall.seller.bean.LogisticsDetailModel;
 import com.huotu.huobanmall.seller.bean.MJLogisticsDetailModel;
 import com.huotu.huobanmall.seller.bean.OrderListProductModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.BitmapLoader;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
@@ -44,19 +48,26 @@ import butterknife.ButterKnife;
  * 物流查看 界面
  */
 public class LogisticsActivity extends BaseFragmentActivity {
+    @Bind(R.id.logistics_logo)
+    NetworkImageView _logistics_logo;
+    @Bind(R.id.logistics_status)
+    TextView _logistics_status;
+    @Bind(R.id.logistics_source)
+    TextView _logistics_source;
+    @Bind(R.id.logistics_orderNo)
+    TextView _logistics_orderNo;
     @Bind(R.id.logistics_goodsList)
-    //RecyclerView _logistics_goods;
     ListView _logistics_goods;
     @Bind(R.id.logistics_list)
-    //RecyclerView _logistics_list;
     ListView _logistics_list;
     @Bind(R.id.header_back)
     Button _headerBack;
     @Bind(R.id.logistics_pullScrollView)
     PullToRefreshScrollView _scrollView;
-    List<OrderListProductModel> _goodsList;
+    //List<OrderListProductModel> _goodsList;
     LogisticsGoodsAdapter _goodsAdapter;
-    List<LogisticsDetailModel> _logisticsList=null;
+    //List<LogisticsDetailModel> _logisticsList=null;
+    LogisticsDetailModel _data=null;
     LogisticsAdapter _logisticAdapter;
     String _orderNo="";
 
@@ -75,7 +86,6 @@ public class LogisticsActivity extends BaseFragmentActivity {
 
     protected void initView(){
         ButterKnife.bind(this);
-
         _scrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ScrollView> pullToRefreshBase) {
@@ -83,27 +93,34 @@ public class LogisticsActivity extends BaseFragmentActivity {
             }
         });
 
-        if( getIntent()!=null && getIntent().hasExtra("orderNo")){
-            _orderNo = getIntent().getStringExtra("orderNo");
+        if( getIntent()!=null && getIntent().hasExtra(Constant.Extra_OrderNo)){
+            _orderNo = getIntent().getStringExtra( Constant.Extra_OrderNo);
         }
 
-        _logisticsList = new ArrayList<>();
+        _data=new LogisticsDetailModel();
+        List<LogisticsDataModel> logisticsList = new ArrayList<>();
         for( int i=0;i<10;i++) {
-            LogisticsDetailModel item = new LogisticsDetailModel();
+            LogisticsDataModel item = new LogisticsDataModel();
+            item.setAreacode("322105");
+            item.setAreaname("浙江东阳");
+            item.setCode("10021");
+            item.setCompany("顺丰物流");
+            item.setTimes("2015-09-22 13:00:00");
             if( i%2==0){
-                item.setSource("时光飞逝，安迪·鲁宾（Andy Rubin）依旧对三星放弃收购安卓耿耿于怀");
+                item.setContext("时光飞逝，安迪·鲁宾（Andy Rubin）依旧对三星放弃收购安卓耿耿于怀");
             }else {
-                item.setSource("打发撒旦发送思阿斯顿飞阿时光飞逝，安迪·鲁宾（Andy Rubin）依旧对三星放弃收购安卓耿耿于怀，而如今安卓依旧在市面上同苹果系统分庭抗礼。记得那是2004年的第一场雪，当时的国内智能手机市场主要占有者是诺基亚，改变世界的iPhone还没有到来，第一台安卓手机也是三年后才发布的。当时的智能手机远不像现在这般统一。各种杂牌手机盛行，而且每种系统都有对应的手机，互相之间是不兼容的，这也就为后来的故事埋下了伏笔。是打发撒的阿是打发受asdfasdf到发岁达发送");
+                item.setContext("阿时光飞逝，安迪·鲁宾（Andy Rubin）依旧对三星放弃收购安卓耿耿于怀，而如今安卓依旧在市面上同苹果系统分庭抗礼。记得那是2004年的第一场雪，当时的国内智能手机市场主要占有者是诺基亚，改变世界的iPhone还没有到来，第一台安卓手机也是三年后才发布的。当时的智能手机远不像现在这般统一。各种杂牌手机盛行，而且每种系统都有对应的手机，互相之间是不兼容的，这也就为后来的故事埋下了伏笔。");
             }
-            _logisticsList.add(item);
+            logisticsList.add(item);
         }
+        _data.setTrack(logisticsList);
 
-        _logisticAdapter =new LogisticsAdapter(this, _logisticsList );
+        _logisticAdapter =new LogisticsAdapter(this, logisticsList );
         //_logistics_list.setLayoutManager(new LinearLayoutManager(this));
         _logistics_list.setAdapter(_logisticAdapter);
         _headerBack.setOnClickListener(this);
 
-        _goodsList = new ArrayList<>();
+        List<OrderListProductModel> goodsList = new ArrayList<>();
 
         for(int i=0;i<8;i++){
             OrderListProductModel item = new OrderListProductModel();
@@ -112,10 +129,11 @@ public class LogisticsActivity extends BaseFragmentActivity {
             item.setPictureUrl("");
             item.setSpec("阿斯顿飞阿斯顿飞阿斯顿飞撒旦法");
             item.setTitle("丹杰仕休闲帆布鞋男2015秋季男鞋男士透气");
-            _goodsList.add(item);
+            goodsList.add(item);
         }
+        _data.setList(goodsList);
 
-        _goodsAdapter = new LogisticsGoodsAdapter(this, _goodsList);
+        _goodsAdapter = new LogisticsGoodsAdapter(this, goodsList);
         //_logistics_goods.setLayoutManager(new LinearLayoutManager(this));
         _logistics_goods.setAdapter(_goodsAdapter);
 
@@ -123,8 +141,6 @@ public class LogisticsActivity extends BaseFragmentActivity {
 
         firstGetData();
     }
-
-
 
     @Override
     public void onClick(View v) {
@@ -185,15 +201,35 @@ public class LogisticsActivity extends BaseFragmentActivity {
                 return;
             }
 
-            if( mjLogisticsDetailModel.getResultData()==null){
-                DialogUtils.showDialog(LogisticsActivity.this,LogisticsActivity.this.getSupportFragmentManager(),
-                        "错误信息", "服务器返回空数据","关闭");
-                return;
-            }
+            _data = mjLogisticsDetailModel.getResultData().getData();
 
-            _logisticsList.add( mjLogisticsDetailModel.getResultData().getData() );
+//            if( mjLogisticsDetailModel.getResultData()==null){
+//                DialogUtils.showDialog(LogisticsActivity.this,LogisticsActivity.this.getSupportFragmentManager(),
+//                        "错误信息", "服务器返回空数据","关闭");
+//                return;
+//            }
 
-            _logisticAdapter.notifyDataSetChanged();
+
+            //logisticsList.add( mjLogisticsDetailModel.getResultData().getData() );
+
+            setData();
+
+            //_logisticAdapter.notifyDataSetChanged();
         }
     };
+
+    protected void setData(){
+        if(_data==null) return;
+
+        BitmapLoader.create().displayUrl( this , _logistics_logo , _data.getPictureURL());
+        _logistics_orderNo.setText(_data.getNo());
+        _logistics_status.setText(_data.getStatus());
+        _logistics_source.setText(_data.getSource());
+
+        _goodsAdapter=new LogisticsGoodsAdapter(this, _data.getList());
+        _logistics_goods.setAdapter(_goodsAdapter);
+
+        _logisticAdapter= new LogisticsAdapter(this, _data.getTrack());
+        _logistics_list.setAdapter(_logisticAdapter);
+    }
 }

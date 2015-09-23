@@ -4,29 +4,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:id="@+id/test_order_item_label1"
+        android:id="@+id/test_order_main_item_label1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="10dp"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_15"
         android:text="主订单号："/>
+
     <TextView
-        android:id="@+id/test_order_item_totalPrice"
+        android:id="@+id/test_order_main_item_orderTime"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
-        android:textColor="#FE3307"
         android:textSize="@dimen/text_size_15"
-        android:text="交易完成"/>
+        android:text="2015-09-22 10:01:08"/>
     <TextView
-        android:id="@+id/test_order_item_orderNo"
-        android:layout_toRightOf="@id/test_order_item_label1"
-        android:layout_toLeftOf="@id/test_order_item_totalPrice"
+        android:id="@+id/test_order_main_item_label2"
+        android:layout_toLeftOf="@id/test_order_main_item_orderTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="下单时间:"/>
+    <TextView
+        android:id="@+id/test_order_main_item_orderNo"
+        android:layout_toRightOf="@id/test_order_main_item_label1"
+        android:layout_toLeftOf="@id/test_order_main_item_orderTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_15"
         android:text="243423423234"/>
+    <TextView
+        android:layout_below="@id/test_order_main_item_label1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:background="@color/white"
+        />
 </RelativeLayout>

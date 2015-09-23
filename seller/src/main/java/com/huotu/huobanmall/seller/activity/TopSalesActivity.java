@@ -34,6 +34,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2015/9/18.
+ * 商品销售前10排名
  */
 public class TopSalesActivity extends BaseFragmentActivity implements View.OnClickListener {
     @Bind(R.id.header_back)
@@ -49,10 +50,7 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topsales);
-        ButterKnife.bind(this);
-
         initView();
-
     }
     protected void initView(){
         ButterKnife.bind(this);
@@ -64,23 +62,18 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
         topsales_listview.getRefreshableView().setAdapter(topsalesAdapter);
 
 
-        View entmyview= new View(this);
-        entmyview.setBackgroundResource(R.mipmap.tpzw);
-        topsales_listview.setEmptyView(entmyview);
+        View emptyView= new View(this);
+        emptyView.setBackgroundResource(R.mipmap.tpzw);
+        topsales_listview.setEmptyView(emptyView);
         topsales_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
-
-
-
                getData();
             }
         });
 
         firstSaleGoodData();
     }
-
-
 
     protected void onDestroy() {
         super.onDestroy();
@@ -139,12 +132,13 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
                 return;
             }
 
-            if( mjTopSalesModel.getResultData() ==null || mjTopSalesModel.getResultData().getList()==null||mjTopSalesModel.getResultData().getList().size()<1){
-                return;
+            topsalesList.clear();
+
+            if( mjTopSalesModel.getResultData() !=null
+                    && mjTopSalesModel.getResultData().getList() !=null
+                    && mjTopSalesModel.getResultData().getList().size()>0){
+                topsalesList.addAll(mjTopSalesModel.getResultData().getList());
             }
-
-
-            topsalesList.addAll(mjTopSalesModel.getResultData().getList());
 
             topsalesAdapter.notifyDataSetChanged();
         }
@@ -154,7 +148,6 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.header_back: {
                 finish();
-
             }
             break;
             default:

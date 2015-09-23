@@ -21,7 +21,9 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.Interface.IIndexFragmentInteractionListener;
+import com.huotu.huobanmall.seller.bean.CloseEvnt;
 import com.huotu.huobanmall.seller.bean.MJNewTodayModel;
+import com.huotu.huobanmall.seller.bean.RefreshSettingEvent;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.R;
@@ -36,8 +38,9 @@ import java.util.ArrayList;
 import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
-public class MainActivity extends BaseFragmentActivity implements IIndexFragmentInteractionListener{
+public class MainActivity extends BaseFragmentActivity{
     @Bind(R.id.main_todyMoney)
     TextView main_TodayMoney;
     @Bind(R.id.main_totalMoney)
@@ -50,19 +53,6 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
     Button main_menu_gdtj;
     @Bind(R.id.main_menu_szgl)
     Button main_menu_szgl;
-
-    Long existTime=0L;
-    Integer waitForExistSecond=2000;
-
-    //TodayDistributorsFragment _todayDistributorsFragments;
-    //TodayMemberFragment _todayMemberFragments;
-    //TodayOrderFragment _todayOrderFragments;
-    //List<BaseFragment> _fragments;
-    //@Bind(R.id.main_pager)
-    //ViewPager _viewPager;
-    //@Bind(R.id.main_indicator)
-    //CirclePageIndicator _indicator;
-    //TodayDataFragmentAdapter _fragmentAdapter;
     @Bind(R.id.main_lineChart)
     LineChart _mainChart;
     @Bind(R.id.main_OrderCount)
@@ -88,6 +78,8 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
     @Bind(R.id.header_operate)
     ImageButton _ibShop;
 
+    Long existTime=0L;
+    Integer waitForExistSecond=2000;
     MJNewTodayModel _data=null;
     //当前选中的位置
     int _currentIndex=0;
@@ -98,11 +90,13 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        if( EventBus.getDefault().isRegistered(this)==false) {
+            EventBus.getDefault().register(this);
+        }
+
         //String formatText = "￥%.2f";
         //CountUpTimerView countUpView =new CountUpTimerView( main_todyMoney , formatText , 1000.33f,5000.45f, 3000,100);
         //countUpView.start();
-
-        //initTodayData();
 
         _llOrder.setOnClickListener(this);
         _llMember.setOnClickListener(this);
@@ -120,9 +114,23 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+
+        if( true == EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     protected void getData(){
@@ -149,15 +157,13 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         if( v.getId() == R.id.main_menu_cpgl){
             ActivityUtils.getInstance().showActivity(this, GoodsActivity.class);
         }else if( v.getId() == R.id.main_menu_ddgl){//订单管理
-
             Intent intent = new Intent( this , OrderActivity.class);
-            //intent.putExtra(Constant.Extra_Url, "http://www.baidu.com");
             ActivityUtils.getInstance().showActivity(this, intent);
-        }else if( v.getId() == R.id.main_menu_gdtj){
+        }else if( v.getId() == R.id.main_menu_gdtj){//产品管理
             ActivityUtils.getInstance().showActivity(this, MoreStatisticActivity.class);
-        }else if( v.getId() ==R.id.main_menu_szgl){
+        }else if( v.getId() ==R.id.main_menu_szgl){//设置管理
             ActivityUtils.getInstance().showActivity(this, SettingActivity.class);
-        }else if( v.getId() == R.id.ll_todayOrder_order){
+        }else if( v.getId() == R.id.ll_todayOrder_order){//
             _currentIndex=0;
             setLineChart();
         }else if(v.getId() == R.id.ll_todayOrder_member){
@@ -171,6 +177,9 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         }
     }
 
+    /**
+     * 线性图
+     */
     protected void setLineChart(){
         if(_data==null || _data.getResultData() ==null  )return;
 
@@ -209,10 +218,8 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         if( xData==null || yData==null )return;
 
         int bg=0xFFFFFFFF;
-        int gridBg=0x56A5EA;
         int lineColor =0xFFFF3C00;
 
-        //lineChart.setGridBackgroundColor( gridBg );
         lineChart.setDrawGridBackground(false);
         lineChart.setBackgroundColor(bg);
         lineChart.setDescription("");
@@ -234,7 +241,6 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
 
         dataSet.setCircleColors(new int[]{Color.rgb(255, 255, 255)});
         dataSet.setCircleSize(5);
-        //dataSet.setDrawCircleHole(true);
         dataSet.setDrawValues(false);
         dataSet.setLineWidth(4);
         dataSet.setColor(lineColor);
@@ -268,24 +274,10 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         lineChart.animateX(2000, Easing.EasingOption.EaseInOutQuart);
     }
 
-//    protected void initTodayData(){
-//        _todayDistributorsFragments = new TodayDistributorsFragment();
-//        _todayMemberFragments = new TodayMemberFragment();
-//        _todayOrderFragments = new TodayOrderFragment();
-//        _fragments=new ArrayList<>();
-//        _fragments.add(_todayOrderFragments);
-//        _fragments.add(_todayMemberFragments);
-//        _fragments.add(_todayDistributorsFragments);
-//        _fragmentAdapter=new TodayDataFragmentAdapter(_fragments, getSupportFragmentManager());
-//        _viewPager.setAdapter(_fragmentAdapter);
-//        _indicator.setViewPager(_viewPager);
-
+//    @Override
+//    public void switchFragment(int position) {
+//        //_indicator.setCurrentItem(position);
 //    }
-
-    @Override
-    public void switchFragment(int position) {
-        //_indicator.setCurrentItem(position);
-    }
 
     Response.Listener<MJNewTodayModel> newTodayModelListener = new Response.Listener<MJNewTodayModel>() {
         @Override
@@ -314,9 +306,7 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
             main_TotalMoney.setText(String.valueOf(mjNewTodayModel.getResultData().getTotalSales()));
 
             _data=mjNewTodayModel;
-            //_todayOrderFragments.setData(mjNewTodayModel);
-            //_todayMemberFragments.setData( mjNewTodayModel);
-            //_todayDistributorsFragments.setData(mjNewTodayModel);
+
             setLineChart();
         }
     };
@@ -339,5 +329,13 @@ public class MainActivity extends BaseFragmentActivity implements IIndexFragment
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     *
+     * @param event
+     */
+    public void onEventMainThread( CloseEvnt event) {
+        MainActivity.this.finish();
     }
 }

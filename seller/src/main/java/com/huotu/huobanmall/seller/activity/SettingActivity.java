@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.JsonSyntaxException;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.CloseEvnt;
 import com.huotu.huobanmall.seller.bean.EditSetTypeEnum;
 import com.huotu.huobanmall.seller.bean.HTMerchantModel;
 
@@ -240,6 +241,8 @@ public class SettingActivity extends BaseFragmentActivity
 
                 //清空token等用户信息
                 application.cleanMerchantInfo ();
+                //关闭MainActivity 界面,防止 按 返回建，回到 mainActivity界面
+                EventBus.getDefault().post(new CloseEvnt());
                 //跳转到
                 ActivityUtils.getInstance ().skipActivity ( SettingActivity.this, LoginActivity.class );
             }

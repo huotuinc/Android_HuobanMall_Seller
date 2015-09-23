@@ -101,6 +101,10 @@ public class SaleGoodsFragment extends BaseFragment {
         _goodsAdapter = new GoodsAdapter(this.getActivity(), _goodsList);
         _goodsSaleListView.getRefreshableView().setAdapter(_goodsAdapter);
 
+        View emptyView = new View(this.getActivity());
+        emptyView.setBackgroundResource(R.mipmap.tpzw);
+        _goodsSaleListView.setEmptyView(emptyView);
+
         _goodsSaleListView.setMode(PullToRefreshBase.Mode.BOTH);
         _listView = _goodsSaleListView.getRefreshableView();
         _goodsSaleListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -120,6 +124,7 @@ public class SaleGoodsFragment extends BaseFragment {
         _isPrepared=true;
 
         if( savedInstanceState !=null && savedInstanceState.containsKey("goodsList") &&  savedInstanceState.getSerializable("goodsList") !=null ){
+            if(_goodsList==null){_goodsList=new ArrayList<>();}
             _goodsList.clear();
             _isFirst=false;
             _goodsList.addAll((List<GoodsModel>) savedInstanceState.getSerializable("goodsList"));
@@ -135,19 +140,11 @@ public class SaleGoodsFragment extends BaseFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        //_goodsSaleListView.setRefreshing();
     }
 
     @Override
@@ -192,7 +189,6 @@ public class SaleGoodsFragment extends BaseFragment {
     protected void getData( OperateTypeEnum type ){
         Map<String,String> maps = new HashMap<>();
         if( type == OperateTypeEnum.REFRESH){
-            //maps.put("lastProductId","");
         }else {
             if( _goodsList !=null && _goodsList.size()>0 ) {
                 String lastId = String.valueOf(_goodsList.get(_goodsList.size() - 1).getGoodsId());
@@ -249,15 +245,19 @@ public class SaleGoodsFragment extends BaseFragment {
                 return;
             }
 
-            if( mjGoodModel.getResultData() ==null || mjGoodModel.getResultData().getList()==null||mjGoodModel.getResultData().getList().size()<1){
-                return;
-            }
+//            if( mjGoodModel.getResultData() ==null || mjGoodModel.getResultData().getList()==null||mjGoodModel.getResultData().getList().size()<1){
+//                return;
+//            }
 
             if(_type == OperateTypeEnum.REFRESH){
                 _goodsList.clear();
-                _goodsList.addAll(mjGoodModel.getResultData().getList());
+                if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList()!=null && mjGoodModel.getResultData().getList().size()>0) {
+                    _goodsList.addAll(mjGoodModel.getResultData().getList());
+                }
             }else{
-                _goodsList.addAll(mjGoodModel.getResultData().getList());
+                if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList()!=null && mjGoodModel.getResultData().getList().size()>0 ) {
+                    _goodsList.addAll(mjGoodModel.getResultData().getList());
+                }
             }
             _goodsAdapter.notifyDataSetChanged();
         }

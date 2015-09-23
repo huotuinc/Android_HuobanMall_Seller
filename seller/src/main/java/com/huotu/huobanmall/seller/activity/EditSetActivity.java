@@ -88,7 +88,7 @@ public class EditSetActivity extends BaseFragmentActivity {
                 null,
                 maps,
                 updateListener,
-                errorListener
+                this
         );
 
         this.showProgressDialog("", "正在更新数据，请稍等...");
@@ -123,19 +123,6 @@ public class EditSetActivity extends BaseFragmentActivity {
             EditSetActivity.this.finish();
         }
     };
-
-    Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            EditSetActivity.this.closeProgressDialog();
-            String message = "";
-            if (null != volleyError.networkResponse) {
-                message = new String(volleyError.networkResponse.data);
-            }
-            DialogUtils.showDialog(EditSetActivity.this, EditSetActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
-        }
-    };
-
 
     public void onClick(View v) {
         switch (v.getId()) {

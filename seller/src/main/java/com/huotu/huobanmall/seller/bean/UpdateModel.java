@@ -29,13 +29,11 @@ public class UpdateModel implements Serializable{
         this.updateMD5 = updateMD5;
     }
 
-    public
-    UpdateType getUpdateType ( ) {
+    public UpdateType getUpdateType ( ) {
         return updateType;
     }
 
-    public
-    void setUpdateType ( UpdateType updateType ) {
+    public  void setUpdateType ( UpdateType updateType ) {
         this.updateType = updateType;
     }
 
@@ -49,9 +47,26 @@ public class UpdateModel implements Serializable{
         this.updateUrl = updateUrl;
     }
 
-    class UpdateType
+    public class UpdateType
     {
-        String name;
-        int value;
+        private String name;
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        private int value;
     }
 }

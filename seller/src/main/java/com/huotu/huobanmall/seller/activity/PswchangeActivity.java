@@ -16,11 +16,13 @@ import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.HTMerchantModel;
 import com.huotu.huobanmall.seller.common.Constant;
+import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.DigestUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import java.io.UnsupportedEncodingException;
@@ -177,12 +179,11 @@ public class PswchangeActivity extends BaseFragmentActivity implements
         } catch (UnsupportedEncodingException ex) {
         }
 
-        paras.put("oldpwd", oldpwdEnc);
-        paras.put("newpwd", newpwdEnc);
-        paras.put("newrepwd", newrepwdEnc);
+        paras.put("oldPassword", oldpwdEnc);
+        paras.put("newPassword", newpwdEnc);
+
         HttpParaUtils utils = new HttpParaUtils();
         url = utils.getHttpGetUrl(url, paras);
-
 
         GsonRequest<HTMerchantModel> loginRequest = new GsonRequest<HTMerchantModel>(
                 Request.Method.GET,
@@ -218,14 +219,17 @@ public class PswchangeActivity extends BaseFragmentActivity implements
             }
 
 
-                SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
-                        .setTitle("修改密码")
-                        .setMessage("修改密码成功")
-                        .setNegativeButtonText("关闭")
-                        .setRequestCode(REQUEST_CODE)
-                        .show();
-                return;
+//                SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
+//                        .setTitle("修改密码")
+//                        .setMessage("修改密码成功")
+//                        .setNegativeButtonText("关闭")
+//                        //.setRequestCode(REQUEST_CODE)
+//                        .show();
+            ToastUtils.showLong("修改密码成功");
 
+            SellerApplication.getInstance().writeMerchantInfo( htMerchantModel.getResultData().getUser() );
+
+            PswchangeActivity.this.finish();
         }
     };
     Response.ErrorListener errorListener = new Response.ErrorListener() {

@@ -1,16 +1,20 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.avast.android.dialogs.fragment.SimpleDialogFragment;
+import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.baidu.location.LocationClientOption;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.HTInitBean;
 import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.bean.UpdateModel;
+import com.huotu.huobanmall.seller.bean.VersionUpdateTypeEnum;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
@@ -18,14 +22,22 @@ import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.StringUtils;
+import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SplashActivity extends BaseFragmentActivity {
+/**
+ * 启动界面
+ */
+public class SplashActivity extends BaseFragmentActivity implements ISimpleDialogListener {
     @Bind(R.id.loadL)
     RelativeLayout loadLayout;
     public SellerApplication application;
+
+    public static final int REQUESTCODE_UPDATE= 6001;
+
+    HTInitBean _data=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +121,7 @@ public class SplashActivity extends BaseFragmentActivity {
     Response.Listener<HTInitBean> htInitBeanListener = new Response.Listener<HTInitBean>() {
         @Override
         public void onResponse(HTInitBean htInitBean) {
-            if( htInitBean == null){
+            if( htInitBean == null ){
                 DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息","请求数据失败","关闭");
                 return;
             }
@@ -128,6 +140,8 @@ public class SplashActivity extends BaseFragmentActivity {
                 DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息",htInitBean.getResultDescription(),"关闭");
                 return;
             }
+
+            _data = htInitBean;
 
             SellerApplication.getInstance().writeGlobalInfo(htInitBean.getResultData().getGlobal());
 
@@ -157,8 +171,57 @@ public class SplashActivity extends BaseFragmentActivity {
         }
     };
 
+    @Override
+    public void onNegativeButtonClicked(int i) {
+        if( i == REQUESTCODE_UPDATE ){
+            ToastUtils.showLong("用户取消升级APP");
+        }
+    }
+
+    @Override
+    public void onNeutralButtonClicked(int i) {
+
+    }
+
+    @Override
+    public void onPositiveButtonClicked(int i) {
+        if( i== REQUESTCODE_UPDATE){
+
+        }
+    }
+
+    protected void updateAppNow( UpdateModel model ){
+        boolean isForce=false;
+        AppUpdateActivity.UpdateType type= AppUpdateActivity.UpdateType.FullUpate;
+        String md5="sadfsafsafafd121";
+        String url="http://cdn4.ops.baidu.com/new-repackonline/baidunuomi/AndroidPhone/5.12.0.1/1/1009769b/20150810142355/baidunuomi_AndroidPhone_5-12-0-1_1009769b.apk"; //"http://newresources.fanmore.cn/fanmore/fanmore3.0.apk";
+        String tips="本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.";
+
+        Intent intent = new Intent( this, AppUpdateActivity.class);
+        intent.putExtra("isForce", isForce);
+        intent.putExtra("type", type);
+        intent.putExtra("md5", md5);
+        intent.putExtra("url", url);
+        intent.putExtra("tips", tips);
+        startActivityForResult(intent, Constant.REQUEST_CODE_CLIENT_DOWNLOAD);
+    }
+
     protected void updateApp( UpdateModel updateInfo ){
-        if( updateInfo == null )return;
-        //if( updateInfo.getUpdateType() ==  )
+        if( updateInfo == null || updateInfo.getUpdateType()==null )return;
+        if( updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.NO.getIndex() ) return;
+
+        if( updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.FORCE_WHOLE.getIndex() ){
+            //强制整包更新
+        }else if( updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.WHOLE.getIndex() ){
+            //整包更新
+            SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager() )
+                    .setTitle("询问")
+                    .setMessage( updateInfo.getUpdateTips() )
+                    .setPositiveButtonText("升级")
+                    .setNegativeButtonText("下次再说")
+                    .setRequestCode( REQUESTCODE_UPDATE)
+                    .show();
+        }
+
     }
 }

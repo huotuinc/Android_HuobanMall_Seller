@@ -70,26 +70,6 @@ public class BillDataAdapter extends RecyclerView.Adapter<BillDataAdapter.OrderL
         _goodsAdapter = new OrderGoodsAdapter(_context, _goodsList);
     }
 
-    public void setListViewHeightBasedOnChildren( ListView lv ) {
-        ListAdapter adapter = lv.getAdapter();
-        if (adapter == null) {
-            return;
-        }
-
-        int totalHeight = 0;
-        for (int i = 0; i < adapter.getCount(); i++) {
-            View listItem = adapter.getView(i, null, lv);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = lv.getLayoutParams();
-        params.height = totalHeight
-                + (lv.getDividerHeight() * (adapter.getCount() - 1));
-        lv.setLayoutParams(params);
-    }
-
-
     @Override
     public OrderListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = _inflater.inflate(R.layout.layout_bill_item, null);

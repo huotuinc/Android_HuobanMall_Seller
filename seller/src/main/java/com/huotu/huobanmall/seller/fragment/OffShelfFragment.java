@@ -45,7 +45,6 @@ public class OffShelfFragment extends BaseFragment {
     PullToRefreshListView _goodsOffshelfListview;
     List<GoodsModel> _goodsList = null;
     GoodsAdapter _goodsAdapter = null;
-    ListView _listView =null;
     OperateTypeEnum _type = OperateTypeEnum.REFRESH;
     private OnFragmentInteractionListener mListener;
 
@@ -85,6 +84,10 @@ public class OffShelfFragment extends BaseFragment {
         _goodsAdapter=new GoodsAdapter(this.getActivity() , _goodsList);
         _goodsOffshelfListview.getRefreshableView().setAdapter(_goodsAdapter);
 
+        View emptyView = new View(this.getActivity());
+        emptyView.setBackgroundResource(R.mipmap.tpzw);
+        _goodsOffshelfListview.setEmptyView(emptyView);
+
         _goodsOffshelfListview.setMode(PullToRefreshBase.Mode.BOTH);
         _goodsOffshelfListview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
@@ -104,6 +107,7 @@ public class OffShelfFragment extends BaseFragment {
 
         if( savedInstanceState !=null && savedInstanceState.containsKey("goodsList") &&  savedInstanceState.getSerializable("goodsList") !=null ){
             _isFirst=false;
+            if( _goodsList==null ){_goodsList=new ArrayList<>();}
             _goodsList.clear();
             _goodsList.addAll((List<GoodsModel>) savedInstanceState.getSerializable("goodsList"));
             _goodsAdapter.notifyDataSetChanged();
@@ -122,12 +126,6 @@ public class OffShelfFragment extends BaseFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -155,11 +153,6 @@ public class OffShelfFragment extends BaseFragment {
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
@@ -182,8 +175,8 @@ public class OffShelfFragment extends BaseFragment {
             //maps.put("lastProductId","");
         }else {
             if( _goodsList !=null && _goodsList.size() >0 ) {
-                String lastid = String.valueOf(_goodsList.get(_goodsList.size() - 1).getGoodsId());
-                maps.put("lastProductId", lastid);
+                String lastId = String.valueOf(_goodsList.get(_goodsList.size() - 1).getGoodsId());
+                maps.put("lastProductId", lastId);
             }
         }
 
@@ -233,15 +226,19 @@ public class OffShelfFragment extends BaseFragment {
                 return;
             }
 
-            if(mjGoodModel.getResultData()==null || mjGoodModel.getResultData().getList() ==null || mjGoodModel.getResultData().getList().size()<1){
-                return;
-            }
+//            if(mjGoodModel.getResultData()==null || mjGoodModel.getResultData().getList() ==null || mjGoodModel.getResultData().getList().size()<1){
+//                return;
+//            }
 
             if( _type == OperateTypeEnum.REFRESH){
                 _goodsList.clear();
-                _goodsList.addAll(mjGoodModel.getResultData().getList());
+                if( mjGoodModel.getResultData() !=null && mjGoodModel.getResultData().getList()!=null && mjGoodModel.getResultData().getList().size()>0 ) {
+                    _goodsList.addAll(mjGoodModel.getResultData().getList());
+                }
             }else{
-                _goodsList.addAll(mjGoodModel.getResultData().getList());
+                if( mjGoodModel.getResultData() !=null && mjGoodModel.getResultData().getList()!=null && mjGoodModel.getResultData().getList().size()>0 ) {
+                    _goodsList.addAll(mjGoodModel.getResultData().getList());
+                }
             }
             _goodsAdapter.notifyDataSetChanged();
         }

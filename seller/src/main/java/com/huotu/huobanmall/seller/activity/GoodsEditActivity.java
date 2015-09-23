@@ -87,6 +87,11 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
         _offShelfList = new ArrayList<>();
         _saleGoodsAdapter = new GoodseditAdapter(this, _saleGoodsList );
         _offShelfAdapter = new GoodseditAdapter(this,_offShelfList);
+
+        View emptyView =new View(this);
+        emptyView.setBackgroundResource(R.mipmap.tpzw);
+        _goodsedit_listview.setEmptyView(emptyView);
+
         _goodsedit_listview.getRefreshableView().setAdapter(_saleGoodsAdapter);
         _header_back.setOnClickListener(this);
 
