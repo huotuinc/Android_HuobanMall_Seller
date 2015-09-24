@@ -15,11 +15,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.TopGoodsAdapter;
-import com.huotu.huobanmall.seller.adapter.TopsalesAdapter;
 import com.huotu.huobanmall.seller.bean.MJTopGoodsModel;
-import com.huotu.huobanmall.seller.bean.MJTopSalesModel;
 import com.huotu.huobanmall.seller.bean.TopGoodsModel;
-import com.huotu.huobanmall.seller.bean.TopSalesModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
@@ -27,8 +24,6 @@ import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
-
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 

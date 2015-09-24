@@ -144,9 +144,6 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
             _circlePageIndicator.setCurrentItem(1);
         }else if( checkedId == R.id.tab_rb_c){
             _circlePageIndicator.setCurrentItem(2);
-//            Intent intent =new Intent(this,WebViewActivity.class);
-//            intent.putExtra(Constants.Extra_Url,"http://www.baidu.com");
-//            ActivityUtils.getInstance().showActivity(this,intent);
         }
     }
 }

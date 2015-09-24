@@ -11,9 +11,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.bean.OrderListModel;
-import com.huotu.huobanmall.seller.bean.OrderScoreModel;
 import com.huotu.huobanmall.seller.utils.BitmapLoader;
-import com.huotu.huobanmall.seller.utils.SystemTools;
 import java.util.List;
 
 /**

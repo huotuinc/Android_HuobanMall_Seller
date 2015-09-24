@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.huotu.huobanmall.seller.R;
-import com.huotu.huobanmall.seller.bean.SalesListModel;
 import com.huotu.huobanmall.seller.bean.TopConsumeModel;
 import com.huotu.huobanmall.seller.utils.BitmapLoader;
 

@@ -3,8 +3,6 @@ package com.huotu.huobanmall.seller.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.huotu.huobanmall.seller.fragment.BaseFragment;
 

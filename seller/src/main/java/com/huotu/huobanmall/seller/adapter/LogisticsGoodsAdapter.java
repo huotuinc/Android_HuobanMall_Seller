@@ -1,8 +1,6 @@
 package com.huotu.huobanmall.seller.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -11,17 +9,16 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.OrderListProductModel;
-import com.huotu.huobanmall.seller.bean.PurchaseOfGoods;
+
 import com.huotu.huobanmall.seller.utils.BitmapLoader;
 
-import org.w3c.dom.Text;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2015/8/24.
  */
-public class LogisticsGoodsAdapter extends BaseAdapter {//RecyclerView.Adapter< LogisticsGoodsAdapter.GoodsViewHolder> {
+public class LogisticsGoodsAdapter extends BaseAdapter {
     List<OrderListProductModel> _data;
     Context _context;
 

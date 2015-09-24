@@ -108,15 +108,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         private final String[] Titles = new String[] { "全部", "待付款","待收货","已完成"};
         List<PullToRefreshListView> _lv;
         List<List<OrderTestModel>> _datas;
-//        List<OrderTestModel> _data1;
-//        List<OrderTestModel> _data2;
-//        List<OrderTestModel> _data3;
-//        List<OrderTestModel> _data4;
         List<OrderDataAdapter> _adapters=null;
-//        OrderDataAdapter _adapter1=null;
-//        OrderDataAdapter _adapter2=null;
-//        OrderDataAdapter _adapter3=null;
-//        OrderDataAdapter _adapter4=null;
         Context _context;
         OrderDataAdapter.ILogisticListener _seeLogisticListener = new OrderDataAdapter.ILogisticListener() {
             @Override
@@ -191,27 +183,6 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                 _datas.add(data);
                 _adapters.add(adapter);
             }
-
-//            _data1 = new ArrayList<>();
-//            _adapter1 = new OrderDataAdapter(_context,_data1);
-//            _adapter1.setLogisticsListener(_seeLogisticListener);
-//            _adapter1.set_seeOrderDetailListener(_seeOrderDetailListener);
-//            _lv.get(0).setAdapter(_adapter1);
-//            _data2 = new ArrayList<>();
-//            _adapter2 = new OrderDataAdapter(_context,_data2);
-//            _adapter2.setLogisticsListener(_seeLogisticListener);
-//            _adapter2.set_seeOrderDetailListener(_seeOrderDetailListener);
-//            _lv.get(1).setAdapter(_adapter2);
-//            _data3 = new ArrayList<>();
-//            _adapter3 = new OrderDataAdapter(_context, _data3);
-//            _adapter3.setLogisticsListener(_seeLogisticListener);
-//            _adapter3.set_seeOrderDetailListener(_seeOrderDetailListener);
-//            _lv.get(2).setAdapter(_adapter3);
-//            _data4 = new ArrayList<>();
-//            _adapter4 = new OrderDataAdapter(_context,_data4);
-//            _adapter4.setLogisticsListener(_seeLogisticListener);
-//            _adapter4.set_seeOrderDetailListener(_seeOrderDetailListener);
-//            _lv.get(3).setAdapter(_adapter4);
         }
 
         protected void getData( int tabIndex ,

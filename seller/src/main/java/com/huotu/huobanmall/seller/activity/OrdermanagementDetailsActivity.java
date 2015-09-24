@@ -6,16 +6,12 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.LogisticsGoodsAdapter;
 import com.huotu.huobanmall.seller.adapter.ScoreExpandableAdapter;
-import com.huotu.huobanmall.seller.bean.MJGoodModel;
 import com.huotu.huobanmall.seller.bean.MJOrderDetailModel;
-import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.bean.OrderDetailModel;
 import com.huotu.huobanmall.seller.bean.OrderListProductModel;
 import com.huotu.huobanmall.seller.bean.OrderScoreModel;

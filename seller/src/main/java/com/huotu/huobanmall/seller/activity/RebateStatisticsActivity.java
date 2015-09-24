@@ -1,14 +1,10 @@
 package com.huotu.huobanmall.seller.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
 import android.widget.Button;
 
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
@@ -16,7 +12,6 @@ import android.widget.RelativeLayout;
 
 import android.widget.RadioGroup;
 
-import android.widget.RelativeLayout;
 
 
 import android.widget.TextView;
@@ -26,16 +21,13 @@ import com.android.volley.Response;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.RebateStatisticsAdapter;
 
 import com.huotu.huobanmall.seller.adapter.UserScoreAdapter;
-import com.huotu.huobanmall.seller.bean.MJSaleListModel;
 import com.huotu.huobanmall.seller.bean.MJTopScoreModel;
 import com.huotu.huobanmall.seller.bean.MJUserScoreModel;
 import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
-import com.huotu.huobanmall.seller.bean.SalesListModel;
 import com.huotu.huobanmall.seller.bean.TopScoreModel;
 import com.huotu.huobanmall.seller.bean.UserScoreModel;
 import com.huotu.huobanmall.seller.common.Constant;
@@ -46,8 +38,6 @@ import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import java.util.ArrayList;
-
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

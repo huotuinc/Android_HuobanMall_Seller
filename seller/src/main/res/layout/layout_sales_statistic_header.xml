@@ -14,8 +14,8 @@
         android:layout_marginLeft="20dp"
         android:id="@+id/header_back"
         android:layout_centerVertical="true"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
         android:background="@color/main_header_bg"
         android:textColor="@android:color/white"
         android:drawableLeft="@drawable/btn_back"/>
@@ -112,5 +112,4 @@
             android:textColor="@color/white"
             android:text="取消"/>
     </RelativeLayout>
-
 </RelativeLayout>

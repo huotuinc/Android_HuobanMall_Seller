@@ -12,17 +12,14 @@ import java.net.URL;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.huotu.huobanmall.seller.R;
-import com.huotu.huobanmall.seller.common.BaseService;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.widget.CircleProgressBar;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
-import android.text.format.Formatter;
 import android.view.KeyEvent;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,10 +84,8 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 		FullUpate, DiffUpdate
 	}
 	private UpdateType updateType;
-//	private String PATH = Environment.getExternalStorageDirectory()
 	private String oldapk_filepath ;//"WeiboV3.apk";
 	private String newapk_savepath ;//"WeiboV4.1.apk";
-	//private String patchpath = "patch.apk";//"weibopatch.apk";
 	private String clientURL;
 
 	@Override
@@ -98,8 +93,6 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_appupdate);
-		//LinearLayout lay = (LinearLayout) findViewById(R.id.lay);
-		//lay.getBackground().setAlpha(150);
 
 		oldapk_filepath = Constant.PATH_PKG_TEMP  + File.separator + getPackageName() + "_old.apk";
 		newapk_savepath = Constant.PATH_PKG_TEMP + File.separator + getPackageName() + "_new.apk";
@@ -146,7 +139,7 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 	private void initView() {
 		progressWithArrow = (CircleProgressBar) findViewById(R.id.progressWithArrow);
 
-		//progressWithArrow.setColorSchemeColors(Color.BLUE,Color.YELLOW);
+
 		handler = new Handler(){
 			@Override
 			public void handleMessage(Message msg) {

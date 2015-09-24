@@ -218,20 +218,10 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
             ForgetActivity.this.closeProgressDialog();
 
             if (sendSMSModel.getSystemResultCode() != 1) {
-//               SimpleDialogFragment.createBuilder( ForgetActivity.this , ForgetActivity.this.getSupportFragmentManager())
-//                       .setTitle("错误信息")
-//                       .setMessage(sendSMSModel.getSystemResultDescription() )
-//                       .setNegativeButtonText("关闭")
-//                       .show();
                 DialogUtils.showDialog(ForgetActivity.this, ForgetActivity.this.getSupportFragmentManager(), "错误信息", sendSMSModel.getSystemResultDescription(), "关闭");
                 return;
             }
             if (sendSMSModel.getResultCode() != 1) {
-//                SimpleDialogFragment.createBuilder( ForgetActivity.this , ForgetActivity.this.getSupportFragmentManager())
-//                        .setTitle("错误信息")
-//                        .setMessage(sendSMSModel.getResultDescription() )
-//                        .setNegativeButtonText("关闭")
-//                        .show();
                 DialogUtils.showDialog(ForgetActivity.this, ForgetActivity.this.getSupportFragmentManager(), "错误信息", sendSMSModel.getResultDescription(), "关闭");
                 return;
             }
@@ -301,10 +291,6 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
 
     }
 
-//    public void onEvent(String enableVoice ){
-//        Toast.makeText(this, "called",Toast.LENGTH_LONG).show();
-//    }
-
     public class TimeCountDownListener implements CountDownTimerButton.CountDownFinishListener {
         public boolean getEnableVoice() {
             return enableVoice;
@@ -322,7 +308,6 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
             //刷新获取按钮状态，设置为可获取语音
             btnGet.setText("尝试语音获取");
             btnGet.setTag(Constant.SMS_TYPE_VOICE);
-            //ToastUtils.showLongToast(ForgetActivity.this, "还没收到短信，请尝试语音获取");
             Toast.makeText(ForgetActivity.this, "还没收到短信，请尝试语音获取", Toast.LENGTH_LONG).show();
         }
     }

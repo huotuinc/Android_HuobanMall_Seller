@@ -1,14 +1,10 @@
 package com.huotu.huobanmall.seller.adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.MenuModel;
 

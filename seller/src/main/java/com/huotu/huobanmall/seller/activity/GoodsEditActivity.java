@@ -14,9 +14,7 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
-import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.huotu.huobanmall.seller.R;
@@ -27,9 +25,7 @@ import com.huotu.huobanmall.seller.bean.GoodsOpeTypeEnum;
 import com.huotu.huobanmall.seller.bean.MJGoodModel;
 import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.common.Constant;
-import com.huotu.huobanmall.seller.fragment.SaleGoodsFragment;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
-import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
@@ -57,8 +53,6 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
     RadioGroup goodsedit_title;
     @Bind(R.id.header_back)
     TextView _header_back;
-    //@Bind(R.id.goodsedit_groupAll)
-    //RadioGroup _goodsedit_groupall;
     @Bind(R.id.goodsedit_all)
     Button _goodsedit_all;
     @Bind(R.id.goodsedit_delete)
@@ -98,12 +92,7 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
         _goodsedit_delete.setOnClickListener(this);
         _goodsedit_onshelf.setOnClickListener(this);
         _goodsedit_offshelf.setOnClickListener(this);
-
-        //_goodsedit_all.setOnCheckedChangeListener(this);
         _goodsedit_all.setOnClickListener(this);
-
-        //_goodsedit_groupall.setOnCheckedChangeListener(this);
-
         _goodsedit_listview.setMode(PullToRefreshBase.Mode.BOTH);
 
         _goodsedit_listview.getRefreshableView().setOnItemClickListener(this);
@@ -247,7 +236,6 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                 if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList()!=null) {
                     _saleGoodsList.addAll(mjGoodModel.getResultData().getList());
                 }
-                //_saleGoodsAdapter.notifyDataSetChanged();
                 _goodsedit_listview.getRefreshableView().setAdapter(_saleGoodsAdapter);
             }else if( _type==1 && _operateType == OperateTypeEnum.LOADMORE){
                 if( mjGoodModel.getResultData() !=null && mjGoodModel.getResultData().getList() !=null ) {
@@ -264,7 +252,6 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                 if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList()!=null ) {
                     _offShelfList.addAll(mjGoodModel.getResultData().getList());
                 }
-                //_goodsedit_listview.setAdapter(_offShelfAdapter);
                 _offShelfAdapter.notifyDataSetChanged();
             }
         }
@@ -293,8 +280,6 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
     }
 
     protected void selectGoods(){
-        //_goodsedit_all.setChecked( !_goodsedit_all.isChecked() );
-
         boolean isChecked =false;
         if( _goodsedit_all.getTag()==null){
             isChecked=false;
@@ -381,15 +366,6 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                 this
         );
 
-//        if( _progressDialog!=null){
-//            _progressDialog.dismiss();
-//            _progressDialog=null;
-//        }
-//        ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder( this, this.getSupportFragmentManager())
-//                .setMessage("正在获取数据，请稍等...")
-//                .setCancelable(false)
-//                .setCancelableOnTouchOutside(false);
-//        _progressDialog = (ProgressDialogFragment) builder.show();
         GoodsEditActivity.this.showProgressDialog("","请稍等...");
 
         VolleyRequestManager.getRequestQueue().add(operGoodsRequest);
