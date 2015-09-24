@@ -226,7 +226,7 @@ public class LogisticsActivity extends BaseFragmentActivity {
 
         BitmapLoader.create().displayUrl( this , _logistics_logo , _data.getPictureURL());
         _logistics_orderNo.setText(_data.getNo());
-        _logistics_status.setText(_data.getStatus());
+        _logistics_status.setText(_data.getStatusName());
         _logistics_source.setText(_data.getSource());
 
         _goodsAdapter=new LogisticsGoodsAdapter(this, _data.getList());

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.LogisticsDataModel;
 import com.huotu.huobanmall.seller.bean.LogisticsDetailModel;
+import com.huotu.huobanmall.seller.utils.SystemTools;
 
 import org.w3c.dom.Text;
 
@@ -42,9 +43,11 @@ public class LogisticsAdapter extends BaseAdapter{//RecyclerView.Adapter<Logisti
             if( position==0 ) {
                 convertView = _inflater.inflate( R.layout.layout_logistics_item_first, null);
                 holder.tvLogistics_Context =(TextView) convertView.findViewById(R.id.logistics_item_context);
+                holder.tvTime = (TextView) convertView.findViewById(R.id.logistics_item_time);
             }else{
                 convertView = _inflater.inflate(R.layout.layout_logistics_item,null);
                 holder.tvLogistics_Context=(TextView)convertView.findViewById(R.id.logistics_item_context);
+                holder.tvTime = (TextView) convertView.findViewById(R.id.logistics_item_time);
             }
             convertView.setTag( holder);
         }else{
@@ -52,6 +55,8 @@ public class LogisticsAdapter extends BaseAdapter{//RecyclerView.Adapter<Logisti
         }
 
         holder.tvLogistics_Context.setText( _list.get(position).getContext() );
+        //String dateStr = SystemTools.getDateTime( _list.get(position).getTimes() , "yyyy-MM-dd HH:mm:ss" );
+        holder.tvTime.setText( _list.get(position).getTimes()  );
 
         return convertView;
     }
@@ -103,6 +108,8 @@ public class LogisticsAdapter extends BaseAdapter{//RecyclerView.Adapter<Logisti
 
     public class LogisticsDetailViewHolder{ //extends RecyclerView.ViewHolder{
         private TextView tvLogistics_Context;
+        private TextView tvTime;
+
 //        public LogisticsDetailViewHolder(View itemView) {
 //            super(itemView);
 //

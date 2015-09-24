@@ -20,6 +20,10 @@ public class LogisticsDetailModel {
      */
     private String status;
     /**
+     * 物流状态 名称
+     */
+    private String statusName;
+    /**
      * 物流跟踪
      */
     private List<LogisticsDataModel> track;
@@ -81,5 +85,7 @@ public class LogisticsDetailModel {
         this.list = list;
     }
 
-
+    public String getStatusName() {
+        return LogisticsStatusEnum.getName( status );
+    }
 }

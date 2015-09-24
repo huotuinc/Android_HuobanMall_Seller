@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.OrderScoreModel;
+import com.huotu.huobanmall.seller.bean.UserRebateModel;
+import com.huotu.huobanmall.seller.bean.UserScoreModel;
 import com.huotu.huobanmall.seller.utils.SystemTools;
 
 import org.w3c.dom.Text;

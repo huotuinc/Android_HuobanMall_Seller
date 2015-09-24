@@ -41,14 +41,14 @@ public class OrderDetailModel {
     /**
      * 返利积分
      */
-    private Integer score;
+    private List<UserScoreModel> scoreList;
 
-    public Integer getScore() {
-        return score;
+    public List<UserScoreModel> getScoreList() {
+        return scoreList;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
+    public void setScoreList(List<UserScoreModel> scoreList) {
+        this.scoreList = scoreList;
     }
 
     public String getAddress() {

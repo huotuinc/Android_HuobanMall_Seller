@@ -9,7 +9,7 @@ public class OrderTestModel {
     private String childOrderNO;
     private String mainOrderNO;
     private String status;
-    private String orderTime;
+    private Date time;
     private String pictureUrl;
     private String goodsName;
     private String price;
@@ -50,12 +50,12 @@ public class OrderTestModel {
         this.status = status;
     }
 
-    public String getOrderTime() {
-        return orderTime;
+    public Date getTime() {
+        return time;
     }
 
-    public void setOrderTime(String orderTime) {
-        this.orderTime = orderTime;
+    public void setTime(Date time) {
+        this.time = time;
     }
 
     public String getPictureUrl() {

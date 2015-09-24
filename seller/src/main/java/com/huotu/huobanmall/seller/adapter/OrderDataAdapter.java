@@ -163,7 +163,7 @@ public class OrderDataAdapter extends BaseAdapter{ //RecyclerView.Adapter<OrderD
             holder = (ViewHolder)convertView.getTag();
         }
         holder.tvOrdernNo.setText( model.getMainOrderNO()==null ? "": model.getMainOrderNO());
-        holder.tvOrderTime.setText( String.valueOf(model.getOrderTime()));
+        holder.tvOrderTime.setText( String.valueOf(model.getTime()));
 
         return convertView;
     }

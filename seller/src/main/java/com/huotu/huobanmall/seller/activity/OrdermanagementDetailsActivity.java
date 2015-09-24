@@ -45,8 +45,20 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
     TextView header_title;
     @Bind(R.id.header_operate)
     TextView header_operate;
+    @Bind(R.id.buyer)
+    TextView buyer;
+    @Bind(R.id.receiver)
+    TextView receiver;
+    @Bind(R.id.address)
+    TextView address;
     @Bind(R.id.moblic)
     TextView moblic;
+    @Bind(R.id.orderNo)
+    TextView orderNo;
+    @Bind(R.id.orderdetail_amount)
+    TextView tvAmount;
+    @Bind(R.id.orderdetail_pay)
+    TextView tvPaid;
     @Bind(R.id.logistics)
     TextView logistics;
     @Bind(R.id.order_item_goodsList)
@@ -58,7 +70,7 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
 
     OrderDetailModel _data=null;
 
-    LogisticsGoodsAdapter orderGoodsAdapter;
+    LogisticsGoodsAdapter _orderGoodsAdapter;
     List<OrderListProductModel> _productList=null;
 
     ScoreExpandableAdapter _scoreAdapter=null;
@@ -71,7 +83,9 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
         setContentView(R.layout.activity_ordermanagement_details);
         initView();
 
-        demoData();
+        getData();
+
+        //demoData();
     }
 
     @Override
@@ -81,6 +95,7 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
     }
     protected void initView() {
         ButterKnife.bind(this);
+        header_operate.setVisibility(View.GONE);
         header_back.setOnClickListener(this);
         header_title.setText("订单管理详情");
         moblic.setOnClickListener(this);
@@ -90,51 +105,52 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
             _orderNo = getIntent().getStringExtra( Constant.Extra_OrderNo );
         }
 
+        _orderNo = "111ec76e-fe08-45a8-a13c-782e290c5ba1";
+
         _data = new OrderDetailModel();
-        _productList=new ArrayList<>();
-        OrderListProductModel orderListProductModel=new OrderListProductModel();
-        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-        orderListProductModel.setSpec("40*40");
-        orderListProductModel.setMoney(1333f);
-        orderListProductModel.setAmount(2333);
-        _productList.add(orderListProductModel);
-        orderListProductModel=new OrderListProductModel();
-        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-        orderListProductModel.setSpec("40*40");
-        orderListProductModel.setMoney(1333f);
-        orderListProductModel.setAmount(2333);
-        _productList.add(orderListProductModel);
-        orderListProductModel=new OrderListProductModel();
-        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-        orderListProductModel.setSpec("40*40");
-        orderListProductModel.setMoney(1333f);
-        orderListProductModel.setAmount(2333);
-        _productList.add(orderListProductModel);
-        orderListProductModel=new OrderListProductModel();
-        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-        orderListProductModel.setSpec("40*40");
-        orderListProductModel.setMoney(1333f);
-        orderListProductModel.setAmount(2333);
-        _productList.add(orderListProductModel);
-        orderListProductModel=new OrderListProductModel();
-        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-        orderListProductModel.setSpec("40*40");
-        orderListProductModel.setMoney(1333f);
-        orderListProductModel.setAmount(2333);
-        _productList.add(orderListProductModel);
-        orderListProductModel=new OrderListProductModel();
-        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-        orderListProductModel.setSpec("40*40");
-        orderListProductModel.setMoney(1333f);
-        orderListProductModel.setAmount(2333);
-        _productList.add(orderListProductModel);
 
-        _data.setList(_productList);
+//        _productList=new ArrayList<>();
+//        OrderListProductModel orderListProductModel=new OrderListProductModel();
+//        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
+//        orderListProductModel.setSpec("40*40");
+//        orderListProductModel.setMoney(1333f);
+//        orderListProductModel.setAmount(2333);
+//        _productList.add(orderListProductModel);
+//        orderListProductModel=new OrderListProductModel();
+//        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
+//        orderListProductModel.setSpec("40*40");
+//        orderListProductModel.setMoney(1333f);
+//        orderListProductModel.setAmount(2333);
+//        _productList.add(orderListProductModel);
+//        orderListProductModel=new OrderListProductModel();
+//        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
+//        orderListProductModel.setSpec("40*40");
+//        orderListProductModel.setMoney(1333f);
+//        orderListProductModel.setAmount(2333);
+//        _productList.add(orderListProductModel);
+//        orderListProductModel=new OrderListProductModel();
+//        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
+//        orderListProductModel.setSpec("40*40");
+//        orderListProductModel.setMoney(1333f);
+//        orderListProductModel.setAmount(2333);
+//        _productList.add(orderListProductModel);
+//        orderListProductModel=new OrderListProductModel();
+//        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
+//        orderListProductModel.setSpec("40*40");
+//        orderListProductModel.setMoney(1333f);
+//        orderListProductModel.setAmount(2333);
+//        _productList.add(orderListProductModel);
+//        orderListProductModel=new OrderListProductModel();
+//        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
+//        orderListProductModel.setSpec("40*40");
+//        orderListProductModel.setMoney(1333f);
+//        orderListProductModel.setAmount(2333);
+//        _productList.add(orderListProductModel);
+//        _data.setList(_productList);
 
-        orderGoodsAdapter=new  LogisticsGoodsAdapter(this,_productList);
-        order_item_goodsList.setAdapter(orderGoodsAdapter);
+        _orderGoodsAdapter= new LogisticsGoodsAdapter(this, _data.getList());
+        order_item_goodsList.setAdapter(_orderGoodsAdapter);
         orderscrollview.smoothScrollTo(0,0);
-
     }
 
     protected void demoData(){
@@ -219,8 +235,22 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
                         , "关闭");
                 return;
             }
+            if( mjOrderDetailModel.getResultData().getData() ==null ){
+                DialogUtils.showDialog(OrdermanagementDetailsActivity.this,OrdermanagementDetailsActivity.this.getSupportFragmentManager(),"错误信息","返回数据不正确","关闭");
+                return;
+            }
 
             //TODO
+            _data = mjOrderDetailModel.getResultData().getData();
+            _orderGoodsAdapter = new LogisticsGoodsAdapter(OrdermanagementDetailsActivity.this , _data.getList());
+            buyer.setText( _data.getBuyer() );
+            receiver.setText( _data.getReceiver() );
+            address.setText(_data.getAddress());
+            moblic.setText( "联系方式：" + _data.getContact() );
+            orderNo.setText( _data.getOrderNo() );
+            tvAmount.setText( "共"+_data.getAmount() +"件商品 实付:￥" );
+            tvPaid.setText( String.valueOf( _data.getPaid() ) );
+            //_scoreAdapter = new ScoreExpandableAdapter(OrdermanagementDetailsActivity.this , _data.getScoreList() );
 
         }
     };

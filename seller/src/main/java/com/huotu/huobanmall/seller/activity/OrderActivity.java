@@ -9,11 +9,15 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -39,6 +43,7 @@ import com.viewpagerindicator.TabPageIndicator;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +54,16 @@ import butterknife.ButterKnife;
 /**
  * 订单管理 界面 2
  */
-public class OrderActivity extends BaseFragmentActivity implements View.OnClickListener {
+public class OrderActivity extends BaseFragmentActivity implements View.OnClickListener , TextView.OnEditorActionListener {
+
+    @Bind(R.id.header_bar)
+    RelativeLayout _header_bar;
+    @Bind(R.id.search_bar)
+    RelativeLayout _search_bar;
+    @Bind(R.id.search_cancel)
+    Button _search_cancel;
+    @Bind(R.id.search_text)
+    com.huotu.android.library.libedittext.EditText _search_text;
     @Bind(R.id.header_back)
     Button _headerBack;
     @Bind(R.id.order_indicator)
@@ -78,6 +92,26 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         _ViewPager.setAdapter(_pagerAdapter);
         _indicator.setViewPager(_ViewPager);
         _header_operate.setOnClickListener(this);
+        _search_cancel.setOnClickListener(this);
+        _search_text.setOnEditorActionListener(this);
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+            if (TextUtils.isEmpty( _search_text.getText())) {
+                _search_text.requestFocus();
+                _search_text.setError("不能为空");
+            } else {
+                //TODO
+                String key = _search_text.getText().toString().trim();
+                //_operateType = OperateTypeEnum.REFRESH;
+                //ConsumeStatisticsActivity.this.showProgressDialog("","正在获取数据，请稍等...");
+                //getData_MX(_operateType, key);
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -86,23 +120,34 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         ButterKnife.unbind(this);
     }
 
+    protected void openSearchBar(){
+        _search_bar.setVisibility(View.VISIBLE);
+        _header_bar.setVisibility(View.GONE);
+    }
+    protected void closeSearchBar(){
+        _search_text.setText("");
+        _search_bar.setVisibility(View.GONE);
+        _header_bar.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.header_back: {
                 finish();
+                break;
             }
-            break;
             case R.id.header_operate: {
-                queryOrder();
+                openSearchBar();
+                break;
+            }
+            case R.id.search_cancel:{
+                closeSearchBar();
                 break;
             }
         }
     }
 
-    protected void queryOrder(){
-
-    }
 
     public class OrderPagerAdapter extends PagerAdapter{
         private final String[] Titles = new String[] { "全部", "待付款","待收货","已完成"};
@@ -156,7 +201,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                         int tabIndex = (Integer) pullToRefreshBase.getTag();
                         if( tabIndex == 0) {
-                            getData_0( OperateTypeEnum.REFRESH);
+                            getData_0( OperateTypeEnum.REFRESH  );
                         }else if( tabIndex ==1){
                             getData_1( OperateTypeEnum.REFRESH);
                         }else if( tabIndex==2){
@@ -227,6 +272,10 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                 paras.put("lastDate", lastDate);
             }
 
+            if( keyword !=null && keyword.length()>0){
+                paras.put("keyword",keyword);
+            }
+
             HttpParaUtils httpParaUtils =new HttpParaUtils();
             url = httpParaUtils.getHttpGetUrl( url , paras);
 
@@ -273,26 +322,33 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             }
         };
 
-        protected void getData_0( OperateTypeEnum operateType){
+        protected void getData_0( OperateTypeEnum operateType  ){
             String lastDate="";
-            getData( 0 , lastDate , "" , operateType , listener_0 );
+            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(0) !=null && _datas.get(0).size()>0 ){
+                lastDate = String.valueOf( _datas.get(0).get( _datas.get(0).size()-1 ).getTime().getTime());
+            }
+
+            String keyword = _search_text.getText().toString();
+            getData(0, lastDate, keyword, operateType, listener_0 );
         }
         protected void getData_1(OperateTypeEnum operateType){
-            getData( 1 , "" ,"", operateType , listener_1 );
+
+            String keyword = _search_text.getText().toString();
+            getData( 1 , "" ,keyword , operateType , listener_1 );
         }
         protected void getData_2(OperateTypeEnum operateType){
-            getData( 2 ,"","", operateType , listener_2 );
+            String keyword = _search_text.getText().toString();
+            getData( 2 ,"",keyword , operateType , listener_2 );
         }
         protected void getData_3(OperateTypeEnum operateType){
-            getData( 3 ,"","", operateType, listener_3 );
+            String keyword = _search_text.getText().toString();
+            getData( 3 ,"",keyword , operateType, listener_3 );
         }
 
         Response.ErrorListener errorListener=new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 //this.closeProgressDialog();
-
-
 
                 String message="";
                 if( null != volleyError.networkResponse){
@@ -314,7 +370,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                 OrderListModel child = new OrderListModel();
                 child.setOrderNo("AAAAAAA"+i);
                 child.setStatus(0);
-                child.setList( new ArrayList<GoodsModel>());
+                child.setList(new ArrayList<GoodsModel>());
                 for( int k=0;k<4;k++){
                     GoodsModel good = new GoodsModel();
                     good.setGoodsId(i);
@@ -326,8 +382,6 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                 model.getChildOrders().add(child);
             }
         }
-
-
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
@@ -360,7 +414,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     item.setMainOrderNO("3223332233" + i);
                     item.setStatus("1");
                     item.setTotalPrice("34343.44");
-                    item.setOrderTime("2015-09-22 10:11:44");
+                    item.setTime(new Date(System.currentTimeMillis()));
                     item.setViewType(0);
                     _datas.get(position).add(item);
                 }
@@ -372,7 +426,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
 
                 for( int i=0;i<10;i++){
                     OrderTestModel item = new OrderTestModel();
-                    item.setChildOrderNO("44444"+i);
+                    item.setChildOrderNO("44444" + i);
                     item.setStatus("1");
                     item.setViewType(1);
                     _datas.get(position).add(item);
@@ -391,7 +445,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     item = new OrderTestModel();
                     item.setMainOrderNO("444444" + i);
                     item.setStatus("1");
-                    item.setOrderTime("2015-09-22 10:11:44");
+                    item.setTime( new Date( System.currentTimeMillis() ));
                     item.setTotalPrice("34343.44");
                     item.setViewType(0);
                     _datas.get(position).add(item);
