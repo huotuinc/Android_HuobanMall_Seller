@@ -53,8 +53,6 @@ public class PswchangeActivity extends BaseFragmentActivity implements
 
     private Button backImage;
 
-    //private NoticeDialog noticeDialog;
-
     private TextView commit;
 
     private TextView forgetPsw;
@@ -218,13 +216,6 @@ public class PswchangeActivity extends BaseFragmentActivity implements
                 return;
             }
 
-
-//                SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
-//                        .setTitle("修改密码")
-//                        .setMessage("修改密码成功")
-//                        .setNegativeButtonText("关闭")
-//                        //.setRequestCode(REQUEST_CODE)
-//                        .show();
             ToastUtils.showLong("修改密码成功");
 
             SellerApplication.getInstance().writeMerchantInfo( htMerchantModel.getResultData().getUser() );

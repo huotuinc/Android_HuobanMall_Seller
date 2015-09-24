@@ -20,10 +20,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.huotu.huobanmall.seller.Interface.IIndexFragmentInteractionListener;
 import com.huotu.huobanmall.seller.bean.CloseEvnt;
 import com.huotu.huobanmall.seller.bean.MJNewTodayModel;
-import com.huotu.huobanmall.seller.bean.RefreshSettingEvent;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.R;
@@ -93,10 +91,6 @@ public class MainActivity extends BaseFragmentActivity{
         if( EventBus.getDefault().isRegistered(this)==false) {
             EventBus.getDefault().register(this);
         }
-
-        //String formatText = "￥%.2f";
-        //CountUpTimerView countUpView =new CountUpTimerView( main_todyMoney , formatText , 1000.33f,5000.45f, 3000,100);
-        //countUpView.start();
 
         _llOrder.setOnClickListener(this);
         _llMember.setOnClickListener(this);
@@ -189,27 +183,18 @@ public class MainActivity extends BaseFragmentActivity{
 
         if(_currentIndex==0){
             _space1.setVisibility(View.VISIBLE);
-            //_space1.setBackgroundResource(R.color.main_header_bg);
             _space2.setVisibility(View.GONE);
-            //_space2.setBackgroundColor(Color.WHITE);
             _space3.setVisibility(View.GONE);
-            //_space3.setBackgroundColor(Color.WHITE);
             setLineChartData(_mainChart, _data.getResultData().getOrderHour(), _data.getResultData().getOrderAmount());
         }else if( _currentIndex==1){
             _space1.setVisibility(View.GONE);
-            //_space1.setBackgroundColor(Color.WHITE);
             _space2.setVisibility(View.VISIBLE);
-            //_space2.setBackgroundResource(R.color.main_header_bg);
             _space3.setVisibility(View.GONE);
-            //_space3.setBackgroundColor(Color.WHITE);
             setLineChartData(_mainChart, _data.getResultData().getMemberHour(), _data.getResultData().getMemberAmount());
         }else if(_currentIndex==2){
             _space1.setVisibility(View.GONE);
-            //_space1.setBackgroundColor(Color.WHITE);
             _space2.setVisibility(View.GONE);
-            //_space2.setBackgroundColor(Color.WHITE);
             _space3.setVisibility(View.VISIBLE);
-            //_space3.setBackgroundResource(R.color.main_header_bg);
             setLineChartData(_mainChart, _data.getResultData().getPartnerHour(), _data.getResultData().getPartnerAmount());
         }
     }
@@ -224,8 +209,6 @@ public class MainActivity extends BaseFragmentActivity{
         lineChart.setBackgroundColor(bg);
         lineChart.setDescription("");
         lineChart.setNoDataText("暂无数据");
-        //lineChart.getAxisRight().setEnabled(false);
-
         List<String> xValues= new ArrayList<String>();
         List<Entry> yValues=new ArrayList<>();
         int count = xData.size();
@@ -253,17 +236,10 @@ public class MainActivity extends BaseFragmentActivity{
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
-        //xAxis.setDrawGridLines(false);
-
-        //xAxis.setTextColor(0xFFFFFFFF);
-
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setStartAtZero(true);
         yAxis.setLabelCount(4, false);
         yAxis.setDrawGridLines(false);
-        //yAxis.setTextColor(0xFFFFFFFF);
-
-        //lineChart.getAxisRight().setDrawGridLines(false);
 
         lineChart.getAxisRight().setDrawLabels(false);
 
@@ -273,11 +249,6 @@ public class MainActivity extends BaseFragmentActivity{
         lineChart.setData(data);
         lineChart.animateX(2000, Easing.EasingOption.EaseInOutQuart);
     }
-
-//    @Override
-//    public void switchFragment(int position) {
-//        //_indicator.setCurrentItem(position);
-//    }
 
     Response.Listener<MJNewTodayModel> newTodayModelListener = new Response.Listener<MJNewTodayModel>() {
         @Override

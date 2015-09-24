@@ -1,6 +1,5 @@
 package com.huotu.huobanmall.seller.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -26,12 +25,10 @@ import com.huotu.huobanmall.seller.adapter.SalesDetailAdapter;
 import com.huotu.huobanmall.seller.adapter.TopsalesAdapter;
 import com.huotu.huobanmall.seller.bean.MJSaleListModel;
 import com.huotu.huobanmall.seller.bean.MJTopSalesModel;
-import com.huotu.huobanmall.seller.bean.MJTopScoreModel;
 import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.bean.SalesListModel;
 import com.huotu.huobanmall.seller.bean.TopSalesModel;
 import com.huotu.huobanmall.seller.common.Constant;
-import com.huotu.huobanmall.seller.fragment.SaleGoodsFragment;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;

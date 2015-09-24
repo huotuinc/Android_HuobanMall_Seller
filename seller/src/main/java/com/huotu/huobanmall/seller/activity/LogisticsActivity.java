@@ -1,12 +1,7 @@
 package com.huotu.huobanmall.seller.activity;
 
-import android.graphics.Canvas;
+
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -20,10 +15,8 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.huotu.huobanmall.seller.R;
-import com.huotu.huobanmall.seller.adapter.GoodsAdapter;
 import com.huotu.huobanmall.seller.adapter.LogisticsAdapter;
 import com.huotu.huobanmall.seller.adapter.LogisticsGoodsAdapter;
-import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.bean.LogisticsDataModel;
 import com.huotu.huobanmall.seller.bean.LogisticsDetailModel;
 import com.huotu.huobanmall.seller.bean.MJLogisticsDetailModel;
@@ -64,9 +57,7 @@ public class LogisticsActivity extends BaseFragmentActivity {
     Button _headerBack;
     @Bind(R.id.logistics_pullScrollView)
     PullToRefreshScrollView _scrollView;
-    //List<OrderListProductModel> _goodsList;
     LogisticsGoodsAdapter _goodsAdapter;
-    //List<LogisticsDetailModel> _logisticsList=null;
     LogisticsDetailModel _data=null;
     LogisticsAdapter _logisticAdapter;
     String _orderNo="";
@@ -119,7 +110,6 @@ public class LogisticsActivity extends BaseFragmentActivity {
         _data.setTrack(logisticsList);
 
         _logisticAdapter =new LogisticsAdapter(this, logisticsList );
-        //_logistics_list.setLayoutManager(new LinearLayoutManager(this));
         _logistics_list.setAdapter(_logisticAdapter);
         _headerBack.setOnClickListener(this);
 
@@ -137,7 +127,6 @@ public class LogisticsActivity extends BaseFragmentActivity {
         _data.setList(goodsList);
 
         _goodsAdapter = new LogisticsGoodsAdapter(this, goodsList);
-        //_logistics_goods.setLayoutManager(new LinearLayoutManager(this));
         _logistics_goods.setAdapter(_goodsAdapter);
 
         _scrollView.getRefreshableView().smoothScrollTo(0, 0);
@@ -206,18 +195,8 @@ public class LogisticsActivity extends BaseFragmentActivity {
 
             _data = mjLogisticsDetailModel.getResultData().getData();
 
-//            if( mjLogisticsDetailModel.getResultData()==null){
-//                DialogUtils.showDialog(LogisticsActivity.this,LogisticsActivity.this.getSupportFragmentManager(),
-//                        "错误信息", "服务器返回空数据","关闭");
-//                return;
-//            }
-
-
-            //logisticsList.add( mjLogisticsDetailModel.getResultData().getData() );
-
             setData();
 
-            //_logisticAdapter.notifyDataSetChanged();
         }
     };
 

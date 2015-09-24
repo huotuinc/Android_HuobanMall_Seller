@@ -77,8 +77,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
                 android:background="@drawable/line_gray_shape" />
 
             <LinearLayout
@@ -102,11 +100,6 @@
                     android:text="杭州市滨江区西兴街道阡陌路482号智慧E谷"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@drawable/line_gray_shape" />
 
             </LinearLayout>
 
@@ -199,8 +192,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
                 android:background="@drawable/line_gray_shape" />
 
             <LinearLayout
@@ -226,8 +217,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
                 android:background="@drawable/line_gray_shape" />
 
             <LinearLayout

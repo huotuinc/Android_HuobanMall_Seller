@@ -9,20 +9,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.huotu.huobanmall.seller.R;
-import com.huotu.huobanmall.seller.activity.BillActivity;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.bean.OrderListModel;
-import com.huotu.huobanmall.seller.bean.OrderListProductModel;
 import com.huotu.huobanmall.seller.bean.OrderStatusEnum;
 import com.huotu.huobanmall.seller.utils.BitmapLoader;
-import com.huotu.huobanmall.seller.utils.ToastUtils;
-import com.huotu.huobanmall.seller.widget.MJExpandableListView;
 import com.huotu.huobanmall.seller.widget.MJListView;
 
 import java.util.ArrayList;

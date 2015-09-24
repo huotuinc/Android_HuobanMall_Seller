@@ -64,7 +64,7 @@
                             android:id="@+id/logo"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@mipmap/ic_launcher"
+
 
                             />
                         <ImageView
@@ -121,7 +121,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="火图"
+                        android:text=""
                         android:textSize="16sp"
                         android:textColor="@color/black"
                         />
@@ -171,7 +171,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="火图hhhhh"
+                        android:text=""
                         android:textSize="16sp"
                         android:textColor="@color/black"
                         />
@@ -231,7 +231,7 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:maxLength="11"
-                        android:text="18767152078"
+                        android:text=""
                         android:textSize="16sp"
                         android:textColor="@color/black"
                         />
@@ -282,7 +282,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="开开"
+                        android:text=""
                         android:textSize="16sp"
                         android:textColor="@color/black"
                         />

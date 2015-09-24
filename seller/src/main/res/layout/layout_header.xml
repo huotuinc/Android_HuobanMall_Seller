@@ -9,7 +9,7 @@
         android:id="@+id/header_back"
         android:layout_centerVertical="true"
         android:layout_width="50dp"
-        android:layout_height="30dp"
+        android:layout_height="20dp"
         android:background="@color/main_header_bg"
         android:textColor="@android:color/white"
         android:drawableLeft="@drawable/btn_back"/>

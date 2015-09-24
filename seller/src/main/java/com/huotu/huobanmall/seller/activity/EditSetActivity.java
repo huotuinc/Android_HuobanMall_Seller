@@ -8,8 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+import com.android.volley.Response;;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.EditSetTypeEnum;
 import com.huotu.huobanmall.seller.bean.HTMerchantModel;

@@ -19,7 +19,6 @@ import com.huotu.huobanmall.seller.adapter.BillDataAdapter;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.bean.OrderListModel;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
-import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
