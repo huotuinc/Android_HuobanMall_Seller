@@ -30,7 +30,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2100单"
+        android:text=""
         android:textColor="@color/black"
         android:layout_alignTop="@+id/consumestatistics_label1"
         android:layout_toRightOf="@+id/consumestatistics_label1"
@@ -39,7 +39,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="3100"
+        android:text=""
         android:textSize="22sp"
         android:textColor="@color/statistic_check_color"
         android:layout_alignTop="@+id/consumestatistics_name"

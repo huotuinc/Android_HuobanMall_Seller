@@ -28,7 +28,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="100"
+        android:text=""
         android:layout_alignTop="@+id/goods_inventory"
         android:layout_toRightOf="@+id/goods_inventory"
         android:layout_toEndOf="@+id/goods_inventory"
@@ -43,7 +43,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1000元"
+        android:text=""
         android:layout_alignTop="@+id/goods_num"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
