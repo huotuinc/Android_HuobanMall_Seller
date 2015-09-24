@@ -61,7 +61,8 @@ public class TopGoodsAdapter extends BaseAdapter {
         holder.tvPrice.setText( "￥"+String.valueOf( _list.get(position).getPrice() ) );
         holder.tvTitle.setText(_list.get(position).getTitle());
         holder.tvAmount.setText( String.valueOf( _list.get(position).getAmount() ) +"人已购买");
-        BitmapLoader.create().displayUrl( _context , holder.ivPicture , _list.get(position).getPicture() );
+        BitmapLoader.create().displayUrl(_context, holder.ivPicture, _list.get(position).getPicture());
+        holder.tvTop.setText( String.valueOf((position + 1)) );
 
         if(position==0){
             holder.tvTop.setBackgroundResource(R.mipmap.yellow);

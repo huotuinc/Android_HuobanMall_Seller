@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/logistics_item_ll1"
-        android:layout_width="20dp"
+        android:layout_width="30dp"
         android:orientation="vertical"
         android:layout_height="match_parent">
         <ImageView

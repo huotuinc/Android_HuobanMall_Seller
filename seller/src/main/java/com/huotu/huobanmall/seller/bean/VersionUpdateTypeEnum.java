@@ -7,7 +7,7 @@ public enum VersionUpdateTypeEnum {
     //0 无更新 1增量更新 2 整包更新 3 强制增量更新 4 强制整包更新
     NO("无更新",0),
     INCREMENT("1增量更新",1),
-    WHOLE("整包更新",'2'),
+    WHOLE("整包更新",2),
     FORCE_INCREMENT("强制增量更新",3),
     FORCE_WHOLE("强制整包更新",4);
 

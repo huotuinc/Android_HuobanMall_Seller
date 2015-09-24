@@ -19,14 +19,14 @@
         android:layout_toRightOf="@+id/salesdetail_imageView"
         android:id="@+id/order" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="1654646846514"
         android:maxEms="16"
         android:textColor="@color/black"
         android:layout_alignTop="@+id/order"
+        android:layout_toLeftOf="@+id/salesdetail_money"
         android:layout_toRightOf="@+id/order"
-        android:layout_toEndOf="@+id/order"
         android:id="@+id/salesdetail_orderNo" />
 
     <TextView

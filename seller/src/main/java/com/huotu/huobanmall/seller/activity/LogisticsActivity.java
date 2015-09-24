@@ -88,6 +88,9 @@ public class LogisticsActivity extends BaseFragmentActivity {
             _orderNo = getIntent().getStringExtra( Constant.Extra_OrderNo);
         }
 
+        //
+        _orderNo="111ec76e-fe08-45a8-a13c-782e290c5ba1";
+
         _data=new LogisticsDetailModel();
         List<LogisticsDataModel> logisticsList = new ArrayList<>();
         for( int i=0;i<10;i++) {

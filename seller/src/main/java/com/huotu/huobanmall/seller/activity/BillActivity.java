@@ -148,25 +148,25 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
             _recycleLVs.get(3).setAdapter(_adapter4);
         }
 
-        protected void demoAddChild(OrderListModel model){
-            model.setHasChildOrder(true);
-            model.setChildOrders(new ArrayList<OrderListModel>());
-            for( int i=0;i<2;i++){
-                OrderListModel child = new OrderListModel();
-                child.setOrderNo("AAAAAAA"+i);
-                child.setStatus(0);
-                child.setGoods( new ArrayList<GoodsModel>());
-                for( int k=0;k<4;k++){
-                    GoodsModel good = new GoodsModel();
-                    good.setGoodsId(i);
-                    good.setPrice(22.22F);
-                    good.setStock(2);
-                    good.setTitle("法规和司法受到犯规地方噶是受到犯规");
-                    child.getGoods().add(good);
-                }
-                model.getChildOrders().add(child);
-            }
-        }
+//        protected void demoAddChild(OrderListModel model){
+//            model.setHasChildOrder(true);
+//            model.setChildOrders(new ArrayList<OrderListModel>());
+//            for( int i=0;i<2;i++){
+//                OrderListModel child = new OrderListModel();
+//                child.setOrderNo("AAAAAAA"+i);
+//                child.setStatus(0);
+//                child.setGoods( new ArrayList<GoodsModel>());
+//                for( int k=0;k<4;k++){
+//                    GoodsModel good = new GoodsModel();
+//                    good.setGoodsId(i);
+//                    good.setPrice(22.22F);
+//                    good.setStock(2);
+//                    good.setTitle("法规和司法受到犯规地方噶是受到犯规");
+//                    child.getGoods().add(good);
+//                }
+//                model.getChildOrders().add(child);
+//            }
+//        }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
@@ -181,7 +181,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                     List<GoodsModel> items= new ArrayList<>();
                     item.setHasChildOrder(false);
                     if(i%2==0){
-                        demoAddChild( item );
+                        //demoAddChild( item );
                     }
 
                     for(int k=0;k<3;k++){
@@ -192,7 +192,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                         g.setTitle("谷歌董事长发话了：人工智能会很友善");
                         items.add(g);
                     }
-                    item.setGoods(items);
+                    //item.setGoods(items);
                     _data1.add(item);
                 }
                 //_adapter1 = new BillDataAdapter(_context, _data1);
@@ -214,7 +214,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                         g.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
                         items.add(g);
                     }
-                    item.setGoods(items);
+                    //item.setGoods(items);
                     _data2.add(item);
                 }
                 //_adapter2 = new BillDataAdapter(_context, _data2);
@@ -236,7 +236,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                         g.setTitle("名落孙山之后， 微软Edge浏览器发布一大波新功能微软Edge浏览器发布一大波新功能微软Edge浏览器发布一大波新功能");
                         items.add(g);
                     }
-                    item.setGoods(items);
+                    //item.setGoods(items);
                     _data3.add(item);
                 }
                 //_adapter3 = new BillDataAdapter(_context, _data3);
@@ -262,7 +262,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                     g.setTitle("名落孙山之后， 微软Edge浏览器发布一大波新功能微软Edge浏览器发布一大波新功能微软Edge浏览器发布一大波新功能");
                     items.add(g);
                 }
-                item.setGoods(items);
+                //item.setGoods(items);
                 _data4.add(item);
 
                 _adapter4.notifyDataSetChanged();

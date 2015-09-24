@@ -1,8 +1,11 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 
 import android.widget.ListView;
@@ -102,11 +105,29 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         header_back.setOnClickListener(this);
         header_operate.setOnClickListener(this);
         search_cancel.setOnClickListener(this);
+        search_text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH  ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
+                    if (TextUtils.isEmpty(search_text.getText())){
+                        search_text.requestFocus();
+                        search_text.setError("不能为空");
+                    }else {
+                        //do reseach
+                        detail_btn.setChecked(true);
+                        String key = search_text.getText().toString().trim();
+                        _operateType = OperateTypeEnum.REFRESH;
+                        getData_MX( _operateType , key );
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
 
         View emptyView= new View(this);
         emptyView.setBackgroundResource(R.mipmap.tpzw);
         _rebateStatistics_listview.setEmptyView(emptyView);
-
         _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH);
 
         _userScoreList = new ArrayList<>();
@@ -290,6 +311,7 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         header_bar.setVisibility(View.GONE);
     }
     protected void closeSearchBar(){
+        search_text.setText("");
         search_bar.setVisibility(View.GONE);
         header_bar.setVisibility(View.VISIBLE);
     }

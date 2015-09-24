@@ -90,7 +90,7 @@ public class BillDataAdapter extends RecyclerView.Adapter<BillDataAdapter.OrderL
             holder.lv.setVisibility(View.VISIBLE);
             holder.lvChildOrder.setVisibility(View.GONE);
             _goodsList.clear();
-            _goodsList.addAll(model.getGoods());
+            _goodsList.addAll(model.getList());
             _goodsAdapter.notifyDataSetChanged();
             //holder.lv.setAdapter(_goodsAdapter);
         }else {

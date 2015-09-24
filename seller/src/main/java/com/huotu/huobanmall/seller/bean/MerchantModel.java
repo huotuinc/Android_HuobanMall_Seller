@@ -54,6 +54,18 @@ public class MerchantModel extends BaseModel {
      * 欢迎提示
      */
     private String welcomeTip;
+    /**
+     * 商家首页url
+     */
+    private String indexUrl;
+
+    public String getIndexUrl() {
+        return indexUrl;
+    }
+
+    public void setIndexUrl(String indexUrl) {
+        this.indexUrl = indexUrl;
+    }
 
     public String getOperatored() {
         return operatored;
