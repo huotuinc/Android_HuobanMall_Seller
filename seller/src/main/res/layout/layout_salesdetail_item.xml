@@ -22,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1654646846514"
+        android:maxEms="16"
         android:textColor="@color/black"
         android:layout_alignTop="@+id/order"
         android:layout_toRightOf="@+id/order"

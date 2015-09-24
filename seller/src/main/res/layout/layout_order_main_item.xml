@@ -1,44 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="@dimen/space_10"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/test_order_main_item_label1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:textColor="@color/black"
-        android:textSize="@dimen/text_size_15"
+        android:textSize="@dimen/text_size_13"
         android:text="主订单号："/>
 
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/test_order_main_item_orderTime"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
-        android:textSize="@dimen/text_size_15"
+        android:textSize="@dimen/text_size_13"
         android:text="2015-09-22 10:01:08"/>
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/test_order_main_item_label2"
         android:layout_toLeftOf="@id/test_order_main_item_orderTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_13"
         android:text="下单时间:"/>
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/test_order_main_item_orderNo"
         android:layout_toRightOf="@id/test_order_main_item_label1"
         android:layout_toLeftOf="@id/test_order_main_item_orderTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:textSize="@dimen/text_size_15"
+        android:textSize="@dimen/text_size_13"
         android:text="243423423234"/>
     <TextView
         android:layout_below="@id/test_order_main_item_label1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_1"
-        android:background="@color/white"
         />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:id="@+id/Tv1"
+        android:layout_below="@+id/test_order_main_item_label1"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="#F5F5F5"
+        android:layout_below="@id/Tv1"/>
 </RelativeLayout>
