@@ -8,6 +8,20 @@ public class OrderListProductModel {
     private Float money;
     private String pictureUrl;
     private String spec;
+    /**
+     *
+     */
+    private int viewType;
+
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
+    }
+
+
 
     public Integer getAmount() {
         return amount;

@@ -69,7 +69,7 @@ public class ConsumeDetailAdapter extends BaseAdapter {
 
         holder.tvAmount.setText( amountStr +"单" );
 
-        BitmapLoader.create().displayUrl(_context, holder.ivPicture,_list.get(position).getPictureUrl());
+        BitmapLoader.create().displayUrl(_context, holder.ivPicture,_list.get(position).getPictureUrl() , R.mipmap.zchyzrs,R.mipmap.zchyzrs);
 
         return convertView;
     }

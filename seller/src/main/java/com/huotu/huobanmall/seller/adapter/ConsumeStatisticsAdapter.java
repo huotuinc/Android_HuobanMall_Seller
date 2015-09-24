@@ -59,7 +59,7 @@ public class ConsumeStatisticsAdapter extends BaseAdapter {
         holder.tvMoney.setText(String.valueOf(_list.get(position).getMoney()));
         holder.tvLabel1.setText("");
         holder.tvName.setText(_list.get(position).getName());
-        BitmapLoader.create().displayUrl(_context, holder.ivPicture, _list.get(position).getPictureUrl());
+        BitmapLoader.create().displayUrl(_context, holder.ivPicture, _list.get(position).getPictureUrl(), R.mipmap.zchyzrs , R.mipmap.zchyzrs);
 
         return convertView;
     }

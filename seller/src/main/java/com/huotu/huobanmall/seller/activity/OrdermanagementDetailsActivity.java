@@ -1,5 +1,6 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -101,7 +102,7 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
             _orderNo = getIntent().getStringExtra( Constant.Extra_OrderNo );
         }
 
-        _orderNo = "111ec76e-fe08-45a8-a13c-782e290c5ba1";
+        //_orderNo = "111ec76e-fe08-45a8-a13c-782e290c5ba1";
 
         _data = new OrderDetailModel();
 
@@ -259,7 +260,10 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
             }
             break;
             case R.id.logistics: {
-                ActivityUtils.getInstance().showActivity(OrdermanagementDetailsActivity.this, LogisticsActivity.class);
+                Intent intent = new Intent();
+                intent.putExtra(Constant.Extra_OrderNo , _orderNo );
+                intent.setClass(OrdermanagementDetailsActivity.this, LogisticsActivity.class);
+                ActivityUtils.getInstance().showActivity(OrdermanagementDetailsActivity.this, intent );
             }
             break;
         }

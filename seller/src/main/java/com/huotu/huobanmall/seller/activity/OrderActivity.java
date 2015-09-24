@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -32,6 +33,7 @@ import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.bean.MJOrderListModel;
 import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.bean.OrderListModel;
+import com.huotu.huobanmall.seller.bean.OrderListProductModel;
 import com.huotu.huobanmall.seller.bean.OrderTestModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
@@ -104,10 +106,13 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                 _search_text.setError("不能为空");
             } else {
                 //TODO
-                String key = _search_text.getText().toString().trim();
+                String keyword = _search_text.getText().toString().trim();
                 //_operateType = OperateTypeEnum.REFRESH;
                 //ConsumeStatisticsActivity.this.showProgressDialog("","正在获取数据，请稍等...");
                 //getData_MX(_operateType, key);
+                int index = _ViewPager.getCurrentItem();
+                OrderActivity.this.showProgressDialog("","正在获取数据，请稍等...");
+                _pagerAdapter.search(index);
             }
             return true;
         }
@@ -152,8 +157,10 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
     public class OrderPagerAdapter extends PagerAdapter{
         private final String[] Titles = new String[] { "全部", "待付款","待收货","已完成"};
         List<PullToRefreshListView> _lv;
-        List<List<OrderTestModel>> _datas;
+        List<List<OrderListModel>> _datas;
+        List<List<OrderTestModel>> _viewDatas;//为了适配UI的数据
         List<OrderDataAdapter> _adapters=null;
+        List<OperateTypeEnum> _operateTypes = null;
         Context _context;
         OrderDataAdapter.ILogisticListener _seeLogisticListener = new OrderDataAdapter.ILogisticListener() {
             @Override
@@ -168,9 +175,9 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             @Override
             public void onSeeOrderDetail(View view, OrderTestModel model) {
                 Intent intent=new Intent();
-                intent.putExtra( Constant.Extra_OrderNo , model.getChildOrderNO());
+                intent.putExtra(Constant.Extra_OrderNo, model.getChildOrderNO());
                 intent.setClass(_context, OrdermanagementDetailsActivity.class);
-                ActivityUtils.getInstance().showActivity((Activity) _context, intent );
+                ActivityUtils.getInstance().showActivity((Activity) _context, intent);
             }
         };
 
@@ -178,9 +185,13 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             _context=context;
             _lv = new ArrayList<>();
             _datas = new ArrayList<>();
+            _viewDatas = new ArrayList<>();
             _adapters =new ArrayList<>();
+            _operateTypes = new ArrayList<>();
             for( int i =0;i<4;i++) {
                 PullToRefreshListView lv=new PullToRefreshListView(_context);
+                //lv.getRefreshableView().setDividerHeight(1);
+                //lv.getRefreshableView().setDivider(new ColorDrawable(0xF0EFF5));
 
                 View emptyView = new View(_context);
                 emptyView.setBackgroundResource(R.mipmap.tpzw);
@@ -192,13 +203,17 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     @Override
                     public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                         int tabIndex = (Integer) pullToRefreshBase.getTag();
-                        if( tabIndex == 0) {
-                            getData_0( OperateTypeEnum.REFRESH  );
-                        }else if( tabIndex ==1){
-                            getData_1( OperateTypeEnum.REFRESH);
-                        }else if( tabIndex==2){
+                        if (tabIndex == 0) {
+                            _operateTypes.set(0, OperateTypeEnum.REFRESH);
+                            getData_0(OperateTypeEnum.REFRESH);
+                        } else if (tabIndex == 1) {
+                            _operateTypes.set(1, OperateTypeEnum.REFRESH);
+                            getData_1(OperateTypeEnum.REFRESH);
+                        } else if (tabIndex == 2) {
+                            _operateTypes.set(2, OperateTypeEnum.REFRESH);
                             getData_2(OperateTypeEnum.REFRESH);
-                        }else if(tabIndex==3){
+                        } else if (tabIndex == 3) {
+                            _operateTypes.set(3, OperateTypeEnum.REFRESH);
                             getData_3(OperateTypeEnum.REFRESH);
                         }
                     }
@@ -206,13 +221,17 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     @Override
                     public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                         int tabIndex = (Integer) pullToRefreshBase.getTag();
-                        if( tabIndex == 0) {
-                            getData_0( OperateTypeEnum.LOADMORE);
-                        }else if( tabIndex ==1){
-                            getData_1( OperateTypeEnum.LOADMORE);
-                        }else if( tabIndex==2){
+                        if (tabIndex == 0) {
+                            _operateTypes.set(0, OperateTypeEnum.LOADMORE);
+                            getData_0(OperateTypeEnum.LOADMORE);
+                        } else if (tabIndex == 1) {
+                            _operateTypes.set(1, OperateTypeEnum.LOADMORE);
+                            getData_1(OperateTypeEnum.LOADMORE);
+                        } else if (tabIndex == 2) {
+                            _operateTypes.set(2, OperateTypeEnum.LOADMORE);
                             getData_2(OperateTypeEnum.LOADMORE);
-                        }else if(tabIndex==3){
+                        } else if (tabIndex == 3) {
+                            _operateTypes.set(3, OperateTypeEnum.LOADMORE);
                             getData_3(OperateTypeEnum.LOADMORE);
                         }
                     }
@@ -220,13 +239,16 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                 _lv.add(lv);
 
                 List<OrderTestModel> data = new ArrayList<>();
+                _viewDatas.add(data);
                 OrderDataAdapter adapter = new OrderDataAdapter(_context , data);
+                _adapters.add(adapter);
                 adapter.setLogisticsListener(_seeLogisticListener);
                 adapter.set_seeOrderDetailListener(_seeOrderDetailListener);
                 lv.setAdapter(adapter);
 
-                _datas.add(data);
-                _adapters.add(adapter);
+                List<OrderListModel> orders= new ArrayList<>();
+                _datas.add(orders);
+                _operateTypes.add( OperateTypeEnum.REFRESH);
             }
         }
 
@@ -244,7 +266,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             }
 
             if( keyword !=null && keyword.length()>0){
-                paras.put("keyword",keyword);
+                paras.put("keyword", keyword);
             }
 
             HttpParaUtils httpParaUtils =new HttpParaUtils();
@@ -265,15 +287,59 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             @Override
             public void onResponse(MJOrderListModel mjOrderListModel) {
                 _lv.get(0).onRefreshComplete();
+                OrderActivity.this.closeProgressDialog();
 
+                setData( 0 , _operateTypes.get(0) , mjOrderListModel );
             }
         };
+
+        protected void setData( int index , OperateTypeEnum operateType , MJOrderListModel data ){
+            if( data == null ){
+                DialogUtils.showDialog( OrderActivity.this , OrderActivity.this.getSupportFragmentManager() , "错误信息","请求数据失败","关闭" );
+                return;
+            }
+            if( data.getSystemResultCode()!=1){
+                DialogUtils.showDialog(OrderActivity.this,OrderActivity.this.getSupportFragmentManager(),"错误信息", data.getSystemResultDescription(),"关闭");
+                return;
+            }
+            if( data.getResultCode() == Constant.TOKEN_OVERDUE){
+                ActivityUtils.getInstance().skipActivity(OrderActivity.this, LoginActivity.class);
+                return;
+            }
+            if( data.getResultCode() !=1){
+                DialogUtils.showDialog(OrderActivity.this, OrderActivity.this.getSupportFragmentManager(), "错误信息", data.getResultDescription(), "关闭");
+                return;
+            }
+
+            if( data.getResultData() == null ){
+                DialogUtils.showDialog(OrderActivity.this,OrderActivity.this.getSupportFragmentManager(),"错误信息","返回的数据不完整","关闭");
+                return;
+            }
+
+            if( operateType == OperateTypeEnum.REFRESH ) {
+                _viewDatas.get(index).clear();
+
+                _datas.get(index).addAll(data.getResultData().getList());
+                List<OrderTestModel> viewData = changeData( data.getResultData().getList() );
+
+                _viewDatas.get(index).addAll( viewData );
+                _adapters.get(index).notifyDataSetChanged();
+            }else {
+                _datas.get(index).addAll( data.getResultData().getList() );
+                List<OrderTestModel> viewData = changeData( data.getResultData().getList() );
+
+                _viewDatas.get(index).addAll( viewData);
+                _adapters.get(index).notifyDataSetChanged();
+            }
+        }
 
         Response.Listener<MJOrderListModel> listener_1 =new Response.Listener<MJOrderListModel>() {
             @Override
             public void onResponse(MJOrderListModel mjOrderListModel) {
                 _lv.get(1).onRefreshComplete();
+                OrderActivity.this.closeProgressDialog();
 
+                setData(1, _operateTypes.get(1), mjOrderListModel);
             }
         };
 
@@ -281,7 +347,9 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             @Override
             public void onResponse(MJOrderListModel mjOrderListModel) {
                 _lv.get(2).onRefreshComplete();
+                OrderActivity.this.closeProgressDialog();
 
+                setData(2, _operateTypes.get(2) , mjOrderListModel );
             }
         };
 
@@ -289,9 +357,23 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             @Override
             public void onResponse(MJOrderListModel mjOrderListModel) {
                 _lv.get(3).onRefreshComplete();
-
+                OrderActivity.this.closeProgressDialog();
+                setData(3, _operateTypes.get(3), mjOrderListModel);
             }
         };
+
+        public void search( int index ){
+            _operateTypes.set(index, OperateTypeEnum.REFRESH);
+            if( index ==0 ) {
+                getData_0(OperateTypeEnum.REFRESH);
+            }else if(index==1){
+                getData_1(OperateTypeEnum.REFRESH);
+            }else if(index==2){
+                getData_2(OperateTypeEnum.REFRESH);
+            }else if(index ==3){
+                getData_3(OperateTypeEnum.REFRESH);
+            }
+        }
 
         protected void getData_0( OperateTypeEnum operateType  ){
             String lastDate="";
@@ -303,23 +385,41 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             getData(0, lastDate, keyword, operateType, listener_0 );
         }
         protected void getData_1(OperateTypeEnum operateType){
+            String lastDate="";
+            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(1) !=null && _datas.get(1).size()>0 ){
+                lastDate = String.valueOf( _datas.get(1).get( _datas.get(1).size()-1 ).getTime().getTime());
+            }
 
             String keyword = _search_text.getText().toString();
-            getData( 1 , "" ,keyword , operateType , listener_1 );
+            getData( 1 , lastDate ,keyword , operateType , listener_1 );
         }
         protected void getData_2(OperateTypeEnum operateType){
+            String lastDate="";
+            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(2) !=null && _datas.get(2).size()>0 ){
+                lastDate = String.valueOf( _datas.get(2).get( _datas.get(2).size()-1 ).getTime().getTime());
+            }
+
             String keyword = _search_text.getText().toString();
-            getData( 2 ,"",keyword , operateType , listener_2 );
+            getData( 2 ,lastDate,keyword , operateType , listener_2 );
         }
         protected void getData_3(OperateTypeEnum operateType){
+            String lastDate="";
+            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(3) !=null && _datas.get(3).size()>0 ){
+                lastDate = String.valueOf( _datas.get(3).get( _datas.get(3).size()-1 ).getTime().getTime());
+            }
+
             String keyword = _search_text.getText().toString();
-            getData( 3 ,"",keyword , operateType, listener_3 );
+            getData( 3 ,lastDate,keyword , operateType, listener_3 );
         }
 
         Response.ErrorListener errorListener=new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                //this.closeProgressDialog();
+                OrderActivity.this.closeProgressDialog();
+                _lv.get(0).onRefreshComplete();
+                _lv.get(1).onRefreshComplete();
+                _lv.get(2).onRefreshComplete();
+                _lv.get(3).onRefreshComplete();
 
                 String message="";
                 if( null != volleyError.networkResponse){
@@ -334,6 +434,52 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             }
         };
 
+        protected List<OrderTestModel> changeData( List<OrderListModel> orders){
+            List<OrderTestModel> list=new ArrayList<>();
+
+            for( int k = 0; k< orders.size() ; k++) {
+                OrderListModel order= orders.get(k);
+
+                OrderTestModel item = new OrderTestModel();
+                item.setViewType(1);
+                item.setMainOrderNO(order.getOrderNo());
+                item.setChildOrderNO(order.getOrderNo());
+                item.setStatus(String.valueOf(order.getStatus()));
+                list.add(item);
+
+                if (order.getList() != null) {
+                    for (int i = 0; i < order.getList().size(); i++) {
+                        item = new OrderTestModel();
+                        item.setViewType(2);
+                        item.setChildOrderNO(order.getOrderNo());
+                        item.setMainOrderNO(order.getOrderNo());
+                        item.setCount(order.getList().get(i).getAmount());
+                        item.setPrice(order.getList().get(i).getMoney());
+                        item.setGoodsName(order.getList().get(i).getTitle());
+                        item.setPictureUrl(order.getList().get(i).getPictureUrl());
+                        item.setSpec(order.getList().get(i).getSpec());
+                        list.add(item);
+                    }
+                }
+
+                item = new OrderTestModel();
+                item.setViewType(3);
+                item.setMainOrderNO(order.getOrderNo());
+                item.setChildOrderNO(order.getOrderNo());
+                item.setCount(9999999);
+                item.setTotalPrice(999999.09f);
+                list.add(item);
+
+                item = new OrderTestModel();
+                item.setViewType(0);
+                item.setMainOrderNO(order.getOrderNo());
+                item.setTime(order.getTime());
+                list.add(item);
+            }
+
+            return list;
+        }
+
         protected void demoAddChild(OrderListModel model){
             model.setHasChildOrder(true);
             model.setChildOrders(new ArrayList<OrderListModel>());
@@ -341,12 +487,13 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                 OrderListModel child = new OrderListModel();
                 child.setOrderNo("AAAAAAA"+i);
                 child.setStatus(0);
-                child.setList(new ArrayList<GoodsModel>());
+                child.setList(new ArrayList<OrderListProductModel>());
                 for( int k=0;k<4;k++){
-                    GoodsModel good = new GoodsModel();
-                    good.setGoodsId(i);
-                    good.setPrice(22.22F);
-                    good.setStock(2);
+                    OrderListProductModel good = new OrderListProductModel();
+                    good.setSpec("asdfasdaf");
+                    good.setMoney(22.22F);
+                    good.setAmount(2);
+                    good.setPictureUrl("");
                     good.setTitle("法规和司法受到犯规地方噶是受到犯规");
                     child.getList().add(good);
                 }
@@ -359,108 +506,50 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             //return super.instantiateItem(container, position);
 
             if( position == 0 ) {
+                _operateTypes.set(0,OperateTypeEnum.REFRESH);
                 getData_0(OperateTypeEnum.REFRESH);
 
-                for( int i=0;i<20;i++){
-                    OrderTestModel item = new OrderTestModel();
-                    item.setChildOrderNO("3333331111" + i);
-                    item.setStatus("1");
-                    item.setViewType(1);
-                    _datas.get(position).add(item);
-                    for( int k=0;k<6;k++) {
-                        OrderTestModel g = new OrderTestModel();
-                        g.setGoodsName("他人阿的发放阿斯顿飞撒旦法师地方撒旦法是的斯顿飞艾丝凡");
-                        g.setCount("32");
-                        g.setPrice("423.44");
-                        g.setSpec("会碰上艾丝凡啊");
-                        g.setPictureUrl("http://images0.cnblogs.com/news_topic/20150202125808578.png");
-                        g.setViewType(2);
-                        _datas.get(position).add(g);
-                    }
-
-                    item =new OrderTestModel();
-                    item.setViewType(3);
-                    _datas.get(position).add(item);
-                    item = new OrderTestModel();
-                    item.setMainOrderNO("3223332233" + i);
-                    item.setStatus("1");
-                    item.setTotalPrice("34343.44");
-                    item.setTime(new Date(System.currentTimeMillis()));
-                    item.setViewType(0);
-                    _datas.get(position).add(item);
-                }
+//                for( int i=0;i<20;i++){
+//                    OrderTestModel item = new OrderTestModel();
+//                    item.setChildOrderNO("3333331111" + i);
+//                    item.setStatus("1");
+//                    item.setViewType(1);
+//                    _datas.get(position).add(item);
+//                    for( int k=0;k<6;k++) {
+//                        OrderTestModel g = new OrderTestModel();
+//                        g.setGoodsName("他人阿的发放阿斯顿飞撒旦法师地方撒旦法是的斯顿飞艾丝凡");
+//                        g.setCount("32");
+//                        g.setPrice("423.44");
+//                        g.setSpec("会碰上艾丝凡啊");
+//                        g.setPictureUrl("http://images0.cnblogs.com/news_topic/20150202125808578.png");
+//                        g.setViewType(2);
+//                        _datas.get(position).add(g);
+//                    }
+//
+//                    item =new OrderTestModel();
+//                    item.setViewType(3);
+//                    _datas.get(position).add(item);
+//                    item = new OrderTestModel();
+//                    item.setMainOrderNO("3223332233" + i);
+//                    item.setStatus("1");
+//                    item.setTotalPrice("34343.44");
+//                    item.setTime(new Date(System.currentTimeMillis()));
+//                    item.setViewType(0);
+//                    _datas.get(position).add(item);
+//                }
                 //_adapter1 = new BillDataAdapter(_context, _data1);
                 //_adapter1.setLogisticsListener(_seeLogisticListener);
                 //_recycleLVs.get(0).setAdapter(_adapter1);
-                _adapters.get(position).notifyDataSetChanged();
+                //_adapters.get(position).notifyDataSetChanged();
             }else if(position==1){
-
-                for( int i=0;i<10;i++){
-                    OrderTestModel item = new OrderTestModel();
-                    item.setChildOrderNO("44444" + i);
-                    item.setStatus("1");
-                    item.setViewType(1);
-                    _datas.get(position).add(item);
-                    for(int k=0;k<8;k++){
-                        OrderTestModel g=new OrderTestModel();
-                        g.setSpec("阿迪沙发阿斯顿飞是的");
-                        g.setPrice("322.64");
-                        g.setCount("111");
-                        g.setGoodsName("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-                        g.setViewType(2);
-                        _datas.get(position).add(g);
-                    }
-                    item =new OrderTestModel();
-                    item.setViewType(3);
-                    _datas.get(position).add(item);
-                    item = new OrderTestModel();
-                    item.setMainOrderNO("444444" + i);
-                    item.setStatus("1");
-                    item.setTime( new Date( System.currentTimeMillis() ));
-                    item.setTotalPrice("34343.44");
-                    item.setViewType(0);
-                    _datas.get(position).add(item);
-
-                }
-
-                _adapters.get(position).notifyDataSetChanged();
+                _operateTypes.set(1,OperateTypeEnum.REFRESH);
+                getData_1(OperateTypeEnum.REFRESH);
             }else if(position ==2 ){
-
-//                for( int i=0;i<10;i++){
-//                    OrderListModel item = new OrderListModel();
-//                    item.setOrderNo("888"+i);
-//                    item.setStatus(1);
-//                    List<GoodsModel> items= new ArrayList<>();
-//                    for(int k=0;k<8;k++){
-//                        GoodsModel g=new GoodsModel();
-//                        g.setGoodsId(k);
-//                        g.setPrice(666.66f);
-//                        g.setStock(3434);
-//                        g.setTitle("名落孙山之后， 微软Edge浏览器发布一大波新功能微软Edge浏览器发布一大波新功能微软Edge浏览器发布一大波新功能");
-//                        items.add(g);
-//                    }
-//                    item.setGoods(items);
-//                    _data3.add(item);
-//                }
-//                _adapter3.notifyDataSetChanged();
+                _operateTypes.set(2,OperateTypeEnum.REFRESH);
+                getData_2(OperateTypeEnum.REFRESH);
             }else if(position==3){
-
-//                OrderListModel item = new OrderListModel();
-//                item.setOrderNo("888");
-//                item.setStatus(1);
-//                List<GoodsModel> items= new ArrayList<>();
-//                for(int k=0;k<8;k++){
-//                    GoodsModel g=new GoodsModel();
-//                    g.setGoodsId(k);
-//                    g.setPrice(666.66f);
-//                    g.setStock(3434);
-//                    g.setTitle("名落孙山之后， 微软Edge浏览器发布一大波新功能微软Edge浏览器发布一大波新功能微软Edge浏览器发布一大波新功能");
-//                    items.add(g);
-//                }
-//                item.setGoods(items);
-//                _data4.add(item);
-//
-//                _adapter4.notifyDataSetChanged();
+                _operateTypes.set(3, OperateTypeEnum.REFRESH);
+                getData_3(OperateTypeEnum.REFRESH);
             }
 
             container.addView(_lv.get(position));
@@ -477,11 +566,6 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
-
-        //@Override
-        //public int getItemPosition(Object object) {
-            //return super.getItemPosition(object);
-        //}
 
         @Override
         public int getCount() {

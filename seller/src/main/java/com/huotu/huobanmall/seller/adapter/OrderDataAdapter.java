@@ -14,6 +14,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.OrderTestModel;
 import com.huotu.huobanmall.seller.utils.BitmapLoader;
+import com.huotu.huobanmall.seller.utils.SystemTools;
 
 import java.util.List;
 
@@ -99,10 +100,18 @@ public class OrderDataAdapter extends BaseAdapter{ //RecyclerView.Adapter<OrderD
                     onLogisticListener(v,  model );
                 }
             });
+
+            holder.tvTotalPrice = (TextView)convertView.findViewById(R.id.test_order_logistic_item_pay);
+            holder.tvCount = (TextView)convertView.findViewById(R.id.test_order_logistic_item_amount);
+
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder)convertView.getTag();
         }
+
+        holder.tvCount.setText ( "共" + String.valueOf( model.getCount()) + "件商品 实付:￥");
+        holder.tvTotalPrice.setText(String.valueOf( model.getTotalPrice()));
+
         return convertView;
     }
 
@@ -128,10 +137,10 @@ public class OrderDataAdapter extends BaseAdapter{ //RecyclerView.Adapter<OrderD
             holder=(ViewHolder)convertView.getTag();
         }
         holder.tvGoodsName.setText( model.getGoodsName() );
-        holder.tvPrice.setText( model.getPrice());
-        holder.tvCount.setText(model.getCount());
+        holder.tvPrice.setText( String.valueOf( model.getPrice() ));
+        holder.tvCount.setText( String .valueOf( model.getCount() ) );
         holder.tvSpec.setText(model.getSpec());
-        BitmapLoader.create().displayUrl(_context, holder.ivPicture, model.getPictureUrl());
+        BitmapLoader.create().displayUrl(_context, holder.ivPicture, model.getPictureUrl() , R.mipmap.goods , R.mipmap.goods );
         return convertView;
     }
 
@@ -163,7 +172,10 @@ public class OrderDataAdapter extends BaseAdapter{ //RecyclerView.Adapter<OrderD
             holder = (ViewHolder)convertView.getTag();
         }
         holder.tvOrdernNo.setText( model.getMainOrderNO()==null ? "": model.getMainOrderNO());
-        holder.tvOrderTime.setText( String.valueOf(model.getTime()));
+
+        String dateStr = SystemTools.getDateTime( model.getTime() , "yyyy-MM-dd HH:mm:ss");
+
+        holder.tvOrderTime.setText( dateStr );
 
         return convertView;
     }

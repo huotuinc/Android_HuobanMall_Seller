@@ -11,6 +11,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.bean.OrderListModel;
+import com.huotu.huobanmall.seller.bean.OrderListProductModel;
 import com.huotu.huobanmall.seller.utils.BitmapLoader;
 import java.util.List;
 
@@ -114,7 +115,7 @@ public class ChildOrderExpandableAdapter extends BaseExpandableListAdapter {
     }
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        GoodsModel model = _data.get(groupPosition).getList().get(childPosition);
+        OrderListProductModel model = _data.get(groupPosition).getList().get(childPosition);
         ViewHolder holder =null;
         if( convertView==null){
             convertView = _inflater.inflate(R.layout.layout_child_order_item ,null);
@@ -129,7 +130,7 @@ public class ChildOrderExpandableAdapter extends BaseExpandableListAdapter {
         }
 
         holder.tvGoodsName.setText( model.getTitle() );
-        holder.tvCount.setText( String.valueOf( model.getStock() ));
+        holder.tvCount.setText( String.valueOf( model.getAmount() ));
         BitmapLoader.create().displayUrl(_context, holder.ivPicture , model.getPictureUrl() );
 
         return convertView;

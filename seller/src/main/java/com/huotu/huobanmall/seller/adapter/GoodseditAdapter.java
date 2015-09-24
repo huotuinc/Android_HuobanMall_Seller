@@ -48,8 +48,8 @@ public class GoodseditAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = View.inflate(_context,
                     R.layout.layout_goodsedit_item, null);
-            holder.radioButton =(RadioButton) convertView
-                    .findViewById(R.id.radioButton);
+            holder.tvSelect =(TextView) convertView
+                    .findViewById(R.id.goods_select);
             holder.goods_imageView = (NetworkImageView) convertView
                     .findViewById(R.id.goods_imageView);
             holder.goods_name = (TextView) convertView
@@ -61,7 +61,7 @@ public class GoodseditAdapter extends BaseAdapter {
         {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.radioButton.setVisibility(View.VISIBLE);
+        holder.tvSelect.setVisibility(View.VISIBLE);
         holder.goods_name.setText(String.valueOf(_list.get(position).getTitle()));
         holder.goods_num.setText(String.valueOf(_list.get(position)
                 .getStock()));
@@ -69,16 +69,16 @@ public class GoodseditAdapter extends BaseAdapter {
         BitmapLoader.create().displayUrl( _context , holder.goods_imageView , _list.get(position).getPictureUrl());
 
         if( _list.get(position).isSelected()){
-            holder.radioButton.setBackgroundResource(R.mipmap.xz);
+            holder.tvSelect.setBackgroundResource(R.mipmap.xz);
         }else {
-            holder.radioButton.setBackgroundResource(R.mipmap.wxz);
+            holder.tvSelect.setBackgroundResource(R.mipmap.wxz);
         }
         return convertView;
     }
     class ViewHolder
 
     {
-        RadioButton radioButton;
+        TextView tvSelect;
 
         NetworkImageView goods_imageView;
 

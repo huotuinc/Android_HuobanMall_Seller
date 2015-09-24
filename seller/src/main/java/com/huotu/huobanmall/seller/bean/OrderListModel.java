@@ -36,7 +36,7 @@ public class OrderListModel {
     /**
      * 规格数据
      */
-    private List<GoodsModel> list;
+    private List<OrderListProductModel> list;
     private List<OrderListModel> childOrders;
     private boolean hasChildOrder =false;
 
@@ -60,11 +60,11 @@ public class OrderListModel {
 
 
 
-    public List<GoodsModel> getList() {
+    public List<OrderListProductModel> getList() {
         return list;
     }
 
-    public void setList(List<GoodsModel> list) {
+    public void setList(List<OrderListProductModel> list) {
         this.list = list;
     }
 

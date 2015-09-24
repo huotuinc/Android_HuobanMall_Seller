@@ -41,6 +41,7 @@
             android:layout_below="@id/logistics_item_context"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#24AD5F"
             android:text="2015-01-01 12:11:11"/>
 
         <TextView

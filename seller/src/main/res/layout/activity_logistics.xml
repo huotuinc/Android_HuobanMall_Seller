@@ -7,8 +7,8 @@
 
     <RelativeLayout
         android:id="@+id/logistics_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="50dp">
         <include layout="@layout/layout_logistics_header" />
     </RelativeLayout>
 

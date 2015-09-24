@@ -56,7 +56,7 @@ public class TopsalesAdapter extends BaseAdapter {
         }
         holder.tvMoney.setText( String.valueOf( _list.get(position).getMoney() ) );
         holder.tvOrderNO.setText(_list.get(position).getOrderNo());
-        BitmapLoader.create().displayUrl( _context , holder.ivPicture , _list.get(position).getPictureUrl() );
+        BitmapLoader.create().displayUrl( _context , holder.ivPicture , _list.get(position).getPictureUrl(),R.mipmap.ddzs,R.mipmap.ddzs );
         return convertView;
     }
     class ViewHolder

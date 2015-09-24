@@ -89,7 +89,7 @@ public class LogisticsActivity extends BaseFragmentActivity {
         }
 
         //
-        _orderNo="111ec76e-fe08-45a8-a13c-782e290c5ba1";
+        //_orderNo="665d1d4e-4f49-4586-acae-e7a49618af17";
 
         _data=new LogisticsDetailModel();
         List<LogisticsDataModel> logisticsList = new ArrayList<>();
@@ -203,7 +203,7 @@ public class LogisticsActivity extends BaseFragmentActivity {
     protected void setData(){
         if(_data==null) return;
 
-        BitmapLoader.create().displayUrl( this , _logistics_logo , _data.getPictureURL());
+        BitmapLoader.create().displayUrl( this , _logistics_logo , _data.getPictureURL() , R.mipmap.wl,R.mipmap.wl);
         _logistics_orderNo.setText(_data.getNo());
         _logistics_status.setText(_data.getStatusName());
         _logistics_source.setText(_data.getSource());

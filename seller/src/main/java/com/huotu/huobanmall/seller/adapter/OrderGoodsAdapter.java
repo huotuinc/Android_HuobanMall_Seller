@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
+import com.huotu.huobanmall.seller.bean.OrderListProductModel;
 
 import java.util.List;
 
@@ -16,9 +17,9 @@ import java.util.List;
  * Created by Administrator on 2015/9/15.
  */
 public class OrderGoodsAdapter extends BaseAdapter{
-    private List<GoodsModel> _list;
+    private List<OrderListProductModel> _list;
     private Context _context;
-    public OrderGoodsAdapter(Context context, List<GoodsModel> list){
+    public OrderGoodsAdapter(Context context, List<OrderListProductModel> list){
         _list=list;
         _context=context;
     }
@@ -52,8 +53,8 @@ public class OrderGoodsAdapter extends BaseAdapter{
         }
         holder.goods_colorSize.setText( "颜色：红色；尺寸：20X30" );// TODO: 2015/9/16
         holder.goods_name.setText(String.valueOf(_list.get(position).getTitle()));
-        holder.goods_num.setText("X "+String.valueOf(_list.get(position).getStock()));
-        holder.goods_price.setText("￥"+String.valueOf(_list.get(position).getPrice()));
+        holder.goods_num.setText("X "+String.valueOf(_list.get(position).getAmount()));
+        holder.goods_price.setText("￥"+String.valueOf(_list.get(position).getMoney()));
         //holder.goods_imageView.get(_list.get(position).getPictureUrl());
         holder.goods_imageView.setBackgroundResource(R.mipmap.ic_launcher);
         return convertView;

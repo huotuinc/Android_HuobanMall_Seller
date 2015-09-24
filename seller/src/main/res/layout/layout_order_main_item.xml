@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@color/white">
     <TextView
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/test_order_main_item_label1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,6 +16,7 @@
 
     <TextView
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/test_order_main_item_orderTime"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
@@ -24,6 +26,7 @@
         android:text="2015-09-22 10:01:08"/>
     <TextView
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/test_order_main_item_orderNo"
         android:layout_toRightOf="@id/test_order_main_item_label1"
         android:layout_toLeftOf="@id/test_order_main_item_orderTime"
@@ -35,16 +38,15 @@
     <TextView
         android:layout_below="@id/test_order_main_item_label1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_1"
+        android:background="@color/gray"
+        android:layout_height="1dp"
+        android:id="@+id/test_order_main_item_label2"
         />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:id="@+id/Tv1"
-        android:layout_below="@+id/test_order_main_item_label1"/>
-    <TextView
+        android:id="@+id/test_order_main_item_label3"
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:background="#F5F5F5"
-        android:layout_below="@id/Tv1"/>
+        android:layout_below="@id/test_order_main_item_label2"/>
 </RelativeLayout>

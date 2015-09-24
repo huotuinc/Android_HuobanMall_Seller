@@ -20,7 +20,7 @@
         android:background="@drawable/btn_logistic"
         android:text="查看物流"/>
     <TextView
-        android:id="@+id/test_order_logistic_item_label1"
+        android:id="@+id/test_order_logistic_item_amount"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/test_order_logistic_item_pay"
         android:layout_width="wrap_content"

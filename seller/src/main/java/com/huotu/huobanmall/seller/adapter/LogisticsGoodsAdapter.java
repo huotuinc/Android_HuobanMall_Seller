@@ -63,7 +63,7 @@ public class LogisticsGoodsAdapter extends BaseAdapter {
         holder.tvTitle.setText( model.getTitle() );
         holder.tvCounts.setText( "X "+ String.valueOf(model.getAmount()) );
 
-        BitmapLoader.create().displayUrl( _context , holder.ivPicture , model.getPictureUrl()  );
+        BitmapLoader.create().displayUrl( _context , holder.ivPicture , model.getPictureUrl() ,R.mipmap.goods , R.mipmap.goods );
 
         return convertView;
     }

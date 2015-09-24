@@ -15,6 +15,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
 import com.huotu.huobanmall.seller.bean.OrderListModel;
+import com.huotu.huobanmall.seller.bean.OrderListProductModel;
 import com.huotu.huobanmall.seller.bean.OrderStatusEnum;
 import com.huotu.huobanmall.seller.utils.BitmapLoader;
 import com.huotu.huobanmall.seller.widget.MJListView;
@@ -32,7 +33,7 @@ public class BillDataAdapter extends RecyclerView.Adapter<BillDataAdapter.OrderL
     private ILogisticListener _seeLogisticsListener = null;
     private ISeeOrderDetailListener _seeOrderDetailListener=null;
     private OrderGoodsAdapter _goodsAdapter=null;
-    private List<GoodsModel> _goodsList=null;
+    private List<OrderListProductModel> _goodsList=null;
     private ChildOrderExpandableAdapter _childOrderAdapter=null;
 
     public void setLogisticsListener(ILogisticListener listener ){
