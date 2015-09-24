@@ -19,7 +19,7 @@ public class Constant {
     // 平台安全码
     public static final String APP_SECRET = "1165a8d240b29af3f418b8d10599d0da";
 
-    public static final String OPERATION_CODE = "FM2015AD";
+    public static final String OPERATION_CODE = "HB2015AD";
     // 定位信息文件
     public final static String LOCATION_INFO = "location_info";
 

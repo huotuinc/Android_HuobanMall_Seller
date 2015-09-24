@@ -8,11 +8,12 @@
     <LinearLayout
         android:id="@+id/logistics_item_ll1"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/logistics_item_circle"
             android:background="@drawable/logistic_circle_first"
+            android:layout_gravity="center_horizontal"
             android:layout_width="20dp"
             android:layout_height="20dp" />
         <TextView

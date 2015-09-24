@@ -314,14 +314,14 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                 OrderListModel child = new OrderListModel();
                 child.setOrderNo("AAAAAAA"+i);
                 child.setStatus(0);
-                child.setGoods( new ArrayList<GoodsModel>());
+                child.setList( new ArrayList<GoodsModel>());
                 for( int k=0;k<4;k++){
                     GoodsModel good = new GoodsModel();
                     good.setGoodsId(i);
                     good.setPrice(22.22F);
                     good.setStock(2);
                     good.setTitle("法规和司法受到犯规地方噶是受到犯规");
-                    child.getGoods().add(good);
+                    child.getList().add(good);
                 }
                 model.getChildOrders().add(child);
             }

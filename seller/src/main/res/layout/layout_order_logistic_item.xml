@@ -2,31 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/space_5"
     android:background="@color/white">
     <Button
         android:id="@+id/test_order_logistic_item_btn"
         android:layout_marginLeft="@dimen/space_15"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginBottom="@dimen/space_10"
-        android:layout_marginTop="@dimen/space_10"
-        android:paddingRight="@dimen/space_5"
-        android:paddingLeft="@dimen/space_5"
+        android:layout_height="28dp"
+        android:layout_marginBottom="@dimen/space_2"
+        android:layout_marginTop="@dimen/space_2"
+        android:paddingRight="@dimen/space_2"
+        android:paddingLeft="@dimen/space_2"
         android:textColor="#51565F"
         android:gravity="center"
+        android:textSize="@dimen/text_size_14"
         android:background="@drawable/btn_logistic"
         android:text="查看物流"/>
     <TextView
-        android:id="@+id/test_order_logistic_item_pay"
+        android:id="@+id/test_order_logistic_item_label1"
         android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@+id/test_order_logistic_item_pay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_14"
+        android:text="共1件商品 实付:￥"/>
+    <TextView
+        android:id="@+id/test_order_logistic_item_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_16"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:textColor="@color/black"
-        android:layout_marginRight="@dimen/space_10"
-        android:textSize="@dimen/space_15"
-        android:text="共1件商品 实付:￥234.23"/>
-
+        android:layout_marginRight="@dimen/space_5"
+        android:text="100.22"/>
 
 </RelativeLayout>

@@ -232,7 +232,7 @@ public class MainActivity extends BaseFragmentActivity{
         for(int i=0;i< count ;i++){
             if( null == xData.get(i) ) continue;
             int x = xData.get(i);
-            xValues.add( String.valueOf( x));
+            xValues.add( String.valueOf( x) +"时");
             int y = yData.get(i);
             Entry item=new Entry( y , i );
             yValues.add(item);

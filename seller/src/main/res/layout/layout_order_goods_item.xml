@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="@dimen/space_15"
-            android:layout_marginRight="@dimen/space_15"
             android:text="￥685.00"/>
         <TextView
             android:id="@+id/test_order_goods_item_count"

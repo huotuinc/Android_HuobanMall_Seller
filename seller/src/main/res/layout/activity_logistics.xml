@@ -42,7 +42,7 @@
             <TextView
                 android:id="@+id/logistics_label1"
                 android:text="物流状态"
-                android:textSize="@dimen/text_size_20"
+                android:textSize="@dimen/text_size_18"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

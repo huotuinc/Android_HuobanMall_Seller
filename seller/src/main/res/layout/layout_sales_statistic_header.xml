@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:cy="http://schemas.android.com/apk/res-auto"
     android:background="@color/main_header_bg">
 
     <RelativeLayout
@@ -94,13 +95,17 @@
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <com.huotu.android.library.libedittext.EditText
             android:id="@+id/search_text"
             style="@style/CyEditTextStyle"
-            android:drawableLeft="@mipmap/xz"
+            android:layout_marginLeft="@dimen/space_5"
+            android:drawableLeft="@mipmap/search"
             android:layout_toLeftOf="@+id/search_cancel"
             android:layout_width="match_parent"
             android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
             android:layout_height="40dp" />
         <Button
             android:id="@+id/search_cancel"

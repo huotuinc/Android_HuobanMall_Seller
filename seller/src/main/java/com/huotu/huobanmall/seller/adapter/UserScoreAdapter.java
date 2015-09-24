@@ -63,7 +63,7 @@ public class UserScoreAdapter extends BaseAdapter {
         String dateStr = SystemTools.getDateTime( _list.get(position).getTime() , "yyyy-MM-dd HH:mm:ss" );
         holder.tvTime.setText( dateStr );
         holder.tvScore.setText( String.valueOf(_list.get(position).getScore()) );
-        BitmapLoader.create().displayUrl( _context , holder.ivPicture , _list.get(position).getPictureUrl() );
+        BitmapLoader.create().displayUrl( _context , holder.ivPicture , _list.get(position).getPictureUrl() ,R.mipmap.zchyzrs , R.mipmap.zchyzrs);
         return convertView;
 
     }

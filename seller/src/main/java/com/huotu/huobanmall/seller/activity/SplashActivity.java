@@ -123,6 +123,7 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
     Response.Listener<HTInitBean> htInitBeanListener = new Response.Listener<HTInitBean>() {
         @Override
         public void onResponse(HTInitBean htInitBean) {
+            _data = htInitBean;
             if( htInitBean == null ){
                 //DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息","请求数据失败","关闭");
                 ToastUtils.showLong("请求数据失败");
@@ -135,57 +136,130 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
                 SplashActivity.this.finish();
                 return;
             }
-            if( htInitBean.getResultCode() == Constant.TOKEN_OVERDUE ||
-                htInitBean.getResultCode() == Constant.ERROR_USER_PASSWORD ){
-                //调转到登录界面
-                ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class);
-                return;
-            }
 
-            if( htInitBean.getResultCode() != 1){
-                //DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息",htInitBean.getResultDescription(),"关闭");
-                ToastUtils.showLong( htInitBean.getResultDescription());
-                SplashActivity.this.finish();
-                return;
-            }
-
-            if( htInitBean.getResultData() ==null  ){
-                ToastUtils.showLong( "启动失败，返回的数据有问题。" );
-                SplashActivity.this.finish();
-                return;
-            }
-
-            _data = htInitBean;
-
-            SellerApplication.getInstance().writeGlobalInfo(htInitBean.getResultData().getGlobal());
-
-            updateApp( htInitBean.getResultData().getUpdate() );
-
-            //更新Token信息
-            MerchantModel user = htInitBean.getResultData().getUser();
-            if(null != user)
-            {
-                String token = user.getToken ();
-                //记录商户信息
-                SellerApplication.getInstance().writeMerchantInfo(user);
-                if( !StringUtils.isEmpty ( token ))
-                {
-                    //直接登录
-                    ActivityUtils.getInstance().skipActivity ( SplashActivity.this, MainActivity.class);
-                }
-                else
-                {
-                    //跳转到登录界面
-                    ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class );
+            //判断是否需要升级
+            if( htInitBean.getResultData() !=null ){
+                boolean isNeedUpdate = judgeUpdate( htInitBean.getResultData().getUpdate() );
+                if( isNeedUpdate ) {
+                    updateApp( htInitBean.getResultData().getUpdate() );
+                    return;
                 }
             }
-            else
-            {
-                //跳转到登录界面
-                ActivityUtils.getInstance().skipActivity(SplashActivity.this, LoginActivity.class);
-            }
+
+//            if( htInitBean.getResultCode() == Constant.TOKEN_OVERDUE ||
+//                htInitBean.getResultCode() == Constant.ERROR_USER_PASSWORD ){
+//                //调转到登录界面
+//                ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class);
+//                return;
+//            }
+//
+//            if( htInitBean.getResultCode() != 1){
+//                //DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息",htInitBean.getResultDescription(),"关闭");
+//                ToastUtils.showLong( htInitBean.getResultDescription());
+//                SplashActivity.this.finish();
+//                return;
+//            }
+//
+//            if( htInitBean.getResultData() ==null  ){
+//                ToastUtils.showLong( "启动失败，返回的数据有问题。" );
+//                SplashActivity.this.finish();
+//                return;
+//            }
+//
+//
+//            SellerApplication.getInstance().writeGlobalInfo(htInitBean.getResultData().getGlobal());
+//
+//            //updateApp( htInitBean.getResultData().getUpdate() );
+//
+//            //更新Token信息
+//            MerchantModel user = htInitBean.getResultData().getUser();
+//            if(null != user)
+//            {
+//                String token = user.getToken ();
+//                //记录商户信息
+//                SellerApplication.getInstance().writeMerchantInfo(user);
+//                if( !StringUtils.isEmpty ( token ))
+//                {
+//                    //直接登录
+//                    ActivityUtils.getInstance().skipActivity ( SplashActivity.this, MainActivity.class);
+//                }
+//                else
+//                {
+//                    //跳转到登录界面
+//                    ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class );
+//                }
+//            }
+//            else
+//            {
+//                //跳转到登录界面
+//                ActivityUtils.getInstance().skipActivity(SplashActivity.this, LoginActivity.class);
+//            }
+            gotoMain();
         }
     };
+
+    protected void gotoMain(){
+        if( _data.getResultCode() == Constant.TOKEN_OVERDUE ||
+            _data.getResultCode() == Constant.ERROR_USER_PASSWORD ){
+            //调转到登录界面
+            ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class);
+            return;
+        }
+
+        if( _data.getResultCode() != 1){
+            ToastUtils.showLong( _data.getResultDescription());
+            SplashActivity.this.finish();
+            return;
+        }
+
+        if( _data.getResultData() ==null  ){
+            ToastUtils.showLong( "启动失败，返回的数据有问题。" );
+            SplashActivity.this.finish();
+            return;
+        }
+
+        SellerApplication.getInstance().writeGlobalInfo(_data.getResultData().getGlobal());
+
+        //更新Token信息
+        MerchantModel user = _data.getResultData().getUser();
+        if(null != user){
+            String token = user.getToken ();
+            //记录商户信息
+            SellerApplication.getInstance().writeMerchantInfo(user);
+            if( !StringUtils.isEmpty ( token )){
+                //直接登录
+                ActivityUtils.getInstance().skipActivity ( SplashActivity.this, MainActivity.class);
+            }
+            else{
+                //跳转到登录界面
+                ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class );
+            }
+        }
+        else{
+            //跳转到登录界面
+            ActivityUtils.getInstance().skipActivity(SplashActivity.this, LoginActivity.class);
+        }
+    }
+
+    /**
+     * 判断 App 是否要升级
+     * @param updateInfo
+     * @return
+     */
+    protected boolean judgeUpdate( UpdateModel updateInfo ){
+        if( updateInfo == null || updateInfo.getUpdateType()==null ) return false;
+        if( updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.NO.getIndex() ) return false;
+
+        if( updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.FORCE_WHOLE.getIndex() ){
+            //强制整包更新
+            //updateAppNow( updateInfo );
+            return true;
+        }else if( updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.WHOLE.getIndex() ){
+            //整包更新
+            return true;
+        }
+        return false;
+    }
 
 
     @Override
@@ -199,6 +273,7 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
     public void onNegativeButtonClicked(int i) {
         if( i == REQUESTCODE_UPDATE ){
             ToastUtils.showLong("用户取消升级APP");
+            gotoMain();
         }
     }
 
@@ -206,14 +281,19 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if( requestCode == Constant.REQUEST_CODE_CLIENT_DOWNLOAD
             && resultCode == Constant.RESULT_CODE_CLIENT_DOWNLOAD_FAILED){
-            Bundle bd = data.getExtras();
-            if (bd != null) {
-                boolean isForce = bd.getBoolean("isForce");
-                if (isForce) {
-                    finish();
-                }
-            }
+//            Bundle bd = data.getExtras();
+//            if (bd != null) {
+//                boolean isForce = bd.getBoolean("isForce");
+//                if (isForce) {
+//                    finish();
+//                }
+//            }
+            finish();
         }
+        if( requestCode == Constant.REQUEST_CODE_CLIENT_DOWNLOAD && resultCode == 0 ){
+            finish();
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 

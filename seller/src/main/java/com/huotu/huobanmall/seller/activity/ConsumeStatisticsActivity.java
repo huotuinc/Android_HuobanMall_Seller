@@ -1,12 +1,16 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -46,6 +50,14 @@ import butterknife.ButterKnife;
  * 消费统计 界面
  */
 public class ConsumeStatisticsActivity extends BaseFragmentActivity implements View.OnClickListener {
+    @Bind(R.id.header_bar)
+    RelativeLayout header_bar;
+    @Bind(R.id.search_bar)
+    RelativeLayout search_bar;
+    @Bind(R.id.search_cancel)
+    Button search_cancel;
+    @Bind(R.id.search_text)
+    com.huotu.android.library.libedittext.EditText search_text;
     @Bind(R.id.detail_btn)
     RadioButton detail_btn;
     @Bind(R.id.statistic_btn)
@@ -74,6 +86,28 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
         ButterKnife.bind(this);
 
         header_back.setOnClickListener(this);
+        header_operate.setOnClickListener(this);
+        search_cancel.setOnClickListener(this);
+        search_text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    if (TextUtils.isEmpty(search_text.getText())) {
+                        search_text.requestFocus();
+                        search_text.setError("不能为空");
+                    } else {
+                        detail_btn.setChecked(true);
+                        String key = search_text.getText().toString().trim();
+                        _operateType = OperateTypeEnum.REFRESH;
+                        ConsumeStatisticsActivity.this.showProgressDialog("","正在获取数据，请稍等...");
+                        getData_MX(_operateType, key);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
 
         salesdetail_title.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -278,12 +312,30 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
         }
     };
 
+    protected void openSearchBar(){
+        search_bar.setVisibility(View.VISIBLE);
+        header_bar.setVisibility(View.GONE);
+    }
+    protected void closeSearchBar(){
+        search_text.setText("");
+        search_bar.setVisibility(View.GONE);
+        header_bar.setVisibility(View.VISIBLE);
+    }
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.header_back: {
                 finish();
             }
             break;
+            case R.id.header_operate:{
+                openSearchBar();
+                break;
+            }
+            case R.id.search_cancel:{
+                closeSearchBar();
+                break;
+            }
             default:
                 break;
         }

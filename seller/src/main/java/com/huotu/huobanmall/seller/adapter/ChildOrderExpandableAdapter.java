@@ -66,7 +66,7 @@ public class ChildOrderExpandableAdapter extends BaseExpandableListAdapter {
     }
     @Override
        public int getChildrenCount(int groupPosition) {
-        return _data==null? 0: _data.get( groupPosition ).getGoods().size();
+        return _data==null? 0: _data.get( groupPosition ).getList().size();
     }
 
     @Override
@@ -116,7 +116,7 @@ public class ChildOrderExpandableAdapter extends BaseExpandableListAdapter {
     }
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        GoodsModel model = _data.get(groupPosition).getGoods().get(childPosition);
+        GoodsModel model = _data.get(groupPosition).getList().get(childPosition);
         ViewHolder holder =null;
         if( convertView==null){
             convertView = _inflater.inflate(R.layout.layout_child_order_item ,null);

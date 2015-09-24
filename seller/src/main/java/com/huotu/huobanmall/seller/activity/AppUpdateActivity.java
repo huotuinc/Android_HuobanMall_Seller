@@ -226,6 +226,7 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setDataAndType(Uri.fromFile(new File(path)),	"application/vnd.android.package-archive");
 		startActivityForResult(intent, 0);
+		AppUpdateActivity.this.finish();
 	}
 
 //	class ClientDownLoadTask extends AsyncTask<String, Integer, Integer>{

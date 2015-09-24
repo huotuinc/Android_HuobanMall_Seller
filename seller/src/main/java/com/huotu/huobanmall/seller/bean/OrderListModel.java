@@ -33,9 +33,14 @@ public class OrderListModel {
      * 下单时间
      */
     private Date time;
-    private List<GoodsModel> goods;
+    /**
+     * 规格数据
+     */
+    private List<GoodsModel> list;
     private List<OrderListModel> childOrders;
     private boolean hasChildOrder =false;
+
+    private String title;
 
     public List<OrderListModel> getChildOrders() {
         return childOrders;
@@ -55,12 +60,12 @@ public class OrderListModel {
 
 
 
-    public List<GoodsModel> getGoods() {
-        return goods;
+    public List<GoodsModel> getList() {
+        return list;
     }
 
-    public void setGoods(List<GoodsModel> goods) {
-        this.goods = goods;
+    public void setList(List<GoodsModel> list) {
+        this.list = list;
     }
 
     public Integer getAmount() {
@@ -135,6 +140,6 @@ public class OrderListModel {
         this.title = title;
     }
 
-    private String title;
+
 
 }
