@@ -39,12 +39,12 @@
             android:layout_height="wrap_content"
             android:text="X 10"
             android:textSize="@dimen/space_15"
-            android:layout_above="@+id/test_order_goods_item_spec"
+            android:layout_below="@+id/test_order_goods_item_price"
             android:layout_alignRight="@+id/test_order_goods_item_price"
             android:layout_alignEnd="@+id/test_order_goods_item_price" />
         <TextView
             android:id="@+id/test_order_goods_item_goodsName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:layout_marginRight="@dimen/space_5"

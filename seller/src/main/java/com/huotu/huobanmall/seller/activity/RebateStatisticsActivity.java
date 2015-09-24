@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -49,6 +50,14 @@ import butterknife.ButterKnife;
  * 返利积分 界面
  */
 public class RebateStatisticsActivity extends BaseFragmentActivity {
+    @Bind(R.id.header_bar)
+    RelativeLayout header_bar;
+    @Bind(R.id.search_bar)
+    RelativeLayout search_bar;
+    @Bind(R.id.search_cancel)
+    Button search_cancel;
+    @Bind(R.id.search_text)
+    com.huotu.android.library.libedittext.EditText search_text;
     @Bind(R.id.salesdetail_title)
     RadioGroup goods_title;
     @Bind(R.id.detail_btn)
@@ -91,6 +100,8 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         });
 
         header_back.setOnClickListener(this);
+        header_operate.setOnClickListener(this);
+        search_cancel.setOnClickListener(this);
 
         View emptyView= new View(this);
         emptyView.setBackgroundResource(R.mipmap.tpzw);
@@ -274,12 +285,29 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         }
     };
 
+    protected void openSearchBar(){
+        search_bar.setVisibility(View.VISIBLE);
+        header_bar.setVisibility(View.GONE);
+    }
+    protected void closeSearchBar(){
+        search_bar.setVisibility(View.GONE);
+        header_bar.setVisibility(View.VISIBLE);
+    }
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.header_back: {
                 finish();
             }
             break;
+            case R.id.header_operate:{
+                openSearchBar();
+                break;
+            }
+            case R.id.search_cancel:{
+                closeSearchBar();
+                break;
+            }
             default:
                 break;
         }

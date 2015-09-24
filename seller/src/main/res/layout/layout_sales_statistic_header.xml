@@ -4,12 +4,18 @@
     android:layout_height="match_parent"
     android:background="@color/main_header_bg">
 
+    <RelativeLayout
+        android:id="@+id/header_bar"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <Button
         android:layout_marginLeft="20dp"
         android:id="@+id/header_back"
         android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
         android:background="@color/main_header_bg"
         android:textColor="@android:color/white"
         android:drawableLeft="@drawable/btn_back"/>
@@ -79,5 +85,32 @@
             android:textColor="@drawable/check_text"
             />
     </RadioGroup>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/search_bar"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.huotu.android.library.libedittext.EditText
+            android:id="@+id/search_text"
+            style="@style/CyEditTextStyle"
+            android:drawableLeft="@mipmap/xz"
+            android:layout_toLeftOf="@+id/search_cancel"
+            android:layout_width="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_height="40dp" />
+        <Button
+            android:id="@+id/search_cancel"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_red_sel"
+            android:textColor="@color/white"
+            android:text="取消"/>
+    </RelativeLayout>
 
 </RelativeLayout>
