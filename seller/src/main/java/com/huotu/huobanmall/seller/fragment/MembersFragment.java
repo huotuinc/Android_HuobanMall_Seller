@@ -452,7 +452,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                         x = String.valueOf(day)+"日";
                         xValues1.add( x );
                     }else {
-                        x = String.valueOf( xObj);
+                        x = String.valueOf( xObj)+"时";
                         xValues1.add(x);
                     }
 
@@ -491,7 +491,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                         int day=((Date)xObj).getDate();
                         x = String.valueOf(day)+"日";
                     }else{
-                        x= String.valueOf( xObj);
+                        x= String.valueOf( xObj)+"时";
                     }
                     xValues2.add(x);
 

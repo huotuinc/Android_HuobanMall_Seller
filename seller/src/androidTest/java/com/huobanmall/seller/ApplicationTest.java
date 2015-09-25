@@ -2,7 +2,6 @@ package com.huobanmall.seller;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
-import android.text.format.DateUtils;
 import android.util.Log;
 
 //import com.huotu.huobanmall.seller.utils.EncryptUtils;
@@ -17,6 +16,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.huotu.huobanmall.seller.utils.DigestUtils;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
 import com.huotu.huobanmall.seller.utils.SystemTools;
 
 import java.io.UnsupportedEncodingException;
@@ -25,6 +25,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -44,9 +46,24 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
         try {
             String s = "金向东金向东1013&appkey=23423sdfasdfg?token=fsdfasf";
-            //String x = EncryptUtils.getInstance().encryptMd532(s);
+            String x = "";// EncryptUtil.getInstance().encryptMd532(s);
             String y = DigestUtils.md5DigestAsHex(s.getBytes("utf-8"));
 
+            Map<String,String> p = new HashMap<>();
+            p.put("keyword", "杭州东阳");
+            p.put("version","1.0.0");
+
+
+            ObtainParamsMap i1=new ObtainParamsMap(  this.getContext() );
+            String xx= i1.getSign(p);
+
+            HttpParaUtils i2=new HttpParaUtils();
+           String yy = i2.getSign(p);
+
+            int o=1;
+            o=1+1;
+
+            x=x;
             //boolean b = x.equals(y);
         }catch (UnsupportedEncodingException ex){
             Log.e("test",ex.getMessage());
@@ -121,4 +138,5 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         );
         System.out.print(date);
     }
+
 }

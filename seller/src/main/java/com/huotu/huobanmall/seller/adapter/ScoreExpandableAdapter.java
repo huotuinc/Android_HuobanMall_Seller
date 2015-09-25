@@ -105,7 +105,7 @@ public class ScoreExpandableAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.tvTitle.setText(model.getOrderNo());
+        holder.tvTitle.setText(model.getUserType());
         holder.tvArrow.setBackgroundResource( isExpanded? R.mipmap.sjt : R.mipmap.xjt);
 
         return convertView;
@@ -128,7 +128,7 @@ public class ScoreExpandableAdapter extends BaseExpandableListAdapter {
             holder= (ViewHolder)convertView.getTag();
         }
 
-        holder.tvTitle.setText( model.getOrderNo() );
+        holder.tvTitle.setText( model.getUserName() );
         holder.tvScore.setText( model.getScore() +"积分" );
         holder.tvStatus.setText( model.getStatus() );
         holder.tvZZTime.setText( String.valueOf( SystemTools.getDateTime( model.getZzTime() , "yyyy/MM/dd")) );

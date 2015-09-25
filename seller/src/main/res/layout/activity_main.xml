@@ -47,7 +47,7 @@
             android:layout_below="@id/main_todyMoney"
             android:textColor="@android:color/white"
             android:text="总销售额(元)"
-            android:textSize="@dimen/text_size_20"
+            android:textSize="@dimen/text_size_18"
             android:layout_centerHorizontal="true"
             android:layout_alignParentLeft="true"
             android:layout_width="wrap_content"
@@ -85,7 +85,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/todayNewOrder"
-            android:textColor="@android:color/black"
             android:textSize="@dimen/text_size_20"
             android:gravity="center"/>
         <ImageView

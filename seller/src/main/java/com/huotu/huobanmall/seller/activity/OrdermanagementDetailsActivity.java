@@ -16,14 +16,17 @@ import com.huotu.huobanmall.seller.bean.MJOrderDetailModel;
 import com.huotu.huobanmall.seller.bean.OrderDetailModel;
 import com.huotu.huobanmall.seller.bean.OrderListProductModel;
 import com.huotu.huobanmall.seller.bean.OrderScoreModel;
+import com.huotu.huobanmall.seller.bean.UserScoreModel;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,70 +105,31 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
             _orderNo = getIntent().getStringExtra( Constant.Extra_OrderNo );
         }
 
-        //_orderNo = "111ec76e-fe08-45a8-a13c-782e290c5ba1";
+        //_orderNo = "15986ae3-c92b-4d0a-b95e-f9978bbf51e9";
 
         _data = new OrderDetailModel();
 
-//        _productList=new ArrayList<>();
-//        OrderListProductModel orderListProductModel=new OrderListProductModel();
-//        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-//        orderListProductModel.setSpec("40*40");
-//        orderListProductModel.setMoney(1333f);
-//        orderListProductModel.setAmount(2333);
-//        _productList.add(orderListProductModel);
-//        orderListProductModel=new OrderListProductModel();
-//        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-//        orderListProductModel.setSpec("40*40");
-//        orderListProductModel.setMoney(1333f);
-//        orderListProductModel.setAmount(2333);
-//        _productList.add(orderListProductModel);
-//        orderListProductModel=new OrderListProductModel();
-//        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-//        orderListProductModel.setSpec("40*40");
-//        orderListProductModel.setMoney(1333f);
-//        orderListProductModel.setAmount(2333);
-//        _productList.add(orderListProductModel);
-//        orderListProductModel=new OrderListProductModel();
-//        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-//        orderListProductModel.setSpec("40*40");
-//        orderListProductModel.setMoney(1333f);
-//        orderListProductModel.setAmount(2333);
-//        _productList.add(orderListProductModel);
-//        orderListProductModel=new OrderListProductModel();
-//        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-//        orderListProductModel.setSpec("40*40");
-//        orderListProductModel.setMoney(1333f);
-//        orderListProductModel.setAmount(2333);
-//        _productList.add(orderListProductModel);
-//        orderListProductModel=new OrderListProductModel();
-//        orderListProductModel.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
-//        orderListProductModel.setSpec("40*40");
-//        orderListProductModel.setMoney(1333f);
-//        orderListProductModel.setAmount(2333);
-//        _productList.add(orderListProductModel);
-//        _data.setList(_productList);
-
         _orderGoodsAdapter= new LogisticsGoodsAdapter(this, _data.getList());
         order_item_goodsList.setAdapter(_orderGoodsAdapter);
-        orderscrollview.smoothScrollTo(0,0);
+        orderscrollview.smoothScrollTo(0, 0);
     }
 
     protected void demoData(){
         List< OrderScoreModel> scoreList =new ArrayList<>();
         for( int i=0;i<4;i++){
             OrderScoreModel item =new OrderScoreModel();
-            item.setOrderNo("阿斯顿飞阿斯顿飞");
+            item.setUserType("阿斯顿飞阿斯顿飞");
             item.setType(1);
             List<OrderScoreModel> list= new ArrayList<>();
             if( i != 0 ) {
                 for (int k = 0; k < 5; k++) {
                     OrderScoreModel child = new OrderScoreModel();
                     child.setType(2);
-                    child.setOrderNo("1111111111" + i);
-                    child.setGetTime(System.currentTimeMillis());
+                    child.setUserType("1111111111" + i);
+                    child.setGetTime( new Date( System.currentTimeMillis()));
                     child.setScore(i);
                     child.setStatus("斯蒂芬打的费的发大阿是打发岁的发放");
-                    child.setZzTime(System.currentTimeMillis());
+                    child.setZzTime(new Date(System.currentTimeMillis()));
                     list.add(child);
                 }
             }
@@ -247,8 +211,34 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
             orderNo.setText( _data.getOrderNo() );
             tvAmount.setText( "共"+_data.getAmount() +"件商品 实付:￥" );
             tvPaid.setText( String.valueOf( _data.getPaid() ) );
-            //_scoreAdapter = new ScoreExpandableAdapter(OrdermanagementDetailsActivity.this , _data.getScoreList() );
 
+            if( _data.getScoreList() ==null ) {
+                List<OrderScoreModel> scores =new ArrayList<>();
+                _scoreAdapter=new ScoreExpandableAdapter( OrdermanagementDetailsActivity.this, scores);
+                _orderScoreList.setAdapter(_scoreAdapter);
+            }else{
+                List<OrderScoreModel> scores = new ArrayList<>();
+                for(int k=0;k<_data.getScoreList().size();k++){
+                    UserScoreModel model = _data.getScoreList().get(k);
+                    OrderScoreModel item = new OrderScoreModel();
+                    item.setUserType(model.getUserType());
+                    scores.add(item);
+
+                    List<OrderScoreModel> list =new ArrayList<>();
+                    OrderScoreModel child=new OrderScoreModel();
+                    child.setStatus( model.getPresent() );
+                    child.setGetTime(model.getGetTime());
+                    child.setScore(model.getScore());
+                    child.setZzTime(model.getRegularization());
+                    child.setUserName( model.getUserName());
+                    list.add(child);
+
+                    item.setList(list);
+                }
+
+                _scoreAdapter = new ScoreExpandableAdapter(OrdermanagementDetailsActivity.this, scores);
+                _orderScoreList.setAdapter(_scoreAdapter);
+            }
         }
     };
 

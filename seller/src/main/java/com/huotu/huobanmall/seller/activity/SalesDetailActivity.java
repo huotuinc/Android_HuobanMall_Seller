@@ -97,10 +97,10 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
                         search_text.setError("不能为空");
                     } else {
                         detail_btn.setChecked(true);
-                        String key = search_text.getText().toString().trim();
+                        //String key = search_text.getText().toString().trim();
                         _operateType = OperateTypeEnum.REFRESH;
                         SalesDetailActivity.this.showProgressDialog("", "正在获取数据，请稍等...");
-                        getData_MX(_operateType, key);
+                        getData_MX(_operateType);
                     }
                     return true;
                 }
@@ -115,7 +115,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
                 if (checkedId == R.id.detail_btn) {
                     _salesDetail_ListView.setMode(PullToRefreshBase.Mode.BOTH);
                     _operateType = OperateTypeEnum.REFRESH;
-                    getData_MX(_operateType, "");
+                    getData_MX(_operateType);
                 } else if (checkedId == R.id.statistic_btn) {
                     _salesDetail_ListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                     _operateType = OperateTypeEnum.REFRESH;
@@ -140,7 +140,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
             public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                 if (detail_btn.isChecked()) {
                     _operateType = OperateTypeEnum.REFRESH;
-                    getData_MX(_operateType,"");
+                    getData_MX(_operateType);
                 }else {
                     _operateType = OperateTypeEnum.REFRESH;
                     getData_TJ();
@@ -151,7 +151,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
             public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                 _operateType = OperateTypeEnum.LOADMORE;
                 if (detail_btn.isChecked()) {
-                    getData_MX(_operateType,"");
+                    getData_MX(_operateType);
                 }
             }
         });
@@ -159,7 +159,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
         firstSaleGoodData();
     }
 
-    protected void getData_MX( OperateTypeEnum type ,String key ){
+    protected void getData_MX( OperateTypeEnum type  ){
         String url = Constant.SALESLIST_INTERFACE;
         Map<String,String> paras = new HashMap<>();
         HttpParaUtils httpParaUtils = new HttpParaUtils();
@@ -173,6 +173,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
             }
         }
 
+        String key = search_text.getText().toString().trim();
         if( key!=null && key.length()>0){
             paras.put("key",key);
         }
@@ -304,7 +305,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
     private void firstSaleGoodData() {
         this.showProgressDialog("","正在获取数据，请稍等...");
         _operateType= OperateTypeEnum.REFRESH;
-        getData_MX(_operateType, "");
+        getData_MX(_operateType);
     }
 
     protected void openSearchBar(){

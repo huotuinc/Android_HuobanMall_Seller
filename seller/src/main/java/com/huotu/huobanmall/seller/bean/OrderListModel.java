@@ -41,6 +41,18 @@ public class OrderListModel {
     private boolean hasChildOrder =false;
 
     private String title;
+    /**
+     * 主订单号
+     */
+    private String mainOrderNo;
+
+    public String getMainOrderNo() {
+        return mainOrderNo;
+    }
+
+    public void setMainOrderNo(String mainOrderNo) {
+        this.mainOrderNo = mainOrderNo;
+    }
 
     public List<OrderListModel> getChildOrders() {
         return childOrders;

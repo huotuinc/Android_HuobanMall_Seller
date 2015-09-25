@@ -93,7 +93,7 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                 if (checkedId == R.id.detail_btn) {
                     _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH );
                     _operateType = OperateTypeEnum.REFRESH;
-                    getData_MX(_operateType, "");
+                    getData_MX(_operateType);
                 } else if (checkedId == R.id.statistic_btn) {
                     _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                     _operateType = OperateTypeEnum.REFRESH;
@@ -113,11 +113,10 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                         search_text.requestFocus();
                         search_text.setError("不能为空");
                     }else {
-                        //do reseach
                         detail_btn.setChecked(true);
-                        String key = search_text.getText().toString().trim();
+                        //String key = search_text.getText().toString().trim();
                         _operateType = OperateTypeEnum.REFRESH;
-                        getData_MX( _operateType , key );
+                        getData_MX( _operateType  );
                     }
                     return true;
                 }
@@ -142,7 +141,7 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                 if (detail_btn.isChecked()) {
                     _operateType = OperateTypeEnum.REFRESH;
-                    getData_MX(OperateTypeEnum.REFRESH, "");
+                    getData_MX(OperateTypeEnum.REFRESH);
                 } else {
                     _operateType = OperateTypeEnum.REFRESH;
                     getData_TJ();
@@ -153,7 +152,7 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
             public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                 if (detail_btn.isChecked()) {
                     _operateType = OperateTypeEnum.LOADMORE;
-                    getData_MX(OperateTypeEnum.LOADMORE, "");
+                    getData_MX(OperateTypeEnum.LOADMORE);
                 }
             }
         });
@@ -169,10 +168,10 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
     private void firstGetData() {
         this.showProgressDialog("", "正在获取数据，请稍等...");
         _operateType = OperateTypeEnum.REFRESH;
-        getData_MX( OperateTypeEnum.REFRESH, "");
+        getData_MX( OperateTypeEnum.REFRESH);
     }
 
-    protected void getData_MX( OperateTypeEnum operateType ,String key ){
+    protected void getData_MX( OperateTypeEnum operateType ){
         String url = Constant.USERSCORELIST_INTERFACE;
         Map<String,String> paras = new HashMap<>();
         if( operateType== OperateTypeEnum.LOADMORE ){
@@ -182,6 +181,7 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
             }
         }
 
+        String key = search_text.getText().toString().trim();
         if( key!=null && key.length()>0){
             paras.put("key",key);
         }

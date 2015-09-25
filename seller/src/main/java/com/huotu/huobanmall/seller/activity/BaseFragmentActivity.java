@@ -8,6 +8,9 @@ import com.android.volley.VolleyError;
 import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
+import com.huotu.huobanmall.seller.utils.ToastUtils;
+import com.huotu.huobanmall.seller.utils.Util;
+
 import cn.jpush.android.api.JPushInterface;
 
 /**
@@ -15,6 +18,7 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class BaseFragmentActivity extends FragmentActivity implements View.OnClickListener , Response.ErrorListener {
     ProgressDialogFragment _progressDialog=null;
+    protected static final String NULL_NETWORK = "无网络或当前网络不可用!";
 
     public BaseFragmentActivity() {
     }
@@ -50,7 +54,21 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
         return super.onKeyDown(keyCode, event);
     }
 
-    protected void showProgressDialog( String title , String message ){
+    protected boolean canConnect(){
+        //网络访问前先检测网络是否可用
+        if(!Util.isConnect(BaseFragmentActivity.this)){
+            ToastUtils.showLongToast(this, NULL_NETWORK);
+            return false;
+        }
+        return true;
+    }
+
+    protected boolean showProgressDialog( String title , String message ){
+        //网络访问前先检测网络是否可用
+        if(canConnect()==false){
+            return false;
+        }
+
         if( _progressDialog !=null ) {
             _progressDialog.dismiss();
             _progressDialog=null;
@@ -61,6 +79,8 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
                 .setCancelable(false)
                 .setCancelableOnTouchOutside(false);
         _progressDialog = (ProgressDialogFragment) builder.show();
+
+        return true;
     }
 
     protected  void closeProgressDialog(){

@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        huotu_hb {
+            keyAlias huotu_signing_keyalias
+            keyPassword huotu_signing_keypassword
+            storeFile file(huotu_signing_storefile)
+            storePassword huotu_signing_storepassword
+        }
+    }
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
     sourceSets {
@@ -14,6 +22,7 @@ android {
         targetSdkVersion 19
         versionCode 1
         versionName "1.0.0"
+        signingConfig signingConfigs.huotu_hb
     }
     buildTypes {
         release {
