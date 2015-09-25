@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginBottom="@dimen/space_5"
         android:layout_marginTop="@dimen/space_5">
     <Button
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_centerVertical="true"
         android:text="更多统计"
-        android:textSize="@dimen/text_size_25"
+        android:textSize="@dimen/text_size_20"
         android:textColor="@android:color/white"
         android:gravity="center"
         android:layout_height="wrap_content" />
@@ -45,10 +45,9 @@
         <TextView
             android:id="@+id/morestatistic_OrderCount"
             android:layout_toRightOf="@id/morestatistic_total_image"
-            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_16"
+            android:textSize="@dimen/text_size_22"
             android:layout_marginLeft="@dimen/space_10"
             android:textColor="@color/white"
             android:text="" />
@@ -57,11 +56,10 @@
             android:layout_width="wrap_content"
             android:layout_marginLeft="@dimen/space_10"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_alignBottom="@id/morestatistic_total_image"
+            android:layout_below="@+id/morestatistic_OrderCount"
             android:layout_toRightOf="@id/morestatistic_total_image"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_16"
+            android:textSize="@dimen/text_size_14"
             android:text="订单总数"/>
 
         <ImageView

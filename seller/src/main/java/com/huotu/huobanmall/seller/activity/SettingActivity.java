@@ -75,6 +75,9 @@ public class SettingActivity extends BaseFragmentActivity
     @Bind(R.id.shopNameLabel)
     public LinearLayout shopNameLabel;
 
+    @Bind(R.id.messageLabel)
+    public LinearLayout messageLabel;
+
     @Bind(R.id.shopdescriptionLabel)
     public LinearLayout shopdescriptionLabel;
 
@@ -180,7 +183,7 @@ public class SettingActivity extends BaseFragmentActivity
                 Bundle bd = new Bundle();
                 bd.putInt("type", EditSetTypeEnum.SHOPNAME.getIndex() );
                 bd.putString("text", shopName.getText().toString());
-                ActivityUtils.getInstance().showActivity(SettingActivity.this, EditSetActivity.class , bd);
+                ActivityUtils.getInstance().showActivity(SettingActivity.this, EditSetActivity.class, bd);
             }
             break;
             case R.id.shopdescriptionLabel:{
@@ -204,6 +207,10 @@ public class SettingActivity extends BaseFragmentActivity
             break;
             case R.id.pushLabel: {
                 ActivityUtils.getInstance().showActivity(SettingActivity.this, PushActivity.class);
+            }
+            break;
+            case R.id.messageLabel: {
+                ActivityUtils.getInstance().showActivity(SettingActivity.this, MessageActivity.class);
             }
             break;
             case R.id.header_back: {

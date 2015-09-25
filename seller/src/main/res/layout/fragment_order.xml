@@ -38,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_20"
                     android:text="" />
                 <TextView
                     android:id="@+id/order_title_text"
@@ -46,8 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_alignBottom="@id/order_total_image"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_13"
                     android:layout_toRightOf="@id/order_total_image"
                     android:text="订单总数"/>
                 <TextView

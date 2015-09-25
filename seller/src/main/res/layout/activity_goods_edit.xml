@@ -43,7 +43,7 @@
             android:id="@+id/goodsedit_delete"
             android:text="@string/goodsedit_delete"
             android:layout_toRightOf="@id/goodsedit_all"
-            android:background="@drawable/shape_white"
+            android:background="@drawable/btn_logistic"
             android:layout_marginLeft="@dimen/space_20"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_20"
@@ -54,7 +54,7 @@
             android:id="@+id/goodsedit_onshelf"
             android:text="@string/goodsedit_onshelf"
             android:layout_toRightOf="@id/goodsedit_delete"
-            android:background="@drawable/shape_white"
+            android:background="@drawable/btn_logistic"
             android:textSize="@dimen/text_size_20"
             android:layout_marginLeft="@dimen/space_20"
             android:layout_centerVertical="true"
@@ -69,7 +69,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/space_20"
-            android:background="@drawable/shape_white"
+            android:background="@drawable/btn_logistic"
 
              />
 
