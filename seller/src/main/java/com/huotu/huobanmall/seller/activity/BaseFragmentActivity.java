@@ -7,7 +7,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.RoleEnum;
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
+import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.Util;
 
@@ -103,5 +106,24 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
             message = "网络请求失败，请检查网络状态";
         }
         DialogUtils.showDialog(BaseFragmentActivity.this, BaseFragmentActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
+    }
+
+
+    protected boolean hasRole( RoleEnum role ){
+        String roles = PreferenceHelper.readString( this , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_AUTHORITY , "");
+        if( roles.contains("*") ) return  true;
+
+        String roleStr = String.valueOf( role);
+        String[] items = roles.split(",");
+        if(items==null || items.length<1) return false;
+
+        for( int i=0;i< items.length;i++){
+            String temp = items[i].trim();
+            if(  temp.equals( roleStr ) ){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

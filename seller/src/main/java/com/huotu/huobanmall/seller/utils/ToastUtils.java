@@ -1,6 +1,7 @@
 package com.huotu.huobanmall.seller.utils;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.huotu.huobanmall.seller.common.SellerApplication;
@@ -47,12 +48,16 @@ public class ToastUtils
     public static void showLong(  String msg){
         if( mToast ==null){
             mToast = Toast.makeText( SellerApplication.getInstance() , msg , Toast.LENGTH_LONG );
+            mToast.setMargin(10,10);
+            mToast.setGravity(Gravity.CENTER , 0,0);
         }
         else{
             mToast.setText(msg);
         }
         mToast.show();
     }
+
+
     public static void showShort( String msg){
         if( mToast ==null){
             mToast = Toast.makeText( SellerApplication.getInstance() , msg , Toast.LENGTH_SHORT );

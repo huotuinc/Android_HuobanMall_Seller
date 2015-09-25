@@ -134,6 +134,8 @@ public class Constant {
     public final static String LOGIN_AUTH_OPERATOR = "operator";
     //商铺名称
     public final static String LOGIN_AUTH_SHOPNAME="title";
+    //店铺首页地址
+    public final static String LOGIN_AUTH_SHOPURL="shopUrl";
     //关于我们
     public final static String LOGIN_GLOBAL_ABOUTURL = "aboutURL";
     //客服电话号码
@@ -186,6 +188,8 @@ public class Constant {
      * 会员Tab页
      */
     public final static int TAB_MEMBER=3;
+
+
 }
 
 
