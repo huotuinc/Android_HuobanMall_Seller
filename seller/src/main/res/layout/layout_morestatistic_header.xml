@@ -37,6 +37,7 @@
         android:padding="@dimen/space_5"
         android:layout_height="wrap_content">
         <ImageView
+            android:layout_marginTop="@dimen/space_4"
             android:layout_marginLeft="20dp"
             android:id="@+id/morestatistic_total_image"
             android:layout_width="40dp"
@@ -45,12 +46,15 @@
         <TextView
             android:id="@+id/morestatistic_OrderCount"
             android:layout_toRightOf="@id/morestatistic_total_image"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_22"
+            android:textSize="@dimen/text_size_20"
+            android:layout_marginTop="0dp"
+            android:paddingTop="0dp"
+            android:gravity="top"
             android:layout_marginLeft="@dimen/space_10"
             android:textColor="@color/white"
-            android:text="" />
+            android:text="1552" />
         <TextView
             android:id="@+id/morestatisitc_title_text"
             android:layout_width="wrap_content"

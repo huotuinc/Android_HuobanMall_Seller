@@ -2,6 +2,7 @@ package com.huotu.huobanmall.seller.receiver;
 
 import java.io.Serializable;
 import java.net.ProtocolException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,11 +21,23 @@ import android.view.WindowManager;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.google.gson.JsonSyntaxException;
+import com.huotu.huobanmall.seller.activity.BaseFragmentActivity;
+import com.huotu.huobanmall.seller.activity.ConsumeStatisticsActivity;
+import com.huotu.huobanmall.seller.activity.OrderActivity;
+import com.huotu.huobanmall.seller.bean.BaseModel;
 import com.huotu.huobanmall.seller.bean.JPushBean;
+import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.common.SellerApplication;
+import com.huotu.huobanmall.seller.utils.GsonRequest;
+import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.JSONUtil;
+import com.huotu.huobanmall.seller.utils.SystemTools;
 import com.huotu.huobanmall.seller.utils.SystemUtils;
+import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 /**
  * 自定义接收器
@@ -51,7 +64,7 @@ public class MJJPushReceiver extends BroadcastReceiver
             regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
             imei = SystemUtils.getPhoneIMEI(context);
 
-            registerJPush_Alias();
+            registerJPush_Alias( context );
 
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction()))
         {
@@ -164,7 +177,25 @@ public class MJJPushReceiver extends BroadcastReceiver
     /**
      * 注册 JPUSH 的别名
      */
-    protected void registerJPush_Alias(){
+    protected void registerJPush_Alias( Context  context ){
+        String url = Constant.UPDATEDEVICETOKEN_INTERFACE;
+        HttpParaUtils httpParaUtils = new HttpParaUtils();
+        String imei = SystemUtils.getPhoneIMEI( context  );
+        Map<String,String> paras = new HashMap<>();
+        paras.put("deviceToken", imei);
+        url = httpParaUtils.getHttpGetUrl(url, paras);
+        GsonRequest<BaseModel> request = new GsonRequest<BaseModel>(
+                Request.Method.GET,
+                url,
+                BaseModel.class,
+                null,
+                listener,
+                errorListener
+        );
+
+        VolleyRequestManager.getRequestQueue().add(request);
+
+
         // 设置别名
 //        new AsyncTask<Void, Void, BaseBaseBean>()
 //        {
@@ -247,7 +278,27 @@ public class MJJPushReceiver extends BroadcastReceiver
 //        }.execute();
     }
 
+    protected Response.Listener<BaseModel> listener = new Response.Listener<BaseModel>() {
+        @Override
+        public void onResponse(BaseModel baseModel) {
+            //TODO
+        }
+    };
 
+    protected Response.ErrorListener errorListener = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            String message="";
+            if( null != volleyError.networkResponse){
+                message=new String( volleyError.networkResponse.data);
+            }else{
+                message = volleyError.getMessage();
+            }
+            if( message.length()<1){
+                message = "网络请求失败，请检查网络状态";
+            }
+        }
+    };
     /**
      * 
      * @创建人：jinxiangdong
