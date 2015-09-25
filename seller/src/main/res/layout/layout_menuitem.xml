@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:background="@color/gray"
-    android:layout_height="200dp">
+    android:layout_height="170dp">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dp"
@@ -15,26 +15,28 @@
             <Button
                 android:id="@+id/main_menu_cpgl"
                 android:drawableTop="@mipmap/cpgl"
-                android:drawablePadding="@dimen/space_10"
+                android:drawablePadding="@dimen/space_5"
                 android:background="@drawable/btn_menu"
-                android:padding="@dimen/space_15"
+                android:padding="@dimen/space_10"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/space_1"
+                android:textSize="@dimen/text_size_15"
                 android:text="产品管理"/>
 
             <Button
                 android:id="@+id/main_menu_gdtj"
                 android:drawableTop="@mipmap/gdtj"
-                android:drawablePadding="@dimen/space_10"
+                android:drawablePadding="@dimen/space_5"
                 android:background="@drawable/btn_menu"
-                android:padding="@dimen/space_15"
+                android:padding="@dimen/space_10"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_gravity="center"
+                android:textSize="@dimen/text_size_15"
                 android:text="更多统计"/>
 
     </LinearLayout>
@@ -49,26 +51,28 @@
         <Button
             android:id="@+id/main_menu_ddgl"
             android:drawableTop="@mipmap/ddgl"
-            android:drawablePadding="@dimen/space_10"
+            android:drawablePadding="@dimen/space_5"
             android:background="@drawable/btn_menu"
-            android:padding="@dimen/space_15"
+            android:padding="@dimen/space_10"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/space_1"
+            android:textSize="@dimen/text_size_15"
             android:text="订单管理"/>
 
         <Button
             android:id="@+id/main_menu_szgl"
             android:drawableTop="@mipmap/szgl"
-            android:drawablePadding="@dimen/space_10"
+            android:drawablePadding="@dimen/space_5"
             android:background="@drawable/btn_menu"
-            android:padding="@dimen/space_15"
+            android:padding="@dimen/space_10"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:textSize="@dimen/text_size_15"
             android:text="设置管理"/>
 
     </LinearLayout>

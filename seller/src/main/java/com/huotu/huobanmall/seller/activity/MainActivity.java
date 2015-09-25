@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.bean.CloseEvnt;
 import com.huotu.huobanmall.seller.bean.MJNewTodayModel;
+import com.huotu.huobanmall.seller.bean.RoleEnum;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.R;
@@ -149,14 +150,27 @@ public class MainActivity extends BaseFragmentActivity{
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        if( v.getId() == R.id.main_menu_cpgl){
+        if( v.getId() == R.id.main_menu_cpgl){//产品管理
+            if( hasRole(RoleEnum.产品管理 ) == false){
+                ToastUtils.showLong("您所属的账号无访问权限。");
+                return;
+            }
             ActivityUtils.getInstance().showActivity(this, GoodsActivity.class);
         }else if( v.getId() == R.id.main_menu_ddgl){//订单管理
+            if( hasRole(RoleEnum.订单管理 ) == false){
+                ToastUtils.showLong("您所属的账号无访问权限。");
+                return;
+            }
             Intent intent = new Intent( this , OrderActivity.class);
             ActivityUtils.getInstance().showActivity(this, intent);
-        }else if( v.getId() == R.id.main_menu_gdtj){//产品管理
+        }else if( v.getId() == R.id.main_menu_gdtj){//更多统计
             ActivityUtils.getInstance().showActivity(this, MoreStatisticActivity.class);
         }else if( v.getId() ==R.id.main_menu_szgl){//设置管理
+            if( hasRole(RoleEnum.设置管理 ) == false){
+                ToastUtils.showLong("您所属的账号无访问权限。");
+                return;
+            }
+
             ActivityUtils.getInstance().showActivity(this, SettingActivity.class);
         }else if( v.getId() == R.id.ll_todayOrder_order){//
             _currentIndex=0;
@@ -168,7 +182,11 @@ public class MainActivity extends BaseFragmentActivity{
             _currentIndex=2;
             setLineChart();
         }else if( v.getId() == R.id.header_operate){//导航到商户首页
-            ActivityUtils.getInstance().showActivity(this, WebViewActivity.class);
+            String shopUrl = PreferenceHelper.readString( this , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_SHOPURL ,"");
+            Intent intent = new Intent();
+            intent.putExtra( Constant.Extra_Url , shopUrl );
+            intent.setClass( this , WebViewActivity.class );
+            ActivityUtils.getInstance().showActivity(this, intent );
         }
     }
 

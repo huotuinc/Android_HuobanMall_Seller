@@ -22,7 +22,7 @@
         <TextView
             android:id="@+id/main_todyMoney"
             android:layout_marginTop="@dimen/space_7"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="@dimen/space_8"
             android:textSize="@dimen/text_size_40"
             android:textColor="@android:color/white"
             android:text=""
@@ -42,12 +42,12 @@
             android:layout_height="wrap_content"
             android:text="今日"/>
         <TextView
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="@dimen/space_10"
             android:id="@+id/main_todayMoneyLabel"
             android:layout_below="@id/main_todyMoney"
             android:textColor="@android:color/white"
             android:text="总销售额(元)"
-            android:textSize="@dimen/text_size_18"
+            android:textSize="@dimen/text_size_17"
             android:layout_centerHorizontal="true"
             android:layout_alignParentLeft="true"
             android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
             />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="15dp"
+            android:layout_height="8dp"
             android:layout_below="@+id/main_todayMoneyLabel"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -66,8 +66,7 @@
             android:text=""
             android:textSize="@dimen/text_size_20"
             android:textColor="@android:color/white"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/space_15"
+            android:layout_marginBottom="@dimen/space_1"
             android:layout_marginLeft="@dimen/space_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -85,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/todayNewOrder"
-            android:textSize="@dimen/text_size_20"
+            android:textSize="@dimen/text_size_18"
             android:gravity="center"/>
         <ImageView
             android:layout_marginTop="@dimen/space_5"

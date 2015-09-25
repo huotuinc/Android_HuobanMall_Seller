@@ -30,15 +30,15 @@ public class MJNewTodayModel extends BaseModel {
         private List<Integer> partnerHour;
         private List<Integer> partnerAmount;
 
-        public float getTodayPartnerAmount() {
+        public Integer getTodayPartnerAmount() {
             return todayPartnerAmount;
         }
 
-        public float getTodayMemberAmount() {
+        public Integer getTodayMemberAmount() {
             return todayMemberAmount;
         }
 
-        public float getTodayOrderAmount() {
+        public Integer getTodayOrderAmount() {
             return todayOrderAmount;
         }
 

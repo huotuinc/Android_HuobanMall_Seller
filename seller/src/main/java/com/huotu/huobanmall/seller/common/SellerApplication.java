@@ -114,6 +114,8 @@ public class SellerApplication extends Application{
         PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_OPERATOR, user.getOperatored () );
         //店铺名称
         PreferenceHelper.writeString(getApplicationContext(), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_SHOPNAME, user.getTitle());
+        //店铺url
+        PreferenceHelper.writeString( getApplicationContext(), Constant.LOGIN_USER_INFO,Constant.LOGIN_AUTH_SHOPURL , user.getIndexUrl() );
     }
 
     public void cleanMerchantInfo()

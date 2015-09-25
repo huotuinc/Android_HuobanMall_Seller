@@ -1,19 +1,20 @@
 package com.huotu.huobanmall.seller.bean;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2015/8/28.
  * 商家信息
  */
 public class MerchantModel extends BaseModel {
     /**
-     * 权限，控制app端的内容显示 以,隔开 如 11,33,55
+     * 权限，控制app端的内容显示 以,隔开 如 11,33,55;特殊情况：*代表商家管理员权限
      */
     private String authority;
     /**
      * 店铺名称
      */
     private String title;
-
     /**
      * 店铺描述
      */
@@ -58,6 +59,7 @@ public class MerchantModel extends BaseModel {
      * 商家首页url
      */
     private String indexUrl;
+
 
     public String getIndexUrl() {
         return indexUrl;
