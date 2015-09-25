@@ -66,7 +66,7 @@ public class GoodseditAdapter extends BaseAdapter {
         holder.goods_num.setText(String.valueOf(_list.get(position)
                 .getStock()));
         holder.goods_price.setText(String.valueOf(_list.get(position).getPrice()));
-        BitmapLoader.create().displayUrl( _context , holder.goods_imageView , _list.get(position).getPictureUrl());
+        BitmapLoader.create().displayUrl( _context , holder.goods_imageView , _list.get(position).getPictureUrl(),R.mipmap.goods,R.mipmap.goods);
 
         if( _list.get(position).isSelected()){
             holder.tvSelect.setBackgroundResource(R.mipmap.xz);

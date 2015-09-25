@@ -34,7 +34,7 @@ public class ObtainParamsMap
         // TODO Auto-generated constructor stub
         this.context = context;
         
-        timestamp = "1441762623123";// String.valueOf(System.currentTimeMillis());
+        timestamp = "111";// String.valueOf(System.currentTimeMillis());
     }
 
 
@@ -201,7 +201,8 @@ public class ObtainParamsMap
             // values = URLEncoder.encode(values);
             String signHex = DigestUtils.md5DigestAsHex(values.toString().getBytes("UTF-8")).toLowerCase();
             //String signHex = EncryptUtil.getInstance().encryptMd532(values);
-            Log.i("signHex", signHex);
+            //Log.i("signHex", signHex);
+            //Log.i("signHex22", signHex2);
             return signHex;
 
         } catch (UnsupportedEncodingException e) { // TODO Auto-generated

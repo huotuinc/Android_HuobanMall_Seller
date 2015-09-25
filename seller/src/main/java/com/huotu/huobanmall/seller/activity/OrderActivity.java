@@ -442,7 +442,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
 
                 OrderTestModel item = new OrderTestModel();
                 item.setViewType(1);
-                item.setMainOrderNO(order.getOrderNo());
+                item.setMainOrderNO(order.getMainOrderNo());
                 item.setChildOrderNO(order.getOrderNo());
                 item.setStatus(String.valueOf(order.getStatus()));
                 list.add(item);
@@ -452,7 +452,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                         item = new OrderTestModel();
                         item.setViewType(2);
                         item.setChildOrderNO(order.getOrderNo());
-                        item.setMainOrderNO(order.getOrderNo());
+                        item.setMainOrderNO(order.getMainOrderNo());
                         item.setCount(order.getList().get(i).getAmount());
                         item.setPrice(order.getList().get(i).getMoney());
                         item.setGoodsName(order.getList().get(i).getTitle());
@@ -464,7 +464,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
 
                 item = new OrderTestModel();
                 item.setViewType(3);
-                item.setMainOrderNO(order.getOrderNo());
+                item.setMainOrderNO(order.getMainOrderNo());
                 item.setChildOrderNO(order.getOrderNo());
                 item.setCount(9999999);
                 item.setTotalPrice(999999.09f);
@@ -472,7 +472,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
 
                 item = new OrderTestModel();
                 item.setViewType(0);
-                item.setMainOrderNO(order.getOrderNo());
+                item.setMainOrderNO(order.getMainOrderNo());
                 item.setTime(order.getTime());
                 list.add(item);
             }

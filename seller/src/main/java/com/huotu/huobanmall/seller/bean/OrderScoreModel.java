@@ -1,15 +1,28 @@
 package com.huotu.huobanmall.seller.bean;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Administrator on 2015/9/18.
  */
 public class OrderScoreModel {
-    private String orderNo;
-    private Long getTime;
+    private String userType;
+    private Date getTime;
     private String status;
-    private Long zzTime;
+    private Date zzTime;
+    private Integer score;
+    private String userName;
+    private int Type;
+    private List<OrderScoreModel> list;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public List<OrderScoreModel> getList() {
         return list;
@@ -19,8 +32,6 @@ public class OrderScoreModel {
         this.list = list;
     }
 
-    private List<OrderScoreModel> list;
-
     public int getType() {
         return Type;
     }
@@ -29,7 +40,6 @@ public class OrderScoreModel {
         Type = type;
     }
 
-    private int Type;
 
     public Integer getScore() {
         return score;
@@ -39,19 +49,19 @@ public class OrderScoreModel {
         this.score = score;
     }
 
-    public String getOrderNo() {
-        return orderNo;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
-    public Long getGetTime() {
+    public Date getGetTime() {
         return getTime;
     }
 
-    public void setGetTime(Long getTime) {
+    public void setGetTime(Date getTime) {
         this.getTime = getTime;
     }
 
@@ -63,13 +73,13 @@ public class OrderScoreModel {
         this.status = status;
     }
 
-    public Long getZzTime() {
+    public Date getZzTime() {
         return zzTime;
     }
 
-    public void setZzTime(Long zzTime) {
+    public void setZzTime(Date zzTime) {
         this.zzTime = zzTime;
     }
 
-    private Integer score;
+
 }

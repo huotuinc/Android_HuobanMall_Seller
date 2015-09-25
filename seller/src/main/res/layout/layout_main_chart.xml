@@ -31,7 +31,9 @@
             <ImageView
                 android:id="@+id/main_order_space"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/space_4"
+                android:layout_height="@dimen/space_3"
+                android:layout_marginRight="@dimen/space_10"
+                android:layout_marginLeft="@dimen/space_10"
                 android:visibility="visible"
                 android:background="@color/main_header_bg"/>
         </LinearLayout>

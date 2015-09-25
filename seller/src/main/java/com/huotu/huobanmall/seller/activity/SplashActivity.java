@@ -34,17 +34,13 @@ import butterknife.ButterKnife;
 public class SplashActivity extends BaseFragmentActivity implements ISimpleDialogListener {
     @Bind(R.id.loadL)
     RelativeLayout loadLayout;
-    //public SellerApplication application;
     //升级APP 请求代码
     public static final int REQUESTCODE_UPDATE= 6001;
-
-    //public static final int REQUESTCODE_CLOSE=6008;
     HTInitBean _data=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //application = (SellerApplication) SplashActivity.this.getApplication();
         setContentView(R.layout.activity_splash);
         initView();
         handlerView();
@@ -79,6 +75,11 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
     }
 
     protected void callInit ( ) {
+        if( false== canConnect() ){
+            this.finish();
+            return;
+        }
+
         String url = Constant.INIT_INTERFACE;
         HttpParaUtils utils = new HttpParaUtils();
         url = utils.getHttpGetUrl(url, null);

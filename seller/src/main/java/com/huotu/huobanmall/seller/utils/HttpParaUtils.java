@@ -103,7 +103,7 @@ public class HttpParaUtils {
         return buffer.toString();
     }
 
-    private String getSign( Map<String,String> paras ) {
+    public String getSign( Map<String,String> paras ) {
         String values = this.doSort(paras);
         Log.i("sign", values);
         //String signHex = EncryptUtils.getInstance().encryptMd532(values);
@@ -134,7 +134,10 @@ public class HttpParaUtils {
                 //System.out.println("key=" + key + " value=" + value);
                 try {
                     String valueEncode= URLEncoder.encode( value,"utf-8");
-                    builder.appendQueryParameter(key, valueEncode);
+
+
+                    builder.appendQueryParameter(key, value);
+
                 }catch (UnsupportedEncodingException ex){
                     Log.e(TAG, ex.getMessage());
                 }

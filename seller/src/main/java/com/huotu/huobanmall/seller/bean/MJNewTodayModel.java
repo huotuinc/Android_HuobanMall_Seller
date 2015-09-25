@@ -20,9 +20,9 @@ public class MJNewTodayModel extends BaseModel {
     public class InnerClass {
         private float totalSales;
         private float todaySales;
-        private float todayPartnerAmount;
-        private float todayMemberAmount;
-        private float todayOrderAmount;
+        private Integer todayPartnerAmount;
+        private Integer todayMemberAmount;
+        private Integer todayOrderAmount;
         private List<Integer> orderHour;
         private List<Integer> orderAmount;
         private List<Integer> memberHour;
@@ -42,15 +42,15 @@ public class MJNewTodayModel extends BaseModel {
             return todayOrderAmount;
         }
 
-        public void setTodayPartnerAmount(float todayPartnerAmount) {
+        public void setTodayPartnerAmount(Integer todayPartnerAmount) {
             this.todayPartnerAmount = todayPartnerAmount;
         }
 
-        public void setTodayMemberAmount(float todayMemberAmount) {
+        public void setTodayMemberAmount(Integer todayMemberAmount) {
             this.todayMemberAmount = todayMemberAmount;
         }
 
-        public void setTodayOrderAmount(float todayOrderAmount) {
+        public void setTodayOrderAmount(Integer todayOrderAmount) {
             this.todayOrderAmount = todayOrderAmount;
         }
 

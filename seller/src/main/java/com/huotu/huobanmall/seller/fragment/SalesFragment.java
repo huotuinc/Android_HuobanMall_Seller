@@ -385,7 +385,7 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
                      int day = ((Date)xObj ).getDate();
                      x = day+"日";
                 }else {
-                    x = xObj.toString();
+                    x = xObj.toString()+"时";
                 }
 
                 xValues1.add( x );

@@ -10,6 +10,51 @@ public class UserScoreModel {
     private String name;
     private String pictureUrl;
     private Integer score;
+    private Date getTime;
+    private String userName;
+    private String present;
+    private String userType;
+    private Date regularization;
+
+    public Date getGetTime() {
+        return getTime;
+    }
+
+    public void setGetTime(Date getTime) {
+        this.getTime = getTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPresent() {
+        return present;
+    }
+
+    public void setPresent(String present) {
+        this.present = present;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public Date getRegularization() {
+        return regularization;
+    }
+
+    public void setRegularization(Date regularization) {
+        this.regularization = regularization;
+    }
 
     public Integer getPid() {
         return pid;

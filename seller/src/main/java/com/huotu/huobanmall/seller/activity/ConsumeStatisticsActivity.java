@@ -30,8 +30,11 @@ import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,10 +95,10 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                         search_text.setError("不能为空");
                     } else {
                         detail_btn.setChecked(true);
-                        String key = search_text.getText().toString().trim();
+                        //String key = search_text.getText().toString().trim();
                         _operateType = OperateTypeEnum.REFRESH;
                         ConsumeStatisticsActivity.this.showProgressDialog("","正在获取数据，请稍等...");
-                        getData_MX(_operateType, key);
+                        getData_MX(_operateType);
                     }
                     return true;
                 }
@@ -110,7 +113,7 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                 if (checkedId == R.id.detail_btn) {
                     _consumStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH);
                     _operateType = OperateTypeEnum.REFRESH;
-                    getData_MX(_operateType, "");
+                    getData_MX(_operateType);
                 } else if (checkedId == R.id.statistic_btn) {
                     _consumStatistics_listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                     _operateType = OperateTypeEnum.REFRESH;
@@ -137,7 +140,7 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                     public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                         if (detail_btn.isChecked()) {
                             _operateType = OperateTypeEnum.REFRESH;
-                            getData_MX(OperateTypeEnum.REFRESH, "");
+                            getData_MX(OperateTypeEnum.REFRESH );
                         } else {
                             _operateType = OperateTypeEnum.REFRESH;
                             getData_TJ();
@@ -148,7 +151,7 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                     public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                         if (detail_btn.isChecked()) {
                             _operateType = OperateTypeEnum.LOADMORE;
-                            getData_MX(OperateTypeEnum.LOADMORE, "");
+                            getData_MX(OperateTypeEnum.LOADMORE);
                         }
                     }
                 }
@@ -165,10 +168,10 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
     private void firstGetData() {
         this.showProgressDialog("","正在获取数据，请稍等...");
         _operateType = OperateTypeEnum.REFRESH;
-        getData_MX(_operateType, "");
+        getData_MX(_operateType);
     }
 
-    protected void getData_MX( OperateTypeEnum operateType ,String key){
+    protected void getData_MX( OperateTypeEnum operateType ){
         String url = Constant.USERCONSUMELIST_INTERFACE;
         Map<String,String> paras = new HashMap<>();
         if( operateType== OperateTypeEnum.LOADMORE ){
@@ -178,10 +181,10 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
             }
         }
 
+        String key = search_text.getText().toString().trim();
         if( key!=null && key.length()>0){
             paras.put("key",key);
         }
-
 
         HttpParaUtils httpParaUtils = new HttpParaUtils();
         url = httpParaUtils.getHttpGetUrl(url, paras );
