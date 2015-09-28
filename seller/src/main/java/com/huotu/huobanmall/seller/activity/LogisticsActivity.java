@@ -92,41 +92,43 @@ public class LogisticsActivity extends BaseFragmentActivity {
         //_orderNo="665d1d4e-4f49-4586-acae-e7a49618af17";
 
         _data=new LogisticsDetailModel();
-        List<LogisticsDataModel> logisticsList = new ArrayList<>();
-        for( int i=0;i<10;i++) {
-            LogisticsDataModel item = new LogisticsDataModel();
-            item.setAreacode("322105");
-            item.setAreaname("浙江东阳");
-            item.setCode("10021");
-            item.setCompany("顺丰物流");
-            item.setTimes("2015-09-22 13:00:00");
-            if( i%2==0){
-                item.setContext("时光飞逝，安迪·鲁宾（Andy Rubin）依旧对三星放弃收购安卓耿耿于怀");
-            }else {
-                item.setContext("阿时光飞逝，安迪·鲁宾（Andy Rubin）依旧对三星放弃收购安卓耿耿于怀，而如今安卓依旧在市面上同苹果系统分庭抗礼。记得那是2004年的第一场雪，当时的国内智能手机市场主要占有者是诺基亚，改变世界的iPhone还没有到来，第一台安卓手机也是三年后才发布的。当时的智能手机远不像现在这般统一。各种杂牌手机盛行，而且每种系统都有对应的手机，互相之间是不兼容的，这也就为后来的故事埋下了伏笔。");
-            }
-            logisticsList.add(item);
-        }
-        _data.setTrack(logisticsList);
+        _data.setTrack(new ArrayList<LogisticsDataModel>());
+//        List<LogisticsDataModel> logisticsList = new ArrayList<>();
+//        for( int i=0;i<10;i++) {
+//            LogisticsDataModel item = new LogisticsDataModel();
+//            item.setAreacode("322105");
+//            item.setAreaname("浙江东阳");
+//            item.setCode("10021");
+//            item.setCompany("顺丰物流");
+//            item.setTimes("2015-09-22 13:00:00");
+//            if( i%2==0){
+//                item.setContext("时光飞逝，安迪·鲁宾（Andy Rubin）依旧对三星放弃收购安卓耿耿于怀");
+//            }else {
+//                item.setContext("阿时光飞逝，安迪·鲁宾（Andy Rubin）依旧对三星放弃收购安卓耿耿于怀，而如今安卓依旧在市面上同苹果系统分庭抗礼。记得那是2004年的第一场雪，当时的国内智能手机市场主要占有者是诺基亚，改变世界的iPhone还没有到来，第一台安卓手机也是三年后才发布的。当时的智能手机远不像现在这般统一。各种杂牌手机盛行，而且每种系统都有对应的手机，互相之间是不兼容的，这也就为后来的故事埋下了伏笔。");
+//            }
+//            logisticsList.add(item);
+//        }
+//        _data.setTrack(logisticsList);
 
-        _logisticAdapter =new LogisticsAdapter(this, logisticsList );
+        _logisticAdapter =new LogisticsAdapter(this, _data.getTrack() );
         _logistics_list.setAdapter(_logisticAdapter);
         _headerBack.setOnClickListener(this);
 
-        List<OrderListProductModel> goodsList = new ArrayList<>();
+        _data.setList( new ArrayList<OrderListProductModel>());
 
-        for(int i=0;i<8;i++){
-            OrderListProductModel item = new OrderListProductModel();
-            item.setAmount(2);
-            item.setMoney(67.44f);
-            item.setPictureUrl("");
-            item.setSpec("阿斯顿飞阿斯顿飞阿斯顿飞撒旦法");
-            item.setTitle("丹杰仕休闲帆布鞋男2015秋季男鞋男士透气");
-            goodsList.add(item);
-        }
-        _data.setList(goodsList);
+//        List<OrderListProductModel> goodsList = new ArrayList<>();
+//        for(int i=0;i<8;i++){
+//            OrderListProductModel item = new OrderListProductModel();
+//            item.setAmount(2);
+//            item.setMoney(67.44f);
+//            item.setPictureUrl("");
+//            item.setSpec("阿斯顿飞阿斯顿飞阿斯顿飞撒旦法");
+//            item.setTitle("丹杰仕休闲帆布鞋男2015秋季男鞋男士透气");
+//            goodsList.add(item);
+//        }
+//        _data.setList(goodsList);
 
-        _goodsAdapter = new LogisticsGoodsAdapter(this, goodsList);
+        _goodsAdapter = new LogisticsGoodsAdapter(this, _data.getList());
         _logistics_goods.setAdapter(_goodsAdapter);
 
         _scrollView.getRefreshableView().smoothScrollTo(0, 0);
@@ -197,6 +199,7 @@ public class LogisticsActivity extends BaseFragmentActivity {
 
             setData();
 
+            _scrollView.getRefreshableView().smoothScrollTo(0, 0);
         }
     };
 

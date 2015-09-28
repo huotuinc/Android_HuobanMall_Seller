@@ -98,6 +98,8 @@ public class Constant {
 
     public static final String ORDERLIST_INTERFACE=BASE_URL+"orderList";//订单列表
 
+    public static final String UPDATEDEVICETOKEN_INTERFACE = BASE_URL +"updateDeviceToken";// app请求设置该设备(imei)的deviceToken
+
     /**
      * token添加的类型
      */

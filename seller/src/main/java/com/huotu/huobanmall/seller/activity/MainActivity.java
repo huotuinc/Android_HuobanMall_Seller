@@ -103,7 +103,7 @@ public class MainActivity extends BaseFragmentActivity{
         _ibShop.setOnClickListener(this);
 
         String logoUrl = PreferenceHelper.readString( this, Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_LOGO,"");
-        BitmapLoader.create().displayUrl(this, _ivLogo , logoUrl);
+        BitmapLoader.create().displayUrl(this, _ivLogo , logoUrl , R.mipmap.txzw,R.mipmap.txzw);
 
         getData();
     }
@@ -221,7 +221,7 @@ public class MainActivity extends BaseFragmentActivity{
     protected void setLineChartData( LineChart lineChart , List<Integer> xData , List<Integer> yData ){
         if( xData==null || yData==null )return;
 
-        int bg=0xFFFFFFFF;
+        int bg=0xFFF5F5F5;
         int lineColor =0xFFFF3C00;
 
         lineChart.setDrawGridBackground(false);

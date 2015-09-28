@@ -137,8 +137,8 @@ public class OrderDataAdapter extends BaseAdapter{ //RecyclerView.Adapter<OrderD
             holder=(ViewHolder)convertView.getTag();
         }
         holder.tvGoodsName.setText( model.getGoodsName() );
-        holder.tvPrice.setText( String.valueOf( model.getPrice() ));
-        holder.tvCount.setText( String .valueOf( model.getCount() ) );
+        holder.tvPrice.setText( "￥"+ String.valueOf( model.getPrice() ));
+        holder.tvCount.setText( "X " + String .valueOf( model.getCount() ) );
         holder.tvSpec.setText(model.getSpec());
         BitmapLoader.create().displayUrl(_context, holder.ivPicture, model.getPictureUrl() , R.mipmap.goods , R.mipmap.goods );
         return convertView;
