@@ -58,6 +58,7 @@
         <activity android:name=".activity.RebateStatisticsActivity" />
         <activity android:name=".activity.TopSalesActivity"/>
         <activity android:name=".activity.MessageActivity"/>
+        <activity android:name=".activity.FeedBackActivity"/>
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"

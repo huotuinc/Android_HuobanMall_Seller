@@ -238,7 +238,7 @@ public class SettingActivity extends BaseFragmentActivity
             case R.id.FeedbackLabel: {
                 String url = PreferenceHelper.readString(this.getApplicationContext(), Constant.LOGIN_GLOBAL_INFO,Constant.LOGIN_GLOBAL_HELPURL);
                 Intent intent=new Intent();
-                intent.setClass(SettingActivity.this,WebViewActivity.class);
+                intent.setClass(SettingActivity.this,FeedBackActivity.class);
                 intent.putExtra(Constant.Extra_Url, url);
                 ActivityUtils.getInstance().showActivity(SettingActivity.this, intent );
             }

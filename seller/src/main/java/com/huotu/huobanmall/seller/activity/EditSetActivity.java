@@ -36,6 +36,8 @@ public class EditSetActivity extends BaseFragmentActivity {
     public TextView header_title;
     @Bind(R.id.header_back)
     public Button header_back;
+    @Bind(R.id.header_operate)
+    public TextView header_operate;
 
     protected EditSetTypeEnum typeEnum;
 
@@ -49,7 +51,7 @@ public class EditSetActivity extends BaseFragmentActivity {
     }
 
     private void initView() {
-
+        header_operate.setText("保存");
         header_title.setText("修改");
 
         if (getIntent().getExtras() == null) return;
@@ -59,6 +61,7 @@ public class EditSetActivity extends BaseFragmentActivity {
         //String tempName = EditSetTypeEnum.getName(temp);
         typeEnum = EditSetTypeEnum.valueOf(temp);
         header_back.setOnClickListener(this);
+        header_operate.setOnClickListener(this);
         String context = getIntent().getExtras().getString("text");
         ET.setText(context);
     }
@@ -126,6 +129,10 @@ public class EditSetActivity extends BaseFragmentActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.header_back: {
+                commit();
+            }
+            break;
+            case R.id.header_operate: {
                 commit();
             }
             break;
