@@ -1,6 +1,7 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -78,6 +79,7 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
     List<TopScoreModel> _topScoreList = null;
     List<UserScoreModel> _userScoreList =null;
     OperateTypeEnum _operateType = OperateTypeEnum.REFRESH;
+    Handler handler =new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,10 +170,21 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
     private void firstGetData() {
         this.showProgressDialog("", "正在获取数据，请稍等...");
         _operateType = OperateTypeEnum.REFRESH;
-        getData_MX( OperateTypeEnum.REFRESH);
+        getData_MX(OperateTypeEnum.REFRESH);
     }
 
     protected void getData_MX( OperateTypeEnum operateType ){
+        if( false==canConnect()){
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    RebateStatisticsActivity.this.closeProgressDialog();
+                    _rebateStatistics_listview.onRefreshComplete();
+                }
+            });
+            return;
+        }
+
         String url = Constant.USERSCORELIST_INTERFACE;
         Map<String,String> paras = new HashMap<>();
         if( operateType== OperateTypeEnum.LOADMORE ){

@@ -1,6 +1,7 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -69,6 +70,7 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
     List<GoodsModel> _offShelfList=null;
     OperateTypeEnum _operateType = OperateTypeEnum.REFRESH;
     int _type = 1;
+    Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +131,17 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
     }
 
     private void getOffShelfGoodsData(OperateTypeEnum operateType){
+        if( false == canConnect() ){
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    GoodsEditActivity.this.closeProgressDialog();
+                    _goodsedit_listview.onRefreshComplete();
+                }
+            });
+            return;
+        }
+
         Map<String,String> paras = new HashMap<>();
         if( operateType == OperateTypeEnum.REFRESH){
         }else {
@@ -162,6 +175,17 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
     }
 
     private void getSaleGoodsData( OperateTypeEnum operateType ) {
+        if( false == canConnect() ){
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    GoodsEditActivity.this.closeProgressDialog();
+                    _goodsedit_listview.onRefreshComplete();
+                }
+            });
+            return;
+        }
+
         Map<String,String> paras = new HashMap<>();
         if( operateType == OperateTypeEnum.REFRESH){
         }else {

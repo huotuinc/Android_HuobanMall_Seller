@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/space_5"
+    android:paddingTop="@dimen/space_5"
+    android:paddingBottom="@dimen/space_5"
+    android:paddingRight="@dimen/space_5"
     android:background="@color/white">
     <Button
         android:id="@+id/test_order_logistic_item_btn"
@@ -13,7 +15,6 @@
         android:layout_marginBottom="@dimen/space_2"
         android:layout_marginTop="@dimen/space_2"
         android:paddingRight="@dimen/space_2"
-        android:paddingLeft="@dimen/space_2"
         android:textColor="#51565F"
         android:gravity="center"
         android:textSize="@dimen/text_size_14"

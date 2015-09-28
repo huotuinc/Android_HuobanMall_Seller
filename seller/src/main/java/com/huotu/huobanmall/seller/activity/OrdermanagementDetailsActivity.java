@@ -85,7 +85,6 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
 
         getData();
 
-        //demoData();
     }
 
     @Override
@@ -114,41 +113,17 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
         orderscrollview.smoothScrollTo(0, 0);
     }
 
-    protected void demoData(){
-        List< OrderScoreModel> scoreList =new ArrayList<>();
-        for( int i=0;i<4;i++){
-            OrderScoreModel item =new OrderScoreModel();
-            item.setUserType("阿斯顿飞阿斯顿飞");
-            item.setType(1);
-            List<OrderScoreModel> list= new ArrayList<>();
-            if( i != 0 ) {
-                for (int k = 0; k < 5; k++) {
-                    OrderScoreModel child = new OrderScoreModel();
-                    child.setType(2);
-                    child.setUserType("1111111111" + i);
-                    child.setGetTime( new Date( System.currentTimeMillis()));
-                    child.setScore(i);
-                    child.setStatus("斯蒂芬打的费的发大阿是打发岁的发放");
-                    child.setZzTime(new Date(System.currentTimeMillis()));
-                    list.add(child);
-                }
-            }
-            item.setList(list);
-            scoreList.add(item);
-        }
-
-        _scoreAdapter=new ScoreExpandableAdapter(this, scoreList);
-        _orderScoreList.setAdapter(_scoreAdapter);
-        if( _scoreAdapter.getGroupCount()>0) {
-            _orderScoreList.expandGroup(0);
-        }
-    }
-
     protected void getData(){
+        if( false == canConnect()){
+            OrdermanagementDetailsActivity.this.closeProgressDialog();
+            return;
+        }
+
+
         Map<String,String> paras = new HashMap<>();
 
         String url = Constant.ORDERDETAIL_INTERFACE;
-        paras.put( Constant.Extra_OrderNo , _orderNo );
+        paras.put(Constant.Extra_OrderNo, _orderNo);
         HttpParaUtils utils = new HttpParaUtils();
         String urlString = utils.getHttpGetUrl(url, paras);
 
@@ -161,7 +136,7 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
                         orderDetailListener,
                         this);
 
-        this.showProgressDialog("","正在获取数据，请稍等...");
+        this.showProgressDialog("", "正在获取数据，请稍等...");
 
         VolleyRequestManager.getRequestQueue().add(request);
     }

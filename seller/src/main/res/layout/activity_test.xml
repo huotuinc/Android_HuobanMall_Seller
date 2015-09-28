@@ -11,13 +11,22 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content">-->
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <com.huotu.android.library.libedittext.EditText
+                android:id="@+id/t"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                >
+
+            </com.huotu.android.library.libedittext.EditText>
 
     <TextView
         android:id="@+id/logistics_label1"
         android:text="物流跟踪"
+        android:layout_below="@id/t"
         android:textSize="@dimen/text_size_20"
         android:layout_margin="@dimen/space_10"
         android:layout_width="wrap_content"
@@ -54,8 +63,7 @@
         android:layout_margin="@dimen/space_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-            <com.huotu.huobanmall.seller.widget.MJListView
+     <com.huotu.huobanmall.seller.widget.MJListView
                 android:id="@+id/ttt2"
                 android:layout_below="@id/logistics_label5"
                 android:layout_width="match_parent"

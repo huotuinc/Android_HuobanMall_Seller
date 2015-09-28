@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -119,6 +120,7 @@ public class SettingActivity extends BaseFragmentActivity
     TextView tvNickName;
     private PhotoSelectView pop;
     private CropperView cropperView;
+    Handler handler = new Handler();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -382,6 +384,12 @@ public class SettingActivity extends BaseFragmentActivity
 
         // 上传头像
         //new UserLogoAsyncTask().execute();
+
+        if( false == canConnect() ){
+            return;
+        }
+
+
 
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         cropBitmap.compress(Bitmap.CompressFormat.PNG, 90, bao);

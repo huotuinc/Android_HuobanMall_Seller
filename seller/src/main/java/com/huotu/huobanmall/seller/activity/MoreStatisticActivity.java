@@ -11,11 +11,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.MJOtherStatisticModel;
+import com.huotu.huobanmall.seller.bean.RoleEnum;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import butterknife.Bind;
@@ -66,6 +68,11 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
     }
 
     protected void getData(){
+        if( false== canConnect()){
+            this.closeProgressDialog();
+            return;
+        }
+
         String url = Constant.OTHERSTATISTIC_INTERFACE;
         HttpParaUtils httpParaUtils =new HttpParaUtils();
         url = httpParaUtils.getHttpGetUrl(url ,null);
@@ -134,31 +141,62 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        if(v.getId()==R.id.morestatistic_title2){
+        if(v.getId()==R.id.morestatistic_title2){//订单统计
+            if( hasRole(RoleEnum.订单统计 ) == false){
+                ToastUtils.showLong("您所属的账号无访问权限。");
+                return;
+            }
             Bundle bd = new Bundle();
             bd.putInt("tabType",Constant.TAB_ORDER);
             ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class,bd);
-        }else if( v.getId() == R.id.morestatistic_menu_xftj){
+        }else if( v.getId() == R.id.morestatistic_menu_xftj){//消费统计
+            if( hasRole(RoleEnum.消费统计 ) == false){
+                ToastUtils.showLong("您所属的账号无访问权限。");
+                return;
+            }
             ActivityUtils.getInstance().showActivity(this, ConsumeStatisticsActivity.class );
-        }else if( v.getId() == R.id.morestatistic_menu_xsmx){
+        }else if( v.getId() == R.id.morestatistic_menu_xsmx){//销售明细
+            if( hasRole(RoleEnum.销售明细 ) == false){
+                ToastUtils.showLong("您所属的账号无访问权限。");
+                return;
+            }
             ActivityUtils.getInstance().showActivity(this, SalesDetailActivity.class );
 
-        }else if( v.getId() == R.id.morestatistic_menu_hytj){
+        }else if( v.getId() == R.id.morestatistic_menu_hytj){//会员统计
+            if( hasRole(RoleEnum.会员统计 ) == false){
+                ToastUtils.showLong("您所属的账号无访问权限。");
+                return;
+            }
             Bundle bd = new Bundle();
             bd.putInt( "tabType" , Constant.TAB_MEMBER );
             ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class , bd );
-        }else if( v.getId() == R.id.morestatistic_menu_fltj){
+        }else if( v.getId() == R.id.morestatistic_menu_fltj){//返利积分
+            if( hasRole(RoleEnum.返利积分统计 ) == false){
+                ToastUtils.showLong("您所属的账号无访问权限。");
+                return;
+            }
+
             ActivityUtils.getInstance().showActivity(this, RebateStatisticsActivity.class );
 
-        }else if( v.getId() == R.id.morestatistic_menu_xsetj){
+        }else if( v.getId() == R.id.morestatistic_menu_xsetj){//销售额统计
+            if( hasRole(RoleEnum.销售额统计 ) == false){
+                ToastUtils.showLong("您所属的账号无访问权限。");
+                return;
+            }
+
             Bundle bd = new Bundle();
             bd.putInt( "tabType" , Constant.TAB_SALE );
             ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class, bd );
-        }else if( v.getId() == R.id.morestatistic_menu_fxs){
+        }else if( v.getId() == R.id.morestatistic_menu_fxs){//分销商
+            if( hasRole(RoleEnum.会员统计 ) == false){
+                ToastUtils.showLong("您所属的账号无访问权限。");
+                return;
+            }
+
             Bundle bd = new Bundle();
             bd.putInt( "tabType" , Constant.TAB_MEMBER );
             ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class , bd );
-        }else if( v.getId() == R.id.morestatistic_menu_sp){
+        }else if( v.getId() == R.id.morestatistic_menu_sp){//商品
            // ActivityUtils.getInstance().showActivity(this, TopSalesActivity.class );
         }
     }

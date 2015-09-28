@@ -156,6 +156,11 @@ public class PswchangeActivity extends BaseFragmentActivity implements
     }
 
     private void modifyPassword() {
+        if( false == canConnect()){
+            PswchangeActivity.this.closeProgressDialog();
+            return;
+        }
+
         String url = Constant.MODIFYPSW_INTEFACE;
         Map<String, String> paras = new HashMap<>();
         String oldpwd = edtOld.getText().toString();

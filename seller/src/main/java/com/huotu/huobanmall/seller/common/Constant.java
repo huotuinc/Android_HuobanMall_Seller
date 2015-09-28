@@ -100,6 +100,7 @@ public class Constant {
 
     public static final String UPDATEDEVICETOKEN_INTERFACE = BASE_URL +"updateDeviceToken";// app请求设置该设备(imei)的deviceToken
 
+    public static final String MESSAGE_INTERFACE = BASE_URL + "messages";// 获取消息列表 ---GET
     /**
      * token添加的类型
      */
@@ -109,6 +110,10 @@ public class Constant {
 
     // 口令文件
     public final static String LOGIN_AUTH_INFO = "login_auth_info";
+    // 推送信息本地别名
+    public final static String PUSH_INFO = "push_info";
+    // 推送信息本地别名
+    public final static String PUSH_INFO_ALIAS = "push_info_alias";
 
     // 口令参数
     public final static String LOGIN_AUTH_TOKEN = "user_token";
@@ -191,7 +196,15 @@ public class Constant {
      */
     public final static int TAB_MEMBER=3;
 
+    /**
+     * 消息类列表每页显示10条
+      */
+    public final static int PAGES_COMMON = 10;
 
+    /**
+     * 系统消息
+    */
+    public static int MESSAGE_TYPE_SYSTEMMESSAGE=2;
 }
 
 

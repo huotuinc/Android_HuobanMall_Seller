@@ -194,11 +194,11 @@ public class Util
         for (RunningTaskInfo item : rti)
         {
             if (item.baseActivity.getClassName().startsWith(
-                    packageName + ".LoadingActivity")
+                    packageName + ".activity.SplashActivity")
                     || item.baseActivity.getClassName().startsWith(
-                            packageName + ".MainActivity")
+                            packageName + ".activity.MainActivity")
                     || item.topActivity.getClassName().startsWith(
-                            packageName + ".MainActivity"))
+                            packageName + ".activity.MainActivity"))
                 return true;
         }
         return false;
