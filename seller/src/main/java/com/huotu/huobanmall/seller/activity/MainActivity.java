@@ -22,8 +22,10 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.bean.CloseEvnt;
 import com.huotu.huobanmall.seller.bean.MJNewTodayModel;
+import com.huotu.huobanmall.seller.bean.RefreshSettingEvent;
 import com.huotu.huobanmall.seller.bean.RoleEnum;
 import com.huotu.huobanmall.seller.common.Constant;
+import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.utils.BitmapLoader;
@@ -344,10 +346,19 @@ public class MainActivity extends BaseFragmentActivity{
     }
 
     /**
-     *
+     * 关闭 事件
      * @param event
      */
     public void onEventMainThread( CloseEvnt event) {
         MainActivity.this.finish();
+    }
+
+    /**
+     * 刷新 头像 事件
+     * @param event
+     */
+    public void onEventMainThread(RefreshSettingEvent event){
+        String logoUrl = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_LOGO);
+        BitmapLoader.create().displayUrl(MainActivity.this, _ivLogo , logoUrl);
     }
 }
