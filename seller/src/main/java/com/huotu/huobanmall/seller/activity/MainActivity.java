@@ -176,13 +176,13 @@ public class MainActivity extends BaseFragmentActivity{
         super.onClick(v);
         if( v.getId() == R.id.main_menu_cpgl){//产品管理
             if( hasRole(RoleEnum.产品管理 ) == false){
-                ToastUtils.showLong("您所属的账号无访问权限。");
+                ToastUtils.showLongToast(MainActivity.this, "您所属的账号无访问权限。");
                 return;
             }
             ActivityUtils.getInstance().showActivity(this, GoodsActivity.class);
         }else if( v.getId() == R.id.main_menu_ddgl){//订单管理
             if( hasRole(RoleEnum.订单管理 ) == false){
-                ToastUtils.showLong("您所属的账号无访问权限。");
+                ToastUtils.showLongToast(MainActivity.this,"您所属的账号无访问权限。");
                 return;
             }
             Intent intent = new Intent( this , OrderActivity.class);
@@ -191,7 +191,7 @@ public class MainActivity extends BaseFragmentActivity{
             ActivityUtils.getInstance().showActivity(this, MoreStatisticActivity.class);
         }else if( v.getId() ==R.id.main_menu_szgl){//设置管理
             if( hasRole(RoleEnum.设置管理 ) == false){
-                ToastUtils.showLong("您所属的账号无访问权限。");
+                ToastUtils.showLongToast(MainActivity.this,"您所属的账号无访问权限。");
                 return;
             }
 
@@ -330,7 +330,7 @@ public class MainActivity extends BaseFragmentActivity{
         if( event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK){
             long currentTime = System.currentTimeMillis();
             if( currentTime - existTime > waitForExistSecond ){
-                ToastUtils.showLong("再按一次退出程序");
+                ToastUtils.showLongToast(MainActivity.this,"再按一次退出程序");
                 existTime = currentTime;
             }else{
                 try {

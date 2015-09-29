@@ -21,8 +21,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/main_todyMoney"
-            android:layout_marginTop="@dimen/space_4"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginLeft="@dimen/space_10"
             android:textSize="@dimen/text_size_35"
             android:textColor="@android:color/white"
             android:text=""
@@ -41,7 +40,7 @@
             android:layout_height="wrap_content"
             android:text="今日"/>
         <TextView
-            android:layout_marginLeft="@dimen/space_10"
+            android:layout_marginLeft="@dimen/space_15"
             android:id="@+id/main_todayMoneyLabel"
             android:layout_below="@id/main_todyMoney"
             android:textColor="@android:color/white"
@@ -113,5 +112,6 @@
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content">
         <include layout="@layout/layout_menuitem"></include>
+
     </RelativeLayout>
 </RelativeLayout>

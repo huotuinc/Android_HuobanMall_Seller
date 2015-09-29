@@ -30,7 +30,7 @@ public class WebViewActivity extends Activity implements View.OnClickListener{
 
     String _url;
     @Bind(R.id.header_back)
-    Button btnBack;
+    Button header_back;
     @Bind(R.id.header_operate)
     public TextView header_operate;
 
@@ -41,8 +41,8 @@ public class WebViewActivity extends Activity implements View.OnClickListener{
         ButterKnife.bind(this);
 
         header_operate.setVisibility(View.GONE);
-        btnBack.setOnClickListener(this);
-
+        header_back.setOnClickListener(this);
+        _webViewTitle.setText("商城首页");
         _webView = _pullToRefreshWebViewPage.getRefreshableView();
         _webView.getSettings().setJavaScriptEnabled(true);
         _webView.setWebViewClient(new SellerWebViewClient());
