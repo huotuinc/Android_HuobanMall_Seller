@@ -49,6 +49,7 @@
             android:textSize="@dimen/text_size_20"
             android:layout_centerVertical="true"
             android:layout_width="60dp"
+            android:visibility="gone"
             android:layout_height="30dp" />
         <Button
             android:id="@+id/goodsedit_onshelf"

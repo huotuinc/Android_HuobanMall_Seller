@@ -33,13 +33,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="@dimen/text_size_14"
                 android:text=""/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="@dimen/text_size_14"
                 android:text="订单"/>
             <ImageView
                 android:id="@+id/main_order_space"
@@ -79,13 +79,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="@dimen/text_size_14"
                 android:text=""/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="@dimen/text_size_14"
                 android:text="会员"/>
             <ImageView
                 android:id="@+id/main_member_space"
@@ -111,13 +111,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="@dimen/text_size_14"
                 android:text=""/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_18"
+                android:textSize="@dimen/text_size_14"
                 android:text="分销商"/>
             <ImageView
                 android:id="@+id/main_fxs_space"
@@ -137,13 +137,14 @@
         android:layout_below="@id/todayOrder_header"
         android:background="@color/gray"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="1dp" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/main_lineChart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/main_lineChart_Color"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp"
+        android:background="@color/theme_color"
         android:layout_below="@id/todayOrder_Space"/>
 
 </RelativeLayout>

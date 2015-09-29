@@ -91,7 +91,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_1"
             android:background="@color/gray"
-            android:layout_marginBottom="10dp"
             android:paddingLeft="@dimen/space_10"
             android:paddingRight="@dimen/space_10"
             android:layout_below="@id/main_TodayOrderText">
