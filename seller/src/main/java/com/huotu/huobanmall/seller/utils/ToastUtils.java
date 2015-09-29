@@ -48,7 +48,7 @@ public class ToastUtils
     public static void showLong(  String msg){
         if( mToast ==null){
             mToast = Toast.makeText( SellerApplication.getInstance() , msg , Toast.LENGTH_LONG );
-            mToast.setMargin(10,10);
+            //mToast.setMargin(10,10);
             mToast.setGravity(Gravity.CENTER , 0,0);
         }
         else{

@@ -14,12 +14,14 @@ import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.activity.BaseFragmentActivity;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
+import com.huotu.huobanmall.seller.utils.ToastUtils;
+import com.huotu.huobanmall.seller.utils.Util;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class BaseFragment extends Fragment implements Response.ErrorListener{
-
+    protected static final String NULL_NETWORK = "无网络或当前网络不可用!";
     ProgressDialogFragment _progressDialog=null;
 
 
@@ -46,6 +48,15 @@ public class BaseFragment extends Fragment implements Response.ErrorListener{
             _progressDialog.dismiss();
             _progressDialog=null;
         }
+    }
+
+    protected boolean canConnect(){
+        //网络访问前先检测网络是否可用
+        if(!Util.isConnect(this.getActivity() )){
+            ToastUtils.showLongToast(this.getActivity() , NULL_NETWORK);
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -76,6 +77,7 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
     ConsumeDetailAdapter _consumeDetailAdapter=null;
 
     OperateTypeEnum _operateType = OperateTypeEnum.REFRESH;
+    Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,6 +174,17 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
     }
 
     protected void getData_MX( OperateTypeEnum operateType ){
+        if( false == canConnect() ){
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    ConsumeStatisticsActivity.this.closeSearchBar();
+                    _consumStatistics_listview.onRefreshComplete();
+                }
+            });
+            return;
+        }
+
         String url = Constant.USERCONSUMELIST_INTERFACE;
         Map<String,String> paras = new HashMap<>();
         if( operateType== OperateTypeEnum.LOADMORE ){

@@ -25,6 +25,7 @@ import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.DigestUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.huotu.huobanmall.seller.widget.CountDownTimerButton;
 
@@ -76,7 +77,6 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
         application = (SellerApplication) ForgetActivity.this.getApplication();
         this.setContentView(R.layout.activity_forget);
         initView();
-
     }
 
     @Override
@@ -163,6 +163,10 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     }
 
     private void sendSMS() {
+        if( false == canConnect()){
+            return;
+        }
+
         String url = Constant.GET_VD_INTERFACE;
         HttpParaUtils httpParaUtils = new HttpParaUtils();
         Map<String, String> map = new HashMap<>();
@@ -183,6 +187,10 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     }
 
     private void forgetPassword() {
+        if( false==canConnect()){
+            return;
+        }
+
         String url = Constant.FORGET_INTERFACE;
         Map<String, String> paras = new HashMap<>();
         paras.put("phone", edtPhone.getText().toString());
@@ -226,6 +234,7 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
                 return;
             }
 
+            ToastUtils.showLongToast( ForgetActivity.this ,"发送短信成功" );
             timeCountDownListener.setEnableVoice(sendSMSModel.getResultData().getVoiceAble());
         }
     };

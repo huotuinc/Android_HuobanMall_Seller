@@ -31,6 +31,9 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!-- V1.2.3新增的权限, GET_TASKS用于检测APP是否处于前台、是否活着；REORDER_TASKS用于将APP切换到前台 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
 
     <application
         android:name=".common.SellerApplication"
@@ -40,6 +43,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activity.SplashActivity"
+            android:launchMode="singleTop"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,8 +61,11 @@
         <activity android:name=".activity.ConsumeStatisticsActivity" />
         <activity android:name=".activity.RebateStatisticsActivity" />
         <activity android:name=".activity.TopSalesActivity"/>
-        <activity android:name=".activity.MessageActivity"/>
+
         <activity android:name=".activity.FeedBackActivity"/>
+
+        <activity android:name=".activity.MessageActivity" android:launchMode="singleTask"/>
+
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
@@ -79,6 +86,11 @@
             android:label="@string/title_activity_goods_edit" >
         </activity>
         <activity android:name=".activity.AppUpdateActivity" />
+
+       <activity android:name=".activity.PushMsgHandlerActivity"
+           android:launchMode="singleTask"
+           android:exported="true"
+           android:screenOrientation="portrait" />
 
         <service
             android:name="com.baidu.location.f"
@@ -109,7 +121,7 @@
             android:name=".activity.LogisticsActivity"
             android:label="@string/title_activity_logistics" >
         </activity>
-        <activity android:name=".activity.TestActivity"></activity>
+
         <activity
             android:name=".activity.OrdermanagementDetailsActivity"
             android:label="@string/title_activity_ordermanagement_details" >
@@ -188,8 +200,7 @@
         <!-- JPUSH User defined.    用户自定义的广播接收器-->
         <receiver
             android:name="com.huotu.huobanmall.seller.receiver.MJJPushReceiver"
-            android:enabled="true"
-            android:exported="false" >
+            android:enabled="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
                 <action android:name="cn.jpush.android.intent.UNREGISTRATION" />

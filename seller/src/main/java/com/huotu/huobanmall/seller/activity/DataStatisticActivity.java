@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.DataStatisticFragmentAdapter;
 
+import com.huotu.huobanmall.seller.bean.RoleEnum;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.fragment.BaseFragment;
 import com.huotu.huobanmall.seller.fragment.MembersFragment;
@@ -57,7 +58,11 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_statistic);
         ButterKnife.bind(this);
+
+        showTabsByRoles();
+
         initView();
+
         initFragments();
     }
 
@@ -72,28 +77,75 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
         statistic_title.setOnCheckedChangeListener(this);
     }
 
+    protected void showTabsByRoles(){
+        boolean order_Role = hasRole(RoleEnum.订单统计);
+        boolean xse_Role = hasRole(RoleEnum.销售额统计);
+        boolean member_Role = hasRole(RoleEnum.会员统计);
+
+        rdb_a.setVisibility( order_Role ? View.VISIBLE : View.GONE );
+
+        rdb_b.setVisibility( xse_Role ? View.VISIBLE : View.GONE );
+        rdb_c.setVisibility( member_Role ? View.VISIBLE : View.GONE);
+
+        if( order_Role && xse_Role && member_Role ){
+            rdb_a.setBackgroundResource( R.drawable.radiobutton_left );
+            rdb_b.setBackgroundResource( R.drawable.radiobutton_middle );
+            rdb_c.setBackgroundResource( R.drawable.radiobutton_right);
+        }else if( order_Role && xse_Role ){
+            rdb_a.setBackgroundResource( R.drawable.radiobutton_left );
+            rdb_b.setBackgroundResource( R.drawable.radiobutton_right );
+        }else if( order_Role && member_Role){
+            rdb_a.setBackgroundResource( R.drawable.radiobutton_left );
+            rdb_c.setBackgroundResource( R.drawable.radiobutton_right );
+        }else if( xse_Role && member_Role ) {
+            rdb_b.setBackgroundResource( R.drawable.radiobutton_left );
+            rdb_c.setBackgroundResource( R.drawable.radiobutton_right);
+        }else if( order_Role ){
+            rdb_a.setBackgroundResource( R.drawable.radiobutton_round );
+        }else if( xse_Role ){
+            rdb_b.setBackgroundResource(R.drawable.radiobutton_round);
+        }else if( member_Role ){
+            rdb_c.setBackgroundResource(R.drawable.radiobutton_round);
+        }
+    }
+
     protected void initFragments(){
-        if(_orderFragment==null) {
-            _orderFragment = OrderFragment.newInstance();
-        }
-        if( _salesFragments==null) {
-            _salesFragments = SalesFragment.newInstance();
-        }
-        if( _membersFragments==null) {
-            _membersFragments = MembersFragment.newInstance();
-        }
+        boolean order_Role = hasRole(RoleEnum.订单统计);
+        boolean xse_Role = hasRole(RoleEnum.销售额统计);
+        boolean member_Role = hasRole(RoleEnum.会员统计);
+
         if( _fragments ==null ) {
             _fragments = new ArrayList<>();
         }
-        _fragments.add(_orderFragment);
-        _fragments.add(_salesFragments);
-        _fragments.add(_membersFragments);
+
+        int index = 0;
+        if( order_Role && _orderFragment==null) {
+            _orderFragment = OrderFragment.newInstance();
+            _fragments.add( _orderFragment );
+            rdb_a.setTag(index);
+            index++;
+        }
+        if( xse_Role && _salesFragments==null) {
+            _salesFragments = SalesFragment.newInstance();
+            _fragments.add( _salesFragments );
+            rdb_b.setTag(index);
+            index++;
+        }
+        if( member_Role &&  _membersFragments==null) {
+            _membersFragments = MembersFragment.newInstance();
+            _fragments.add(_membersFragments);
+            rdb_c.setTag( index );
+            index++;
+        }
+
+        //_fragments.add(_orderFragment);
+        //_fragments.add(_salesFragments);
+        //_fragments.add(_membersFragments);
         _fragmentManager = this.getSupportFragmentManager();
         _dataStatisticFragmentAdapter = new DataStatisticFragmentAdapter(_fragments,_fragmentManager);
 
         _viewPager.setAdapter(_dataStatisticFragmentAdapter);
         _circlePageIndicator.setViewPager(_viewPager);
-
 
         _circlePageIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -103,19 +155,38 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
 
             @Override
             public void onPageSelected(int position) {
-                if( position ==0 ){
-                    rdb_a.setChecked(true);
-                    rdb_b.setChecked(false);
-                    rdb_c.setChecked(false);
-                }else if( position==1){
-                    rdb_a.setChecked(false);
-                    rdb_b.setChecked(true);
-                    rdb_c.setChecked(false);
-                }else if( position==2){
-                    rdb_a.setChecked(false);
-                    rdb_b.setChecked(false);
-                    rdb_c.setChecked(true);
+                rdb_a.setChecked(false);
+                rdb_b.setChecked(false);
+                rdb_c.setChecked(false);
+//                if( position ==0 ){
+                    int index = -1;
+                    if( rdb_a.getVisibility() == View.VISIBLE ) {
+                        index = (int) rdb_a.getTag();
+                        if (index == position) {
+                            rdb_a.setChecked(true);
+                        }
+                    }
+                if( rdb_b.getVisibility() == View.VISIBLE) {
+                    index = (int) rdb_b.getTag();
+                    if (index == position) {
+                        rdb_b.setChecked(true);
+                    }
                 }
+                if( rdb_c.getVisibility() == View.VISIBLE ) {
+                    index = (int) rdb_c.getTag();
+                    if (index == position) {
+                        rdb_c.setChecked(true);
+                    }
+                }
+//                }else if( position==1){
+//                    rdb_a.setChecked(false);
+//                    rdb_b.setChecked(true);
+//                    rdb_c.setChecked(false);
+//                }else if( position==2){
+//                    rdb_a.setChecked(false);
+//                    rdb_b.setChecked(false);
+//                    rdb_c.setChecked(true);
+//                }
             }
 
             @Override
@@ -127,9 +198,9 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
         _circlePageIndicator.setCurrentItem( _currentTabType -1 );
     }
 
-    protected void setCurrentFragment(){
-
-    }
+//    protected void setCurrentFragment(){
+//
+//    }
 
     @Override
     public void onClick(View v) {
@@ -139,11 +210,17 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         if( checkedId == R.id.tab_rb_a){
-            _circlePageIndicator.setCurrentItem( 0 );
+            if( rdb_a.getVisibility() == View.GONE ) return;
+            int index = (int) rdb_a.getTag();
+            _circlePageIndicator.setCurrentItem( index );
         }else if( checkedId == R.id.tab_rb_b){
-            _circlePageIndicator.setCurrentItem(1);
+            if( rdb_b.getVisibility() == View.GONE ) return;
+            int index = (int) rdb_b.getTag();
+            _circlePageIndicator.setCurrentItem(  index );
         }else if( checkedId == R.id.tab_rb_c){
-            _circlePageIndicator.setCurrentItem(2);
+            if( rdb_c.getVisibility() == View.GONE ) return;
+            int index = (int)rdb_c.getTag();
+            _circlePageIndicator.setCurrentItem( index );
         }
     }
 }

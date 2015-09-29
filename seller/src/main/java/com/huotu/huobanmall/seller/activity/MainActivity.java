@@ -105,12 +105,29 @@ public class MainActivity extends BaseFragmentActivity{
         String logoUrl = PreferenceHelper.readString( this, Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_LOGO,"");
         BitmapLoader.create().displayUrl(this, _ivLogo , logoUrl , R.mipmap.txzw,R.mipmap.txzw);
 
-        getData();
+        openMessage();
+
+        //getData();
+    }
+
+
+    private void openMessage() {
+        int messageType = 0;
+        if (getIntent().hasExtra("type")) {
+            messageType = getIntent().getIntExtra("type", 0);
+        }
+        if (messageType == Constant.MESSAGE_TYPE_SYSTEMMESSAGE) {
+            Intent intentMsg = new Intent(this, MessageActivity.class);
+            startActivity(intentMsg);
+            return;
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        getData();
     }
 
     @Override
@@ -129,6 +146,11 @@ public class MainActivity extends BaseFragmentActivity{
     }
 
     protected void getData(){
+        if( false == canConnect() ){
+            this.closeProgressDialog();
+            return;
+        }
+
         String url = Constant.NEWTODAY_INTERFACE;
         HttpParaUtils httpParaUtils =new HttpParaUtils();
         url =  httpParaUtils.getHttpGetUrl(url,null);

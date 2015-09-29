@@ -43,7 +43,12 @@ public class ActivityUtils
         Intent i = new Intent(aty, clazz);
         aty.startActivity(i);
         aty.finish();
-    }    
+    }
+
+    public void skipActivity(Activity aty , Intent intent){
+        aty.startActivity(intent);
+        aty.finish();
+    }
     
     public void skipActivity( Activity aty , Class clazz , String key , Serializable serialize ){
         Intent i = new Intent(aty , clazz);

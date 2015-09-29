@@ -113,7 +113,7 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
         String roles = PreferenceHelper.readString( this , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_AUTHORITY , "");
         if( roles.contains("*") ) return  true;
 
-        String roleStr = String.valueOf( role);
+        String roleStr = String.valueOf( role.getIndex() );
         String[] items = roles.split(",");
         if(items==null || items.length<1) return false;
 

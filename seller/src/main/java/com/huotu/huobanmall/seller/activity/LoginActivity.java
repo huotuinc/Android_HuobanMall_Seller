@@ -2,6 +2,7 @@ package com.huotu.huobanmall.seller.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -51,6 +52,8 @@ public class LoginActivity extends BaseFragmentActivity implements
     @Bind(R.id.header_title)
     public TextView header_title;
 
+    Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +63,10 @@ public class LoginActivity extends BaseFragmentActivity implements
     private void initView()
     {
         ButterKnife.bind(this);
-        userName.setText("wlf");
+        userName.setText("");
         //userName.setText("18767152078");
         //userName.setText("jxd");
-        passWord.setText("123456");
+        passWord.setText("");
         header_title.setText("用户登录");
         loginBtn.setOnClickListener(this);
         forgetPsw.setOnClickListener(this);
@@ -78,6 +81,10 @@ public class LoginActivity extends BaseFragmentActivity implements
     }
 
     protected void login(){
+        if( false== canConnect()){
+            return;
+        }
+
         this.showProgressDialog("","正在登录，请稍等...");
 
         //调用登录接口之前，先清空一下Token的值

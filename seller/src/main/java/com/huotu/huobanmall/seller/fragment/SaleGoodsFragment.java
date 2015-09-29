@@ -3,6 +3,7 @@ package com.huotu.huobanmall.seller.fragment;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,6 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  */
 public class SaleGoodsFragment extends BaseFragment {
-
     @Bind(R.id.goods_sale_listView)
     PullToRefreshListView _goodsSaleListView;
 
@@ -59,6 +59,8 @@ public class SaleGoodsFragment extends BaseFragment {
     boolean _isPrepared = false;
 
     boolean _isFirst = true;
+
+    Handler _handler = new Handler();
 
     /**
      * Use this factory method to create a new instance of
@@ -187,6 +189,17 @@ public class SaleGoodsFragment extends BaseFragment {
 
 
     protected void getData( OperateTypeEnum type ){
+        if( false == canConnect() ){
+            this.closeProgressDialog();
+            _handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    _goodsSaleListView.onRefreshComplete();
+                }
+            });
+            return;
+        }
+
         Map<String,String> maps = new HashMap<>();
         if( type == OperateTypeEnum.REFRESH){
         }else {

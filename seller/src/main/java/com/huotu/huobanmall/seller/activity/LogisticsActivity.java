@@ -148,6 +148,11 @@ public class LogisticsActivity extends BaseFragmentActivity {
 
 
     protected void getData(){
+        if( false == canConnect()){
+            LogisticsActivity.this.closeProgressDialog();
+            return;
+        }
+
         String url = Constant.LOGISTICSDETAIL_INTERFACE;
         HttpParaUtils httpParaUtils = new HttpParaUtils();
         Map<String,String> paras = new HashMap<>();

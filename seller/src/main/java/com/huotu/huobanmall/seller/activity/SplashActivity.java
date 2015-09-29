@@ -27,6 +27,7 @@ import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * 启动界面
@@ -37,17 +38,43 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
     //升级APP 请求代码
     public static final int REQUESTCODE_UPDATE= 6001;
     HTInitBean _data=null;
+    //消息的类型
+    private int messageType = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        initJPush();
+
         initView();
         handlerView();
     }
 
+    protected void initJPush(){
+        //int enable = MyApplication.readInt(this , Constant.LOGIN_USER_INFO,  Constant.PUSH_ENABLE , 1 );
+        //if( enable == 1){
+            if(  JPushInterface.isPushStopped(SplashActivity.this))
+            {
+                JPushInterface.resumePush(SplashActivity.this);
+            }
+        //}else {
+        //    if( false == JPushInterface.isPushStopped(LoadingActivity.this)){
+        //        JPushInterface.stopPush(LoadingActivity.this);
+        //    }
+        //}
+    }
+
+
+
     protected void initView() {
         ButterKnife.bind(this);
+
+        if(getIntent().hasExtra("type")){
+            messageType = getIntent().getIntExtra("type", 0);
+        }
+
     }
 
     private void handlerView() {
@@ -228,8 +255,11 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
             //记录商户信息
             SellerApplication.getInstance().writeMerchantInfo(user);
             if( !StringUtils.isEmpty ( token )){
-                //直接登录
-                ActivityUtils.getInstance().skipActivity ( SplashActivity.this, MainActivity.class);
+                // 跳转到首页
+                Intent intent = new Intent();
+                intent.putExtra("type", messageType);
+                intent.setClass( SplashActivity.this , MainActivity.class );
+                ActivityUtils.getInstance().skipActivity ( SplashActivity.this, intent);
             }
             else{
                 //跳转到登录界面

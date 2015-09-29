@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.WindowManager;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
@@ -28,6 +29,7 @@ import com.google.gson.JsonSyntaxException;
 import com.huotu.huobanmall.seller.activity.BaseFragmentActivity;
 import com.huotu.huobanmall.seller.activity.ConsumeStatisticsActivity;
 import com.huotu.huobanmall.seller.activity.OrderActivity;
+import com.huotu.huobanmall.seller.activity.PushMsgHandlerActivity;
 import com.huotu.huobanmall.seller.bean.BaseModel;
 import com.huotu.huobanmall.seller.bean.JPushBean;
 import com.huotu.huobanmall.seller.common.Constant;
@@ -35,6 +37,8 @@ import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.JSONUtil;
+import com.huotu.huobanmall.seller.utils.KJLoger;
+import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.SystemTools;
 import com.huotu.huobanmall.seller.utils.SystemUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
@@ -58,11 +62,12 @@ public class MJJPushReceiver extends BroadcastReceiver
     public void onReceive(final Context context, Intent intent)
     {
         Bundle bundle = intent.getExtras();
-        if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction()))
-        {
+        Log.d( TAG, "onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
+
+        if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())){
             // 注册后获取极光全局ID
             regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
-            imei = SystemUtils.getPhoneIMEI(context);
+            //imei = SystemUtils.getPhoneIMEI(context);
 
             registerJPush_Alias( context );
 
@@ -75,10 +80,12 @@ public class MJJPushReceiver extends BroadcastReceiver
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent
                 .getAction()))
         {
+
+            String regId = JPushInterface.getRegistrationID(context);
             // 接收到了自定义的通知
             // 通知ID
-//            String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
-//            String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
+            String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+            String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
 //            // json封装成bean
 //            JBean bean = new JBean();
 //            JSONUtil<JBean> jsonUtil = new JSONUtil<JBean>();
@@ -95,8 +102,7 @@ public class MJJPushReceiver extends BroadcastReceiver
                 .getAction()))
         {
             // 接受点击通知事件
-            String title = bundle
-                    .getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+            String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
             String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
             // json封装成bean
             JPushBean bean = new JPushBean();
@@ -114,36 +120,17 @@ public class MJJPushReceiver extends BroadcastReceiver
             }
                 break;
             case 2:
-            {
-                // 求流量
-                //requestFlowMessage(context, bean);
-            }
-                break;
             case 3:
             {
-                // 版本更新
-                //notificationMessage(context, bean);
+                sellerMessage(context);
             }
-                break;
-            case 4:
-            {
-                // 任务推送
-                //taskMessage(context, bean);
-            }
-                break;
-            case 5:
-            {
-                // 消息提醒
-                //fanmoreMessage(context );
-            }
-                break;
+            break;
             case 6:
             {
                 // 通知
                 notificationMessage(context, bean);
             }
                 break;
-
             default:
                 break;
             }
@@ -163,9 +150,13 @@ public class MJJPushReceiver extends BroadcastReceiver
         } else if (JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent
                 .getAction()))
         {
+            String regId = JPushInterface.getRegistrationID(context);
+
             boolean connected = intent.getBooleanExtra(
                     JPushInterface.EXTRA_CONNECTION_CHANGE, false);
             // 处理网络变更事件
+
+            //sellerMessage( context );
 
         } else
         {
@@ -194,94 +185,27 @@ public class MJJPushReceiver extends BroadcastReceiver
         );
 
         VolleyRequestManager.getRequestQueue().add(request);
-
-
-        // 设置别名
-//        new AsyncTask<Void, Void, BaseBaseBean>()
-//        {
-//            String url = null;
-//            @Override
-//            protected BaseBaseBean doInBackground(Void... params)
-//            {
-//                // TODO Auto-generated method stub
-//                BaseBaseBean aliasBean = new BaseBaseBean();
-//                JSONUtil<BaseBaseBean> jsonUtil = new JSONUtil<BaseBaseBean>();
-//                ObtainParamsMap obtainMap = new ObtainParamsMap(context);
-//                Map<String, String> paramMap = obtainMap.obtainMap();
-//
-//                // 拼接注册url
-//                url = Constant.SETUP_ALIAS;
-//                // 注册是POST提交
-//                paramMap.put("deviceToken", imei);
-//                // 封装sign
-//                String signStr = obtainMap.getSign(paramMap);
-//                paramMap.put("sign", signStr);
-//
-//                String jsonStr = HttpUtil.getInstance().doPost(url,
-//                        paramMap);
-//                try
-//                {
-//                    aliasBean = jsonUtil.toBean(jsonStr, aliasBean);
-//                } catch (JsonSyntaxException e)
-//                {
-//                    aliasBean.setResultCode(0);
-//                    aliasBean.setResultDescription("解析json出错");
-//                }
-//                return aliasBean;
-//            }
-//
-//            @Override
-//            protected void onPreExecute()
-//            {
-//                // TODO Auto-generated method stub
-//                super.onPreExecute();
-//            }
-//
-//            @Override
-//            protected void onPostExecute(BaseBaseBean result)
-//            {
-//                // TODO Auto-generated method stub
-//                super.onPostExecute(result);
-//                if (1 == result.getResultCode())
-//                {
-//                    // 保存别名到本地
-//                    JPushInterface.setAliasAndTags(context, imei, null,
-//                            new TagAliasCallback()
-//                            {
-//
-//                                @Override
-//                                public void gotResult(int code,
-//                                                      String alias, Set<String> tags)
-//                                {
-//                                    // TODO Auto-generated method stub
-//                                    switch (code)
-//                                    {
-//                                        case 0:
-//                                            KJLoger.i("设置别名成功！");
-//                                            MyApplication.writeString(context,
-//                                                    Constant.PUSH_INFO,
-//                                                    Constant.PUSH_INFO_ALIAS,
-//                                                    imei);
-//                                            break;
-//
-//                                        case 6002:
-//                                            KJLoger.i("设置别名超时！");
-//                                            break;
-//
-//                                        default:
-//                                            break;
-//                                    }
-//                                }
-//                            });
-//                }
-//            }
-//        }.execute();
     }
 
     protected Response.Listener<BaseModel> listener = new Response.Listener<BaseModel>() {
         @Override
         public void onResponse(BaseModel baseModel) {
-            //TODO
+            final String imei = SystemUtils.getPhoneIMEI(SellerApplication.getInstance());
+            if( baseModel != null && baseModel.getSystemResultCode() ==1 && baseModel.getResultCode() ==1 ){
+                JPushInterface.setAlias(SellerApplication.getInstance(), imei, new TagAliasCallback() {
+                    @Override
+                    public void gotResult(int i, String s, Set<String> set) {
+                        if( i == 0 ){
+                            Log.i(TAG , "设置别名成功！");
+                            PreferenceHelper.writeString( SellerApplication.getInstance() , Constant.PUSH_INFO,  Constant.PUSH_INFO_ALIAS,      imei);
+                        }else if( i== 6002){
+                            Log.i(TAG,"设置别名超时!");
+                        }else{
+                            Log.i(TAG, "返回码："+ i);
+                        }
+                    }
+                });
+            }
         }
     };
 
@@ -334,4 +258,28 @@ public class MJJPushReceiver extends BroadcastReceiver
     }
 
 
+    protected void sellerMessage( Context context ){
+        Intent intent = new Intent(context, PushMsgHandlerActivity.class);
+        intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("type", Constant.MESSAGE_TYPE_SYSTEMMESSAGE);
+        context.startActivity(intent);
+    }
+
+    /**
+     *    打印所有的 intent extra 数据
+    */
+    private static String printBundle(Bundle bundle) {
+        StringBuilder sb = new StringBuilder();
+        for (String key : bundle.keySet()) {
+            if (key.equals(JPushInterface.EXTRA_NOTIFICATION_ID)) {
+                sb.append("\nkey:" + key + ", value:" + bundle.getInt(key));
+            }else if(key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)){
+                sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
+            }
+            else {
+                sb.append("\nkey:" + key + ", value:" + bundle.getString(key));
+            }
+        }
+        return sb.toString();
+    }
 }

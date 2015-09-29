@@ -42,6 +42,12 @@ public class SellerApplication extends Application{
     protected void initJPush(){
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
+
+
+    }
+
+    protected void registerJPush_Alias(){
+
     }
 
     protected void initVolley(){
