@@ -36,8 +36,6 @@ public class GoodsActivity extends BaseFragmentActivity {
     Button  _header_back;
     @Bind(R.id.goods_pager)
     ViewPager _goodsViewPager;
-    //@Bind(R.id.goods_indicator)
-    //TabPageIndicator _goodIndicator;
     @Bind(R.id.header_operate)
     TextView _btnOperate;
     @Bind(R.id.goods_title)
@@ -68,10 +66,8 @@ public class GoodsActivity extends BaseFragmentActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.saleing_btn) {
-                    //_goodIndicator.setCurrentItem(0);
                     _goodsViewPager.setCurrentItem(0);
                 } else if (checkedId == R.id.offshelf_btn) {
-                    //_goodIndicator.setCurrentItem(1);
                     _goodsViewPager.setCurrentItem(1);
                 }
             }
@@ -107,7 +103,6 @@ public class GoodsActivity extends BaseFragmentActivity {
 
             }
         });
-        //_goodIndicator.setViewPager(_goodsViewPager);
     }
 
     @Override
@@ -118,11 +113,9 @@ public class GoodsActivity extends BaseFragmentActivity {
 
     @Override
     public void onClick(View v) {
-        super.onClick(v);
         if( v.getId() == R.id.header_operate){
             ActivityUtils.getInstance().skipActivity(this, GoodsEditActivity.class);
-        }
-        if( v.getId() == R.id.header_back){
+        }else if( v.getId() == R.id.header_back){
             finish();
         }
     }

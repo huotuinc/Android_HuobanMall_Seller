@@ -101,6 +101,8 @@ public class Constant {
     public static final String UPDATEDEVICETOKEN_INTERFACE = BASE_URL +"updateDeviceToken";// app请求设置该设备(imei)的deviceToken
 
     public static final String MESSAGE_INTERFACE = BASE_URL + "messages";// 获取消息列表 ---GET
+
+    public static final String FEEDBACK_INTERFACE = BASE_URL +"feedback";// 反馈意见 ---POST
     /**
      * token添加的类型
      */

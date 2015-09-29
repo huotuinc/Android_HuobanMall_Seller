@@ -47,7 +47,7 @@ public class SaleGoodsFragment extends BaseFragment {
     @Bind(R.id.goods_sale_listView)
     PullToRefreshListView _goodsSaleListView;
 
-    ListView _listView;
+    //ListView _listView;
 
     List<GoodsModel> _goodsList = null;
     GoodsAdapter _goodsAdapter = null;
@@ -108,7 +108,7 @@ public class SaleGoodsFragment extends BaseFragment {
         _goodsSaleListView.setEmptyView(emptyView);
 
         _goodsSaleListView.setMode(PullToRefreshBase.Mode.BOTH);
-        _listView = _goodsSaleListView.getRefreshableView();
+        //_listView = _goodsSaleListView.getRefreshableView();
         _goodsSaleListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
@@ -246,7 +246,7 @@ public class SaleGoodsFragment extends BaseFragment {
                         .show();
                 return;
             }else if( mjGoodModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().showActivity(SaleGoodsFragment.this.getActivity(), LoginActivity.class);
+                ActivityUtils.getInstance().skipActivity(SaleGoodsFragment.this.getActivity(), LoginActivity.class);
                 return;
             }
             else if( mjGoodModel.getResultCode() != 1){

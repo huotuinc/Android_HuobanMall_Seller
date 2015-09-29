@@ -22,8 +22,10 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.huotu.huobanmall.seller.bean.CloseEvnt;
 import com.huotu.huobanmall.seller.bean.MJNewTodayModel;
+import com.huotu.huobanmall.seller.bean.RefreshSettingEvent;
 import com.huotu.huobanmall.seller.bean.RoleEnum;
 import com.huotu.huobanmall.seller.common.Constant;
+import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.utils.BitmapLoader;
@@ -223,18 +225,29 @@ public class MainActivity extends BaseFragmentActivity{
         _todayFxsCount.setText( String.valueOf(_data.getResultData().getTodayPartnerAmount()));
 
         if(_currentIndex==0){
+            _space1.setBackgroundColor( getResources().getColor( R.color.main_header_bg ));
+            //_space1.setBackgroundResource(R.color.main_header_bg);
+            _space2.setBackgroundColor(Color.WHITE);
+            _space3.setBackgroundColor(Color.WHITE);
             _space1.setVisibility(View.VISIBLE);
-            _space2.setVisibility(View.GONE);
-            _space3.setVisibility(View.GONE);
+            _space2.setVisibility(View.VISIBLE);
+            _space3.setVisibility(View.VISIBLE);
             setLineChartData(_mainChart, _data.getResultData().getOrderHour(), _data.getResultData().getOrderAmount());
         }else if( _currentIndex==1){
-            _space1.setVisibility(View.GONE);
+            _space1.setBackgroundColor(Color.WHITE);
+            _space2.setBackgroundColor(getResources().getColor(R.color.main_header_bg));
+            _space3.setBackgroundColor(Color.WHITE);
+            _space1.setVisibility(View.VISIBLE);
             _space2.setVisibility(View.VISIBLE);
-            _space3.setVisibility(View.GONE);
+            _space3.setVisibility(View.VISIBLE);
             setLineChartData(_mainChart, _data.getResultData().getMemberHour(), _data.getResultData().getMemberAmount());
         }else if(_currentIndex==2){
-            _space1.setVisibility(View.GONE);
-            _space2.setVisibility(View.GONE);
+            _space1.setBackgroundColor(Color.WHITE);
+            _space2.setBackgroundColor(Color.WHITE);
+            _space3.setBackgroundColor(getResources().getColor(R.color.main_header_bg));
+
+            _space1.setVisibility(View.VISIBLE);
+            _space2.setVisibility(View.VISIBLE);
             _space3.setVisibility(View.VISIBLE);
             setLineChartData(_mainChart, _data.getResultData().getPartnerHour(), _data.getResultData().getPartnerAmount());
         }
@@ -344,10 +357,19 @@ public class MainActivity extends BaseFragmentActivity{
     }
 
     /**
-     *
+     * 关闭 事件
      * @param event
      */
     public void onEventMainThread( CloseEvnt event) {
         MainActivity.this.finish();
+    }
+
+    /**
+     * 刷新 头像 事件
+     * @param event
+     */
+    public void onEventMainThread(RefreshSettingEvent event){
+        String logoUrl = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_LOGO);
+        BitmapLoader.create().displayUrl(MainActivity.this, _ivLogo , logoUrl);
     }
 }

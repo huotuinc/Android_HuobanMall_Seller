@@ -62,7 +62,13 @@ public class GoodsAdapter extends BaseAdapter{
         }
         holder.goods_cplx.setText("干果");
         holder.goods_name.setText(String.valueOf(_list.get(position).getTitle()));
-        holder.goods_num.setText(String.valueOf(_list.get(position).getStock()));
+        String numString = "";
+        if( _list.get(position).getStock() <0 ){
+            numString="无限制";
+        }else{
+            numString = String.valueOf( _list.get(position).getStock());
+        }
+        holder.goods_num.setText( numString );
         holder.goods_price.setText(String.valueOf(_list.get(position).getPrice()));
         BitmapLoader.create().displayUrl( _context , holder.goods_imageView , _list.get(position).getPictureUrl() ,R.mipmap.goods,R.mipmap.goods);
 
