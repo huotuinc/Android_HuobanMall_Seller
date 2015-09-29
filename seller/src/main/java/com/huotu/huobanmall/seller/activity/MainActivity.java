@@ -2,6 +2,7 @@ package com.huotu.huobanmall.seller.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -92,7 +93,18 @@ public class MainActivity extends BaseFragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        Drawable drawable1 = getResources().getDrawable(R.mipmap.cpgl);
+        drawable1.setBounds(0, 0, 50, 50);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        main_menu_cpgl.setCompoundDrawables(null, drawable1, null, null);
+        Drawable drawable2= getResources().getDrawable(R.mipmap.gdtj);
+        drawable2.setBounds(0, 0, 50, 50);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        main_menu_gdtj.setCompoundDrawables(null, drawable2, null, null);
+        Drawable drawable3 = getResources().getDrawable(R.mipmap.ddgl);
+        drawable3.setBounds(0, 0, 50, 50);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        main_menu_ddgl.setCompoundDrawables(null, drawable3, null, null);
+        Drawable drawable4 = getResources().getDrawable(R.mipmap.szgl);
+        drawable4.setBounds(0, 0, 50, 50);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        main_menu_szgl.setCompoundDrawables(null, drawable4, null, null);
         if( EventBus.getDefault().isRegistered(this)==false) {
             EventBus.getDefault().register(this);
         }
@@ -263,7 +275,7 @@ public class MainActivity extends BaseFragmentActivity{
     protected void setLineChartData( LineChart lineChart , List<Integer> xData , List<Integer> yData ){
         if( xData==null || yData==null )return;
 
-        int bg=0xFFF5F5F5;
+        int bg=0xffffffff;
         int lineColor =0xFFFF3C00;
 
         lineChart.setDrawGridBackground(false);

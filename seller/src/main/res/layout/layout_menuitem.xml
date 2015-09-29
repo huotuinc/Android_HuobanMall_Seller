@@ -4,13 +4,17 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/white"/>
 <LinearLayout
     android:id="@+id/mainitem_menu"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:background="@color/gray"
+    android:background="@color/theme_color"
     android:layout_height="wrap_content">
+
             <Button
                 android:layout_marginTop="@dimen/space_1"
                 android:layout_marginRight="@dimen/space_1"
@@ -22,7 +26,7 @@
                 android:padding="@dimen/space_10"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:textSize="@dimen/text_size_15"
+                android:textSize="@dimen/text_size_12"
                 android:text="产品管理"/>
 
             <Button
@@ -36,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="@dimen/text_size_15"
+                android:textSize="@dimen/text_size_12"
                 android:text="更多统计"/>
 
 
@@ -53,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_15"
+            android:textSize="@dimen/text_size_12"
             android:text="订单管理"/>
 
         <Button
@@ -66,16 +70,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="@dimen/text_size_15"
+            android:textSize="@dimen/text_size_12"
             android:text="设置管理"/>
 
 
 </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/gray"
 
-        />
 
     </LinearLayout>
