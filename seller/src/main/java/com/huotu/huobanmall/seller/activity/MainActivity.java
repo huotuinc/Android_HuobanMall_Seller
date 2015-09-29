@@ -225,18 +225,29 @@ public class MainActivity extends BaseFragmentActivity{
         _todayFxsCount.setText( String.valueOf(_data.getResultData().getTodayPartnerAmount()));
 
         if(_currentIndex==0){
+            _space1.setBackgroundColor( getResources().getColor( R.color.main_header_bg ));
+            //_space1.setBackgroundResource(R.color.main_header_bg);
+            _space2.setBackgroundColor(Color.WHITE);
+            _space3.setBackgroundColor(Color.WHITE);
             _space1.setVisibility(View.VISIBLE);
-            _space2.setVisibility(View.GONE);
-            _space3.setVisibility(View.GONE);
+            _space2.setVisibility(View.VISIBLE);
+            _space3.setVisibility(View.VISIBLE);
             setLineChartData(_mainChart, _data.getResultData().getOrderHour(), _data.getResultData().getOrderAmount());
         }else if( _currentIndex==1){
-            _space1.setVisibility(View.GONE);
+            _space1.setBackgroundColor(Color.WHITE);
+            _space2.setBackgroundColor(getResources().getColor(R.color.main_header_bg));
+            _space3.setBackgroundColor(Color.WHITE);
+            _space1.setVisibility(View.VISIBLE);
             _space2.setVisibility(View.VISIBLE);
-            _space3.setVisibility(View.GONE);
+            _space3.setVisibility(View.VISIBLE);
             setLineChartData(_mainChart, _data.getResultData().getMemberHour(), _data.getResultData().getMemberAmount());
         }else if(_currentIndex==2){
-            _space1.setVisibility(View.GONE);
-            _space2.setVisibility(View.GONE);
+            _space1.setBackgroundColor(Color.WHITE);
+            _space2.setBackgroundColor(Color.WHITE);
+            _space3.setBackgroundColor(getResources().getColor(R.color.main_header_bg));
+
+            _space1.setVisibility(View.VISIBLE);
+            _space2.setVisibility(View.VISIBLE);
             _space3.setVisibility(View.VISIBLE);
             setLineChartData(_mainChart, _data.getResultData().getPartnerHour(), _data.getResultData().getPartnerAmount());
         }

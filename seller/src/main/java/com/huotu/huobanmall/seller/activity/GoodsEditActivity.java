@@ -242,7 +242,7 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                         .show();
                 return;
             }else if( mjGoodModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().showActivity( GoodsEditActivity.this, LoginActivity.class);
+                ActivityUtils.getInstance().skipActivity( GoodsEditActivity.this, LoginActivity.class);
                 return;
             }
             else if( mjGoodModel.getResultCode() != 1){

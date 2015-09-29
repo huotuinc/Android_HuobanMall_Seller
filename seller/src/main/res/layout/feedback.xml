@@ -50,7 +50,6 @@
         android:background="@drawable/btn_red_sel"
         android:clickable="true"
         android:gravity="center"
-        android:onClick="onClickButton"
         android:text="提交反馈"
         android:textColor="@color/white"
         android:textSize="20sp"
