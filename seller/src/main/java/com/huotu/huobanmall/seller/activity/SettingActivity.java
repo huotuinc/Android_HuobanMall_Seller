@@ -151,7 +151,7 @@ public class SettingActivity extends BaseFragmentActivity
         String shopDescription = PreferenceHelper.readString(application , Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_DISCRIPTION);
         ShopDescription.setText(shopDescription);
         String logoUrl = PreferenceHelper.readString(application, Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_LOGO);
-        BitmapLoader.create().displayUrl(SettingActivity.this, logo, logoUrl);
+        BitmapLoader.create().displayUrl(SettingActivity.this, logo, logoUrl, R.mipmap.txzw,R.mipmap.txzw);
         String userId = PreferenceHelper.readString(application, Constant.LOGIN_USER_INFO,Constant.LOGIN_AUTH_MOBILE);
         tvUserId.setText(userId);
         String nickname=PreferenceHelper.readString(application,Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_NICKNAME);

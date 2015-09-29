@@ -84,7 +84,7 @@ public class BillDataAdapter extends RecyclerView.Adapter<BillDataAdapter.OrderL
         //setListViewHeightBasedOnChildren( holder.lv );
 
         holder.tvOrderNo.setText(model.getOrderNo());
-        holder.tvStatus.setText(OrderStatusEnum.getName(model.getStatus()) );
+        holder.tvStatus.setText(model.getStatus() );
         holder.position = position;
 
         if( false == model.getHasChildOrder() ){

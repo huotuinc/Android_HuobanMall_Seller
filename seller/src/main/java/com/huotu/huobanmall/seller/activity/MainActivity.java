@@ -78,6 +78,8 @@ public class MainActivity extends BaseFragmentActivity{
     NetworkImageView _ivLogo;
     @Bind(R.id.header_operate)
     ImageButton _ibShop;
+    @Bind(R.id.header_title)
+    TextView _header_title;
 
     Long existTime=0L;
     Integer waitForExistSecond=2000;
@@ -104,14 +106,19 @@ public class MainActivity extends BaseFragmentActivity{
         main_menu_szgl.setOnClickListener(this);
         _ibShop.setOnClickListener(this);
 
-        String logoUrl = PreferenceHelper.readString( this, Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_LOGO,"");
-        BitmapLoader.create().displayUrl(this, _ivLogo , logoUrl , R.mipmap.txzw,R.mipmap.txzw);
+        setShopNameLogo();
 
         openMessage();
 
-        //getData();
+        getData();
     }
 
+    protected void setShopNameLogo(){
+        String shopNameStr = PreferenceHelper.readString( SellerApplication.getInstance() , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_SHOPNAME );
+        _header_title.setText(shopNameStr);
+        String logoUrl = PreferenceHelper.readString( this, Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_LOGO,"");
+        BitmapLoader.create().displayUrl(this, _ivLogo , logoUrl , R.mipmap.txzw,R.mipmap.txzw);
+    }
 
     private void openMessage() {
         int messageType = 0;
@@ -129,7 +136,7 @@ public class MainActivity extends BaseFragmentActivity{
     protected void onResume() {
         super.onResume();
 
-        getData();
+        //getData();
     }
 
     @Override
@@ -369,7 +376,6 @@ public class MainActivity extends BaseFragmentActivity{
      * @param event
      */
     public void onEventMainThread(RefreshSettingEvent event){
-        String logoUrl = PreferenceHelper.readString(SellerApplication.getInstance(), Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_LOGO);
-        BitmapLoader.create().displayUrl(MainActivity.this, _ivLogo , logoUrl);
+        setShopNameLogo();
     }
 }

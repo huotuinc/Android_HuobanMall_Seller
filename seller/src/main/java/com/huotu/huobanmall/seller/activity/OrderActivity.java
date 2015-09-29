@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -78,6 +79,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
     TextView _header_title;
 
     OrderPagerAdapter _pagerAdapter;
+    Handler _handler=new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +107,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                 _search_text.requestFocus();
                 _search_text.setError("不能为空");
             } else {
-                //TODO
-                String keyword = _search_text.getText().toString().trim();
+                //String keyword = _search_text.getText().toString().trim();
                 //_operateType = OperateTypeEnum.REFRESH;
                 //ConsumeStatisticsActivity.this.showProgressDialog("","正在获取数据，请稍等...");
                 //getData_MX(_operateType, key);
@@ -190,8 +191,6 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             _operateTypes = new ArrayList<>();
             for( int i =0;i<4;i++) {
                 PullToRefreshListView lv=new PullToRefreshListView(_context);
-                //lv.getRefreshableView().setDividerHeight(1);
-                //lv.getRefreshableView().setDivider(new ColorDrawable(0xF0EFF5));
 
                 View emptyView = new View(_context);
                 emptyView.setBackgroundResource(R.mipmap.tpzw);
@@ -257,6 +256,20 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                                 String keyword,
                                 OperateTypeEnum operateType ,
                                 Response.Listener<MJOrderListModel> listener ){
+            if( false == canConnect() ){
+                _handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        _lv.get(0).onRefreshComplete();
+                        _lv.get(1).onRefreshComplete();
+                        _lv.get(2).onRefreshComplete();
+                        _lv.get(3).onRefreshComplete();
+                    }
+                });
+                OrderActivity.this.closeProgressDialog();
+                return;
+            }
+
             String url = Constant.ORDERLIST_INTERFACE;
             Map<String,String> paras = new HashMap<>();
             paras.put("status", String.valueOf( tabIndex));
@@ -466,8 +479,8 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                 item.setViewType(3);
                 item.setMainOrderNO(order.getMainOrderNo());
                 item.setChildOrderNO(order.getOrderNo());
-                item.setCount(9999999);
-                item.setTotalPrice(999999.09f);
+                item.setCount(order.getAmount());
+                item.setTotalPrice(order.getPaid());
                 list.add(item);
 
                 item = new OrderTestModel();
@@ -480,27 +493,6 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             return list;
         }
 
-        protected void demoAddChild(OrderListModel model){
-            model.setHasChildOrder(true);
-            model.setChildOrders(new ArrayList<OrderListModel>());
-            for( int i=0;i<2;i++){
-                OrderListModel child = new OrderListModel();
-                child.setOrderNo("AAAAAAA"+i);
-                child.setStatus(0);
-                child.setList(new ArrayList<OrderListProductModel>());
-                for( int k=0;k<4;k++){
-                    OrderListProductModel good = new OrderListProductModel();
-                    good.setSpec("asdfasdaf");
-                    good.setMoney(22.22F);
-                    good.setAmount(2);
-                    good.setPictureUrl("");
-                    good.setTitle("法规和司法受到犯规地方噶是受到犯规");
-                    child.getList().add(good);
-                }
-                model.getChildOrders().add(child);
-            }
-        }
-
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             //return super.instantiateItem(container, position);
@@ -508,39 +500,6 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             if( position == 0 ) {
                 _operateTypes.set(0,OperateTypeEnum.REFRESH);
                 getData_0(OperateTypeEnum.REFRESH);
-
-//                for( int i=0;i<20;i++){
-//                    OrderTestModel item = new OrderTestModel();
-//                    item.setChildOrderNO("3333331111" + i);
-//                    item.setStatus("1");
-//                    item.setViewType(1);
-//                    _datas.get(position).add(item);
-//                    for( int k=0;k<6;k++) {
-//                        OrderTestModel g = new OrderTestModel();
-//                        g.setGoodsName("他人阿的发放阿斯顿飞撒旦法师地方撒旦法是的斯顿飞艾丝凡");
-//                        g.setCount("32");
-//                        g.setPrice("423.44");
-//                        g.setSpec("会碰上艾丝凡啊");
-//                        g.setPictureUrl("http://images0.cnblogs.com/news_topic/20150202125808578.png");
-//                        g.setViewType(2);
-//                        _datas.get(position).add(g);
-//                    }
-//
-//                    item =new OrderTestModel();
-//                    item.setViewType(3);
-//                    _datas.get(position).add(item);
-//                    item = new OrderTestModel();
-//                    item.setMainOrderNO("3223332233" + i);
-//                    item.setStatus("1");
-//                    item.setTotalPrice("34343.44");
-//                    item.setTime(new Date(System.currentTimeMillis()));
-//                    item.setViewType(0);
-//                    _datas.get(position).add(item);
-//                }
-                //_adapter1 = new BillDataAdapter(_context, _data1);
-                //_adapter1.setLogisticsListener(_seeLogisticListener);
-                //_recycleLVs.get(0).setAdapter(_adapter1);
-                //_adapters.get(position).notifyDataSetChanged();
             }else if(position==1){
                 _operateTypes.set(1,OperateTypeEnum.REFRESH);
                 getData_1(OperateTypeEnum.REFRESH);

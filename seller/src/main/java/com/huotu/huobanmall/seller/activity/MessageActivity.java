@@ -53,7 +53,7 @@ import butterknife.ButterKnife;
  */
 public class MessageActivity extends BaseFragmentActivity implements View.OnClickListener {
 
-    public SellerApplication application;
+    //public SellerApplication application;
     @Bind(R.id.header_title)
     public TextView header_title;
     @Bind(R.id.header_back)
@@ -67,15 +67,12 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_message);
-        application = ( SellerApplication ) MessageActivity.this.getApplication ();
+        //application = ( SellerApplication ) MessageActivity.this.getApplication ();
         ButterKnife.bind(this);
-
         initView();
     }
     private void initView() {
-
         header_title.setText("消息中心");
         header_back.setOnClickListener(this);
 
@@ -106,7 +103,6 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
     @Override
     protected void onResume()
     {
-        // TODO Auto-generated method stub
         super.onResume();
 
         firstGetData();
@@ -138,7 +134,6 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
         }
 
         String url =Constant.MESSAGE_INTERFACE;
-
         HttpParaUtils httpParaUtils =new HttpParaUtils();
         Paging paging = new Paging();
         paging.setPagingSize(Constant.PAGES_COMMON);
@@ -238,18 +233,12 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
         {
             // TODO Auto-generated method stub
             switch (v.getId()) {
-                case R.id.header_back:{
+                case R.id.header_back: {
                     finish();
-            }
+                }
                     break;
-
-
                 default:
                     break;
             }
         }
-
-
-
-
 }

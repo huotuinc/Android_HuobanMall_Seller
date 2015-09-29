@@ -28,7 +28,7 @@ public class OrderListModel {
     /**
      * 订单状态
      */
-    private Integer status;
+    private String status;
     /**
      * 下单时间
      */
@@ -128,11 +128,11 @@ public class OrderListModel {
         this.score = score;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

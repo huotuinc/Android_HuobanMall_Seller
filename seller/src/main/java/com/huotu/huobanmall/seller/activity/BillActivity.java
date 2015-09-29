@@ -177,7 +177,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                 for( int i=0;i<10;i++){
                     OrderListModel item = new OrderListModel();
                     item.setOrderNo("333"+i);
-                    item.setStatus(1);
+                    item.setStatus("1");
                     List<GoodsModel> items= new ArrayList<>();
                     item.setHasChildOrder(false);
                     if(i%2==0){
@@ -204,7 +204,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                 for( int i=0;i<10;i++){
                     OrderListModel item = new OrderListModel();
                     item.setOrderNo("44444"+i);
-                    item.setStatus(1);
+                    item.setStatus("1");
                     List<GoodsModel> items= new ArrayList<>();
                     for(int k=0;k<8;k++){
                         GoodsModel g=new GoodsModel();
@@ -226,7 +226,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                 for( int i=0;i<10;i++){
                     OrderListModel item = new OrderListModel();
                     item.setOrderNo("888"+i);
-                    item.setStatus(1);
+                    item.setStatus("1");
                     List<GoodsModel> items= new ArrayList<>();
                     for(int k=0;k<8;k++){
                         GoodsModel g=new GoodsModel();
@@ -252,7 +252,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                 //_recycleLVs.get(3).setAdapter(_adapter4);
                 OrderListModel item = new OrderListModel();
                 item.setOrderNo("888");
-                item.setStatus(1);
+                item.setStatus("1");
                 List<GoodsModel> items= new ArrayList<>();
                 for(int k=0;k<8;k++){
                     GoodsModel g=new GoodsModel();
