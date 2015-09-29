@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_15"
+                android:textSize="@dimen/text_size_18"
                 android:text="订单"/>
             <ImageView
                 android:id="@+id/main_order_space"
@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_15"
+                android:textSize="@dimen/text_size_18"
                 android:text="会员"/>
             <ImageView
                 android:id="@+id/main_member_space"
@@ -117,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_15"
+                android:textSize="@dimen/text_size_18"
                 android:text="分销商"/>
             <ImageView
                 android:id="@+id/main_fxs_space"

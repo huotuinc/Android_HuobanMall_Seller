@@ -4,13 +4,17 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/white"/>
 <LinearLayout
     android:id="@+id/mainitem_menu"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:background="@color/gray"
     android:layout_height="wrap_content">
+
             <Button
                 android:layout_marginTop="@dimen/space_1"
                 android:layout_marginRight="@dimen/space_1"
@@ -71,11 +75,6 @@
 
 
 </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/gray"
 
-        />
 
     </LinearLayout>

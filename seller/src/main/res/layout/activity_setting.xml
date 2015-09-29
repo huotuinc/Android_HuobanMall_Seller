@@ -601,7 +601,9 @@
                     android:background="@drawable/line_gray_shape" />
                 <!-- 问题反馈 -->
 
-
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="30dp" />
 
             </LinearLayout>
 

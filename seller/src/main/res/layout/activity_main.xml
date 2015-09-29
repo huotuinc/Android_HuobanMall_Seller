@@ -82,6 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/todayNewOrder"
+            android:layout_margin="10dp"
             android:textSize="@dimen/text_size_18"
             android:gravity="center"/>
         <ImageView
@@ -90,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_1"
             android:background="@color/gray"
-            android:layout_margin="@dimen/space_5"
+            android:layout_marginBottom="10dp"
             android:paddingLeft="@dimen/space_10"
             android:paddingRight="@dimen/space_10"
             android:layout_below="@id/main_TodayOrderText">
