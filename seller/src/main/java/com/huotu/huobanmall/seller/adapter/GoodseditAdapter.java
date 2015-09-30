@@ -63,8 +63,15 @@ public class GoodseditAdapter extends BaseAdapter {
         }
         holder.tvSelect.setVisibility(View.VISIBLE);
         holder.goods_name.setText(String.valueOf(_list.get(position).getTitle()));
-        holder.goods_num.setText(String.valueOf(_list.get(position)
-                .getStock()));
+
+        String numStr = "";
+        if( _list.get(position).getStock()>=0 && _list.get(position).getStock() < 5 ){
+            numStr="不充足";
+        }else{
+            numStr="充足";
+        }
+
+        holder.goods_num.setText( numStr );
         holder.goods_price.setText(String.valueOf(_list.get(position).getPrice()));
         BitmapLoader.create().displayUrl( _context , holder.goods_imageView , _list.get(position).getPictureUrl(),R.mipmap.goods,R.mipmap.goods);
 

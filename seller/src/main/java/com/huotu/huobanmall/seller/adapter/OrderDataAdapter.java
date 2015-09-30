@@ -259,39 +259,6 @@ public class OrderDataAdapter extends BaseAdapter{ //RecyclerView.Adapter<OrderD
         public Button btnLogistics;
         public RelativeLayout rlGoods;
         public int position;
-
-//        public ViewHolder(View itemView , int viewType ) {
-//            super(itemView);
-//
-//            if( viewType== 0){
-//                tvOrdernNo = (TextView)itemView.findViewById(R.id.test_order_item_orderNo);
-//                tvOrderTime = (TextView)itemView.findViewById(R.id.test_order_main_item_orderTime);
-//            }else if( viewType==1){
-//                tvOrdernNo = (TextView)itemView.findViewById(R.id.test_order_child_item_childno);
-//                tvStatus = (TextView)itemView.findViewById(R.id.test_order_child_item_status);
-//            }else if(viewType==2){
-//                tvGoodsName = (TextView)itemView.findViewById(R.id.test_order_goods_item_goodsName);
-//                tvPrice = (TextView)itemView.findViewById(R.id.test_order_goods_item_price);
-//                tvCount = (TextView)itemView.findViewById(R.id.test_order_goods_item_count);
-//                tvSpec = (TextView)itemView.findViewById(R.id.test_order_goods_item_spec);
-//                ivPicture =(NetworkImageView)itemView.findViewById(R.id.test_order_goods_item_picture);
-//                rlGoods=(RelativeLayout)itemView.findViewById(R.id.test_order_child_item_rl_goods);
-//                rlGoods.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        onSeeOrderDetailListener(v, _data.get(position));
-//                    }
-//                });
-//            }else if( viewType==3){
-//                btnLogistics=(Button)itemView.findViewById(R.id.test_order_logistic_item_btn);
-//                btnLogistics.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        onLogisticListener(v, _data.get(position));
-//                    }
-//                });
-//            }
-//        }
     }
 
     public interface ILogisticListener {

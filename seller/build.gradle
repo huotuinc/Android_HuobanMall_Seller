@@ -28,6 +28,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.huotu_hb
+            zipAlignEnabled true
+        }
+        debug {
+            signingConfig signingConfigs.huotu_hb
         }
     }
     productFlavors {

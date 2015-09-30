@@ -3,3 +3,20 @@
     <stroke android:width="1dp" android:color="@color/white" />
     <solid android:color="@color/statistic_check_color" />
 </shape>
+
+<!--<layer-list  xmlns:android="http://schemas.android.com/apk/res/android" >-->
+    <!--<item android:left="1dip" android:right="1dip"   >-->
+        <!--<shape>-->
+            <!--<stroke android:width="1dp" android:color="@color/white" />-->
+            <!--<solid android:color="@color/statistic_check_color" />-->
+            <!--<padding android:bottom="@dimen/space_4"  android:top="@dimen/space_4" />-->
+        <!--</shape>-->
+    <!--</item>-->
+    <!--<item android:top="1dip" android:bottom="1dip" android:right="0dip" android:left="0dip">-->
+        <!--<shape>-->
+            <!--<padding android:bottom="@dimen/space_4"  android:top="@dimen/space_4" />-->
+            <!--<stroke android:width="1dp" android:color="@color/statistic_check_color" />-->
+            <!--<solid android:color="@color/statistic_check_color" />-->
+        <!--</shape>-->
+    <!--</item>-->
+<!--</layer-list>-->

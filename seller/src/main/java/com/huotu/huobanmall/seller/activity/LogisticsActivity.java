@@ -2,6 +2,7 @@ package com.huotu.huobanmall.seller.activity;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -61,6 +62,7 @@ public class LogisticsActivity extends BaseFragmentActivity {
     LogisticsDetailModel _data=null;
     LogisticsAdapter _logisticAdapter;
     String _orderNo="";
+    Handler _handler=new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +111,14 @@ public class LogisticsActivity extends BaseFragmentActivity {
     }
 
     protected void firstGetData(){
-        this.showProgressDialog("","正在获取数据，请稍等...");
-        getData();
+        //this.showProgressDialog("","正在获取数据，请稍等...");
+        //getData();
+        _handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                _scrollView.setRefreshing(true);
+            }
+        },1000);
     }
 
 

@@ -221,6 +221,10 @@
         <!--  </>值来自开发者平台取得的AppKey-->
         <meta-data android:name="JPUSH_APPKEY" android:value="a237b5c86ab65f7fa6260bcf" />
 
+        <!-- 友盟统计 Appkey -->
+        <meta-data  android:name="UMENG_APPKEY" android:value="" />
+        <!-- 友盟统计 渠道ID -->
+        <meta-data android:name="UMENG_CHANNEL" android:value="" />
     </application>
 
 </manifest>

@@ -55,7 +55,7 @@
                 android:textColor="#37B36A"
                 android:layout_marginLeft="@dimen/space_8"
                 android:textSize="@dimen/text_size_18"
-                android:text="已签收"
+                android:text=""
                 android:layout_toRightOf="@id/logistics_label1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -70,7 +70,7 @@
                 android:id="@+id/logistics_source"
                 android:layout_below="@id/logistics_status"
                 android:layout_alignLeft="@id/logistics_status"
-                android:text="韵达快递"
+                android:text=""
                 android:textSize="@dimen/text_size_18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

@@ -82,6 +82,6 @@ public class TodayFragment extends  BaseFragment {
 
         LineData data =new LineData(xValues ,dataSet );
         lineChart.setData(data);
-        lineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+        lineChart.animateX(2000, Easing.EasingOption.EaseInOutQuart);
     }
 }
