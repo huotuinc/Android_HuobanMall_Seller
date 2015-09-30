@@ -1,6 +1,8 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,6 +14,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -151,7 +154,7 @@ public class SettingActivity extends BaseFragmentActivity
         String shopDescription = PreferenceHelper.readString(application , Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_DISCRIPTION);
         ShopDescription.setText(shopDescription);
         String logoUrl = PreferenceHelper.readString(application, Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_LOGO);
-        BitmapLoader.create().displayUrl(SettingActivity.this, logo, logoUrl, R.mipmap.txzw,R.mipmap.txzw);
+        BitmapLoader.create().displayUrl(SettingActivity.this, logo, logoUrl, R.mipmap.txzw, R.mipmap.txzw);
         String userId = PreferenceHelper.readString(application, Constant.LOGIN_USER_INFO,Constant.LOGIN_AUTH_MOBILE);
         tvUserId.setText(userId);
         String nickname=PreferenceHelper.readString(application,Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_NICKNAME);
@@ -225,6 +228,7 @@ public class SettingActivity extends BaseFragmentActivity
                 Intent intent=new Intent();
                 intent.setClass(SettingActivity.this,WebViewActivity.class);
                 intent.putExtra(Constant.Extra_Url, url);
+                intent.putExtra(Constant.Extra_Title, "关于我们");
                 ActivityUtils.getInstance().showActivity(SettingActivity.this, intent );
             }
             break;
@@ -233,6 +237,7 @@ public class SettingActivity extends BaseFragmentActivity
                 Intent intent=new Intent();
                 intent.setClass(SettingActivity.this,WebViewActivity.class);
                 intent.putExtra(Constant.Extra_Url, url);
+                intent.putExtra(Constant.Extra_Title, "使用帮助");
                  ActivityUtils.getInstance().showActivity(SettingActivity.this, intent );
 
             }
@@ -246,15 +251,46 @@ public class SettingActivity extends BaseFragmentActivity
             }
             break;
             case R.id.quit: {
-                 //ActivityUtils.getInstance().showActivity(SettingActivity.this, MainActivity.class);
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(
+                        SettingActivity.this);
+              final  AlertDialog alertdialog =dialog.create();
+                LayoutInflater inflater = LayoutInflater.from(SettingActivity.this) ;
+                View view = inflater.inflate(R.layout.actyivity_dialog, null) ;
+                alertdialog.setView(view);
+                TextView titletext= (TextView) view.findViewById(R.id.titletext);
+                TextView messagetext= (TextView) view.findViewById(R.id.messagetext);
+                Button stay_btn= (Button) view.findViewById(R.id.stay_btn);
+                Button logout_btn= (Button) view.findViewById(R.id.logout_btn);
+                titletext.setText("切换账户");
+                titletext.setTextColor(getResources().getColor(R.color.black));
+                stay_btn.setTextColor(getResources().getColor(R.color.blue));
+                logout_btn.setTextColor(getResources().getColor(R.color.blue));
+                messagetext.setText("真的要离开吗？");
+                logout_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //清空token等用户信息
+                        application.cleanMerchantInfo();
+                        //关闭MainActivity 界面,防止 按 返回建，回到 mainActivity界面
+                        EventBus.getDefault().post(new CloseEvnt());
+                        //跳转到
+                        ActivityUtils.getInstance().skipActivity(SettingActivity.this, LoginActivity.class);
+                    }
+                });
+                stay_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertdialog.dismiss();
+                    }
+                });
 
-                //清空token等用户信息
-                application.cleanMerchantInfo ();
-                //关闭MainActivity 界面,防止 按 返回建，回到 mainActivity界面
-                EventBus.getDefault().post(new CloseEvnt());
-                //跳转到
-                ActivityUtils.getInstance ().skipActivity ( SettingActivity.this, LoginActivity.class );
+                alertdialog.show();
+
+
             }
+
+
+
             break;
         }
 

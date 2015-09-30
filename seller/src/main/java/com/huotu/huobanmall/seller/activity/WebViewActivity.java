@@ -52,6 +52,10 @@ public class WebViewActivity extends Activity implements View.OnClickListener{
             _url= getIntent().getStringExtra( Constant.Extra_Url );
             _webView.loadUrl(_url);
         }
+        if( null != getIntent() && getIntent().hasExtra(Constant.Extra_Title )){
+            String title= getIntent().getStringExtra( Constant.Extra_Title );
+            _webViewTitle.setText(title);
+        }
     }
 
     @Override

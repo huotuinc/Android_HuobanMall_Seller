@@ -164,6 +164,7 @@ public class Constant {
 
     //Activity之间传递参数的参数名称
     public final static String Extra_Url="url";
+    public final static String Extra_Title="title";
     //
     public final static String Extra_OrderNo="orderNo";
     public static final String UPDATE_PROFILE = BASE_URL + "updateProfile";// 修改资料
