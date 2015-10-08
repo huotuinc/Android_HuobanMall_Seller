@@ -83,18 +83,24 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
                 MJOtherStatisticModel.class,
                 null,
                 otherListener,
-                errorListener
+                this
         );
-
-        this.showProgressDialog("","正在获取数据，请稍等...");
-
+        this.showProgressDialog("", "正在获取数据，请稍等...");
         VolleyRequestManager.getRequestQueue().add(otherRequest);
+    }
+
+    protected void clearData(){
+        moresta_ordercount.setText(  "0" );
+        moresta_sp.setText( "0" );
+        moresta_hytj.setText( "0" );
+        moresta_fxs.setText( "0" );
     }
 
     Response.Listener<MJOtherStatisticModel> otherListener=new Response.Listener<MJOtherStatisticModel>() {
         @Override
         public void onResponse(MJOtherStatisticModel  mjOtherStatisticModel ) {
             MoreStatisticActivity.this.closeProgressDialog();
+            clearData();
 
             if( mjOtherStatisticModel==null){
                 DialogUtils.showDialog(MoreStatisticActivity.this, MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息","请求数据失败","关闭");
@@ -113,6 +119,12 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
                 return;
             }
 
+            if( mjOtherStatisticModel.getResultData() ==null || mjOtherStatisticModel.getResultData().getOtherInfoList() ==null ){
+                DialogUtils.showDialog( MoreStatisticActivity.this , MoreStatisticActivity.this.getSupportFragmentManager(),
+                        "错误信息","服务端返回数据不完整","关闭");
+                return;
+            }
+
             String orderCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getBillAmount());
             String spCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getGoodsAmount() );
             String fxsCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getDiscributorAmount());
@@ -125,18 +137,12 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         }
     };
 
-    Response.ErrorListener errorListener =new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            MoreStatisticActivity.this.closeProgressDialog();
-            String message ="";
-            if( volleyError.networkResponse !=null){
-                message = new String( volleyError.networkResponse.data );
-            }
-            DialogUtils.showDialog(MoreStatisticActivity.this,MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息",message,"关闭");
-
-        }
-    };
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        MoreStatisticActivity.this.closeProgressDialog();
+        clearData();
+        super.onErrorResponse(volleyError);
+    }
 
     @Override
     public void onClick(View v) {
@@ -175,9 +181,7 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
                 ToastUtils.showLong("您所属的账号无访问权限。");
                 return;
             }
-
             ActivityUtils.getInstance().showActivity(this, RebateStatisticsActivity.class );
-
         }else if( v.getId() == R.id.morestatistic_menu_xsetj){//销售额统计
             if( hasRole(RoleEnum.销售额统计 ) == false){
                 ToastUtils.showLong("您所属的账号无访问权限。");

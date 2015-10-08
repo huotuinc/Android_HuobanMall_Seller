@@ -176,13 +176,13 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
                 return;
             }
 
-            //TODO
             _data = mjOrderDetailModel.getResultData().getData();
             _orderGoodsAdapter = new LogisticsGoodsAdapter(OrdermanagementDetailsActivity.this , _data.getList());
+            order_item_goodsList.setAdapter(_orderGoodsAdapter);
             buyer.setText( _data.getBuyer() );
             receiver.setText( _data.getReceiver() );
             address.setText(_data.getAddress());
-            moblic.setText( "联系方式：" + _data.getContact() );
+            moblic.setText( "联系方式：" + _data.getContact() ==null ? "" : _data.getContact() );
             orderNo.setText( _data.getOrderNo() );
             tvAmount.setText( "共"+_data.getAmount() +"件商品 实付:￥" );
             tvPaid.setText( String.valueOf( _data.getPaid() ) );
@@ -213,6 +213,9 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
 
                 _scoreAdapter = new ScoreExpandableAdapter(OrdermanagementDetailsActivity.this, scores);
                 _orderScoreList.setAdapter(_scoreAdapter);
+                if( _orderScoreList.getCount()>0 ){
+                    _orderScoreList.expandGroup(0);
+                }
             }
         }
     };

@@ -13,6 +13,7 @@ import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.Util;
+import com.umeng.analytics.MobclickAgent;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -38,6 +39,7 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
         super.onResume();
 
         JPushInterface.onResume(BaseFragmentActivity.this);
+        MobclickAgent.onResume(BaseFragmentActivity.this);
     }
 
     @Override
@@ -45,6 +47,7 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
         super.onPause();
 
         JPushInterface.onPause(BaseFragmentActivity.this);
+        MobclickAgent.onPause(BaseFragmentActivity.this);
     }
 
     @Override
