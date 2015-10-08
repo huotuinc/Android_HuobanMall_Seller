@@ -1,6 +1,5 @@
 package com.huotu.huobanmall.seller.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -19,7 +18,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2015/8/26.
  */
-public class WebViewActivity extends Activity implements View.OnClickListener{
+public class WebViewActivity extends BaseFragmentActivity implements View.OnClickListener{
     @Bind(R.id.webView_page)
     PullToRefreshWebView _pullToRefreshWebViewPage;
 
@@ -104,7 +103,5 @@ public class WebViewActivity extends Activity implements View.OnClickListener{
 
 
     }
-
-
 
 }

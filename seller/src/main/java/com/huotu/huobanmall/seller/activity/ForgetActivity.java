@@ -120,9 +120,8 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
                     countDownTimerButton.start();
 
                 } else {
-                    edtPhone.setError("请输入手机号");
+                    //edtPhone.setError("请输入手机号");
                 }
-
             }
             break;
             default:
@@ -134,8 +133,13 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
 
     private boolean hasPhone() {
         if (TextUtils.isEmpty(edtPhone.getText())) {
+            edtPhone.setError("请输入手机号");
             return false;
-        } else {
+        }else if( edtPhone.getText().toString().trim().length() < 11){
+            edtPhone.setError("请输入合法的手机号码");
+            return false;
+        }
+        else {
             return true;
         }
     }

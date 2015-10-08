@@ -95,9 +95,6 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
                 listener,
                 this
         );
-
-
-
         VolleyRequestManager.getRequestQueue().add(request);
     }
     Response.Listener<MJTopGoodsModel> listener =new Response.Listener<MJTopGoodsModel>() {

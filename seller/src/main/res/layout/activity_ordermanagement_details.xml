@@ -241,15 +241,14 @@
                         android:layout_toLeftOf="@+id/orderdetail_pay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
                         android:text="共1件商品 实付:￥"/>
                     <TextView
                         android:id="@+id/orderdetail_pay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
-                        android:text="234.23"
+                        android:layout_alignBottom="@id/orderdetail_amount"
+                        android:text="0.00"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_17" />
                 </RelativeLayout>
