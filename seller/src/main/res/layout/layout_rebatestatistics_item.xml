@@ -53,8 +53,8 @@
         android:text="总返利"
         android:textColor="@color/black"
         android:layout_alignTop="@+id/consumestatistics_time"
-        android:layout_alignLeft="@+id/consumestatistics_score"
-        android:layout_alignStart="@+id/consumestatistics_score" />
+        android:layout_alignRight="@+id/consumestatistics_score"
+        android:layout_alignEnd="@+id/consumestatistics_score" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="15dp"

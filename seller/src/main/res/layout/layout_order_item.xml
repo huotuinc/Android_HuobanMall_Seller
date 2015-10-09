@@ -27,7 +27,7 @@
             android:layout_marginRight="15dp"
             android:textColor="#FE3307"
             android:textSize="@dimen/text_size_15"
-            android:text="交易完成"/>
+            android:text=""/>
         <TextView
             android:id="@+id/order_item_orderNo"
             android:layout_toRightOf="@id/order_item_label1"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_15"
-            android:text="243423423234"/>
+            android:text=""/>
 
     </RelativeLayout>
 
