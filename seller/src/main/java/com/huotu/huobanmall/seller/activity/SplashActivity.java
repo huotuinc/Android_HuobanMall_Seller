@@ -230,7 +230,9 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
         if( _data.getResultCode() == Constant.TOKEN_OVERDUE ||
             _data.getResultCode() == Constant.ERROR_USER_PASSWORD ){
             //调转到登录界面
-            ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class);
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+            intent.putExtra("type", messageType);
+            ActivityUtils.getInstance().skipActivity ( SplashActivity.this, intent);
             return;
         }
 

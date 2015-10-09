@@ -10,9 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        >
-
+        android:layout_margin="10dp">
         <TextView
             android:id="@+id/goods_select"
             android:layout_width="20dp"
@@ -24,9 +22,9 @@
         <com.android.volley.toolbox.NetworkImageView
             android:layout_centerVertical="true"
             android:id="@+id/goods_imageView"
-            android:layout_width="60dp"
+            android:layout_width="65dp"
             android:layout_marginLeft="10dp"
-            android:layout_height="60dp"
+            android:layout_height="65dp"
             android:layout_toRightOf="@+id/goods_select"
             android:background="@mipmap/ic_launcher" />
 
@@ -60,7 +58,7 @@
             android:id="@+id/goods_inventory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/goods_imageView"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/goods_imageView"
             android:text="￥ "

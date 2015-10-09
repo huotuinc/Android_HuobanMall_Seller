@@ -72,8 +72,9 @@ public class BitmapLoader
     {
         if( null == imageUrl || imageUrl.length()<1 ||  Uri.parse(imageUrl).getHost()==null){
             imageView.setDefaultImageResId(initImg);
-            imageView.setImageUrl("",null);
             imageView.setBackgroundResource(initImg);
+            imageView.setErrorImageResId(errorImg);
+            imageView.setImageUrl("",null);
             return;
         } 
 

@@ -53,6 +53,8 @@ public class LoginActivity extends BaseFragmentActivity implements
     public TextView header_title;
 
     Handler handler = new Handler();
+    //消息的类型
+    private int messageType = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,10 @@ public class LoginActivity extends BaseFragmentActivity implements
         forgetPsw.setOnClickListener(this);
         forgetPsw.setText("忘记密码？");
         header_back.setOnClickListener(this);
+
+        if(getIntent().hasExtra("type")){
+            messageType = getIntent().getIntExtra("type", 0);
+        }
     }
 
     @Override
@@ -114,17 +120,6 @@ public class LoginActivity extends BaseFragmentActivity implements
                 this);
 
         VolleyRequestManager.getRequestQueue().add(loginRequest);
-    }
-
-    protected void testAppUpdate(){
-        String tips="本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.";
-        SimpleDialogFragment.createBuilder(this,getSupportFragmentManager())
-                .setTitle("温馨提示")
-                .setMessage("发现新版本，马上更新?\n"+tips )
-                .setPositiveButtonText("马上更新")
-                .setNegativeButtonText("跳过该版本")
-                .setRequestCode(REQUEST_UPDATE)
-                .show();
     }
 
     protected void updateApp(){
@@ -244,8 +239,10 @@ public class LoginActivity extends BaseFragmentActivity implements
             if(null != user)
             {
                 //记录token
-                SellerApplication.getInstance().writeMerchantInfo ( user );
-                ActivityUtils.getInstance().skipActivity(LoginActivity.this, MainActivity.class);
+                SellerApplication.getInstance().writeMerchantInfo(user);
+                Intent intent = new Intent(LoginActivity.this , MainActivity.class);
+                intent.putExtra("type", messageType);
+                ActivityUtils.getInstance().skipActivity(LoginActivity.this, intent );
             }
             else
             {

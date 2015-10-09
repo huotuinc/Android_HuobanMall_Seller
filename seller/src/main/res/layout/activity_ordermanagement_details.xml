@@ -242,21 +242,14 @@
                             android:id="@+id/orderdetail_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-
                             android:layout_toLeftOf="@+id/orderdetail_pay"
                             android:text="" />
-
-
                         <TextView
                             android:id="@+id/orderdetail_pay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/orderdetail_amount"
-
                             android:layout_alignParentRight="true"
-                            android:layout_centerInParent="true"
-
                             android:text=""
                             android:textColor="@color/black"
                             android:textSize="@dimen/text_size_17" />
