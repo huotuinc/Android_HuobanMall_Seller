@@ -318,7 +318,7 @@ public class MainActivity extends BaseFragmentActivity{
         lineChart.getAxisRight().setDrawLabels(false);
 
         lineChart.getLegend().setEnabled(false);
-        lineChart.setBorderColor( lineColor );
+        lineChart.setBorderColor( gridColor );
         lineChart.setDrawBorders(true);
         LineData data =new LineData(xValues, dataSet);
         lineChart.setData(data);
