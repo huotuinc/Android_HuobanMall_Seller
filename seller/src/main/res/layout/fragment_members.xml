@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/space_10"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_20"
+                    android:textSize="@dimen/text_size_19"
                     android:text="" />
                 <TextView
                     android:id="@+id/members_title_text"

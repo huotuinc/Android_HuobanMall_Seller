@@ -413,12 +413,12 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
             xAxis.setTextColor(textColor);
 
             YAxis yAxis1 = lineChart.getAxisRight();
-            yAxis1.setTextColor(0x34327882);
+            yAxis1.setTextColor(0xFFFFFFFF);
             yAxis1.setEnabled(true);
             yAxis1.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
 
             YAxis yAxis = lineChart.getAxisLeft();
-            yAxis.setTextColor(0x34324222);
+            yAxis.setTextColor(0xFF000000);
 
             lineChart.setBorderColor( gridColor );
             lineChart.setDrawBorders(true);

@@ -7,7 +7,7 @@
     <Button
         android:id="@+id/header_back"
         android:layout_width="50dp"
-        android:layout_height="25dp"
+        android:layout_height="20dp"
         android:paddingLeft="@dimen/space_20"
         android:paddingRight="@dimen/space_20"
         android:layout_centerVertical="true"
