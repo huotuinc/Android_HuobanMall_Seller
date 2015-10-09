@@ -273,6 +273,7 @@ public class MainActivity extends BaseFragmentActivity{
     }
 
     protected void setLineChartData( LineChart lineChart , List<Integer> xData , List<Integer> yData ){
+
         if( xData==null || yData==null )return;
 
         int bg=0xffffffff;
