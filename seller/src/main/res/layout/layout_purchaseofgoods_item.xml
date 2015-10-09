@@ -6,12 +6,12 @@
         android:id="@+id/order_purchaseofgoods_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="asdfadf"
+        android:text=""
         android:layout_toLeftOf="@+id/order_purchaseofgoods_count"/>
     <TextView
         android:id="@+id/order_purchaseofgoods_count"
         android:layout_width="wrap_content"
-        android:text="2222"
+        android:text=""
         android:layout_alignParentRight="true"
         android:layout_height="wrap_content" />
 </RelativeLayout>

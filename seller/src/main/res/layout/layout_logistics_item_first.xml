@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:textColor="#24AD5F"
             android:textSize="@dimen/text_size_18"
-            android:text="时光飞逝，安迪·鲁宾（Andy Rubin）依旧对三星放弃收，这也就为后来的故事埋下了伏笔。"/>
+            android:text=""/>
 
         <TextView
             android:id="@+id/logistics_item_time"
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#24AD5F"
-            android:text="2015-01-01 12:11:11"/>
+            android:text=""/>
 
         <TextView
             android:layout_below="@id/logistics_item_time"

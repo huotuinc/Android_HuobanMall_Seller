@@ -429,7 +429,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
             //if( xData1==null || yData1==null )return;
 
             int bgColor=0xFFFFFFFF;
-            //int gridColor=0xFFD3D3D3;
+            int gridColor=0xFFD3D3D3;
             int lineColor1 = 0xFF0094FF;
             int lineColor2 =0xFFFF3C00;
             int textColor = 0xFF000000;
@@ -521,9 +521,16 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setTextColor( textColor );
 
-            YAxis yAxis = lineChart.getAxisLeft();
-            yAxis.setTextColor(0xFFFFFFFF);
+            YAxis yAxis1 = lineChart.getAxisRight();
+            yAxis1.setTextColor(0xFFFFFFFF);
+            yAxis1.setEnabled(true);
+            yAxis1.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
 
+            YAxis yAxis = lineChart.getAxisLeft();
+            yAxis.setTextColor(0xFF000000);
+
+            lineChart.setBorderColor(gridColor);
+            lineChart.setDrawBorders(true);
             lineChart.getLegend().setEnabled(false);
 
             LineData data =new LineData( xValue , dataSets );

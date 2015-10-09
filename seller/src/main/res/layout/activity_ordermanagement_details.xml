@@ -17,300 +17,309 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/title_login">
+
         <ScrollView
             android:id="@+id/orderscrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
             <LinearLayout
-                android:id="@+id/nameLabel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/theme_color"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="购买人："
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/buyer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="阿斯顿"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-                <TextView
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="收件人："
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/receiver"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="阿斯顿"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_shape" />
-
-            <LinearLayout
-                android:id="@+id/addressLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/theme_color"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp">
-
-                <TextView
-                    android:id="@+id/address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="杭州市滨江区西兴街道阡陌路482号智慧E谷"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_shape" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/line_gray_shape" />
-
-            <LinearLayout
-                android:id="@+id/moblicLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/theme_color"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp">
-
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/nameLabel"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/moblic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="联系方式：18767152078"
-                        android:textColor="@color/ring_color"
-                        android:textSize="@dimen/text_size_16" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_shape" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/line_gray_shape" />
-
-            <LinearLayout
-                android:id="@+id/ordernumLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/theme_color"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="订单号："
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:background="@color/theme_color"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp">
 
-                <TextView
-                    android:id="@+id/orderNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="2431589ddddddddddddddddddddddddddddddddd97"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_shape" />
-
-            <LinearLayout
-                android:id="@+id/goodslistLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/theme_color"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                >
-
-                <com.huotu.huobanmall.seller.widget.MJListView
-                    android:id="@+id/order_item_goodsList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:dividerHeight="@dimen/space_1"
-                     />
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_shape" />
-
-            <LinearLayout
-                android:id="@+id/payLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/theme_color"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp">>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
                     <TextView
-                        android:id="@+id/orderdetail_amount"
-                        android:layout_toLeftOf="@+id/orderdetail_pay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="共1件商品 实付:￥"/>
-                    <TextView
-                        android:id="@+id/orderdetail_pay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignBottom="@id/orderdetail_amount"
-                        android:text="0.00"
+                        android:text="购买人："
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_17" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_shape" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/line_gray_shape" />
-
-            <LinearLayout
-                android:id="@+id/logisticsLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/theme_color"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:onClick="onClick"
-                android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/logistics"
+                        android:id="@+id/buyer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:text="查看物流信息"
+                        android:text=""
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_16" />
-                </RelativeLayout>
+                        android:textSize="16sp" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="收件人："
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/receiver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+
+                <LinearLayout
+                    android:id="@+id/addressLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/theme_color"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp">
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/line_gray_shape" />
+
+                <LinearLayout
+                    android:id="@+id/moblicLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/theme_color"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/moblic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/ring_color"
+                            android:textSize="@dimen/text_size_16" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/line_gray_shape" />
+
+                <LinearLayout
+                    android:id="@+id/ordernumLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/theme_color"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="订单号："
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/orderNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+
+                <LinearLayout
+                    android:id="@+id/goodslistLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/theme_color"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal">
+
+                    <com.huotu.huobanmall.seller.widget.MJListView
+                        android:id="@+id/order_item_goodsList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:dividerHeight="@dimen/space_1" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+
+                <LinearLayout
+                    android:id="@+id/payLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/theme_color"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp">>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/orderdetail_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+
+                            android:layout_toLeftOf="@+id/orderdetail_pay"
+                            android:text="" />
+
+
+                        <TextView
+                            android:id="@+id/orderdetail_pay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/orderdetail_amount"
+
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true"
+
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_17" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/line_gray_shape" />
+
+                <LinearLayout
+                    android:id="@+id/logisticsLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/theme_color"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/logistics"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:text="查看物流信息"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_16" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/order_detail_space10"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@drawable/line_gray_shape" />
+
+                <com.huotu.huobanmall.seller.widget.MJExpandableListView
+                    android:id="@+id/order_detail_scoreList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:groupIndicator="@null" />
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/order_detail_space10"
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@drawable/line_gray_shape" />
-            
-            <com.huotu.huobanmall.seller.widget.MJExpandableListView
-                android:id="@+id/order_detail_scoreList"
-                android:groupIndicator="@null"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-</ScrollView>
+        </ScrollView>
 
 
     </RelativeLayout>

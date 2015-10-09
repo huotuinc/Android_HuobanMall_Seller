@@ -275,7 +275,7 @@ public class MainActivity extends BaseFragmentActivity{
     protected void setLineChartData( LineChart lineChart , List<Integer> xData , List<Integer> yData ){
 
         if( xData==null || yData==null )return;
-
+        int gridColor=0xFFD3D3D3;
         int bg=0xffffffff;
         int lineColor =0xFFFF3C00;
 
@@ -309,7 +309,7 @@ public class MainActivity extends BaseFragmentActivity{
         dataSet.setDrawCircleHole(true);
 
         XAxis xAxis = lineChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setStartAtZero(true);
         yAxis.setLabelCount(4, false);
@@ -318,8 +318,9 @@ public class MainActivity extends BaseFragmentActivity{
         lineChart.getAxisRight().setDrawLabels(false);
 
         lineChart.getLegend().setEnabled(false);
-
-        LineData data =new LineData(xValues ,dataSet );
+        lineChart.setBorderColor( lineColor );
+        lineChart.setDrawBorders(true);
+        LineData data =new LineData(xValues, dataSet);
         lineChart.setData(data);
         lineChart.animateX(2000, Easing.EasingOption.EaseInOutQuart);
     }

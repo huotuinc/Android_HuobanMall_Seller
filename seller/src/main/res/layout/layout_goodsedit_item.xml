@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="地方说的方式发生地方多舒服舒服水电费水"
+            android:text=""
             android:layout_above="@+id/textView2"
             android:singleLine="true"
             android:layout_alignLeft="@+id/textView2"/>
@@ -46,7 +46,6 @@
             android:layout_above="@+id/goods_inventory"
             android:layout_alignLeft="@+id/goods_inventory"
             android:text="产品分类：" />
-
         <TextView
             android:id="@+id/cplx"
             android:layout_width="wrap_content"
@@ -54,7 +53,7 @@
             android:layout_alignTop="@+id/textView2"
             android:layout_toEndOf="@+id/textView2"
             android:layout_toRightOf="@+id/textView2"
-            android:text="干果" />
+            android:text="" />
 
 
         <TextView
@@ -74,8 +73,9 @@
             android:layout_alignTop="@+id/goods_inventory"
             android:layout_toEndOf="@+id/goods_inventory"
             android:layout_toRightOf="@+id/goods_inventory"
-            android:text="100"
-            android:textColor="@color/main_header_bg"       />
+            android:text=""
+            android:textColor="@color/main_header_bg" />
+
 
         <TextView
             android:id="@+id/textView"
@@ -94,9 +94,7 @@
             android:layout_alignTop="@+id/textView"
             android:layout_toEndOf="@+id/textView"
             android:layout_toRightOf="@+id/textView"
-            android:text="1000"
-            android:textColor="@color/main_header_bg"          />
-
+            android:text=""
+            android:textColor="@color/main_header_bg" />
     </RelativeLayout>
-
 </LinearLayout>

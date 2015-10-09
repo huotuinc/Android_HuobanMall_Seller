@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_15"
-            android:text="243423423234"/>
+            android:text=""/>
 
     </RelativeLayout>
 

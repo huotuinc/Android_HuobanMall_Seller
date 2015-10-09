@@ -28,7 +28,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/space_15"
             android:layout_marginRight="@dimen/space_15"
-            android:text="X 44"/>
+            android:text=""/>
         <TextView
             android:id="@+id/child_order_item_goodsName"
             android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
             android:maxLines="2"
             android:textSize="@dimen/text_size_15"
             android:ellipsize="end"
-            android:text="阿斯顿飞阿斯顿法师地方的萨芬阿斯顿飞阿斯顿飞阿斯顿飞阿斯蒂芬撒旦法撒旦法阿是打发受到发阿斯顿飞"
+            android:text=""
             android:layout_toLeftOf="@id/child_order_item_count"/>
     </RelativeLayout>
 </RelativeLayout>

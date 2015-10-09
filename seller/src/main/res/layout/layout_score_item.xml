@@ -16,7 +16,7 @@
         android:textSize="@dimen/text_size_18"
         android:textColor="@color/black"
         android:layout_height="wrap_content"
-        android:text="12451554554"/>
+        android:text=""/>
     <TextView
         android:id="@+id/order_score_item_label1"
         android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
         android:id="@+id/order_score_item_getTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2015/09/16"/>
+        android:text=""/>
     <TextView
         android:id="@+id/order_score_item_label2"
         android:layout_below="@id/order_score_item_getTime"
@@ -41,7 +41,7 @@
         android:id="@+id/order_score_item_status"
         android:layout_toRightOf="@id/order_score_item_label2"
         android:layout_alignTop="@id/order_score_item_label2"
-        android:text="待转正状态下被拙夫了啊把"
+        android:text=""
         android:singleLine="true"
         android:ellipsize="end"
         android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
         <TextView
             android:id="@+id/order_score_item_score"
             android:layout_alignParentRight="true"
-            android:text="1000积分"
+            android:text=""
             android:textColor="#FE3D00"
             android:textSize="@dimen/text_size_18"
             android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2015/09/18"/>
+            android:text=""/>
     </RelativeLayout>
 
 </LinearLayout>

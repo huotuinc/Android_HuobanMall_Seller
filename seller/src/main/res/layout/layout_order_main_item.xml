@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
         android:textSize="@dimen/text_size_13"
-        android:text="2015-09-22 10:01:08"/>
+        android:text=""/>
     <TextView
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_13"
-        android:text="243423423234"/>
+        android:text=""/>
     <TextView
         android:layout_below="@id/test_order_main_item_label1"
         android:layout_width="match_parent"
