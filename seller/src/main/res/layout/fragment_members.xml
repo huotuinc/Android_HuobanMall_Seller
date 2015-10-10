@@ -164,12 +164,12 @@
                     android:text=""/>
 
             </RelativeLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@id/members_info"
-    android:layout_above="@+id/members_statistic_container"
-    android:layout_marginTop="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/members_info"
+                android:layout_above="@+id/members_statistic_container"
+                android:layout_marginTop="10dp">
             <android.support.v4.view.ViewPager
                 android:id="@+id/members_viewPager"
 
@@ -177,7 +177,7 @@
                 android:layout_height="match_parent">
             </android.support.v4.view.ViewPager>
 </RelativeLayout>
-        <RelativeLayout
+           <RelativeLayout
             android:id="@+id/members_statistic_container"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
@@ -263,6 +263,5 @@
         </RelativeLayout>
 
         </RelativeLayout>
-
 
 </FrameLayout>

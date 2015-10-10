@@ -103,10 +103,6 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            //mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -129,53 +125,6 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
         }
         return _rootView;
     }
-
-//    protected void initData(){
-//
-//        initFragments();
-//
-//        _indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                _currentIndex = position;
-//                if (_data == null || _data.getResultData() == null) return;
-//                if (position == 0) {
-//                    //Integer count = 0;
-//                    Long fxsCount = _data.getResultData().getTodayPartnerAmount();
-//                    Long memberCount = _data.getResultData().getTodayMemberAmount();
-//                    //_members_info_count.setText(String.valueOf(count));
-//                    _member_fxsCount2.setText(String.valueOf(fxsCount));
-//                    _member_memberCount2.setText(String.valueOf(memberCount));
-//                } else if (position == 1) {
-//                    //Integer count = 0;
-//                    Long fxsCount = _data.getResultData().getWeekPartnerAmount();
-//                    Long memberCount = _data.getResultData().getWeekMemberAmount();
-//                    //_members_info_count.setText(String.valueOf(count));
-//                    _member_fxsCount2.setText(String.valueOf(fxsCount));
-//                    _member_memberCount2.setText(String.valueOf(memberCount));
-//                } else if (position == 2) {
-//                    //Integer count = 0;
-//                    Long fxsCount = _data.getResultData().getMonthPartnerAmount();
-//                    Long memberCount = _data.getResultData().getMonthMemberAmount();
-//                    //_members_info_count.setText(String.valueOf(count));
-//                    _member_fxsCount2.setText(String.valueOf(fxsCount));
-//                    _member_memberCount2.setText(String.valueOf(memberCount));
-//                }
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
-//
-//        getData();
-//    }
 
     @Override
     public void onResume() {
@@ -230,7 +179,8 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                 MJMemberStatisticModel.class,
                 null,
                 userReportListner,
-                errorListener
+                //errorListener
+                this
         );
 
         this.showProgressDialog("", "正在获取数据，请稍等...");
@@ -292,20 +242,20 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
         }
     };
 
-    protected Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            MembersFragment.this.closeProgressDialog();
-            String message="";
-            if( volleyError.networkResponse !=null){
-                message = new String( volleyError.networkResponse.data);
-            }else if( volleyError.getCause() !=null ) {
-                message = volleyError.getCause().getMessage();
-            }
-            DialogUtils.showDialog(MembersFragment.this.getActivity(), MembersFragment.this.getFragmentManager(),"错误信息", message ,"关闭");
-
-        }
-    };
+//    protected Response.ErrorListener errorListener = new Response.ErrorListener() {
+//        @Override
+//        public void onErrorResponse(VolleyError volleyError) {
+//            MembersFragment.this.closeProgressDialog();
+//            String message="";
+//            if( volleyError.networkResponse !=null){
+//                message = new String( volleyError.networkResponse.data);
+//            }else if( volleyError.getCause() !=null ) {
+//                message = volleyError.getCause().getMessage();
+//            }
+//            DialogUtils.showDialog(MembersFragment.this.getActivity(), MembersFragment.this.getFragmentManager(),"错误信息", message ,"关闭");
+//
+//        }
+//    };
 
 
     @Override

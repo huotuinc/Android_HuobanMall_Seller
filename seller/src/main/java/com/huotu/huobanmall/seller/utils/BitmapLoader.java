@@ -74,11 +74,13 @@ public class BitmapLoader
             imageView.setDefaultImageResId(initImg);
             imageView.setBackgroundResource(initImg);
             imageView.setErrorImageResId(errorImg);
-            imageView.setImageUrl("",null);
+            //ImageLoader imageLoader = VolleyRequestManager.getImageLoader(context);
+            imageView.setImageUrl("", null );
             return;
         } 
 
         imageView.setBackgroundResource(0);
+        imageView.setDefaultImageResId(initImg);
         ImageLoader imageLoader = VolleyRequestManager.getImageLoader(context);
         imageView.setErrorImageResId(errorImg);
         imageView.setImageUrl(imageUrl, imageLoader);

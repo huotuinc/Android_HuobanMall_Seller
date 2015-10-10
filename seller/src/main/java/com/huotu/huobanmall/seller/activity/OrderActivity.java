@@ -97,26 +97,8 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         _headerBack.setOnClickListener(this);
         _header_title.setText("订单管理");
         _pagerAdapter = new OrderPagerAdapter(this);
-        //_ViewPager.setOffscreenPageLimit(1);
         _ViewPager.setAdapter(_pagerAdapter);
         _indicator.setViewPager(_ViewPager);
-        _indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
 
         _header_operate.setOnClickListener(this);
         _search_cancel.setOnClickListener(this);
@@ -332,9 +314,13 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         Response.Listener<MJOrderListModel> listener_0 =new Response.Listener<MJOrderListModel>() {
             @Override
             public void onResponse(MJOrderListModel mjOrderListModel) {
-                _lv.get(0).onRefreshComplete();
-                OrderActivity.this.closeProgressDialog();
-
+                _handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        _lv.get(0).onRefreshComplete();
+                        OrderActivity.this.closeProgressDialog();
+                    }
+                });
                 setData( 0 , _operateTypes.get(0) , mjOrderListModel );
             }
         };
@@ -390,8 +376,13 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         Response.Listener<MJOrderListModel> listener_1 =new Response.Listener<MJOrderListModel>() {
             @Override
             public void onResponse(MJOrderListModel mjOrderListModel) {
-                _lv.get(1).onRefreshComplete();
-                OrderActivity.this.closeProgressDialog();
+                _handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        _lv.get(1).onRefreshComplete();
+                        OrderActivity.this.closeProgressDialog();
+                    }
+                });
 
                 setData(1, _operateTypes.get(1), mjOrderListModel);
             }
@@ -400,8 +391,13 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         Response.Listener<MJOrderListModel> listener_2 =new Response.Listener<MJOrderListModel>() {
             @Override
             public void onResponse(MJOrderListModel mjOrderListModel) {
-                _lv.get(2).onRefreshComplete();
-                OrderActivity.this.closeProgressDialog();
+                _handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        _lv.get(2).onRefreshComplete();
+                        OrderActivity.this.closeProgressDialog();
+                    }
+                });
 
                 setData(2, _operateTypes.get(2) , mjOrderListModel );
             }
@@ -410,8 +406,14 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         Response.Listener<MJOrderListModel> listener_3 =new Response.Listener<MJOrderListModel>() {
             @Override
             public void onResponse(MJOrderListModel mjOrderListModel) {
-                _lv.get(3).onRefreshComplete();
-                OrderActivity.this.closeProgressDialog();
+                _handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        _lv.get(3).onRefreshComplete();
+                        OrderActivity.this.closeProgressDialog();
+                    }
+                });
+
                 setData(3, _operateTypes.get(3), mjOrderListModel);
             }
         };
@@ -429,7 +431,6 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
 //                getData_3(OperateTypeEnum.REFRESH);
 //            }
         }
-
 
         protected void getData( int index ,  OperateTypeEnum operateType, Response.Listener<MJOrderListModel> listener){
             String lastDate="";
