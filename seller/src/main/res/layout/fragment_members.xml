@@ -105,7 +105,7 @@
                     android:id="@+id/members_info_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_14"
                     android:layout_marginLeft="15dp"
                     android:textColor="@android:color/black"
                     android:text="当前统计："/>
@@ -125,7 +125,7 @@
                     android:textColor="@android:color/black"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/members_firend_color"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_14"
                     android:text="分销商："/>
                 <TextView
                     android:id="@+id/members_firendCount2"
@@ -133,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_14"
                     android:text=""/>
 
                 <TextView
@@ -151,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/members_member_color"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_14"
                     android:textColor="@android:color/black"
                     android:text="会员："/>
                 <TextView
@@ -159,7 +159,7 @@
                     android:layout_toRightOf="@id/members_member_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_16"
+                    android:textSize="@dimen/text_size_14"
                     android:textColor="@android:color/black"
                     android:text=""/>
 
@@ -190,14 +190,15 @@
                 android:layout_height="40dp"
                 android:padding="@dimen/space_5"
                 android:background="@drawable/btn_botton_menu"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp">
 
                 <ImageView
                     android:layout_marginLeft="15dp"
                     android:id="@+id/members_statis_icon1"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentLeft="true"
                     android:background="@mipmap/hyxhbfljftj"/>
 
@@ -206,7 +207,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_16"
-                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginLeft="@dimen/space_10"
                     android:layout_centerVertical="true"
                     android:textColor="@android:color/black"
                     android:layout_toRightOf="@id/members_statis_icon1"
@@ -232,8 +233,8 @@
                 android:layout_marginLeft="15dp">
                 <ImageView
                     android:id="@+id/members_statis_icon2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="15dp"
                     android:layout_alignParentLeft="true"
                     android:background="@mipmap/hyxhbxftj"/>
@@ -243,7 +244,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_16"
                     android:textColor="@android:color/black"
-                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginLeft="@dimen/space_10"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/members_statis_icon2"
                     android:layout_toLeftOf="@+id/members_arrow2"/>
