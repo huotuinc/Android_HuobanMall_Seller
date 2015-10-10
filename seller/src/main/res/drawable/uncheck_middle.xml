@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"  >
-    <stroke android:width="1dp" android:color="@color/white" />
-    <solid android:color="@color/statistic_check_color" />
-</shape>
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android"  >-->
+    <!--<stroke android:width="1dp" android:color="@color/white" />-->
+    <!--<solid android:color="@color/statistic_check_color" />-->
+<!--</shape>-->
 
-<!--<layer-list  xmlns:android="http://schemas.android.com/apk/res/android" >-->
-    <!--<item android:left="1dip" android:right="1dip"   >-->
-        <!--<shape>-->
-            <!--<stroke android:width="1dp" android:color="@color/white" />-->
-            <!--<solid android:color="@color/statistic_check_color" />-->
-            <!--<padding android:bottom="@dimen/space_4"  android:top="@dimen/space_4" />-->
-        <!--</shape>-->
-    <!--</item>-->
-    <!--<item android:top="1dip" android:bottom="1dip" android:right="0dip" android:left="0dip">-->
-        <!--<shape>-->
-            <!--<padding android:bottom="@dimen/space_4"  android:top="@dimen/space_4" />-->
-            <!--<stroke android:width="1dp" android:color="@color/statistic_check_color" />-->
-            <!--<solid android:color="@color/statistic_check_color" />-->
-        <!--</shape>-->
-    <!--</item>-->
-<!--</layer-list>-->
+<layer-list  xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <shape>
+            <stroke android:width="1dp" android:color="@color/white" />
+            <solid android:color="@color/statistic_check_color" />
+        </shape>
+    </item>
+    <item android:top="1.5dp" android:bottom="1.5dp" android:right="0dp" android:left="0dp">
+        <shape>
+            <stroke android:width="1dp" android:color="@color/statistic_check_color" />
+            <solid android:color="@color/statistic_check_color" />
+            <padding android:bottom="0dp" android:left="@dimen/space_5" android:right="@dimen/space_5" android:top="0dp" />
+        </shape>
+    </item>
+</layer-list>
