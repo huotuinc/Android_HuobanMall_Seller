@@ -7,14 +7,14 @@
     <com.android.volley.toolbox.NetworkImageView
         android:layout_marginLeft="15dp"
         android:id="@+id/header_logo"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_centerVertical="true"
         android:background="@mipmap/txzw" />
     <ImageView android:id="@+id/header_img"
         android:layout_marginLeft="15dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_centerVertical="true"
         android:background="@mipmap/logo_bg"/>
     <ImageButton
