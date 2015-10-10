@@ -21,6 +21,7 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -41,6 +42,8 @@ import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.StringUtils;
+import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.viewpagerindicator.TabPageIndicator;
 
@@ -93,8 +96,27 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         _headerBack.setOnClickListener(this);
         _header_title.setText("订单管理");
         _pagerAdapter = new OrderPagerAdapter(this);
+        //_ViewPager.setOffscreenPageLimit(1);
         _ViewPager.setAdapter(_pagerAdapter);
         _indicator.setViewPager(_ViewPager);
+        _indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
         _header_operate.setOnClickListener(this);
         _search_cancel.setOnClickListener(this);
         _search_text.setOnEditorActionListener(this);
@@ -107,10 +129,6 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                 _search_text.requestFocus();
                 _search_text.setError("不能为空");
             } else {
-                //String keyword = _search_text.getText().toString().trim();
-                //_operateType = OperateTypeEnum.REFRESH;
-                //ConsumeStatisticsActivity.this.showProgressDialog("","正在获取数据，请稍等...");
-                //getData_MX(_operateType, key);
                 int index = _ViewPager.getCurrentItem();
                 OrderActivity.this.showProgressDialog("","正在获取数据，请稍等...");
                 _pagerAdapter.search(index);
@@ -162,6 +180,8 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         List<List<OrderTestModel>> _viewDatas;//为了适配UI的数据
         List<OrderDataAdapter> _adapters=null;
         List<OperateTypeEnum> _operateTypes = null;
+        Map<Integer , Boolean> _tabInit=null;//保存tab是否初始化数据
+        Map<Integer , Response.Listener<MJOrderListModel>> _listeners=null;
         Context _context;
         OrderDataAdapter.ILogisticListener _seeLogisticListener = new OrderDataAdapter.ILogisticListener() {
             @Override
@@ -189,9 +209,16 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             _viewDatas = new ArrayList<>();
             _adapters =new ArrayList<>();
             _operateTypes = new ArrayList<>();
+            _tabInit = new HashMap<>();
+            _listeners =new HashMap<>();
+            _listeners.put(0,listener_0);
+            _listeners.put(1,listener_1);
+            _listeners.put(2,listener_2);
+            _listeners.put(3,listener_3);
             for( int i =0;i<4;i++) {
-                PullToRefreshListView lv=new PullToRefreshListView(_context);
+                _tabInit.put(i,false);
 
+                PullToRefreshListView lv=new PullToRefreshListView(_context);
                 View emptyView = new View(_context);
                 emptyView.setBackgroundResource(R.mipmap.tpzw);
                 lv.setEmptyView(emptyView);
@@ -202,37 +229,41 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     @Override
                     public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                         int tabIndex = (Integer) pullToRefreshBase.getTag();
-                        if (tabIndex == 0) {
-                            _operateTypes.set(0, OperateTypeEnum.REFRESH);
-                            getData_0(OperateTypeEnum.REFRESH);
-                        } else if (tabIndex == 1) {
-                            _operateTypes.set(1, OperateTypeEnum.REFRESH);
-                            getData_1(OperateTypeEnum.REFRESH);
-                        } else if (tabIndex == 2) {
-                            _operateTypes.set(2, OperateTypeEnum.REFRESH);
-                            getData_2(OperateTypeEnum.REFRESH);
-                        } else if (tabIndex == 3) {
-                            _operateTypes.set(3, OperateTypeEnum.REFRESH);
-                            getData_3(OperateTypeEnum.REFRESH);
-                        }
+                        _operateTypes.set(tabIndex, OperateTypeEnum.REFRESH);
+                        getData(tabIndex, OperateTypeEnum.REFRESH, _listeners.get(tabIndex));
+//                        if (tabIndex == 0) {
+//                            _operateTypes.set(0, OperateTypeEnum.REFRESH);
+//                            getData_0(OperateTypeEnum.REFRESH);
+//                        } else if (tabIndex == 1) {
+//                            _operateTypes.set(1, OperateTypeEnum.REFRESH);
+//                            getData_1(OperateTypeEnum.REFRESH);
+//                        } else if (tabIndex == 2) {
+//                            _operateTypes.set(2, OperateTypeEnum.REFRESH);
+//                            getData_2(OperateTypeEnum.REFRESH);
+//                        } else if (tabIndex == 3) {
+//                            _operateTypes.set(3, OperateTypeEnum.REFRESH);
+//                            getData_3(OperateTypeEnum.REFRESH);
+//                        }
                     }
 
                     @Override
                     public void onPullUpToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
                         int tabIndex = (Integer) pullToRefreshBase.getTag();
-                        if (tabIndex == 0) {
-                            _operateTypes.set(0, OperateTypeEnum.LOADMORE);
-                            getData_0(OperateTypeEnum.LOADMORE);
-                        } else if (tabIndex == 1) {
-                            _operateTypes.set(1, OperateTypeEnum.LOADMORE);
-                            getData_1(OperateTypeEnum.LOADMORE);
-                        } else if (tabIndex == 2) {
-                            _operateTypes.set(2, OperateTypeEnum.LOADMORE);
-                            getData_2(OperateTypeEnum.LOADMORE);
-                        } else if (tabIndex == 3) {
-                            _operateTypes.set(3, OperateTypeEnum.LOADMORE);
-                            getData_3(OperateTypeEnum.LOADMORE);
-                        }
+                        _operateTypes.set(tabIndex, OperateTypeEnum.LOADMORE);
+                        getData(tabIndex, OperateTypeEnum.LOADMORE , _listeners.get(tabIndex));
+//                        if (tabIndex == 0) {
+//                            _operateTypes.set(0, OperateTypeEnum.LOADMORE);
+//                            getData_0(OperateTypeEnum.LOADMORE);
+//                        } else if (tabIndex == 1) {
+//                            _operateTypes.set(1, OperateTypeEnum.LOADMORE);
+//                            getData_1(OperateTypeEnum.LOADMORE);
+//                        } else if (tabIndex == 2) {
+//                            _operateTypes.set(2, OperateTypeEnum.LOADMORE);
+//                            getData_2(OperateTypeEnum.LOADMORE);
+//                        } else if (tabIndex == 3) {
+//                            _operateTypes.set(3, OperateTypeEnum.LOADMORE);
+//                            getData_3(OperateTypeEnum.LOADMORE);
+//                        }
                     }
                 });
                 _lv.add(lv);
@@ -264,9 +295,9 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                         _lv.get(1).onRefreshComplete();
                         _lv.get(2).onRefreshComplete();
                         _lv.get(3).onRefreshComplete();
+                        OrderActivity.this.closeProgressDialog();
                     }
                 });
-                OrderActivity.this.closeProgressDialog();
                 return;
             }
 
@@ -293,6 +324,9 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     listener,
                     errorListener
             );
+
+            //VolleyRequestManager.getRequestQueue().cancelAll();
+
             VolleyRequestManager.getRequestQueue().add(request);
         }
 
@@ -332,16 +366,20 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             if( operateType == OperateTypeEnum.REFRESH ) {
                 _viewDatas.get(index).clear();
 
-                _datas.get(index).addAll(data.getResultData().getList());
-                List<OrderTestModel> viewData = changeData( data.getResultData().getList() );
+                if( data.getResultData().getList() !=null && data.getResultData().getList().size()>0) {
+                    _datas.get(index).addAll(data.getResultData().getList());
+                    List<OrderTestModel> viewData = changeData(data.getResultData().getList());
+                    _viewDatas.get(index).addAll(viewData);
+                }
 
-                _viewDatas.get(index).addAll( viewData );
                 _adapters.get(index).notifyDataSetChanged();
             }else {
-                _datas.get(index).addAll( data.getResultData().getList() );
-                List<OrderTestModel> viewData = changeData( data.getResultData().getList() );
+                if( data.getResultData().getList() !=null && data.getResultData().getList().size()>0) {
+                    _datas.get(index).addAll(data.getResultData().getList());
+                    List<OrderTestModel> viewData = changeData(data.getResultData().getList());
+                    _viewDatas.get(index).addAll(viewData);
+                }
 
-                _viewDatas.get(index).addAll( viewData);
                 _adapters.get(index).notifyDataSetChanged();
             }
         }
@@ -377,53 +415,64 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
 
         public void search( int index ){
             _operateTypes.set(index, OperateTypeEnum.REFRESH);
-            if( index ==0 ) {
-                getData_0(OperateTypeEnum.REFRESH);
-            }else if(index==1){
-                getData_1(OperateTypeEnum.REFRESH);
-            }else if(index==2){
-                getData_2(OperateTypeEnum.REFRESH);
-            }else if(index ==3){
-                getData_3(OperateTypeEnum.REFRESH);
-            }
+            getData(index,OperateTypeEnum.REFRESH,_listeners.get(index));
+//            if( index ==0 ) {
+//                getData_0(OperateTypeEnum.REFRESH);
+//            }else if(index==1){
+//                getData_1(OperateTypeEnum.REFRESH);
+//            }else if(index==2){
+//                getData_2(OperateTypeEnum.REFRESH);
+//            }else if(index ==3){
+//                getData_3(OperateTypeEnum.REFRESH);
+//            }
         }
 
-        protected void getData_0( OperateTypeEnum operateType  ){
+
+        protected void getData( int index ,  OperateTypeEnum operateType, Response.Listener<MJOrderListModel> listener){
             String lastDate="";
-            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(0) !=null && _datas.get(0).size()>0 ){
-                lastDate = String.valueOf( _datas.get(0).get( _datas.get(0).size()-1 ).getTime().getTime());
+            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(index ) !=null && _datas.get(index).size()>0 ){
+                lastDate = String.valueOf( _datas.get(index).get( _datas.get(index).size()-1 ).getTime().getTime());
             }
-
             String keyword = _search_text.getText().toString();
-            getData(0, lastDate, keyword, operateType, listener_0 );
+            getData(index , lastDate, keyword, operateType, listener );
         }
-        protected void getData_1(OperateTypeEnum operateType){
-            String lastDate="";
-            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(1) !=null && _datas.get(1).size()>0 ){
-                lastDate = String.valueOf( _datas.get(1).get( _datas.get(1).size()-1 ).getTime().getTime());
-            }
 
-            String keyword = _search_text.getText().toString();
-            getData( 1 , lastDate ,keyword , operateType , listener_1 );
-        }
-        protected void getData_2(OperateTypeEnum operateType){
-            String lastDate="";
-            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(2) !=null && _datas.get(2).size()>0 ){
-                lastDate = String.valueOf( _datas.get(2).get( _datas.get(2).size()-1 ).getTime().getTime());
-            }
-
-            String keyword = _search_text.getText().toString();
-            getData( 2 ,lastDate,keyword , operateType , listener_2 );
-        }
-        protected void getData_3(OperateTypeEnum operateType){
-            String lastDate="";
-            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(3) !=null && _datas.get(3).size()>0 ){
-                lastDate = String.valueOf( _datas.get(3).get( _datas.get(3).size()-1 ).getTime().getTime());
-            }
-
-            String keyword = _search_text.getText().toString();
-            getData( 3 ,lastDate,keyword , operateType, listener_3 );
-        }
+//        protected void getData_0( OperateTypeEnum operateType  ){
+//            String lastDate="";
+//            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(0) !=null && _datas.get(0).size()>0 ){
+//                lastDate = String.valueOf( _datas.get(0).get( _datas.get(0).size()-1 ).getTime().getTime());
+//            }
+//
+//            String keyword = _search_text.getText().toString();
+//            getData(0, lastDate, keyword, operateType, listener_0 );
+//        }
+//        protected void getData_1(OperateTypeEnum operateType){
+//            String lastDate="";
+//            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(1) !=null && _datas.get(1).size()>0 ){
+//                lastDate = String.valueOf( _datas.get(1).get( _datas.get(1).size()-1 ).getTime().getTime());
+//            }
+//
+//            String keyword = _search_text.getText().toString();
+//            getData( 1 , lastDate ,keyword , operateType , listener_1 );
+//        }
+//        protected void getData_2(OperateTypeEnum operateType){
+//            String lastDate="";
+//            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(2) !=null && _datas.get(2).size()>0 ){
+//                lastDate = String.valueOf( _datas.get(2).get( _datas.get(2).size()-1 ).getTime().getTime());
+//            }
+//
+//            String keyword = _search_text.getText().toString();
+//            getData( 2 ,lastDate,keyword , operateType , listener_2 );
+//        }
+//        protected void getData_3(OperateTypeEnum operateType){
+//            String lastDate="";
+//            if( operateType == OperateTypeEnum.LOADMORE && _datas.get(3) !=null && _datas.get(3).size()>0 ){
+//                lastDate = String.valueOf( _datas.get(3).get( _datas.get(3).size()-1 ).getTime().getTime());
+//            }
+//
+//            String keyword = _search_text.getText().toString();
+//            getData( 3 ,lastDate,keyword , operateType, listener_3 );
+//        }
 
         Response.ErrorListener errorListener=new Response.ErrorListener() {
             @Override
@@ -496,20 +545,21 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             //return super.instantiateItem(container, position);
+            //ToastUtils.showLong(String.valueOf( position )+ String.valueOf( System.currentTimeMillis()) );
 
-            if( position == 0 ) {
-                _operateTypes.set(0,OperateTypeEnum.REFRESH);
-                getData_0(OperateTypeEnum.REFRESH);
-            }else if(position==1){
-                _operateTypes.set(1,OperateTypeEnum.REFRESH);
-                getData_1(OperateTypeEnum.REFRESH);
-            }else if(position ==2 ){
-                _operateTypes.set(2,OperateTypeEnum.REFRESH);
-                getData_2(OperateTypeEnum.REFRESH);
-            }else if(position==3){
-                _operateTypes.set(3, OperateTypeEnum.REFRESH);
-                getData_3(OperateTypeEnum.REFRESH);
-            }
+//            if( position == 0 ) {
+//                _operateTypes.set(0,OperateTypeEnum.REFRESH);
+//                getData_0(OperateTypeEnum.REFRESH);
+//            }else if(position==1){
+//                _operateTypes.set(1,OperateTypeEnum.REFRESH);
+//                getData_1(OperateTypeEnum.REFRESH);
+//            }else if(position ==2 ){
+//                _operateTypes.set(2,OperateTypeEnum.REFRESH);
+//                getData_2(OperateTypeEnum.REFRESH);
+//            }else if(position==3){
+//                _operateTypes.set(3, OperateTypeEnum.REFRESH);
+//                getData_3(OperateTypeEnum.REFRESH);
+//            }
 
             container.addView(_lv.get(position));
             return _lv.get(position);
@@ -534,6 +584,34 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         @Override
         public CharSequence getPageTitle(int position) {
             return Titles[ position%Titles.length];
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            super.setPrimaryItem(container, position, object);
+            if( _tabInit.get(position) == false ) {
+                _tabInit.put(position,true);
+                _operateTypes.set(position, OperateTypeEnum.REFRESH);
+                OrderActivity.this.showProgressDialog("","正在获取数据，请稍等...");
+                getData(position,OperateTypeEnum.REFRESH, _listeners.get(position));
+//                if (position == 0) {
+//                    OrderActivity.this.showProgressDialog("","正在获取数据，请稍等...");
+//                    _operateTypes.set(0, OperateTypeEnum.REFRESH);
+//                    getData_0(OperateTypeEnum.REFRESH);
+//                } else if (position == 1) {
+//                    OrderActivity.this.showProgressDialog("","正在获取数据，请稍等...");
+//                    _operateTypes.set(1, OperateTypeEnum.REFRESH);
+//                    getData_1(OperateTypeEnum.REFRESH);
+//                } else if (position == 2) {
+//                    OrderActivity.this.showProgressDialog("","正在获取数据，请稍等...");
+//                    _operateTypes.set(2, OperateTypeEnum.REFRESH);
+//                    getData_2(OperateTypeEnum.REFRESH);
+//                } else if (position == 3) {
+//                    OrderActivity.this.showProgressDialog("","正在获取数据，请稍等...");
+//                    _operateTypes.set(3, OperateTypeEnum.REFRESH);
+//                    getData_3(OperateTypeEnum.REFRESH);
+//                }
+            }
         }
     }
 }
