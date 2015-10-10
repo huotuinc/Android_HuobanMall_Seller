@@ -60,7 +60,6 @@ public class GoodsAdapter extends BaseAdapter{
         {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.goods_cplx.setText("干果");
         holder.goods_name.setText(String.valueOf(_list.get(position).getTitle()));
         String numString = "";
         if( _list.get(position).getStock() >= 0 && _list.get(position).getStock() < 5 ){
@@ -70,6 +69,7 @@ public class GoodsAdapter extends BaseAdapter{
         }
         holder.goods_num.setText( numString );
         holder.goods_price.setText(String.valueOf(_list.get(position).getPrice()));
+        holder.goods_cplx.setText( _list.get(position).getCategory() );
         BitmapLoader.create().displayUrl( _context , holder.goods_imageView , _list.get(position).getPictureUrl() ,R.mipmap.goods,R.mipmap.goods);
 
         return convertView;
