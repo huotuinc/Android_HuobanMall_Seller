@@ -67,7 +67,7 @@ public class ConsumeDetailAdapter extends BaseAdapter {
         Integer amount = _list.get(position).getAmount();
         String amountStr = amount==null ? "0" : amount.toString();
 
-        holder.tvAmount.setText( amountStr +"单" );
+        holder.tvAmount.setText( amountStr +"单"+")" );
 
         BitmapLoader.create().displayUrl(_context, holder.ivPicture,_list.get(position).getPictureUrl() , R.mipmap.zchyzrs,R.mipmap.zchyzrs);
 
