@@ -38,6 +38,8 @@ import java.util.Map;
  */
 public class GsonRequest<T> extends Request<T> {
 
+	public static final String TAG="volleyRequest";
+
 	/**
 	 * Gson parser 
 	 */
@@ -97,6 +99,8 @@ public class GsonRequest<T> extends Request<T> {
 		mTypeToken=null;
 		mParams=null;
 		this.setRetryPolicy( new DefaultRetryPolicy(Constant.REQUEST_TIMEOUT,1,1.0f));
+
+		this.setTag( TAG );
 	}
 
 	public GsonRequest(int method
@@ -120,6 +124,7 @@ public class GsonRequest<T> extends Request<T> {
 		this.mClass=null;
 		this.mParams=null;
 		this.setRetryPolicy( new DefaultRetryPolicy(Constant.REQUEST_TIMEOUT,1,1.0f));
+		this.setTag(TAG);
 	}
 
 	public GsonRequest(int method
@@ -146,6 +151,7 @@ public class GsonRequest<T> extends Request<T> {
 		this.mTypeToken=null;
 
 		this.setRetryPolicy( new DefaultRetryPolicy(Constant.REQUEST_TIMEOUT,1,1.0f));
+		this.setTag( TAG );
 	}
 
 	@Override

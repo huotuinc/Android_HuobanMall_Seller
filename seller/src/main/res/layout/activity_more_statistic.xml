@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.huotu.huobanmall.seller.activity.MoreStatisticActivity">
+
     <RelativeLayout
         android:id="@+id/datastatistic_header"
         android:layout_width="match_parent"
@@ -10,8 +11,14 @@
         <include layout="@layout/layout_morestatistic_header"></include>
     </RelativeLayout>
 
-    <LinearLayout
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/morestatistic_refresh"
         android:layout_below="@id/datastatistic_header"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent">
+
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:background="@color/gray"
@@ -67,7 +74,6 @@
                />
 
         </LinearLayout>
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -192,7 +198,9 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
+
+
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
 </RelativeLayout>

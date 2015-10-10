@@ -2,13 +2,17 @@ package com.huotu.huobanmall.seller.activity;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.MJOtherStatisticModel;
 import com.huotu.huobanmall.seller.bean.RoleEnum;
@@ -47,6 +51,10 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
     Button moresta_fljftj;
     @Bind(R.id.morestatistic_menu_xftj)
     Button moresta_xftj;
+    @Bind(R.id.morestatistic_refresh)
+    PullToRefreshScrollView morestat_refresh;
+
+    Handler handler =new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +72,20 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         moresta_xsetj.setOnClickListener(this);
         moresta_xsmx.setOnClickListener(this);
 
-        getData();
+        morestat_refresh.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                getData();
+            }
+        });
+
+        //getData();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                morestat_refresh.setRefreshing(true);
+            }
+        },1000);
     }
 
     protected void getData(){
@@ -85,8 +106,9 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
                 otherListener,
                 this
         );
-        this.showProgressDialog("", "正在获取数据，请稍等...");
-        VolleyRequestManager.getRequestQueue().add(otherRequest);
+        //this.showProgressDialog("", "正在获取数据，请稍等...");
+        //VolleyRequestManager.getRequestQueue().add(otherRequest);
+        VolleyRequestManager.AddRequest(otherRequest);
     }
 
     protected void clearData(){
@@ -100,6 +122,7 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         @Override
         public void onResponse(MJOtherStatisticModel  mjOtherStatisticModel ) {
             MoreStatisticActivity.this.closeProgressDialog();
+            morestat_refresh.onRefreshComplete();
             clearData();
 
             if( mjOtherStatisticModel==null){
@@ -140,7 +163,9 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
     @Override
     public void onErrorResponse(VolleyError volleyError) {
         MoreStatisticActivity.this.closeProgressDialog();
+        morestat_refresh.onRefreshComplete();
         clearData();
+
         super.onErrorResponse(volleyError);
     }
 

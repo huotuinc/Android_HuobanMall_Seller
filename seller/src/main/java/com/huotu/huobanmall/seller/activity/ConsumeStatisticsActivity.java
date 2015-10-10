@@ -211,7 +211,8 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                 this
         );
 
-        VolleyRequestManager.getRequestQueue().add(request);
+        //VolleyRequestManager.getRequestQueue().add(request);
+        VolleyRequestManager.AddRequest(request);
     }
 
     protected void getData_TJ(){
@@ -230,7 +231,8 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                 this
         );
 
-        VolleyRequestManager.getRequestQueue().add( request);
+        //VolleyRequestManager.getRequestQueue().add( request);
+        VolleyRequestManager.AddRequest(request);
     }
 
     Response.Listener<MJTopConsumeModel> listener_TJ =new Response.Listener<MJTopConsumeModel>() {

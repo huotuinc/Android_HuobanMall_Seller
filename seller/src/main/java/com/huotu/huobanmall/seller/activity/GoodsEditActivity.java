@@ -164,7 +164,8 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                         goodsListListener,
                         this);
 
-        VolleyRequestManager.getRequestQueue().add(goodsListRequest);
+        //VolleyRequestManager.getRequestQueue().add(goodsListRequest);
+        VolleyRequestManager.AddRequest( goodsListRequest);
     }
 
     protected void firstSaleGoodData(){
@@ -210,7 +211,8 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                         goodsListListener,
                         this);
 
-        VolleyRequestManager.getRequestQueue().add(goodsListRequest);
+        //VolleyRequestManager.getRequestQueue().add(goodsListRequest);
+        VolleyRequestManager.AddRequest(goodsListRequest);
     }
 
     private Response.Listener< MJGoodModel > goodsListListener = new Response.Listener<MJGoodModel>() {
@@ -390,9 +392,10 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                 this
         );
 
-        GoodsEditActivity.this.showProgressDialog("","请稍等...");
+        GoodsEditActivity.this.showProgressDialog("", "请稍等...");
 
-        VolleyRequestManager.getRequestQueue().add(operGoodsRequest);
+        //VolleyRequestManager.getRequestQueue().add(operGoodsRequest);
+        VolleyRequestManager.AddRequest(operGoodsRequest);
     }
 
     protected Response.Listener<BaseModel> operGoodsListener=new Response.Listener<BaseModel>() {

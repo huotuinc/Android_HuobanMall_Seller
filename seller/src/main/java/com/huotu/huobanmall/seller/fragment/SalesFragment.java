@@ -50,7 +50,6 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SalesFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link SalesFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -75,8 +74,8 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
     FragmentManager _fragmentManager;
     SalesFragmentPageAdapter _salesFragmentAdapter;
     int _currentIndx = 0;
-
-    private OnFragmentInteractionListener mListener;
+    boolean _isFirst = true;
+    View rootView;
 
     /**
      * Use this factory method to create a new instance of
@@ -103,45 +102,35 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_sales, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if( rootView ==null ) {
+            rootView = inflater.inflate(R.layout.fragment_sales, container, false);
 
-        ButterKnife.bind(this, rootView);
+            ButterKnife.bind(this, rootView);
 
-        initData();
-
+            initData();
+        }else {
+            ViewGroup parentView = (ViewGroup)rootView.getParent();
+            if( parentView !=null ){
+                parentView.removeView(rootView);
+            }
+        }
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -149,21 +138,6 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
         if( v.getId() == R.id.sales_statis1){
             ActivityUtils.getInstance().showActivity(this.getActivity(), SalesDetailActivity.class);
         }
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
     }
 
     protected void initData(){
@@ -206,7 +180,7 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
             }
         });
 
-        getData();
+        //getData();
     }
 
     protected void getData(){
@@ -223,9 +197,10 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
                 errorListener
         );
 
-        this.showProgressDialog("","正在获取数据，请稍等...");
+        this.showProgressDialog("", "正在获取数据，请稍等...");
 
-        VolleyRequestManager.getRequestQueue().add(saleReportRequest);
+        //VolleyRequestManager.getRequestQueue().add(saleReportRequest);
+        VolleyRequestManager.AddRequest(saleReportRequest);
     }
 
     protected void initFragments(){
@@ -300,9 +275,17 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
             }
             DialogUtils.showDialog(SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager(),"错误信息", message ,"关闭");
 
-
         }
     };
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if( isVisibleToUser && _isFirst){
+            getData();
+            _isFirst=false;
+        }
+    }
 
     public static class SalesLineChartFragment extends BaseFragment{
 
@@ -432,6 +415,4 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
         }
 
     }
-
-
 }

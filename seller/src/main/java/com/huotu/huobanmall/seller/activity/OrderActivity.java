@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -325,9 +326,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     errorListener
             );
 
-            //VolleyRequestManager.getRequestQueue().cancelAll();
-
-            VolleyRequestManager.getRequestQueue().add(request);
+            VolleyRequestManager.AddRequest(request);
         }
 
         Response.Listener<MJOrderListModel> listener_0 =new Response.Listener<MJOrderListModel>() {
@@ -370,6 +369,8 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     _datas.get(index).addAll(data.getResultData().getList());
                     List<OrderTestModel> viewData = changeData(data.getResultData().getList());
                     _viewDatas.get(index).addAll(viewData);
+                }else{
+                    ToastUtils.showLong(Constant.No_Data_Text,Gravity.BOTTOM);
                 }
 
                 _adapters.get(index).notifyDataSetChanged();
@@ -378,6 +379,8 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     _datas.get(index).addAll(data.getResultData().getList());
                     List<OrderTestModel> viewData = changeData(data.getResultData().getList());
                     _viewDatas.get(index).addAll(viewData);
+                }else{
+                    ToastUtils.showLong(Constant.No_Data_Text , Gravity.BOTTOM );
                 }
 
                 _adapters.get(index).notifyDataSetChanged();
@@ -592,7 +595,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             if( _tabInit.get(position) == false ) {
                 _tabInit.put(position,true);
                 _operateTypes.set(position, OperateTypeEnum.REFRESH);
-                OrderActivity.this.showProgressDialog("","正在获取数据，请稍等...");
+                OrderActivity.this.showProgressDialog("", "正在获取数据，请稍等...");
                 getData(position,OperateTypeEnum.REFRESH, _listeners.get(position));
 //                if (position == 0) {
 //                    OrderActivity.this.showProgressDialog("","正在获取数据，请稍等...");

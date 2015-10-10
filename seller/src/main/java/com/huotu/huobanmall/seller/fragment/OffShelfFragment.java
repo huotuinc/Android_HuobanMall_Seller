@@ -193,7 +193,8 @@ public class OffShelfFragment extends BaseFragment {
                 this
         );
 
-        VolleyRequestManager.getRequestQueue().add(goodsListRequest);
+        //VolleyRequestManager.getRequestQueue().add(goodsListRequest);
+        VolleyRequestManager.AddRequest(goodsListRequest);
     }
 
     Response.Listener<MJGoodModel> goodslistListener =new Response.Listener<MJGoodModel>() {

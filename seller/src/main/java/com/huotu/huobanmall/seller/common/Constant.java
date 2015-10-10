@@ -208,6 +208,8 @@ public class Constant {
      * 系统消息
     */
     public static int MESSAGE_TYPE_SYSTEMMESSAGE=2;
+
+    public static String No_Data_Text="已经没有数据了";
 }
 
 

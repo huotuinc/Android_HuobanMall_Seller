@@ -38,8 +38,6 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
     Integer _currentTabType = Constant.TAB_ORDER;
     @Bind(R.id.datastatistic_pager)
     ViewPager _viewPager;
-    //@Bind(R.id.datastatistic_indicator)
-    //CirclePageIndicator _circlePageIndicator;
     @Bind(R.id.tab_rb_a)
     RadioButton rdb_a;
     @Bind(R.id.tab_rb_b)

@@ -211,7 +211,8 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                 this
         );
 
-        VolleyRequestManager.getRequestQueue().add(request);
+        //VolleyRequestManager.getRequestQueue().add(request);
+        VolleyRequestManager.AddRequest(request);
     }
 
     protected void getData_TJ(){
@@ -228,7 +229,8 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                 this
         );
 
-        VolleyRequestManager.getRequestQueue().add( request);
+        //VolleyRequestManager.getRequestQueue().add( request);
+        VolleyRequestManager.AddRequest(request);
     }
 
     Response.Listener<MJUserScoreModel> listener_MX =new Response.Listener<MJUserScoreModel>() {

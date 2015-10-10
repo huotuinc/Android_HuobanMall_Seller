@@ -188,7 +188,8 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
                 this
         );
 
-        VolleyRequestManager.getRequestQueue().add(request);
+        //VolleyRequestManager.getRequestQueue().add(request);
+        VolleyRequestManager.AddRequest(request);
     }
 
     protected void getData_TJ(){
@@ -205,7 +206,8 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
                 this
         );
 
-        VolleyRequestManager.getRequestQueue().add( request);
+        //VolleyRequestManager.getRequestQueue().add( request);
+        VolleyRequestManager.AddRequest(request);
     }
 
     Response.Listener<MJTopSalesModel> listener_TJ =new Response.Listener<MJTopSalesModel>() {

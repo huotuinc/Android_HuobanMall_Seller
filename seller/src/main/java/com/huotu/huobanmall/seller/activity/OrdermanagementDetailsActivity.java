@@ -138,7 +138,8 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
 
         this.showProgressDialog("", "正在获取数据，请稍等...");
 
-        VolleyRequestManager.getRequestQueue().add(request);
+        //VolleyRequestManager.getRequestQueue().add(request);
+        VolleyRequestManager.AddRequest(request);
     }
 
     private Response.Listener< MJOrderDetailModel > orderDetailListener = new Response.Listener<MJOrderDetailModel>() {

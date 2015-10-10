@@ -68,7 +68,7 @@ import butterknife.ButterKnife;
  */
 public class OrderFragment extends BaseFragment implements View.OnClickListener {
 
-    private OnFragmentInteractionListener mListener;
+    //private OnFragmentInteractionListener mListener;
 
     //@Bind(R.id.order_lineChart)
     //LineChart _orderLineChart;
@@ -105,6 +105,8 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
     MJBillStatisticModel _data=null;
     int _currentIdx = 0;
+    boolean _isFirst =true;
+    View _rootView;
 
     public static OrderFragment newInstance() {
         OrderFragment fragment = new OrderFragment();
@@ -125,13 +127,20 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_order, container, false);
-        ButterKnife.bind(this, rootView);
+        if( _rootView ==null) {
+            _rootView = inflater.inflate(R.layout.fragment_order, container, false);
+            ButterKnife.bind(this, _rootView);
 
-        initData();
-        order_statis1.setOnClickListener(this);
+            initData();
+            order_statis1.setOnClickListener(this);
+        }else{
+            ViewGroup parentView = (ViewGroup)_rootView.getParent();
+            if( parentView !=null ){
+                parentView.removeView(_rootView);
+            }
+        }
 
-        return rootView;
+        return _rootView;
     }
 
     protected  void getData(){
@@ -148,40 +157,27 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
                 this
         );
 
-        this.showProgressDialog("","正在获取数据，请稍等...");
+        this.showProgressDialog("", "正在获取数据，请稍等...");
 
-        VolleyRequestManager.getRequestQueue().add(orderReportRequest);
+        VolleyRequestManager.AddRequest(orderReportRequest);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onResume() {
         super.onResume();
-
 
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        //mListener = null;
     }
 
     @Override
@@ -190,11 +186,6 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
             Intent intent = new Intent(this.getActivity(), TopSalesActivity.class);
             ActivityUtils.getInstance().showActivity(this.getActivity(),intent);
         }
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
     }
 
     protected Response.Listener<MJBillStatisticModel> billReportListner = new Response.Listener<MJBillStatisticModel>() {
@@ -262,24 +253,24 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onPageSelected(int position) {
-                _currentIdx=position;
+                _currentIdx = position;
 
-                if( _data==null || _data.getResultData()==null ) return;
-                if( position==0){
+                if (_data == null || _data.getResultData() == null) return;
+                if (position == 0) {
                     Long count = _data.getResultData().getTodayAmount();
-                    _order_info_count.setText( String.valueOf( count ) );
+                    _order_info_count.setText(String.valueOf(count));
                     //_orderFragmentAdapter.notifyDataSetChanged();
-                    _fragment1.setData(_data,1);
-                }else if( position==1){
+                    _fragment1.setData(_data, 1);
+                } else if (position == 1) {
                     Long count = _data.getResultData().getWeekAmount();
-                    _order_info_count.setText( String.valueOf( count ));
-                    _fragment2.setData(_data, 2 );
+                    _order_info_count.setText(String.valueOf(count));
+                    _fragment2.setData(_data, 2);
                     //_orderFragmentAdapter.notifyDataSetChanged();
-                }else if( position==2){
+                } else if (position == 2) {
                     Long count = _data.getResultData().getMonthAmount();
-                    _order_info_count.setText( String.valueOf( count ));
+                    _order_info_count.setText(String.valueOf(count));
                     //_orderFragmentAdapter.notifyDataSetChanged();
-                    _fragment3.setData(_data,3);
+                    _fragment3.setData(_data, 3);
                 }
             }
 
@@ -291,9 +282,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
         initFragments();
 
-        //setLineChartData();
-
-        getData();
+        //getData();
     }
 
     protected void initFragments(){
@@ -310,6 +299,16 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
         _indicator.setViewPager(_viewPager);
 
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if( isVisibleToUser && _isFirst){
+            getData();
+            _isFirst=false;
+        }
     }
 
     public static class LineChartFragment extends BaseFragment{

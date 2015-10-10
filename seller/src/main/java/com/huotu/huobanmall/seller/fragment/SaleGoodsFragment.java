@@ -221,7 +221,8 @@ public class SaleGoodsFragment extends BaseFragment {
                 goodslistListener,
                 this
                 );
-        VolleyRequestManager.getRequestQueue().add(goodsListRequest);
+
+        VolleyRequestManager.AddRequest(goodsListRequest);
     }
 
     Response.Listener<MJGoodModel> goodslistListener =new Response.Listener<MJGoodModel>() {

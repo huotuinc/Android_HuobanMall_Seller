@@ -143,7 +143,8 @@ public class LogisticsActivity extends BaseFragmentActivity {
                 requestListener,
                 this
         );
-        VolleyRequestManager.getRequestQueue().add(request);
+        //VolleyRequestManager.getRequestQueue().add(request);
+        VolleyRequestManager.AddRequest( request );
     }
 
     @Override

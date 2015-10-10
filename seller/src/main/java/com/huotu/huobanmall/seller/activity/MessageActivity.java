@@ -169,7 +169,8 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
                 this
         );
 
-        VolleyRequestManager.getRequestQueue().add(request);
+        //VolleyRequestManager.getRequestQueue().add(request);
+        VolleyRequestManager.AddRequest(request);
     }
 
     Response.Listener<MJMessageModel> listener = new Response.Listener<MJMessageModel>() {

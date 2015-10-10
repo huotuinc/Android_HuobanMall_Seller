@@ -3,7 +3,14 @@ package com.huotu.huobanmall.seller.activity;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.huotu.huobanmall.seller.R;
@@ -100,11 +107,25 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
     public void onErrorResponse(VolleyError volleyError) {
         BaseFragmentActivity.this.closeProgressDialog();
         String message="";
-        if( null != volleyError.networkResponse){
-            message=new String( volleyError.networkResponse.data);
-        }else{
-            message = volleyError.getMessage();
+        if( volleyError instanceof TimeoutError ){
+            message = "网络连接超时";
+        }else if( volleyError instanceof NetworkError || volleyError instanceof NoConnectionError ) {
+            message ="网络请求异常，请检查网络状态";
+        }else if( volleyError instanceof ParseError ){
+            message = "数据解析失败，请检测数据的正确性";
+        }else if( volleyError instanceof ServerError || volleyError instanceof AuthFailureError){
+            if( null != volleyError.networkResponse){
+                message=new String( volleyError.networkResponse.data);
+            }else{
+                message = volleyError.getMessage();
+            }
         }
+//        if( null != volleyError.networkResponse){
+//            message=new String( volleyError.networkResponse.data);
+//        }else{
+//            message = volleyError.getMessage();
+//        }
+
         if( message.length()<1){
             message = "网络请求失败，请检查网络状态";
         }

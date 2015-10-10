@@ -55,13 +55,10 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class MembersFragment extends BaseFragment implements View.OnClickListener{
-    private OnFragmentInteractionListener mListener;
-
     @Bind(R.id.members_statis1)
     RelativeLayout _membersstatis1;
     @Bind(R.id.members_statis2)
     RelativeLayout _membersstatis2;
-
     @Bind(R.id.members_firendCount2)
     TextView _member_fxsCount2;
     @Bind(R.id.members_memberCount2)
@@ -81,9 +78,10 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     List<BaseFragment> _fragments=null;
     MembersFragmentPageAdapter _membersFragmentAdapter;
     FragmentManager _fragmentManager;
-
     MJMemberStatisticModel _data;
     int _currentIndex = 0;
+    View _rootView;
+    boolean _isFirst=true;
 
     /**
      * Use this factory method to create a new instance of
@@ -94,8 +92,6 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     public static MembersFragment newInstance() {
         MembersFragment fragment = new MembersFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -117,73 +113,74 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_members, container, false);
-        ButterKnife.bind(this, rootView);
+        if( _rootView ==null) {
+            _rootView = inflater.inflate(R.layout.fragment_members, container, false);
+            ButterKnife.bind(this, _rootView);
 
-        _membersstatis1.setOnClickListener(this);
-        _membersstatis2.setOnClickListener(this);
+            _membersstatis1.setOnClickListener(this);
+            _membersstatis2.setOnClickListener(this);
 
-        initFragments();
-
-        getData();
-
-        return rootView;
+            initFragments();
+        }else{
+            ViewGroup parentView = (ViewGroup)_rootView.getParent();
+            if( parentView !=null ){
+                parentView.removeView(_rootView);
+            }
+        }
+        return _rootView;
     }
 
-    protected void initData(){
-
-        initFragments();
-
-        _indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                _currentIndex = position;
-                if (_data == null || _data.getResultData() == null) return;
-                if (position == 0) {
-                    //Integer count = 0;
-                    Long fxsCount = _data.getResultData().getTodayPartnerAmount();
-                    Long memberCount = _data.getResultData().getTodayMemberAmount();
-                    //_members_info_count.setText(String.valueOf(count));
-                    _member_fxsCount2.setText(String.valueOf(fxsCount));
-                    _member_memberCount2.setText(String.valueOf(memberCount));
-                } else if (position == 1) {
-                    //Integer count = 0;
-                    Long fxsCount = _data.getResultData().getWeekPartnerAmount();
-                    Long memberCount = _data.getResultData().getWeekMemberAmount();
-                    //_members_info_count.setText(String.valueOf(count));
-                    _member_fxsCount2.setText(String.valueOf(fxsCount));
-                    _member_memberCount2.setText(String.valueOf(memberCount));
-                } else if (position == 2) {
-                    //Integer count = 0;
-                    Long fxsCount = _data.getResultData().getMonthPartnerAmount();
-                    Long memberCount = _data.getResultData().getMonthMemberAmount();
-                    //_members_info_count.setText(String.valueOf(count));
-                    _member_fxsCount2.setText(String.valueOf(fxsCount));
-                    _member_memberCount2.setText(String.valueOf(memberCount));
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        getData();
-    }
+//    protected void initData(){
+//
+//        initFragments();
+//
+//        _indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                _currentIndex = position;
+//                if (_data == null || _data.getResultData() == null) return;
+//                if (position == 0) {
+//                    //Integer count = 0;
+//                    Long fxsCount = _data.getResultData().getTodayPartnerAmount();
+//                    Long memberCount = _data.getResultData().getTodayMemberAmount();
+//                    //_members_info_count.setText(String.valueOf(count));
+//                    _member_fxsCount2.setText(String.valueOf(fxsCount));
+//                    _member_memberCount2.setText(String.valueOf(memberCount));
+//                } else if (position == 1) {
+//                    //Integer count = 0;
+//                    Long fxsCount = _data.getResultData().getWeekPartnerAmount();
+//                    Long memberCount = _data.getResultData().getWeekMemberAmount();
+//                    //_members_info_count.setText(String.valueOf(count));
+//                    _member_fxsCount2.setText(String.valueOf(fxsCount));
+//                    _member_memberCount2.setText(String.valueOf(memberCount));
+//                } else if (position == 2) {
+//                    //Integer count = 0;
+//                    Long fxsCount = _data.getResultData().getMonthPartnerAmount();
+//                    Long memberCount = _data.getResultData().getMonthMemberAmount();
+//                    //_members_info_count.setText(String.valueOf(count));
+//                    _member_fxsCount2.setText(String.valueOf(fxsCount));
+//                    _member_memberCount2.setText(String.valueOf(memberCount));
+//                }
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
+//
+//        getData();
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
-
     }
-
-
 
     protected void initFragments(){
         _fragment1 = new MemberLineChartFragment();
@@ -196,59 +193,28 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
         _fragmentManager = this.getActivity().getSupportFragmentManager();
         _membersFragmentAdapter = new MembersFragmentPageAdapter(_fragments, _fragmentManager);
         _viewPager.setAdapter(_membersFragmentAdapter);
-
         _indicator.setViewPager(_viewPager);
-
-    }
-
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
     }
 
     @Override
     public void onClick(View v) {
         if( v.getId() == R.id.members_statis1){
-            //String url = "http://m.cnblogs.com";
             Intent intent = new Intent();
             intent.setClass(getActivity(), RebateStatisticsActivity.class);
-            //intent.putExtra(Constant.Extra_Url, url);
             ActivityUtils.getInstance().showActivity(getActivity(), intent);
         }else if( v.getId()==R.id.members_statis2){
-            //String url = "http://www.baidu.com";
             Intent intent = new Intent();
             intent.setClass(getActivity(), ConsumeStatisticsActivity.class);
-            //intent.putExtra(Constant.Extra_Url, url);
             ActivityUtils.getInstance().showActivity(getActivity(), intent);
         }
     }
@@ -267,9 +233,9 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                 errorListener
         );
 
-        this.showProgressDialog("","正在获取数据，请稍等...");
+        this.showProgressDialog("", "正在获取数据，请稍等...");
 
-        VolleyRequestManager.getRequestQueue().add(userReportRequest);
+        VolleyRequestManager.AddRequest(userReportRequest);
     }
 
     protected Response.Listener<MJMemberStatisticModel> userReportListner = new Response.Listener<MJMemberStatisticModel>() {
@@ -338,14 +304,18 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
             }
             DialogUtils.showDialog(MembersFragment.this.getActivity(), MembersFragment.this.getFragmentManager(),"错误信息", message ,"关闭");
 
-////           SimpleDialogFragment.createBuilder( getActivity() , getFragmentManager() )
-////                    .setTitle("错误信息")
-//                    .setMessage( volleyError.getMessage())
-//                    .setNegativeButtonText("关闭")
-//                    .show();
         }
     };
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if( isVisibleToUser && _isFirst){
+            getData();
+            _isFirst =false;
+        }
+    }
 
     public static class MemberLineChartFragment extends BaseFragment{
 

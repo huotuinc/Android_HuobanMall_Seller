@@ -45,11 +45,11 @@ public class ToastUtils
     }
 
     private static Toast  mToast=null;
-    public static void showLong(  String msg){
+    public static void showLong(  String msg , int gravity){
         if( mToast ==null){
             mToast = Toast.makeText( SellerApplication.getInstance() , msg , Toast.LENGTH_LONG );
             //mToast.setMargin(10,10);
-            mToast.setGravity(Gravity.CENTER , 0,0);
+            mToast.setGravity( gravity , 0,0);
         }
         else{
             mToast.setText(msg);
@@ -57,6 +57,17 @@ public class ToastUtils
         mToast.show();
     }
 
+    public static void showLong(  String msg ){
+        if( mToast ==null){
+            mToast = Toast.makeText( SellerApplication.getInstance() , msg , Toast.LENGTH_LONG );
+            //mToast.setMargin(10,10);
+            mToast.setGravity( Gravity.CENTER , 0,0);
+        }
+        else{
+            mToast.setText(msg);
+        }
+        mToast.show();
+    }
 
     public static void showShort( String msg){
         if( mToast ==null){

@@ -50,6 +50,11 @@ public class VolleyRequestManager {
 	    }
 	}
 
+	public static void AddRequest(GsonRequest request){
+		getRequestQueue().cancelAll( GsonRequest.TAG );
+		getRequestQueue().add( request);
+	}
+
 	public static ImageLoader getImageLoader(Context context) {
 		if (null == imageLoader)
 		{
