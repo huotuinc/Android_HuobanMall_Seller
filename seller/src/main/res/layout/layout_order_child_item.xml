@@ -19,9 +19,11 @@
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="10dp"
         android:textColor="#FE3307"
-        android:textSize="@dimen/text_size_15"
+        android:textSize="@dimen/text_size_13"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:text=""/>
     <TextView
         android:textColor="@color/black"

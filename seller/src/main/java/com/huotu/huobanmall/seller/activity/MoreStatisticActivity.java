@@ -88,6 +88,13 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         },1000);
     }
 
+
+    @Override
+    protected void onResume() {
+        morestat_refresh.onRefreshComplete();
+        super.onResume();
+    }
+
     protected void getData(){
         if( false== canConnect()){
             this.closeProgressDialog();

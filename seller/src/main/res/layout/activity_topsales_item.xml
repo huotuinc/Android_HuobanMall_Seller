@@ -48,7 +48,8 @@
             android:ellipsize="end"
             android:textColor="@color/main_header_bg"
             android:textSize="@dimen/text_size_15"
-            android:text=""/>
+            android:text=""
+            android:visibility="gone" />
         <TextView
             android:id="@+id/topgoods_item_amount"
             android:layout_width="wrap_content"
@@ -56,9 +57,11 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textSize="@dimen/text_size_14"
-            android:text=""
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/topgoods_item_price"
+            android:text="1"
+            android:layout_marginTop="@dimen/space_5"
+            android:layout_marginLeft="0dp"
+            android:layout_below="@id/topgoods_item_goodsName"
+            android:layout_alignLeft="@id/topgoods_item_goodsName"
             android:layout_toLeftOf="@id/topgoods_item_top"
             android:layout_alignBottom="@+id/topgoods_item_price" />
         <TextView

@@ -47,8 +47,8 @@ public class Constant {
     // 城市码
     public final static String  PRE_LOCATION_CITY_CODE = "cityCode";
     // url请求前缀
-    //public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
-    public final static String BASE_ROOT_URL ="http://192.168.1.57:8080/huobanmall/";
+    public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
+    //public final static String BASE_ROOT_URL ="http://192.168.1.57:8080/huobanmall/";
     //public final static String BASE_ROOT_URL ="http://192.168.1.48:8080/huobanmall/";
     public static final String BASE_URL = BASE_ROOT_URL + "app/";// 基础URL
 
@@ -185,7 +185,7 @@ public class Constant {
     //用户名或密码错误
     public final static int ERROR_USER_PASSWORD=56000;
     //请求超时时间
-    public final static int REQUEST_TIMEOUT=20*1000;
+    public final static int REQUEST_TIMEOUT=15*1000;
     /**
      * 订单Tab页
      */

@@ -209,8 +209,8 @@ public class MainActivity extends BaseFragmentActivity{
                 this
         );
 
-        boolean isConnect = this.showProgressDialog("", "正在获取数据，请稍等...");
-        if( isConnect==false) return;
+        //boolean isConnect = this.showProgressDialog("", "正在获取数据，请稍等...");
+        //if( isConnect==false) return;
 
         //VolleyRequestManager.getRequestQueue().add(newTodayRequest);
         VolleyRequestManager.AddRequest(newTodayRequest);
