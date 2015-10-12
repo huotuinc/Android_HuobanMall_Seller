@@ -45,7 +45,7 @@
             android:layout_alignLeft="@+id/goods_inventory"
             android:text="产品分类：" />
         <TextView
-            android:id="@+id/cplx"
+            android:id="@+id/goods_cplx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/textView2"
@@ -79,9 +79,9 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cplx"
-            android:layout_toEndOf="@+id/cplx"
-            android:layout_toRightOf="@+id/cplx"
+            android:layout_below="@+id/goods_cplx"
+            android:layout_toEndOf="@+id/goods_cplx"
+            android:layout_toRightOf="@+id/goods_cplx"
             android:text="库存："
             android:textColor="@color/main_header_bg"            />
 

@@ -52,7 +52,7 @@ public class GoodsAdapter extends BaseAdapter{
                     .findViewById(R.id.goods_imageView);
             holder.goods_name = (TextView) convertView
                     .findViewById(R.id.goods_name);
-            holder.goods_cplx = (TextView) convertView.findViewById(R.id.cplx);
+            holder.goods_cplx = (TextView) convertView.findViewById(R.id.goods_cplx);
             holder.goods_num = (TextView) convertView.findViewById(R.id.goods_num);
             holder.goods_price = (TextView) convertView.findViewById(R.id.goods_price);
             convertView.setTag(holder);

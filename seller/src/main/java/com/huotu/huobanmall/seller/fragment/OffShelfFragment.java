@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import java.util.ArrayList;
@@ -181,7 +183,7 @@ public class OffShelfFragment extends BaseFragment {
         }
 
         HttpParaUtils httpParaUtils = new HttpParaUtils();
-        maps.put("type", "2");
+        maps.put("type", "0");
         String url = Constant.GOODSLIST_INTERFACE;
         url = httpParaUtils.getHttpGetUrl(url,maps);
 
@@ -235,10 +237,14 @@ public class OffShelfFragment extends BaseFragment {
                 _goodsList.clear();
                 if( mjGoodModel.getResultData() !=null && mjGoodModel.getResultData().getList()!=null && mjGoodModel.getResultData().getList().size()>0 ) {
                     _goodsList.addAll(mjGoodModel.getResultData().getList());
+                }else{
+                    ToastUtils.showLong(Constant.No_Data_Text,Gravity.BOTTOM);
                 }
             }else{
                 if( mjGoodModel.getResultData() !=null && mjGoodModel.getResultData().getList()!=null && mjGoodModel.getResultData().getList().size()>0 ) {
                     _goodsList.addAll(mjGoodModel.getResultData().getList());
+                }else{
+                    ToastUtils.showLong(Constant.No_Data_Text, Gravity.BOTTOM);
                 }
             }
             _goodsAdapter.notifyDataSetChanged();

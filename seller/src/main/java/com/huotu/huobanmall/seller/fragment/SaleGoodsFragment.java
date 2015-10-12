@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import java.io.Serializable;
@@ -267,10 +269,14 @@ public class SaleGoodsFragment extends BaseFragment {
                 _goodsList.clear();
                 if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList()!=null && mjGoodModel.getResultData().getList().size()>0) {
                     _goodsList.addAll(mjGoodModel.getResultData().getList());
+                }else{
+                    ToastUtils.showLong(Constant.No_Data_Text,Gravity.BOTTOM);
                 }
             }else{
                 if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList()!=null && mjGoodModel.getResultData().getList().size()>0 ) {
                     _goodsList.addAll(mjGoodModel.getResultData().getList());
+                }else{
+                    ToastUtils.showLong(Constant.No_Data_Text, Gravity.BOTTOM);
                 }
             }
             _goodsAdapter.notifyDataSetChanged();

@@ -151,7 +151,7 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
             }
         }
         String url = Constant.GOODSLIST_INTERFACE;
-        paras.put("type", "2" );
+        paras.put("type", "0" );
         HttpParaUtils utils = new HttpParaUtils();
         String urlString = utils.getHttpGetUrl(url, paras);
 
@@ -211,7 +211,6 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                         goodsListListener,
                         this);
 
-        //VolleyRequestManager.getRequestQueue().add(goodsListRequest);
         VolleyRequestManager.AddRequest(goodsListRequest);
     }
 

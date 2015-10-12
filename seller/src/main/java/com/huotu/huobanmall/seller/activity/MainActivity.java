@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.NetworkImageView;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
@@ -81,18 +84,26 @@ public class MainActivity extends BaseFragmentActivity{
     ImageButton _ibShop;
     @Bind(R.id.header_title)
     TextView _header_title;
+    @Bind(R.id.main_refresh)
+    SwipeRefreshLayout _main_Refresh;
 
     Long existTime=0L;
     Integer waitForExistSecond=2000;
     MJNewTodayModel _data=null;
     //当前选中的位置
     int _currentIndex=0;
+    Handler _handler=new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        _main_Refresh.setColorSchemeColors( R.color.holo_blue_bright, R.color.holo_green_light,
+                R.color.holo_orange_light, R.color.holo_red_light);
+        _main_Refresh.setOnRefreshListener(refreshListener);
+
         Drawable drawable1 = getResources().getDrawable(R.mipmap.cpgl);
         drawable1.setBounds(0, 0, 50, 50);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         main_menu_cpgl.setCompoundDrawables(null, drawable1, null, null);
@@ -122,8 +133,22 @@ public class MainActivity extends BaseFragmentActivity{
 
         openMessage();
 
-        getData();
+        //getData();
+        _handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+               _main_Refresh.setRefreshing(true);
+               refreshListener.onRefresh();
+            }
+        },500);
     }
+
+    protected SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            getData();
+        }
+    };
 
     protected void setShopNameLogo(){
         String shopNameStr = PreferenceHelper.readString( SellerApplication.getInstance() , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_SHOPNAME );
@@ -330,6 +355,7 @@ public class MainActivity extends BaseFragmentActivity{
         @Override
         public void onResponse(MJNewTodayModel mjNewTodayModel) {
             MainActivity.this.closeProgressDialog();
+            _main_Refresh.setRefreshing(false);
 
             if(null == mjNewTodayModel){
                 DialogUtils.showDialog(MainActivity.this, MainActivity.this.getSupportFragmentManager()
@@ -376,6 +402,13 @@ public class MainActivity extends BaseFragmentActivity{
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        _main_Refresh.setRefreshing(false);
+
+        super.onErrorResponse(volleyError);
     }
 
     /**

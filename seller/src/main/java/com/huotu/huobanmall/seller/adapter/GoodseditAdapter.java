@@ -56,6 +56,7 @@ public class GoodseditAdapter extends BaseAdapter {
                     .findViewById(R.id.goods_name);
             holder.goods_num = (TextView) convertView.findViewById(R.id.goods_num);
             holder.goods_price = (TextView) convertView.findViewById(R.id.goods_price);
+            holder.goods_cplx = (TextView) convertView.findViewById(R.id.goods_cplx);
             convertView.setTag(holder);
         } else
         {
@@ -63,6 +64,7 @@ public class GoodseditAdapter extends BaseAdapter {
         }
         holder.tvSelect.setVisibility(View.VISIBLE);
         holder.goods_name.setText(String.valueOf(_list.get(position).getTitle()));
+        holder.goods_cplx.setText( _list.get(position).getCategory() );
 
         String numStr = "";
         if( _list.get(position).getStock()>=0 && _list.get(position).getStock() < 5 ){
@@ -94,5 +96,7 @@ public class GoodseditAdapter extends BaseAdapter {
         TextView goods_price;
 
         TextView goods_num;
+
+        TextView goods_cplx;
     }
 }
