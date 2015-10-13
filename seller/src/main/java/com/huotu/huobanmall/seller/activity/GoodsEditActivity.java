@@ -393,7 +393,6 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
 
         GoodsEditActivity.this.showProgressDialog("", "请稍等...");
 
-        //VolleyRequestManager.getRequestQueue().add(operGoodsRequest);
         VolleyRequestManager.AddRequest(operGoodsRequest);
     }
 

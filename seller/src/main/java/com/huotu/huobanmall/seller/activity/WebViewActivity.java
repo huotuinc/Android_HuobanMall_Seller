@@ -100,8 +100,5 @@ public class WebViewActivity extends BaseFragmentActivity implements View.OnClic
                 _webview.onRefreshComplete();
             }
         }
-
-
     }
-
 }

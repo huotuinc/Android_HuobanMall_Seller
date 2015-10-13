@@ -182,48 +182,6 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
         });
 
         _viewPager.setCurrentItem( _currentTabType-1 );
-
-        //_circlePageIndicator.setViewPager(_viewPager);
-
-//        _circlePageIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                rdb_a.setChecked(false);
-//                rdb_b.setChecked(false);
-//                rdb_c.setChecked(false);
-//                    int index = -1;
-//                    if( rdb_a.getVisibility() == View.VISIBLE ) {
-//                        index = (int) rdb_a.getTag();
-//                        if (index == position) {
-//                            rdb_a.setChecked(true);
-//                        }
-//                    }
-//                if( rdb_b.getVisibility() == View.VISIBLE) {
-//                    index = (int) rdb_b.getTag();
-//                    if (index == position) {
-//                        rdb_b.setChecked(true);
-//                    }
-//                }
-//                if( rdb_c.getVisibility() == View.VISIBLE ) {
-//                    index = (int) rdb_c.getTag();
-//                    if (index == position) {
-//                        rdb_c.setChecked(true);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
-//        //设置当前Tab
-//        _circlePageIndicator.setCurrentItem( _currentTabType -1 );
     }
 
     @Override

@@ -111,8 +111,6 @@ public class LogisticsActivity extends BaseFragmentActivity {
     }
 
     protected void firstGetData(){
-        //this.showProgressDialog("","正在获取数据，请稍等...");
-        //getData();
         _handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -143,7 +141,7 @@ public class LogisticsActivity extends BaseFragmentActivity {
                 requestListener,
                 this
         );
-        //VolleyRequestManager.getRequestQueue().add(request);
+
         VolleyRequestManager.AddRequest( request );
     }
 

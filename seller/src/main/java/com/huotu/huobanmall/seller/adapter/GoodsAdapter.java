@@ -63,7 +63,7 @@ public class GoodsAdapter extends BaseAdapter{
         holder.goods_name.setText(String.valueOf(_list.get(position).getTitle()));
         String numString = "";
         if( _list.get(position).getStock() >= 0 && _list.get(position).getStock() < 5 ){
-            numString="无充足";
+            numString="不充足";
         }else{
             numString = "充足";//String.valueOf( _list.get(position).getStock());
         }

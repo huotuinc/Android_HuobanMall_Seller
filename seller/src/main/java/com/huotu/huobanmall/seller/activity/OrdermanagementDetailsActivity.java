@@ -104,8 +104,6 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
             _orderNo = getIntent().getStringExtra( Constant.Extra_OrderNo );
         }
 
-        //_orderNo = "15986ae3-c92b-4d0a-b95e-f9978bbf51e9";
-
         _data = new OrderDetailModel();
 
         _orderGoodsAdapter= new LogisticsGoodsAdapter(this, _data.getList());
@@ -138,7 +136,6 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
 
         this.showProgressDialog("", "正在获取数据，请稍等...");
 
-        //VolleyRequestManager.getRequestQueue().add(request);
         VolleyRequestManager.AddRequest(request);
     }
 

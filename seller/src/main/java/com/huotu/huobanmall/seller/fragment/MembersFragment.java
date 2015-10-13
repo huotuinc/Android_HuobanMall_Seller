@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -24,6 +23,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.DefaultValueFormatter;
+import com.github.mikephil.charting.utils.ValueFormatter;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.activity.ConsumeStatisticsActivity;
 import com.huotu.huobanmall.seller.activity.LoginActivity;
@@ -38,7 +39,9 @@ import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.StringUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+import com.huotu.huobanmall.seller.widget.MJMarkerView;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -143,6 +146,39 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
         _membersFragmentAdapter = new MembersFragmentPageAdapter(_fragments, _fragmentManager);
         _viewPager.setAdapter(_membersFragmentAdapter);
         _indicator.setViewPager(_viewPager);
+
+        _indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if( _data ==null || _data.getResultData()==null ) return;
+                if(position==0){
+                    Long today_fxs = _data.getResultData().getTodayMemberAmount();
+                    Long today_menber = _data.getResultData().getTodayPartnerAmount();
+                    _member_fxsCount2.setText( String.valueOf( today_fxs) );
+                    _member_memberCount2.setText( String.valueOf( today_menber ) );
+                }else if( position==1){
+                    Long week_fxsCount = _data.getResultData().getWeekPartnerAmount();
+                    Long week_MemberCount = _data.getResultData().getWeekMemberAmount();
+                    _member_fxsCount2.setText( String.valueOf( week_fxsCount ));
+                    _member_memberCount2.setText( String.valueOf( week_MemberCount ));
+                }else if( position==2){
+                    Long month_fxs = _data.getResultData().getMonthPartnerAmount();
+                    Long month_MemberCount = _data.getResultData().getMonthMemberAmount();
+                    _member_fxsCount2.setText( String.valueOf( month_fxs ));
+                    _member_memberCount2.setText( String.valueOf( month_MemberCount) );
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -242,22 +278,6 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
         }
     };
 
-//    protected Response.ErrorListener errorListener = new Response.ErrorListener() {
-//        @Override
-//        public void onErrorResponse(VolleyError volleyError) {
-//            MembersFragment.this.closeProgressDialog();
-//            String message="";
-//            if( volleyError.networkResponse !=null){
-//                message = new String( volleyError.networkResponse.data);
-//            }else if( volleyError.getCause() !=null ) {
-//                message = volleyError.getCause().getMessage();
-//            }
-//            DialogUtils.showDialog(MembersFragment.this.getActivity(), MembersFragment.this.getFragmentManager(),"错误信息", message ,"关闭");
-//
-//        }
-//    };
-
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -295,13 +315,12 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
         protected void initData(){
             int bgColor=0xFFFFFFFF;
-
             _memberLineChart.setBackgroundColor(bgColor);
             _memberLineChart.setDrawGridBackground(false);
             _memberLineChart.setDescription("");
             _memberLineChart.setNoDataText("暂无数据");
-
-
+            MJMarkerView mv = new MJMarkerView( getActivity() , R.layout.custom_marker_view);
+            _memberLineChart.setMarkerView(mv);
 
         }
 
@@ -350,8 +369,8 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
             int bgColor=0xFFFFFFFF;
             int gridColor=0xFFD3D3D3;
-            int lineColor1 = 0xFF0094FF;
-            int lineColor2 =0xFFFF3C00;
+            int lineColor2 = 0xFF0094FF;
+            int lineColor1 =0xFFFF3C00;
             int textColor = 0xFF000000;
             //int circleColor=0xFFFFFFFF;
             List<String> xValue = new ArrayList<>();
@@ -385,16 +404,18 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                     yValues1.add(item);
                 }
                 LineDataSet dataSet1 = new LineDataSet(yValues1, "");
-                dataSet1.setCircleColor(lineColor1 );
+                dataSet1.setCircleColor(lineColor1);
                 dataSet1.setCircleSize(5);
                 dataSet1.setDrawCircleHole(true);
                 dataSet1.setDrawValues(false);
                 dataSet1.setLineWidth(2);
                 dataSet1.setColor(lineColor1);
-                dataSet1.setValueTextSize(14);
-                dataSet1.setValueTextColor(Color.GREEN);
+                dataSet1.setValueTextSize(12);
+                //dataSet1.setValueTextColor(Color.GREEN);
                 dataSet1.setDrawCubic(true);
                 dataSet1.setCircleColorHole(Color.WHITE);
+                //
+                dataSet1.setValueFormatter(new DefaultValueFormatter(0));
 
                 dataSets.add(dataSet1);
             }
@@ -423,14 +444,14 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                     yValues2.add(item);
                 }
                 LineDataSet dataSet2 = new LineDataSet(yValues2, "");
-                dataSet2.setCircleColor( lineColor2 );
+                dataSet2.setCircleColor(lineColor2);
                 dataSet2.setCircleSize(5);
                 dataSet2.setDrawCircleHole(true);
                 dataSet2.setDrawValues(false);
                 dataSet2.setLineWidth(2);
                 dataSet2.setColor(lineColor2);
-                dataSet2.setValueTextSize(14);
-                dataSet2.setValueTextColor(Color.GREEN);
+                dataSet2.setValueTextSize(12);
+                //dataSet2.setValueTextColor(Color.GREEN);
                 dataSet2.setDrawCubic(true);
                 dataSet2.setCircleColorHole(Color.WHITE);
 
@@ -439,11 +460,12 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
 
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setTextColor( textColor );
+            xAxis.setTextColor(textColor);
 
             YAxis yAxis1 = lineChart.getAxisRight();
             yAxis1.setTextColor(0xFFFFFFFF);
             yAxis1.setEnabled(true);
+
             yAxis1.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
 
             YAxis yAxis = lineChart.getAxisLeft();

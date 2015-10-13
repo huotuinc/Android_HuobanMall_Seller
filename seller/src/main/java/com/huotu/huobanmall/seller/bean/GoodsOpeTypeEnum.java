@@ -1,16 +1,12 @@
 package com.huotu.huobanmall.seller.bean;
 
-import android.graphics.Color;
-
-import org.w3c.dom.ProcessingInstruction;
-
 /**
  * Created by Administrator on 2015/8/27.
  */
 public enum  GoodsOpeTypeEnum {
-    //1 上架商品 2 下架商品 3 删除商品
+    //1 上架商品 0 下架商品 3 删除商品
     ONSHELF("上架商品",1),
-    OFFSHELF("下架商品",2),
+    OFFSHELF("下架商品",0),
     DELETEGOODS("删除商品",3);
 
     private GoodsOpeTypeEnum(String name , int index){

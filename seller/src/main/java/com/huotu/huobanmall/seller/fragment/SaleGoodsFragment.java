@@ -23,6 +23,7 @@ import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.activity.LoginActivity;
 import com.huotu.huobanmall.seller.adapter.GoodsAdapter;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
+import com.huotu.huobanmall.seller.bean.GoodsOpeTypeEnum;
 import com.huotu.huobanmall.seller.bean.MJGoodModel;
 import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.common.Constant;
@@ -48,8 +49,6 @@ import butterknife.ButterKnife;
 public class SaleGoodsFragment extends BaseFragment {
     @Bind(R.id.goods_sale_listView)
     PullToRefreshListView _goodsSaleListView;
-
-    //ListView _listView;
 
     List<GoodsModel> _goodsList = null;
     GoodsAdapter _goodsAdapter = null;
@@ -108,9 +107,7 @@ public class SaleGoodsFragment extends BaseFragment {
         View emptyView = new View(this.getActivity());
         emptyView.setBackgroundResource(R.mipmap.tpzw);
         _goodsSaleListView.setEmptyView(emptyView);
-
         _goodsSaleListView.setMode(PullToRefreshBase.Mode.BOTH);
-        //_listView = _goodsSaleListView.getRefreshableView();
         _goodsSaleListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
@@ -212,7 +209,7 @@ public class SaleGoodsFragment extends BaseFragment {
         }
 
         HttpParaUtils httpParaUtils = new HttpParaUtils();
-        maps.put("type", "1");
+        maps.put("type", String.valueOf( GoodsOpeTypeEnum.ONSHELF.getIndex()) );
         String url = Constant.GOODSLIST_INTERFACE;
         url = httpParaUtils.getHttpGetUrl(url,maps);
 

@@ -20,11 +20,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.GoodsAdapter;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
+import com.huotu.huobanmall.seller.bean.GoodsOpeTypeEnum;
 import com.huotu.huobanmall.seller.bean.MJGoodModel;
 import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.StringUtils;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
@@ -183,7 +185,7 @@ public class OffShelfFragment extends BaseFragment {
         }
 
         HttpParaUtils httpParaUtils = new HttpParaUtils();
-        maps.put("type", "0");
+        maps.put("type", String.valueOf( GoodsOpeTypeEnum.OFFSHELF.getIndex() ) );
         String url = Constant.GOODSLIST_INTERFACE;
         url = httpParaUtils.getHttpGetUrl(url,maps);
 
@@ -195,7 +197,6 @@ public class OffShelfFragment extends BaseFragment {
                 this
         );
 
-        //VolleyRequestManager.getRequestQueue().add(goodsListRequest);
         VolleyRequestManager.AddRequest(goodsListRequest);
     }
 
@@ -228,10 +229,6 @@ public class OffShelfFragment extends BaseFragment {
                         .show();
                 return;
             }
-
-//            if(mjGoodModel.getResultData()==null || mjGoodModel.getResultData().getList() ==null || mjGoodModel.getResultData().getList().size()<1){
-//                return;
-//            }
 
             if( _type == OperateTypeEnum.REFRESH){
                 _goodsList.clear();

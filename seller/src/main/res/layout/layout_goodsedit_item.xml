@@ -69,19 +69,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/goods_inventory"
-            android:layout_toEndOf="@+id/goods_inventory"
+            android:layout_toLeftOf="@+id/textView"
             android:layout_toRightOf="@+id/goods_inventory"
             android:text=""
             android:textColor="@color/main_header_bg" />
-
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/goods_cplx"
-            android:layout_toEndOf="@+id/goods_cplx"
-            android:layout_toRightOf="@+id/goods_cplx"
+            android:layout_toLeftOf="@+id/goods_num"
             android:text="库存："
             android:textColor="@color/main_header_bg"            />
 
@@ -90,8 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/textView"
-            android:layout_toEndOf="@+id/textView"
-            android:layout_toRightOf="@+id/textView"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/space_5"
             android:text=""
             android:textColor="@color/main_header_bg" />
     </RelativeLayout>
