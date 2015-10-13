@@ -2,6 +2,7 @@ package com.huotu.huobanmall.seller.activity;
 
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -43,6 +44,7 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
     List<TopGoodsModel> topGoodsList = null;
     @Bind(R.id.header_title)
     TextView header_title;
+    Handler handler=new Handler();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +81,14 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
     }
 
     private void firstSaleGoodData() {
-        this.showProgressDialog("", "正在获取数据，请稍等...");
-         getData();
+        //this.showProgressDialog("", "正在获取数据，请稍等...");
+        // getData();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                topGoods_listview.setRefreshing(true);
+            }
+        },1000);
     }
     protected void getData(){
         String url = Constant.TOPGOODS_INTERFACE;
@@ -95,7 +103,7 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
                 listener,
                 this
         );
-        //VolleyRequestManager.getRequestQueue().add(request);
+
         VolleyRequestManager.AddRequest(request);
     }
     Response.Listener<MJTopGoodsModel> listener =new Response.Listener<MJTopGoodsModel>() {

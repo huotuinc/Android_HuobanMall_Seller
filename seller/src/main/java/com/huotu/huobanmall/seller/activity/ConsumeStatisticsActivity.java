@@ -168,9 +168,16 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
     }
 
     private void firstGetData() {
-        this.showProgressDialog("","正在获取数据，请稍等...");
-        _operateType = OperateTypeEnum.REFRESH;
-        getData_MX(_operateType);
+        //this.showProgressDialog("","正在获取数据，请稍等...");
+        //_operateType = OperateTypeEnum.REFRESH;
+        //getData_MX(_operateType);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                _operateType = OperateTypeEnum.REFRESH;
+                _consumStatistics_listview.setRefreshing(true);
+            }
+        },1000);
     }
 
     protected void getData_MX( OperateTypeEnum operateType ){

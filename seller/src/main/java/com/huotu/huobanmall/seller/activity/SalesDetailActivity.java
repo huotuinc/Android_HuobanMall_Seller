@@ -1,6 +1,7 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -79,6 +80,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
 
     OperateTypeEnum _operateType = OperateTypeEnum.REFRESH;
 
+    Handler _handler=new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +99,6 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
                         search_text.setError("不能为空");
                     } else {
                         detail_btn.setChecked(true);
-                        //String key = search_text.getText().toString().trim();
                         _operateType = OperateTypeEnum.REFRESH;
                         SalesDetailActivity.this.showProgressDialog("", "正在获取数据，请稍等...");
                         getData_MX(_operateType);
@@ -188,7 +189,6 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
                 this
         );
 
-        //VolleyRequestManager.getRequestQueue().add(request);
         VolleyRequestManager.AddRequest(request);
     }
 
@@ -206,7 +206,6 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
                 this
         );
 
-        //VolleyRequestManager.getRequestQueue().add( request);
         VolleyRequestManager.AddRequest(request);
     }
 
@@ -305,9 +304,16 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
     }
 
     private void firstSaleGoodData() {
-        this.showProgressDialog("","正在获取数据，请稍等...");
-        _operateType= OperateTypeEnum.REFRESH;
-        getData_MX(_operateType);
+        //this.showProgressDialog("","正在获取数据，请稍等...");
+        //_operateType= OperateTypeEnum.REFRESH;
+        //getData_MX(_operateType);
+        _handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                _operateType= OperateTypeEnum.REFRESH;
+                _salesDetail_ListView.setRefreshing(true);
+            }
+        },800);
     }
 
     protected void openSearchBar(){

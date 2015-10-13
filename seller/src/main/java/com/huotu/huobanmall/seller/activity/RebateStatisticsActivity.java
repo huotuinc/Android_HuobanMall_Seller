@@ -87,8 +87,6 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         setContentView(R.layout.activity_sales_detail);
         ButterKnife.bind(this);
 
-        PullToRefreshListView.Mode m = _rebateStatistics_listview.getMode();
-
         goods_title.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -168,9 +166,14 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
     }
 
     private void firstGetData() {
-        this.showProgressDialog("", "正在获取数据，请稍等...");
-        _operateType = OperateTypeEnum.REFRESH;
-        getData_MX(OperateTypeEnum.REFRESH);
+        //this.showProgressDialog("", "正在获取数据，请稍等...");
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                _operateType = OperateTypeEnum.REFRESH;
+                _rebateStatistics_listview.setRefreshing(true);
+            }
+        }, 1000);
     }
 
     protected void getData_MX( OperateTypeEnum operateType ){
@@ -211,7 +214,6 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                 this
         );
 
-        //VolleyRequestManager.getRequestQueue().add(request);
         VolleyRequestManager.AddRequest(request);
     }
 
@@ -229,7 +231,6 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                 this
         );
 
-        //VolleyRequestManager.getRequestQueue().add( request);
         VolleyRequestManager.AddRequest(request);
     }
 
@@ -348,9 +349,5 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
             default:
                 break;
         }
-
     }
-
-
-
 }
