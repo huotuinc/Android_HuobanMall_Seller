@@ -46,8 +46,6 @@ import butterknife.ButterKnife;
  * @version:
  */
 public class MessageActivity extends BaseFragmentActivity implements View.OnClickListener {
-
-    //public SellerApplication application;
     @Bind(R.id.header_title)
     public TextView header_title;
     @Bind(R.id.header_back)
@@ -62,7 +60,6 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-        //application = ( SellerApplication ) MessageActivity.this.getApplication ();
         ButterKnife.bind(this);
         initView();
     }
@@ -104,15 +101,24 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
 
 
     protected void firstGetData(){
-        this.showProgressDialog("","正在获取数据，请稍等...");
-        operateType= OperateTypeEnum.REFRESH;
-        getData();
+        //this.showProgressDialog("","正在获取数据，请稍等...");
+        //operateType= OperateTypeEnum.REFRESH;
+        //getData();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if( MessageActivity.this.isFinishing() ){return;}
+                operateType= OperateTypeEnum.REFRESH;
+                msgList.setRefreshing(true);
+            }
+        },1000);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        VolleyRequestManager.cancelAllRequest();
     }
 
     protected void getData(){
@@ -163,13 +169,14 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
                 this
         );
 
-        //VolleyRequestManager.getRequestQueue().add(request);
         VolleyRequestManager.AddRequest(request);
     }
 
     Response.Listener<MJMessageModel> listener = new Response.Listener<MJMessageModel>() {
         @Override
         public void onResponse(MJMessageModel mjMessageModel) {
+            if( MessageActivity.this.isFinishing() )return;
+
             msgList.onRefreshComplete();
             MessageActivity.this.closeProgressDialog();
 

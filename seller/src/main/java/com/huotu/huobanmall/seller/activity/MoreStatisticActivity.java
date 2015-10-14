@@ -114,6 +114,9 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                if( MoreStatisticActivity.this.isFinishing() ) return;
+
                 morestat_refresh.setRefreshing(true);
             }
         },1000);
@@ -129,6 +132,7 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
     protected void getData(){
         if( false== canConnect()){
             this.closeProgressDialog();
+            morestat_refresh.onRefreshComplete();
             return;
         }
 
@@ -144,8 +148,7 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
                 otherListener,
                 this
         );
-        //this.showProgressDialog("", "正在获取数据，请稍等...");
-        //VolleyRequestManager.getRequestQueue().add(otherRequest);
+
         VolleyRequestManager.AddRequest(otherRequest);
     }
 
@@ -159,6 +162,8 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
     Response.Listener<MJOtherStatisticModel> otherListener=new Response.Listener<MJOtherStatisticModel>() {
         @Override
         public void onResponse(MJOtherStatisticModel  mjOtherStatisticModel ) {
+          if( MoreStatisticActivity.this.isFinishing() )return;
+
             MoreStatisticActivity.this.closeProgressDialog();
             morestat_refresh.onRefreshComplete();
             clearData();
@@ -200,6 +205,8 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
+        if( MoreStatisticActivity.this.isFinishing() ) return;
+
         MoreStatisticActivity.this.closeProgressDialog();
         morestat_refresh.onRefreshComplete();
         clearData();

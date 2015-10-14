@@ -220,6 +220,8 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
     protected Response.Listener<MJSaleStatisticModel> saleReportListner = new Response.Listener<MJSaleStatisticModel>() {
         @Override
         public void onResponse(MJSaleStatisticModel mjSaleStatisticModel  ) {
+           if( SalesFragment.this.isDetached() || SalesFragment.this.isRemoving() ) return;
+
             SalesFragment.this.closeProgressDialog();
 
             if( mjSaleStatisticModel==null){
@@ -264,6 +266,7 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
     protected Response.ErrorListener errorListener = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
+            if( SalesFragment.this.isRemoving() || SalesFragment.this.isDetached() ) return;
 
             SalesFragment.this.closeProgressDialog();
 
@@ -387,7 +390,7 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
             dataSet.setColor(lineColor);
             dataSet.setValueTextSize(14);
             dataSet.setValueTextColor(textColor);
-            dataSet.setDrawCubic(true);
+            //dataSet.setDrawCubic(true);
             dataSet.setDrawValues(false);
             dataSet.setCircleColorHole( Color.WHITE );
             dataSet.setDrawCircleHole(true);

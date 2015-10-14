@@ -54,6 +54,10 @@ public class VolleyRequestManager {
 		getRequestQueue().cancelAll( GsonRequest.TAG );
 		getRequestQueue().add( request);
 	}
+	
+	public static void cancelAllRequest(){
+		getRequestQueue().cancelAll(GsonRequest.TAG );
+	}
 
 	public static ImageLoader getImageLoader(Context context) {
 		if (null == imageLoader)

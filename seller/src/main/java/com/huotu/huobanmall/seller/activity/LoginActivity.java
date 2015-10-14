@@ -68,10 +68,6 @@ public class LoginActivity extends BaseFragmentActivity implements
     public void initView()
     {
         ButterKnife.bind(this);
-//        if( EventBus.getDefault().isRegistered(this)==false) {
-//            EventBus.getDefault().register(this);
-//        }
-
         userName.setText("");
         //userName.setText("18767152078");
         //userName.setText("jxd");
@@ -91,9 +87,6 @@ public class LoginActivity extends BaseFragmentActivity implements
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-//        if( EventBus.getDefault().isRegistered(this)) {
-//            EventBus.getDefault().unregister(this);
-//        }
     }
 
 
@@ -131,7 +124,7 @@ public class LoginActivity extends BaseFragmentActivity implements
                 loginListener,
                 this);
 
-        VolleyRequestManager.getRequestQueue().add(loginRequest);
+        VolleyRequestManager.AddRequest(loginRequest);
     }
 
     protected void updateApp(){

@@ -164,7 +164,6 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                         goodsListListener,
                         this);
 
-        //VolleyRequestManager.getRequestQueue().add(goodsListRequest);
         VolleyRequestManager.AddRequest( goodsListRequest);
     }
 
@@ -180,6 +179,7 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
             handler.post(new Runnable() {
                 @Override
                 public void run() {
+                    if( GoodsEditActivity.this.isFinishing() ) return;
                     GoodsEditActivity.this.closeProgressDialog();
                     _goodsedit_listview.onRefreshComplete();
                 }
@@ -217,6 +217,8 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
     private Response.Listener< MJGoodModel > goodsListListener = new Response.Listener<MJGoodModel>() {
         @Override
         public void onResponse( MJGoodModel mjGoodModel ) {
+            if( GoodsEditActivity.this.isFinishing() ) return;
+
             GoodsEditActivity.this.closeProgressDialog();
             _goodsedit_listview.onRefreshComplete();
             if(_type==1) {
@@ -284,6 +286,7 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
+        if( GoodsEditActivity.this.isFinishing() ) return;
         _goodsedit_listview.onRefreshComplete();
         super.onErrorResponse(volleyError);
     }
@@ -399,6 +402,9 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
     protected Response.Listener<BaseModel> operGoodsListener=new Response.Listener<BaseModel>() {
         @Override
         public void onResponse(BaseModel baseModel) {
+
+            if( GoodsEditActivity.this.isFinishing() ) return;
+
            GoodsEditActivity.this.closeProgressDialog();
 
             if( null == baseModel){

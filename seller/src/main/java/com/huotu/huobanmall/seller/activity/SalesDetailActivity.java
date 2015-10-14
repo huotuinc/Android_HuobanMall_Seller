@@ -254,6 +254,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
     Response.Listener<MJSaleListModel> listener_MX =new Response.Listener<MJSaleListModel>() {
         @Override
         public void onResponse(MJSaleListModel mjSaleListModel) {
+           if( SalesDetailActivity.this.isFinishing() ) return;
             SalesDetailActivity.this.closeProgressDialog();
             _salesDetail_ListView.onRefreshComplete();
 
@@ -296,6 +297,7 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
+        if( SalesDetailActivity.this.isFinishing() )return;
         _salesDetail_ListView.onRefreshComplete();
         super.onErrorResponse(volleyError);
     }
@@ -312,6 +314,8 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
         _handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if( SalesDetailActivity.this.isFinishing() ) return;
+
                 _operateType= OperateTypeEnum.REFRESH;
                 _salesDetail_ListView.setRefreshing(true);
             }

@@ -30,6 +30,8 @@ import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
+import org.apache.commons.logging.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -114,6 +116,7 @@ public class LogisticsActivity extends BaseFragmentActivity {
         _handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if( LogisticsActivity.this.isFinishing() ) return;
                 _scrollView.setRefreshing(true);
             }
         },1000);
@@ -147,6 +150,8 @@ public class LogisticsActivity extends BaseFragmentActivity {
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
+        if(LogisticsActivity.this.isFinishing()) return;
+
         _scrollView.onRefreshComplete();
         super.onErrorResponse(volleyError);
     }
@@ -154,6 +159,8 @@ public class LogisticsActivity extends BaseFragmentActivity {
     Response.Listener<MJLogisticsDetailModel> requestListener = new Response.Listener<MJLogisticsDetailModel>() {
         @Override
         public void onResponse(MJLogisticsDetailModel mjLogisticsDetailModel ) {
+            if( LogisticsActivity.this.isFinishing() ) return;
+
             LogisticsActivity.this.closeProgressDialog();
             _scrollView.onRefreshComplete();
 

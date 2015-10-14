@@ -97,7 +97,6 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                         search_text.setError("不能为空");
                     } else {
                         detail_btn.setChecked(true);
-                        //String key = search_text.getText().toString().trim();
                         _operateType = OperateTypeEnum.REFRESH;
                         ConsumeStatisticsActivity.this.showProgressDialog("","正在获取数据，请稍等...");
                         getData_MX(_operateType);
@@ -107,7 +106,6 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                 return false;
             }
         });
-
 
         salesdetail_title.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -176,6 +174,9 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if( ConsumeStatisticsActivity.this.isFinishing() ) return;
+
+                detail_btn.setChecked(true);
                 _operateType = OperateTypeEnum.REFRESH;
                 _consumStatistics_listview.setRefreshing(true);
             }
@@ -244,6 +245,8 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
     Response.Listener<MJTopConsumeModel> listener_TJ =new Response.Listener<MJTopConsumeModel>() {
         @Override
         public void onResponse(MJTopConsumeModel mjTopConsumeModel ) {
+         if( ConsumeStatisticsActivity.this.isFinishing()) return;
+
             ConsumeStatisticsActivity.this.closeProgressDialog();
             _consumStatistics_listview.onRefreshComplete();
 
@@ -259,7 +262,7 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                         .show();
                 return;
             }else if( mjTopConsumeModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().showActivity(ConsumeStatisticsActivity.this, LoginActivity.class);
+                ActivityUtils.getInstance().skipActivity(ConsumeStatisticsActivity.this, LoginActivity.class);
                 return;
             }
             else if( mjTopConsumeModel.getResultCode() != 1){
@@ -281,10 +284,11 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
     };
 
 
-
     Response.Listener<MJConsumeListModel> listener_MX =new Response.Listener<MJConsumeListModel>() {
         @Override
         public void onResponse(MJConsumeListModel mjConsumeListModel ) {
+         if( ConsumeStatisticsActivity.this.isFinishing() ) return;
+
             ConsumeStatisticsActivity.this.closeProgressDialog();
             _consumStatistics_listview.onRefreshComplete();
 
@@ -300,7 +304,7 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                         .show();
                 return;
             }else if( mjConsumeListModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().showActivity(ConsumeStatisticsActivity.this, LoginActivity.class);
+                ActivityUtils.getInstance().skipActivity(ConsumeStatisticsActivity.this, LoginActivity.class);
                 return;
             }
             else if( mjConsumeListModel.getResultCode() != 1){

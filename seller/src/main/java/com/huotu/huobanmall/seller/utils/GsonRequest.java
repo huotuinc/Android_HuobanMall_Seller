@@ -174,6 +174,7 @@ public class GsonRequest<T> extends Request<T> {
 
 	@Override
 	protected void deliverResponse(T response) {
+		if( mListener ==null) return;
 		mListener.onResponse(response);
 	}
 

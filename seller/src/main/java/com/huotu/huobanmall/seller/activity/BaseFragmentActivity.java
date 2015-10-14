@@ -77,6 +77,7 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
     }
 
     protected boolean showProgressDialog( String title , String message ){
+        if( BaseFragmentActivity.this.isFinishing() ) return true;
         //网络访问前先检测网络是否可用
         if(canConnect()==false){
             return false;
@@ -89,7 +90,7 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
         ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder(this, getSupportFragmentManager())
                 .setTitle(title)
                 .setMessage( message )
-                .setCancelable(false)
+                //.setCancelable(false)
                 .setCancelableOnTouchOutside(false);
         _progressDialog = (ProgressDialogFragment) builder.show();
 
@@ -97,6 +98,7 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
     }
 
     protected  void closeProgressDialog(){
+        if( BaseFragmentActivity.this.isFinishing() )return;
         if(_progressDialog!=null){
             _progressDialog.dismiss();
             _progressDialog=null;
@@ -105,6 +107,8 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
+        if( BaseFragmentActivity.this.isFinishing() ) return;
+
         BaseFragmentActivity.this.closeProgressDialog();
         String message="";
         if( volleyError instanceof TimeoutError ){
@@ -120,11 +124,6 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
                 message = volleyError.getMessage();
             }
         }
-//        if( null != volleyError.networkResponse){
-//            message=new String( volleyError.networkResponse.data);
-//        }else{
-//            message = volleyError.getMessage();
-//        }
 
         if( message.length()<1){
             message = "网络请求失败，请检查网络状态";
@@ -133,6 +132,9 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
     }
 
 
+    /*
+      判断是否有权限
+    */
     protected boolean hasRole( RoleEnum role ){
         String roles = PreferenceHelper.readString( this , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_AUTHORITY , "");
         if( roles.contains("*") ) return  true;

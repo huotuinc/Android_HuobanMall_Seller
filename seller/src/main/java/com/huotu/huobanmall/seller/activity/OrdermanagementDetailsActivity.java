@@ -142,6 +142,8 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
     private Response.Listener< MJOrderDetailModel > orderDetailListener = new Response.Listener<MJOrderDetailModel>() {
         @Override
         public void onResponse( MJOrderDetailModel mjOrderDetailModel ) {
+            if( OrdermanagementDetailsActivity.this.isFinishing() ) return;
+
             OrdermanagementDetailsActivity.this.closeProgressDialog();
             if (mjOrderDetailModel == null) {
                 DialogUtils.showDialog(OrdermanagementDetailsActivity.this

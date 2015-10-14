@@ -16,6 +16,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.adapter.TopGoodsAdapter;
+import com.huotu.huobanmall.seller.adapter.TopsalesAdapter;
 import com.huotu.huobanmall.seller.bean.MJTopGoodsModel;
 import com.huotu.huobanmall.seller.bean.TopGoodsModel;
 import com.huotu.huobanmall.seller.common.Constant;
@@ -86,6 +87,7 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if( TopSalesActivity.this.isFinishing() ) return;
                 topGoods_listview.setRefreshing(true);
             }
         },1000);
@@ -109,6 +111,8 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
     Response.Listener<MJTopGoodsModel> listener =new Response.Listener<MJTopGoodsModel>() {
         @Override
         public void onResponse(MJTopGoodsModel mjTopGoodsModel ) {
+            if(TopSalesActivity.this.isFinishing()) return;
+
             TopSalesActivity.this.closeProgressDialog();
             topGoods_listview.onRefreshComplete();
 

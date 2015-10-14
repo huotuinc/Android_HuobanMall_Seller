@@ -61,6 +61,8 @@ public class BaseFragment extends Fragment implements Response.ErrorListener{
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
+        if( BaseFragment.this.isRemoving() || BaseFragment.this.isDetached() ) return;
+
         BaseFragment.this.closeProgressDialog();
         String message="";
         if( null != volleyError.networkResponse){

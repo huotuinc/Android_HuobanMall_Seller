@@ -226,6 +226,8 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
     protected Response.Listener<MJMemberStatisticModel> userReportListner = new Response.Listener<MJMemberStatisticModel>() {
         @Override
         public void onResponse(MJMemberStatisticModel mjMemberStatisticModel  ) {
+         if( MembersFragment.this.isRemoving() || MembersFragment.this.isDetached() ) return;
+
             MembersFragment.this.closeProgressDialog();
 
             if( mjMemberStatisticModel==null){
@@ -410,7 +412,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                 dataSet1.setColor(lineColor1);
                 dataSet1.setValueTextSize(12);
                 //dataSet1.setValueTextColor(Color.GREEN);
-                dataSet1.setDrawCubic(true);
+                //dataSet1.setDrawCubic(true);
                 dataSet1.setCircleColorHole(Color.WHITE);
                 //
                 dataSet1.setValueFormatter(new DefaultValueFormatter(0));
@@ -450,7 +452,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                 dataSet2.setColor(lineColor2);
                 dataSet2.setValueTextSize(12);
                 //dataSet2.setValueTextColor(Color.GREEN);
-                dataSet2.setDrawCubic(true);
+                //dataSet2.setDrawCubic(true);
                 dataSet2.setCircleColorHole(Color.WHITE);
 
                 dataSets.add(dataSet2);

@@ -172,6 +172,7 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if( RebateStatisticsActivity.this.isFinishing() ) return;
                 _operateType = OperateTypeEnum.REFRESH;
                 _rebateStatistics_listview.setRefreshing(true);
             }
@@ -239,6 +240,8 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
     Response.Listener<MJUserScoreModel> listener_MX =new Response.Listener<MJUserScoreModel>() {
         @Override
         public void onResponse(MJUserScoreModel mjUserScoreModel ) {
+           if( RebateStatisticsActivity.this.isFinishing() ) return;
+
             RebateStatisticsActivity.this.closeProgressDialog();
             _rebateStatistics_listview.onRefreshComplete();
 
@@ -288,7 +291,8 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
     Response.Listener<MJTopScoreModel> listener_TJ =new Response.Listener<MJTopScoreModel>() {
         @Override
         public void onResponse(MJTopScoreModel mjTopScoreModel ) {
-             RebateStatisticsActivity.this.closeProgressDialog();
+            if( RebateStatisticsActivity.this.isFinishing() ) return;
+            RebateStatisticsActivity.this.closeProgressDialog();
             _rebateStatistics_listview.onRefreshComplete();
 
             if( mjTopScoreModel==null){

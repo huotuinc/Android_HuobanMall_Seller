@@ -179,10 +179,18 @@ public class SaleGoodsFragment extends BaseFragment {
     protected void firstGetData(){
 
         if( _isPrepared && _isVisiable && _isFirst ) {
-            this.showProgressDialog("", "正在获取数据，请稍等...");
-            _type = OperateTypeEnum.REFRESH;
-            _isFirst=false;
-            getData(_type);
+            //this.showProgressDialog("", "正在获取数据，请稍等...");
+            //_type = OperateTypeEnum.REFRESH;
+            //_isFirst=false;
+            //getData(_type);
+            _handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    _type = OperateTypeEnum.REFRESH;
+                    _isFirst=false;
+                    _goodsSaleListView.setRefreshing(true);
+                }
+            },1000);
         }
     }
 

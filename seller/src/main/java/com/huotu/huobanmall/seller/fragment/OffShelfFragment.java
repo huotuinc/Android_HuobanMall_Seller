@@ -3,6 +3,7 @@ package com.huotu.huobanmall.seller.fragment;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -55,6 +56,7 @@ public class OffShelfFragment extends BaseFragment {
     boolean _isVisiable=false;
     boolean _isPrepared = false;
     boolean _isFirst =true;
+    Handler _handler = new Handler();
 
     /**
      * Use this factory method to create a new instance of
@@ -166,10 +168,20 @@ public class OffShelfFragment extends BaseFragment {
 
     protected void firstGetData(){
         if(_isVisiable && _isPrepared && _isFirst ) {
-            OffShelfFragment.this.showProgressDialog("", "正在获取数据，请稍等...");
-            _type = OperateTypeEnum.REFRESH;
-            _isFirst = false;
-            getData(_type);
+            //OffShelfFragment.this.showProgressDialog("", "正在获取数据，请稍等...");
+            //_type = OperateTypeEnum.REFRESH;
+            //_isFirst = false;
+            //getData(_type);
+            _handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if( OffShelfFragment.this.isDetached()|| OffShelfFragment.this.isRemoving() ) return;
+                    _type = OperateTypeEnum.REFRESH;
+                    _isFirst = false;
+                    _goodsOffshelfListview.setRefreshing(true);
+                }
+            },1000);
+
         }
     }
 
@@ -203,6 +215,8 @@ public class OffShelfFragment extends BaseFragment {
     Response.Listener<MJGoodModel> goodslistListener =new Response.Listener<MJGoodModel>() {
         @Override
         public void onResponse(MJGoodModel mjGoodModel) {
+           if( OffShelfFragment.this.isDetached() || OffShelfFragment.this.isRemoving() ) return;
+
             OffShelfFragment.this.closeProgressDialog();
             _goodsOffshelfListview.onRefreshComplete();
 

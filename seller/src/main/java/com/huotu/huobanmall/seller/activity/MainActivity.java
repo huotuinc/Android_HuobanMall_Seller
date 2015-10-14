@@ -310,6 +310,8 @@ public class MainActivity extends BaseFragmentActivity{
         MJMarkerView mv = new MJMarkerView( MainActivity.this , R.layout.custom_marker_view);
         lineChart.setMarkerView(mv);
 
+        //lineChart.offsetLeftAndRight(20);
+
         List<String> xValues= new ArrayList<String>();
         List<Entry> yValues=new ArrayList<>();
         int count = xData.size();
@@ -331,7 +333,7 @@ public class MainActivity extends BaseFragmentActivity{
         dataSet.setColor(lineColor);
         dataSet.setValueTextSize(14);
         dataSet.setValueTextColor(Color.GREEN);
-        dataSet.setDrawCubic(true);
+        //dataSet.setDrawCubic(true);
         dataSet.setCircleColor(lineColor);
         dataSet.setCircleColorHole(bg);
         dataSet.setDrawCircleHole(true);
@@ -354,6 +356,7 @@ public class MainActivity extends BaseFragmentActivity{
         lineChart.setDrawBorders(true);
         LineData data =new LineData(xValues, dataSet);
         lineChart.setData(data);
+        lineChart.invalidate();
         lineChart.animateX(2000, Easing.EasingOption.EaseInOutQuart);
     }
 

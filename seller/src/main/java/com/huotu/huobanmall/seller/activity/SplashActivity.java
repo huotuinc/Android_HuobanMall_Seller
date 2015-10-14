@@ -70,11 +70,9 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
 
     protected void initView() {
         ButterKnife.bind(this);
-
         if(getIntent().hasExtra("type")){
             messageType = getIntent().getIntExtra("type", 0);
         }
-
     }
 
     private void handlerView() {
@@ -118,7 +116,7 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
                 htInitBeanListener,
                 this
         );
-        VolleyRequestManager.getRequestQueue().add(initRequest);
+        VolleyRequestManager.AddRequest(initRequest);
     }
 
 
@@ -345,9 +343,9 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
     protected void updateAppNow( UpdateModel model ){
         boolean isForce=false;
         AppUpdateActivity.UpdateType type= AppUpdateActivity.UpdateType.FullUpate;
-        String md5= model.getUpdateMD5(); //"sadfsafsafafd121";
-        String url= model.getUpdateUrl(); //"http://cdn4.ops.baidu.com/new-repackonline/baidunuomi/AndroidPhone/5.12.0.1/1/1009769b/20150810142355/baidunuomi_AndroidPhone_5-12-0-1_1009769b.apk"; //"http://newresources.fanmore.cn/fanmore/fanmore3.0.apk";
-        String tips= model.getUpdateTips(); //"本文版权归作者和博客园共有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利.";
+        String md5= model.getUpdateMD5();
+        String url= model.getUpdateUrl(); //
+        String tips= model.getUpdateTips(); //
 
         Intent intent = new Intent( SplashActivity.this, AppUpdateActivity.class);
         intent.putExtra("isForce", isForce);

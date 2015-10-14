@@ -192,6 +192,8 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
     protected Response.Listener<MJBillStatisticModel> billReportListner = new Response.Listener<MJBillStatisticModel>() {
         @Override
         public void onResponse(MJBillStatisticModel mjBillStatisticModel  ) {
+         if( OrderFragment.this.isRemoving() || OrderFragment.this.isDetached() ) return;
+
             OrderFragment.this.closeProgressDialog();
 
             if( mjBillStatisticModel==null){
@@ -424,7 +426,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
             dataSet.setColor(lineColor);
             dataSet.setValueTextSize(14);
             dataSet.setValueTextColor(textColor);
-            dataSet.setDrawCubic(true);
+            //dataSet.setDrawCubic(true);
             dataSet.setDrawValues(false);
 
             XAxis xAxis = lineChart.getXAxis();
