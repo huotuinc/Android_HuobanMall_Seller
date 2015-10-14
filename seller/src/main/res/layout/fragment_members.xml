@@ -44,6 +44,42 @@
                     android:layout_toRightOf="@id/members_total_image"
 
                     android:text="注册总人数"/>
+                <TextView
+                    android:id="@+id/members_member_color1"
+                    android:background="@color/members_line_firend_color"
+                    android:layout_toLeftOf="@+id/members_member_name"
+                    android:layout_width="@dimen/space_15"
+                    android:layout_alignTop="@+id/members_total_image"
+                    android:layout_marginRight="@dimen/space_5"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_height="@dimen/space_15" />
+                <TextView
+                    android:id="@+id/members_member_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_13"
+                    android:text=" 分销商"
+                    android:layout_alignTop="@+id/members_total_image"
+                    android:layout_toLeftOf="@+id/members_firend_color1"/>
+                <TextView
+                    android:id="@+id/members_firend_color1"
+                    android:background="@color/members_line_member_color"
+                    android:layout_alignTop="@+id/members_total_image"
+                    android:layout_width="@dimen/space_15"
+                    android:layout_toLeftOf="@+id/members_firend_name"
+                    android:layout_marginRight="@dimen/space_5"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_height="@dimen/space_15" />
+                <TextView
+                    android:id="@+id/members_firend_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_13"
+                    android:layout_alignTop="@+id/members_total_image"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:text=" 会员"/>
+
 
 
                 <TextView
@@ -58,7 +94,7 @@
                     android:id="@+id/members_firendCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_13"
                     android:layout_marginRight="15dp"
                     android:textColor="@android:color/black"
                     android:text=""
@@ -110,6 +146,7 @@
                     android:textColor="@android:color/black"
                     android:text="当前统计："/>
 
+
                 <TextView
                     android:id="@+id/members_firend_color"
                     android:background="@color/members_line_firend_color"
@@ -119,17 +156,10 @@
                     android:layout_marginRight="@dimen/space_5"
                     android:layout_marginLeft="@dimen/space_5"
                     android:layout_height="@dimen/space_15" />
-                <TextView
-                    android:id="@+id/members_firend_name"
-                    android:layout_width="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/members_firend_color"
-                    android:textSize="@dimen/text_size_14"
-                    android:text="分销商："/>
+
                 <TextView
                     android:id="@+id/members_firendCount2"
-                    android:layout_toRightOf="@id/members_firend_name"
+                    android:layout_toRightOf="@id/members_firend_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
@@ -146,17 +176,10 @@
                     android:layout_marginLeft="@dimen/space_5"
                     android:layout_height="@dimen/space_15" />
 
-                <TextView
-                    android:id="@+id/members_member_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/members_member_color"
-                    android:textSize="@dimen/text_size_14"
-                    android:textColor="@android:color/black"
-                    android:text="会员："/>
+
                 <TextView
                     android:id="@+id/members_memberCount2"
-                    android:layout_toRightOf="@id/members_member_name"
+                    android:layout_toRightOf="@id/members_member_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_14"

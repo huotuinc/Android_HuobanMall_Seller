@@ -1,6 +1,7 @@
 package com.huotu.huobanmall.seller.activity;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -51,6 +52,10 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
     Button moresta_fljftj;
     @Bind(R.id.morestatistic_menu_xftj)
     Button moresta_xftj;
+    @Bind(R.id.kb1)
+    Button kb1;
+    @Bind(R.id.kb2)
+    Button kb2;
     @Bind(R.id.morestatistic_refresh)
     PullToRefreshScrollView morestat_refresh;
 
@@ -61,7 +66,33 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_statistic);
         ButterKnife.bind(this);
-
+        Drawable drawable1 = getResources().getDrawable(R.mipmap.fxs);
+        drawable1.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_fxs.setCompoundDrawables(null, drawable1, null, null);
+        Drawable drawable2= getResources().getDrawable(R.mipmap.sp);
+        drawable2.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_sp.setCompoundDrawables(null, drawable2, null, null);
+        Drawable drawable3 = getResources().getDrawable(R.mipmap.xsetj);
+        drawable3.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_xsetj.setCompoundDrawables(null, drawable3, null, null);
+        Drawable drawable4 = getResources().getDrawable(R.mipmap.hytj);
+        drawable4.setBounds(0, 0,100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_hytj.setCompoundDrawables(null, drawable4, null, null);
+        Drawable drawable5 = getResources().getDrawable(R.mipmap.xsmx);
+        drawable5.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_xsmx.setCompoundDrawables(null, drawable5, null, null);
+        Drawable drawable6 = getResources().getDrawable(R.mipmap.fltj);
+        drawable6.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_fljftj.setCompoundDrawables(null, drawable6, null, null);
+        Drawable drawable7 = getResources().getDrawable(R.mipmap.xftj);
+        drawable7.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_xftj.setCompoundDrawables(null, drawable7, null, null);
+        Drawable drawable8 = getResources().getDrawable(R.mipmap.kb);
+        drawable8.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        kb1.setCompoundDrawables(null, drawable8, null, null);
+        Drawable drawable9 = getResources().getDrawable(R.mipmap.kb);
+        drawable9.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        kb2.setCompoundDrawables(null, drawable9, null, null);
         btnBack.setOnClickListener(this);
         morestatistic_title2.setOnClickListener(this);
         moresta_fljftj.setOnClickListener(this);

@@ -219,8 +219,6 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                 listener_MX,
                 this
         );
-
-        //VolleyRequestManager.getRequestQueue().add(request);
         VolleyRequestManager.AddRequest(request);
     }
 
@@ -240,7 +238,6 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                 this
         );
 
-        //VolleyRequestManager.getRequestQueue().add( request);
         VolleyRequestManager.AddRequest(request);
     }
 
