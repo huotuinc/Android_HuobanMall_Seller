@@ -50,6 +50,7 @@ import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+import com.huotu.huobanmall.seller.widget.MJMarkerView;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -343,7 +344,8 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
             _orderLineChart.setDescription("");
             _orderLineChart.setNoDataText("暂无数据");
             _orderLineChart.getAxisRight().setEnabled(false);
-
+            MJMarkerView mv = new MJMarkerView( getActivity() , R.layout.custom_marker_view);
+            _orderLineChart.setMarkerView(mv);
         }
 
         @Override
@@ -386,20 +388,30 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
             //lineChart.getAxisRight().setEnabled(false);
 
             List<String> xValues1= new ArrayList<String>();
+
             List<Entry> yValues1=new ArrayList<>();
             int count = xData1.size();
+            //int startIndex = 0;
             for(int i=0;i< count ;i++){
                 Object x = xData1.get(i);
 
                 if( x instanceof Date){
                     int day = ((Date)x).getDate();
+//                    if(i==0 && day != 0 ){
+//                        xValues1.add("0日");
+//                        startIndex =1;
+//                    }
                     xValues1.add( String.valueOf( day ) + "日");
                 }else{
-                    xValues1.add( String.valueOf( x ) );
+//                    if(i==0 && x != 0  ){
+//                        xValues1.add("0时");
+//                        startIndex =1;
+//                    }
+                    xValues1.add( String.valueOf( x ) +"时" );
                 }
 
                 int y = yData1.get(i);
-                Entry item=new Entry( y , i , "sss");
+                Entry item=new Entry( y , i );
                 yValues1.add(item);
             }
 
@@ -413,11 +425,12 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
             dataSet.setValueTextSize(14);
             dataSet.setValueTextColor(textColor);
             dataSet.setDrawCubic(true);
-            dataSet.setDrawValues(true);
+            dataSet.setDrawValues(false);
 
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setTextColor(textColor);
+
 
             YAxis yAxis1 = lineChart.getAxisRight();
             yAxis1.setTextColor(0xFFFFFFFF);
@@ -426,7 +439,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
             YAxis yAxis = lineChart.getAxisLeft();
             yAxis.setTextColor(0xFF000000);
-
+            //yAxis.setStartAtZero(false);
 
             lineChart.setBorderColor( gridColor );
             lineChart.setDrawBorders(true);
@@ -436,7 +449,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
             LineData data =new LineData(xValues1 , dataSet );
             lineChart.setData(data);
-            lineChart.animateX(3000, Easing.EasingOption.EaseInOutQuart);
+            lineChart.animateX(2000, Easing.EasingOption.EaseInOutQuart);
         }
     }
 

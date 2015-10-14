@@ -37,7 +37,7 @@ public class MJMarkerView extends MarkerView {
             tvContent.setText("" + Utils.formatNumber(ce.getHigh(), 0, true));
         } else {
 
-            tvContent.setText("" + Utils.formatNumber(e.getVal(), 0, true));
+            tvContent.setText("" +   e.getVal() );
         }
     }
 

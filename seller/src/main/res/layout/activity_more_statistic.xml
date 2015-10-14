@@ -129,6 +129,7 @@
                 style="@style/home_tab_bottom"
                 android:id="@+id/morestatistic_menu_xftj"
                 android:drawableTop="@mipmap/xftj"
+                android:drawablePadding="@dimen/space_20"
                 android:background="@drawable/setting_menu"
                 android:layout_width="wrap_content"
                 android:layout_weight="1"

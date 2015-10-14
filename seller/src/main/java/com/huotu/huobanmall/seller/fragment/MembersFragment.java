@@ -321,7 +321,6 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
             _memberLineChart.setNoDataText("暂无数据");
             MJMarkerView mv = new MJMarkerView( getActivity() , R.layout.custom_marker_view);
             _memberLineChart.setMarkerView(mv);
-
         }
 
         @Override

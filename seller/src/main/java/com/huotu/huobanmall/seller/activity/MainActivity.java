@@ -39,6 +39,8 @@ import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+import com.huotu.huobanmall.seller.widget.MJMarkerView;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.Bind;
@@ -209,10 +211,6 @@ public class MainActivity extends BaseFragmentActivity{
                 this
         );
 
-        //boolean isConnect = this.showProgressDialog("", "正在获取数据，请稍等...");
-        //if( isConnect==false) return;
-
-        //VolleyRequestManager.getRequestQueue().add(newTodayRequest);
         VolleyRequestManager.AddRequest(newTodayRequest);
     }
 
@@ -309,13 +307,17 @@ public class MainActivity extends BaseFragmentActivity{
         lineChart.setBackgroundColor(bg);
         lineChart.setDescription("");
         lineChart.setNoDataText("暂无数据");
+        MJMarkerView mv = new MJMarkerView( MainActivity.this , R.layout.custom_marker_view);
+        lineChart.setMarkerView(mv);
+
         List<String> xValues= new ArrayList<String>();
         List<Entry> yValues=new ArrayList<>();
         int count = xData.size();
+        int index = 0;
         for(int i=0;i< count ;i++){
             if( null == xData.get(i) ) continue;
             int x = xData.get(i);
-            xValues.add( String.valueOf( x) +"时");
+            xValues.add( String.valueOf(x) +"时");
             int y = yData.get(i);
             Entry item=new Entry( y , i );
             yValues.add(item);
@@ -336,10 +338,14 @@ public class MainActivity extends BaseFragmentActivity{
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setAvoidFirstLastClipping(true);
+
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setStartAtZero(true);
         yAxis.setLabelCount(4, false);
         yAxis.setDrawGridLines(false);
+
+
 
         lineChart.getAxisRight().setDrawLabels(false);
 
@@ -407,7 +413,6 @@ public class MainActivity extends BaseFragmentActivity{
     @Override
     public void onErrorResponse(VolleyError volleyError) {
         _main_Refresh.setRefreshing(false);
-
         super.onErrorResponse(volleyError);
     }
 
@@ -425,5 +430,13 @@ public class MainActivity extends BaseFragmentActivity{
      */
     public void onEventMainThread(RefreshSettingEvent event){
         setShopNameLogo();
+        
+        _handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                _main_Refresh.setRefreshing(true);
+                refreshListener.onRefresh();
+            }
+        }, 800);
     }
 }

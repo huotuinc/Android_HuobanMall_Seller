@@ -91,10 +91,12 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.detail_btn) {
+                    header_operate.setVisibility(View.VISIBLE);
                     _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH );
                     _operateType = OperateTypeEnum.REFRESH;
                     getData_MX(_operateType);
                 } else if (checkedId == R.id.statistic_btn) {
+                    header_operate.setVisibility(View.GONE);
                     _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                     _operateType = OperateTypeEnum.REFRESH;
                     getData_TJ();

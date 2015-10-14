@@ -114,10 +114,12 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.detail_btn) {
+                    header_operate.setVisibility(View.VISIBLE);
                     _salesDetail_ListView.setMode(PullToRefreshBase.Mode.BOTH);
                     _operateType = OperateTypeEnum.REFRESH;
                     getData_MX(_operateType);
                 } else if (checkedId == R.id.statistic_btn) {
+                    header_operate.setVisibility(View.GONE);
                     _salesDetail_ListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                     _operateType = OperateTypeEnum.REFRESH;
                     getData_TJ();

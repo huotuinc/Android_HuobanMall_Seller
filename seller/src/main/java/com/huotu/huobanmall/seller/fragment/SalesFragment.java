@@ -36,6 +36,7 @@ import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+import com.huotu.huobanmall.seller.widget.MJMarkerView;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -199,7 +200,6 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
 
         this.showProgressDialog("", "正在获取数据，请稍等...");
 
-        //VolleyRequestManager.getRequestQueue().add(saleReportRequest);
         VolleyRequestManager.AddRequest(saleReportRequest);
     }
 
@@ -317,7 +317,8 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
             _saleslineChart.setDrawGridBackground(false);
             _saleslineChart.setDescription("");
             _saleslineChart.setNoDataText("暂无数据");
-
+            MJMarkerView mv = new MJMarkerView( getActivity() , R.layout.custom_marker_view);
+            _saleslineChart.setMarkerView(mv);
         }
 
         @Override

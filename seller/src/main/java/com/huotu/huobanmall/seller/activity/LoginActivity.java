@@ -15,6 +15,7 @@ import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.HTMerchantModel;
 import com.huotu.huobanmall.seller.bean.MerchantModel;
+import com.huotu.huobanmall.seller.bean.RefreshSettingEvent;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.common.SellerApplication;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 public class LoginActivity extends BaseFragmentActivity implements
         View.OnClickListener , ISimpleDialogListener{
@@ -242,6 +244,7 @@ public class LoginActivity extends BaseFragmentActivity implements
                 SellerApplication.getInstance().writeMerchantInfo(user);
                 Intent intent = new Intent(LoginActivity.this , MainActivity.class);
                 intent.putExtra("type", messageType);
+                EventBus.getDefault().post(new RefreshSettingEvent());
                 ActivityUtils.getInstance().skipActivity(LoginActivity.this, intent );
             }
             else
