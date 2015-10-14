@@ -430,7 +430,7 @@ public class MainActivity extends BaseFragmentActivity{
      */
     public void onEventMainThread(RefreshSettingEvent event){
         setShopNameLogo();
-        
+
         _handler.postDelayed(new Runnable() {
             @Override
             public void run() {

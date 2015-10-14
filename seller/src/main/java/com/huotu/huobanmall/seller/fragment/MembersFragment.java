@@ -215,7 +215,6 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                 MJMemberStatisticModel.class,
                 null,
                 userReportListner,
-                //errorListener
                 this
         );
 
