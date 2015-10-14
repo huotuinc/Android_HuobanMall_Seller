@@ -148,25 +148,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
             _recycleLVs.get(3).setAdapter(_adapter4);
         }
 
-//        protected void demoAddChild(OrderListModel model){
-//            model.setHasChildOrder(true);
-//            model.setChildOrders(new ArrayList<OrderListModel>());
-//            for( int i=0;i<2;i++){
-//                OrderListModel child = new OrderListModel();
-//                child.setOrderNo("AAAAAAA"+i);
-//                child.setStatus(0);
-//                child.setGoods( new ArrayList<GoodsModel>());
-//                for( int k=0;k<4;k++){
-//                    GoodsModel good = new GoodsModel();
-//                    good.setGoodsId(i);
-//                    good.setPrice(22.22F);
-//                    good.setStock(2);
-//                    good.setTitle("法规和司法受到犯规地方噶是受到犯规");
-//                    child.getGoods().add(good);
-//                }
-//                model.getChildOrders().add(child);
-//            }
-//        }
+
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
@@ -195,9 +177,6 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                     //item.setGoods(items);
                     _data1.add(item);
                 }
-                //_adapter1 = new BillDataAdapter(_context, _data1);
-                //_adapter1.setLogisticsListener(_seeLogisticListener);
-                //_recycleLVs.get(0).setAdapter(_adapter1);
                 _adapter1.notifyDataSetChanged();
             }else if(position==1){
                 //_data2 = new ArrayList<>();
@@ -214,12 +193,8 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                         g.setTitle("如何让熊孩子爱上刷牙？飞利浦新款智能牙刷加入游戏应用");
                         items.add(g);
                     }
-                    //item.setGoods(items);
                     _data2.add(item);
                 }
-                //_adapter2 = new BillDataAdapter(_context, _data2);
-                //_adapter2.setLogisticsListener(_seeLogisticListener);
-                //_recycleLVs.get(1).setAdapter(_adapter2);
                 _adapter2.notifyDataSetChanged();
             }else if(position ==2 ){
                 //_data3 = new ArrayList<>();
@@ -236,20 +211,11 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                         g.setTitle("名落孙山之后， 微软Edge浏览器发布一大波新功能微软Edge浏览器发布一大波新功能微软Edge浏览器发布一大波新功能");
                         items.add(g);
                     }
-                    //item.setGoods(items);
+
                     _data3.add(item);
                 }
-                //_adapter3 = new BillDataAdapter(_context, _data3);
-                //_adapter3.setLogisticsListener(_seeLogisticListener);
-                //_recycleLVs.get(2).setAdapter(_adapter3);
                 _adapter3.notifyDataSetChanged();
             }else if(position==3){
-                //_data4=new ArrayList<>();
-                //_data4.clear();
-
-                //_adapter4 = new BillDataAdapter(_context, _data4);
-                //_adapter4.setLogisticsListener(_seeLogisticListener);
-                //_recycleLVs.get(3).setAdapter(_adapter4);
                 OrderListModel item = new OrderListModel();
                 item.setOrderNo("888");
                 item.setStatus("1");
@@ -262,7 +228,6 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
                     g.setTitle("名落孙山之后， 微软Edge浏览器发布一大波新功能微软Edge浏览器发布一大波新功能微软Edge浏览器发布一大波新功能");
                     items.add(g);
                 }
-                //item.setGoods(items);
                 _data4.add(item);
 
                 _adapter4.notifyDataSetChanged();
@@ -274,20 +239,13 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            //super.destroyItem(container, position, object);
             container.removeView(_recycleLVs.get(position) );
-            //container.removeView();
         }
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
-
-        //@Override
-        //public int getItemPosition(Object object) {
-            //return super.getItemPosition(object);
-        //}
 
         @Override
         public int getCount() {

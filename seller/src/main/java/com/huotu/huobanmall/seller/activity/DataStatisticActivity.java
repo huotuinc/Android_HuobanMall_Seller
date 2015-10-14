@@ -182,6 +182,7 @@ public class DataStatisticActivity extends BaseFragmentActivity implements Radio
         });
 
         _viewPager.setCurrentItem( _currentTabType-1 );
+
     }
 
     @Override
