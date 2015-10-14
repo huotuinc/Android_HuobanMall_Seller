@@ -13,6 +13,7 @@ import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.huotu.android.library.libedittext.EditText;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.CloseEvnt;
 import com.huotu.huobanmall.seller.bean.HTMerchantModel;
 import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.bean.RefreshSettingEvent;
@@ -64,9 +65,13 @@ public class LoginActivity extends BaseFragmentActivity implements
         setContentView(R.layout.activity_login);
         initView();
     }
-    private void initView()
+    public void initView()
     {
         ButterKnife.bind(this);
+//        if( EventBus.getDefault().isRegistered(this)==false) {
+//            EventBus.getDefault().register(this);
+//        }
+
         userName.setText("");
         //userName.setText("18767152078");
         //userName.setText("jxd");
@@ -86,7 +91,12 @@ public class LoginActivity extends BaseFragmentActivity implements
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+//        if( EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().unregister(this);
+//        }
     }
+
+
 
     protected void login(){
         if( false== canConnect()){
@@ -169,6 +179,7 @@ public class LoginActivity extends BaseFragmentActivity implements
             }
             break;
             case R.id.header_back: {
+                EventBus.getDefault().post(new CloseEvnt());
                 finish();
             }
             break;
@@ -196,6 +207,7 @@ public class LoginActivity extends BaseFragmentActivity implements
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getAction() == KeyEvent.ACTION_DOWN)
         {
+            EventBus.getDefault().post(new CloseEvnt());
             // finish自身
             LoginActivity.this.finish();
             return true;
@@ -253,4 +265,5 @@ public class LoginActivity extends BaseFragmentActivity implements
             }
         }
     };
+
 }
