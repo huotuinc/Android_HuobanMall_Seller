@@ -3,6 +3,11 @@
     android:layout_width="match_parent"
     android:background="@color/main_header_bg"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/header_back_relayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
     <Button
         android:id="@+id/header_back"
         android:layout_width="30dp"
@@ -12,6 +17,7 @@
         android:textColor="@android:color/white"
         android:layout_marginLeft="20dp"
         android:drawableLeft="@drawable/btn_back"/>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/header_operate"
@@ -24,7 +30,7 @@
     <TextView
         android:id="@+id/header_title"
         android:layout_toLeftOf="@id/header_operate"
-        android:layout_toRightOf="@id/header_back"
+        android:layout_toRightOf="@id/header_back_relayout"
         android:layout_width="match_parent"
         android:layout_centerVertical="true"
         android:text="订单管理"

@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.huotu.huobanmall.seller.R;
@@ -40,6 +41,8 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
     TextView header_operate;
     @Bind(R.id.header_title)
     TextView header_title;
+    @Bind(R.id.header_back_relayout)
+    RelativeLayout header_back_relayout;
 
     BillAdapter _adapter;
 
@@ -53,7 +56,7 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
 
     protected void initView(){
         ButterKnife.bind(this);
-        _headerBack.setOnClickListener(this);
+        header_back_relayout.setOnClickListener(this);
         header_title.setText("订单管理");
         _adapter = new BillAdapter(this);
 
@@ -73,10 +76,11 @@ public class BillActivity extends BaseFragmentActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.header_back: {
+            case R.id.header_back_relayout:{
                 finish();
             }
             break;
+
             }
     }
 
