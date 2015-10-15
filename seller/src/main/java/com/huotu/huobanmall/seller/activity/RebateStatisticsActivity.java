@@ -295,29 +295,32 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
             RebateStatisticsActivity.this.closeProgressDialog();
             _rebateStatistics_listview.onRefreshComplete();
 
-            if( mjTopScoreModel==null){
-                DialogUtils.showDialog(RebateStatisticsActivity.this, RebateStatisticsActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
+            if(!validateData(mjTopScoreModel)){
                 return;
             }
-            if( mjTopScoreModel.getSystemResultCode()!=1){
-                SimpleDialogFragment.createBuilder(RebateStatisticsActivity.this, RebateStatisticsActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage( mjTopScoreModel.getSystemResultDescription() )
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }else if( mjTopScoreModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().showActivity(RebateStatisticsActivity.this, LoginActivity.class);
-                return;
-            }
-            else if( mjTopScoreModel.getResultCode() != 1){
-                SimpleDialogFragment.createBuilder( RebateStatisticsActivity.this , RebateStatisticsActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage( mjTopScoreModel.getResultDescription() )
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }
+//            if( mjTopScoreModel==null){
+//                DialogUtils.showDialog(RebateStatisticsActivity.this, RebateStatisticsActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
+//                return;
+//            }
+//            if( mjTopScoreModel.getSystemResultCode()!=1){
+//                SimpleDialogFragment.createBuilder(RebateStatisticsActivity.this, RebateStatisticsActivity.this.getSupportFragmentManager())
+//                        .setTitle("错误信息")
+//                        .setMessage( mjTopScoreModel.getSystemResultDescription() )
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+//                return;
+//            }else if( mjTopScoreModel.getResultCode()== Constant.TOKEN_OVERDUE){
+//                ActivityUtils.getInstance().showActivity(RebateStatisticsActivity.this, LoginActivity.class);
+//                return;
+//            }
+//            else if( mjTopScoreModel.getResultCode() != 1){
+//                SimpleDialogFragment.createBuilder( RebateStatisticsActivity.this , RebateStatisticsActivity.this.getSupportFragmentManager())
+//                        .setTitle("错误信息")
+//                        .setMessage( mjTopScoreModel.getResultDescription() )
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+//                return;
+//            }
 
             _topScoreList.clear();
             if( mjTopScoreModel.getResultData() !=null && mjTopScoreModel.getResultData().getList() !=null

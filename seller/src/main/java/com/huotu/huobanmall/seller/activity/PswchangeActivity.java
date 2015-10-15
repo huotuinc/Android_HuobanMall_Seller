@@ -194,32 +194,36 @@ public class PswchangeActivity extends BaseFragmentActivity implements
                 HTMerchantModel.class,
                 null,
                 modifyPasswordListener,
-                errorListener
+                this
         );
 
-        VolleyRequestManager.getRequestQueue().add(loginRequest);
+        VolleyRequestManager.AddRequest(loginRequest);
     }
     Response.Listener<HTMerchantModel> modifyPasswordListener = new Response.Listener<HTMerchantModel>() {
         @Override
         public void onResponse(HTMerchantModel htMerchantModel ) {
+           if( PswchangeActivity.this.isFinishing() ) return;
             PswchangeActivity.this.closeProgressDialog();
 
-            if(  htMerchantModel.getSystemResultCode() != 1 ) {
-                SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
-                        .setTitle("系统错误")
-                        .setMessage(htMerchantModel.getSystemResultDescription())
-                        .setNegativeButtonText("关闭")
-                        .show();
+            if( ! validateData( htMerchantModel)){
                 return;
             }
-            if( htMerchantModel.getResultCode() !=1 ){
-                SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
-                        .setTitle("系统错误")
-                        .setMessage(htMerchantModel.getResultDescription())
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }
+//            if(  htMerchantModel.getSystemResultCode() != 1 ) {
+//                SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
+//                        .setTitle("系统错误")
+//                        .setMessage(htMerchantModel.getSystemResultDescription())
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+//                return;
+//            }
+//            if( htMerchantModel.getResultCode() !=1 ){
+//                SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
+//                        .setTitle("系统错误")
+//                        .setMessage(htMerchantModel.getResultDescription())
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+//                return;
+//            }
 
             ToastUtils.showLong("修改密码成功");
 
@@ -228,16 +232,6 @@ public class PswchangeActivity extends BaseFragmentActivity implements
             PswchangeActivity.this.finish();
         }
     };
-    Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            PswchangeActivity.this.closeProgressDialog();
-            String message="";
-            if( null != volleyError.networkResponse){
-                message=new String( volleyError.networkResponse.data);
-            }
-            DialogUtils.showDialog(PswchangeActivity.this,PswchangeActivity.this.getSupportFragmentManager(),"错误信息",message,"关闭");
-        }
-    };
+
 
 }

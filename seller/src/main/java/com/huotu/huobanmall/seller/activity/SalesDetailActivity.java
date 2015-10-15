@@ -258,27 +258,30 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
             SalesDetailActivity.this.closeProgressDialog();
             _salesDetail_ListView.onRefreshComplete();
 
-            if( mjSaleListModel==null){
-                DialogUtils.showDialog(SalesDetailActivity.this, SalesDetailActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
+            if(!validateData(mjSaleListModel)){
                 return;
             }
-            if( mjSaleListModel.getSystemResultCode()!=1){
-                DialogUtils.showDialog(SalesDetailActivity.this, SalesDetailActivity.this.getSupportFragmentManager()
-                        ,"错误信息"
-                        , mjSaleListModel.getSystemResultDescription()
-                        ,"关闭");
-                return;
-            }else if( mjSaleListModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().skipActivity(SalesDetailActivity.this, LoginActivity.class);
-                return;
-            }
-            else if( mjSaleListModel.getResultCode() != 1){
-                DialogUtils.showDialog(SalesDetailActivity.this, SalesDetailActivity.this.getSupportFragmentManager()
-                        ,"错误信息"
-                        , mjSaleListModel.getResultDescription()
-                        ,"关闭");
-                return;
-            }
+//            if( mjSaleListModel==null){
+//                DialogUtils.showDialog(SalesDetailActivity.this, SalesDetailActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
+//                return;
+//            }
+//            if( mjSaleListModel.getSystemResultCode()!=1){
+//                DialogUtils.showDialog(SalesDetailActivity.this, SalesDetailActivity.this.getSupportFragmentManager()
+//                        ,"错误信息"
+//                        , mjSaleListModel.getSystemResultDescription()
+//                        ,"关闭");
+//                return;
+//            }else if( mjSaleListModel.getResultCode()== Constant.TOKEN_OVERDUE){
+//                ActivityUtils.getInstance().skipActivity(SalesDetailActivity.this, LoginActivity.class);
+//                return;
+//            }
+//            else if( mjSaleListModel.getResultCode() != 1){
+//                DialogUtils.showDialog(SalesDetailActivity.this, SalesDetailActivity.this.getSupportFragmentManager()
+//                        ,"错误信息"
+//                        , mjSaleListModel.getResultDescription()
+//                        ,"关闭");
+//                return;
+//            }
 
             if(_operateType == OperateTypeEnum.REFRESH){
                 _saledetailList.clear();

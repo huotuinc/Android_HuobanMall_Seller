@@ -14,8 +14,10 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.avast.android.dialogs.fragment.ProgressDialogFragment;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.bean.BaseModel;
 import com.huotu.huobanmall.seller.bean.RoleEnum;
 import com.huotu.huobanmall.seller.common.Constant;
+import com.huotu.huobanmall.seller.utils.ActivityUtils;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
@@ -132,8 +134,44 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
     }
 
 
+ 
+    /**
+    * 方法描述：
+    * 方法名称：
+    * 参数：
+    * 返回值：
+    * 创建时间: 2015/10/15
+    * 作者: Administrator
+    */
+    protected boolean validateData(BaseModel data){
+        if( BaseFragmentActivity.this.isFinishing() ) return false;
+
+        if(null == data){
+            DialogUtils.showDialog(BaseFragmentActivity.this, BaseFragmentActivity.this.getSupportFragmentManager() ,"错误信息","请求失败","关闭");
+            return false;
+        }else if(data.getSystemResultCode()!=1){
+            DialogUtils.showDialog(BaseFragmentActivity.this, BaseFragmentActivity.this.getSupportFragmentManager() ,"错误信息",data.getSystemResultDescription(),"关闭");
+            return false;
+        }else if( data.getResultCode()== Constant.TOKEN_OVERDUE){
+            ActivityUtils.getInstance().skipActivity(BaseFragmentActivity.this,LoginActivity.class);
+            return false;
+        }else if( data.getResultCode() != 1){
+            DialogUtils.showDialog(BaseFragmentActivity.this, BaseFragmentActivity.this.getSupportFragmentManager() ,"错误信息",data.getResultDescription(),"关闭");
+            return false;
+        }
+        return true;
+    }
+
     /*
       判断是否有权限
+    */
+    /**
+    * 方法描述：
+    * 方法名称：
+    * 参数：
+    * 返回值：
+    * 创建时间: 2015/10/15
+    * 作者: 
     */
     protected boolean hasRole( RoleEnum role ){
         String roles = PreferenceHelper.readString( this , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_AUTHORITY , "");

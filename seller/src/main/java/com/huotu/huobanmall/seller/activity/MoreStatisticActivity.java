@@ -168,22 +168,25 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
             morestat_refresh.onRefreshComplete();
             clearData();
 
-            if( mjOtherStatisticModel==null){
-                DialogUtils.showDialog(MoreStatisticActivity.this, MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息","请求数据失败","关闭");
+            if(! validateData(mjOtherStatisticModel)){
                 return;
             }
-            if( mjOtherStatisticModel.getSystemResultCode()!=1){
-                DialogUtils.showDialog(MoreStatisticActivity.this,MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息", mjOtherStatisticModel.getSystemResultDescription(),"关闭");
-                return;
-            }
-            if( mjOtherStatisticModel.getResultCode() == Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().skipActivity(MoreStatisticActivity.this, LoginActivity.class);
-                return;
-            }
-            if( mjOtherStatisticModel.getResultCode() !=1){
-                DialogUtils.showDialog(MoreStatisticActivity.this,MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息",mjOtherStatisticModel.getResultDescription(),"关闭");
-                return;
-            }
+//            if( mjOtherStatisticModel==null){
+//                DialogUtils.showDialog(MoreStatisticActivity.this, MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息","请求数据失败","关闭");
+//                return;
+//            }
+//            if( mjOtherStatisticModel.getSystemResultCode()!=1){
+//                DialogUtils.showDialog(MoreStatisticActivity.this,MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息", mjOtherStatisticModel.getSystemResultDescription(),"关闭");
+//                return;
+//            }
+//            if( mjOtherStatisticModel.getResultCode() == Constant.TOKEN_OVERDUE){
+//                ActivityUtils.getInstance().skipActivity(MoreStatisticActivity.this, LoginActivity.class);
+//                return;
+//            }
+//            if( mjOtherStatisticModel.getResultCode() !=1){
+//                DialogUtils.showDialog(MoreStatisticActivity.this,MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息",mjOtherStatisticModel.getResultDescription(),"关闭");
+//                return;
+//            }
 
             if( mjOtherStatisticModel.getResultData() ==null || mjOtherStatisticModel.getResultData().getOtherInfoList() ==null ){
                 DialogUtils.showDialog( MoreStatisticActivity.this , MoreStatisticActivity.this.getSupportFragmentManager(),

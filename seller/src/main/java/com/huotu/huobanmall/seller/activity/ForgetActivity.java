@@ -61,7 +61,6 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
     EditText edtRePwd;
     @Bind(R.id.btnComplete)
     Button btnComplete;
-    //返回文字事件
     @Bind(R.id.header_back)
     Button header_back;
 

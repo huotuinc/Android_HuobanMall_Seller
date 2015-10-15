@@ -30,8 +30,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:gravity="left"
-        android:hint="请留下您的宝贵意见(500字内)"
-        android:maxLength="500"
+        android:hint="请留下您的宝贵意见(200字内)"
+        android:maxLength="200"
         android:imeOptions="actionNext"
         android:minHeight="200dp"
         android:textColor="@color/black" >

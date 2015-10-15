@@ -41,6 +41,7 @@ import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.huotu.huobanmall.seller.widget.MJMarkerView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.Bind;
@@ -88,7 +89,6 @@ public class MainActivity extends BaseFragmentActivity{
     TextView _header_title;
     @Bind(R.id.main_refresh)
     SwipeRefreshLayout _main_Refresh;
-
     Long existTime=0L;
     Integer waitForExistSecond=2000;
     MJNewTodayModel _data=null;
@@ -135,14 +135,14 @@ public class MainActivity extends BaseFragmentActivity{
 
         openMessage();
 
-        //getData();
         _handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if( MainActivity.this.isFinishing() ) return;
                _main_Refresh.setRefreshing(true);
                refreshListener.onRefresh();
             }
-        },500);
+        },800);
     }
 
     protected SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
@@ -174,8 +174,6 @@ public class MainActivity extends BaseFragmentActivity{
     @Override
     protected void onResume() {
         super.onResume();
-
-        //getData();
     }
 
     @Override
@@ -196,6 +194,7 @@ public class MainActivity extends BaseFragmentActivity{
     protected void getData(){
         if( false == canConnect() ){
             this.closeProgressDialog();
+            _main_Refresh.setRefreshing(false);
             return;
         }
 
@@ -347,8 +346,6 @@ public class MainActivity extends BaseFragmentActivity{
         yAxis.setLabelCount(4, false);
         yAxis.setDrawGridLines(false);
 
-
-
         lineChart.getAxisRight().setDrawLabels(false);
 
         lineChart.getLegend().setEnabled(false);
@@ -363,32 +360,26 @@ public class MainActivity extends BaseFragmentActivity{
     Response.Listener<MJNewTodayModel> newTodayModelListener = new Response.Listener<MJNewTodayModel>() {
         @Override
         public void onResponse(MJNewTodayModel mjNewTodayModel) {
+           if( MainActivity.this.isFinishing() ) return;
+
             MainActivity.this.closeProgressDialog();
             _main_Refresh.setRefreshing(false);
 
-            if(null == mjNewTodayModel){
-                DialogUtils.showDialog(MainActivity.this, MainActivity.this.getSupportFragmentManager()
-                ,"错误信息","请求失败","关闭");
-                return;
-            }
-            if(mjNewTodayModel.getSystemResultCode()!=1){
-                DialogUtils.showDialog(MainActivity.this, MainActivity.this.getSupportFragmentManager()
-                        ,"错误信息",mjNewTodayModel.getSystemResultDescription(),"关闭");
-                return;
-            }else if( mjNewTodayModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().skipActivity(MainActivity.this,LoginActivity.class);
-                return;
-            }else if( mjNewTodayModel.getResultCode() != 1){
-                DialogUtils.showDialog(MainActivity.this, MainActivity.this.getSupportFragmentManager()
-                        ,"错误信息",mjNewTodayModel.getResultDescription(),"关闭");
+            if( ! validateData( mjNewTodayModel) ){
                 return;
             }
 
-            main_TodayMoney.setText("￥"+String.valueOf(mjNewTodayModel.getResultData().getTodaySales()));
-            main_TotalMoney.setText(String.valueOf(mjNewTodayModel.getResultData().getTotalSales()));
+            if( mjNewTodayModel.getResultData() ==null ){
+                DialogUtils.showDialog(MainActivity.this, MainActivity.this.getSupportFragmentManager(),"错误信息", "服务器端返回的数据不完整","关闭");
+                return;
+            }
 
+            DecimalFormat decimalFormat=new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+            String todaySales = decimalFormat.format(mjNewTodayModel.getResultData().getTodaySales());//format 返回的是字符串
+            main_TodayMoney.setText("￥" + todaySales );
+            String totalSales = decimalFormat.format(mjNewTodayModel.getResultData().getTotalSales() );
+            main_TotalMoney.setText( totalSales );
             _data=mjNewTodayModel;
-
             setLineChart();
         }
     };
@@ -415,6 +406,7 @@ public class MainActivity extends BaseFragmentActivity{
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
+        if( MainActivity.this.isFinishing() ) return;
         _main_Refresh.setRefreshing(false);
         super.onErrorResponse(volleyError);
     }
@@ -437,6 +429,7 @@ public class MainActivity extends BaseFragmentActivity{
         _handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if( MainActivity.this.isFinishing() )return;
                 _main_Refresh.setRefreshing(true);
                 refreshListener.onRefresh();
             }

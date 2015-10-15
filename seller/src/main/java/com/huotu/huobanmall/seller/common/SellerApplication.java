@@ -91,7 +91,7 @@ public class SellerApplication extends Application{
         //新增小伙伴通知
         PreferenceHelper.writeInt(getApplicationContext(), Constant.LOGIN_USER_INFO, Constant
                 .LOGIN_AUTH_ENABLE_PARTNER_NOTICE, user
-                .getEnableBillNotice());
+                .getEnablePartnerNotice() );
         //店铺logo
         PreferenceHelper.writeString ( getApplicationContext (), Constant.LOGIN_USER_INFO, Constant.LOGIN_AUTH_LOGO, user.getLogo() );
         //用户Token

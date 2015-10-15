@@ -61,8 +61,6 @@ public class FeedBackActivity extends BaseFragmentActivity implements OnClickLis
     //设置监听
     public void onClick(View v)
     {
-        // TODO Auto-generated method stub
-
         switch (v.getId())
         {
         //提交反馈
@@ -148,48 +146,18 @@ public class FeedBackActivity extends BaseFragmentActivity implements OnClickLis
                 listener,
                 this
         );
-        VolleyRequestManager.getRequestQueue().add(request);
+
+        this.showProgressDialog("", "正在提交数据，请稍等...");
+
+        VolleyRequestManager.AddRequest(request);
     }
 
     Response.Listener<MJFeedbackModel> listener =new Response.Listener<MJFeedbackModel>() {
         @Override
         public void onResponse(MJFeedbackModel mjFeedbackModel) {
+           if( FeedBackActivity.this.isFinishing() ) return;
             FeedBackActivity.this.closeProgressDialog();
-
-            if( null == mjFeedbackModel ){
-                SimpleDialogFragment.createBuilder(
-                        FeedBackActivity.this,
-                        FeedBackActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage("请求出错")
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }
-            else if( mjFeedbackModel.getSystemResultCode() != 1){
-                SimpleDialogFragment.createBuilder(
-                        FeedBackActivity.this ,
-                        FeedBackActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage(mjFeedbackModel.getSystemResultDescription())
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }else if( mjFeedbackModel.getResultCode() == Constant.TOKEN_OVERDUE ){
-                ActivityUtils.getInstance().skipActivity(FeedBackActivity.this, LoginActivity.class);
-                return;
-            }
-            else if( mjFeedbackModel.getResultCode() !=1){
-                SimpleDialogFragment.createBuilder(
-                        FeedBackActivity.this ,
-                        FeedBackActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage(mjFeedbackModel.getResultDescription() )
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }
-
+            if(!validateData(mjFeedbackModel)) {return;}
             SimpleDialogFragment.createBuilder( FeedBackActivity.this,
                     FeedBackActivity.this.getSupportFragmentManager())
                     .setTitle("意见反馈")
@@ -208,7 +176,7 @@ public class FeedBackActivity extends BaseFragmentActivity implements OnClickLis
             FeedBackActivity.this.finish();
             return true;
         }
-        // TODO Auto-generated method stub
+
         return super.onKeyDown(keyCode, event);
     }
 

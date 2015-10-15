@@ -1,6 +1,7 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -8,6 +9,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.common.Constant;
@@ -21,17 +23,15 @@ import butterknife.ButterKnife;
 public class WebViewActivity extends BaseFragmentActivity implements View.OnClickListener{
     @Bind(R.id.webView_page)
     PullToRefreshWebView _pullToRefreshWebViewPage;
-
     WebView _webView;
-
     @Bind(R.id.header_title)
     public TextView _webViewTitle;
-
     String _url;
     @Bind(R.id.header_back)
     Button header_back;
     @Bind(R.id.header_operate)
     public TextView header_operate;
+    Handler _handler =new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,14 @@ public class WebViewActivity extends BaseFragmentActivity implements View.OnClic
         header_operate.setVisibility(View.GONE);
         header_back.setOnClickListener(this);
         _webViewTitle.setText("商城首页");
+
+        _pullToRefreshWebViewPage.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<WebView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<WebView> refreshView) {
+                refreshView.getRefreshableView().loadUrl(_url);
+            }
+        });
+
         _webView = _pullToRefreshWebViewPage.getRefreshableView();
         _webView.getSettings().setJavaScriptEnabled(true);
         _webView.setWebViewClient(new SellerWebViewClient());
@@ -49,7 +57,13 @@ public class WebViewActivity extends BaseFragmentActivity implements View.OnClic
 
         if( null != getIntent() && getIntent().hasExtra(Constant.Extra_Url )){
             _url= getIntent().getStringExtra( Constant.Extra_Url );
-            _webView.loadUrl(_url);
+            _handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if( WebViewActivity.this.isFinishing() )return;
+                    _pullToRefreshWebViewPage.setRefreshing(true);
+                }
+            },1000);
         }
         if( null != getIntent() && getIntent().hasExtra(Constant.Extra_Title )){
             String title= getIntent().getStringExtra( Constant.Extra_Title );
@@ -71,11 +85,19 @@ public class WebViewActivity extends BaseFragmentActivity implements View.OnClic
         ButterKnife.unbind(this);
     }
 
-    private static class SellerWebViewClient extends WebViewClient {
+    private class SellerWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
+        }
+
+
+
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
+            WebViewActivity.this._pullToRefreshWebViewPage.onRefreshComplete();
         }
     }
 

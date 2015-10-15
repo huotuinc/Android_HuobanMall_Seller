@@ -1,8 +1,11 @@
 package com.huotu.huobanmall.seller.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,45 +37,37 @@ import de.greenrobot.event.EventBus;
  * Created by Administrator on 2015/8/31.
  */
 public class PushActivity extends BaseFragmentActivity implements View.OnClickListener {
-
-    // 界面名称
+    String TAG= PushActivity.class.getName();
     @Bind(R.id.header_title)
     public TextView header_title;
-
     @Bind(R.id.header_back)
     public TextView header_back;
-
     @Bind(R.id.RLnotice)
     public RelativeLayout RLnotice;
-
     @Bind(R.id.RLxiaohuoban)
     public RelativeLayout RLxiaohuoban;
-
     @Bind(R.id.RLmiandarao)
     public RelativeLayout RLmiandarao;
-
     @Bind(R.id.swit1)
     public com.zcw.togglebutton.ToggleButton swit1;
-
     @Bind(R.id.swit2)
     public com.zcw.togglebutton.ToggleButton swit2;
-
     @Bind(R.id.swit3)
     public com.zcw.togglebutton.ToggleButton swit3;
-
     @Bind(R.id.tip)
     public TextView tip;
+    @Bind(R.id.header_operate)
+    TextView header_operate;
+    Handler _handler = new Handler();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_push);
-
-        ButterKnife.bind(this);
         initView();
     }
 
     private void initView() {
+        ButterKnife.bind(this);
         header_title.setText("推送设置");
         header_back.setOnClickListener(this);
         swit1.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
@@ -147,48 +142,33 @@ public class PushActivity extends BaseFragmentActivity implements View.OnClickLi
                 null,
                 maps,
                 updateListener,
-                errorListener
+                this
         );
-
         VolleyRequestManager.getRequestQueue().add(request);
     }
 
     Response.Listener<HTMerchantModel> updateListener = new Response.Listener<HTMerchantModel>() {
         @Override
         public void onResponse(HTMerchantModel htMerchantModel) {
-            PushActivity.this.closeProgressDialog();
-            if( null == htMerchantModel){
-                DialogUtils.showDialog(PushActivity.this, PushActivity.this.getSupportFragmentManager(), "错误信息", "更新失败", "关闭");
-                return;
-            }
-            if( htMerchantModel.getSystemResultCode()!=1){
-                DialogUtils.showDialog(PushActivity.this,PushActivity.this.getSupportFragmentManager(),"错误信息",htMerchantModel.getSystemResultDescription(),"关闭");
-                return;
-            }
-            if( htMerchantModel.getResultCode() == Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().skipActivity(PushActivity.this,LoginActivity.class);
-                return;
-            }
-            if( htMerchantModel.getResultCode() != 1){
-                DialogUtils.showDialog(PushActivity.this,PushActivity.this.getSupportFragmentManager(),"错误信息",htMerchantModel.getResultDescription(),"关闭");
-                return;
-            }
-            SellerApplication.getInstance().writeMerchantInfo(htMerchantModel.getResultData().getUser());
-            //刷新界面数据
-            EventBus.getDefault().post( new RefreshSettingEvent());
-            //PushActivity.this.finish();
-        }
-    };
+            //if( PushActivity.this.isFinishing() ) return;
+            try {
+                _handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (PushActivity.this.isFinishing()) return;
+                        PushActivity.this.closeProgressDialog();
+                    }
+                });
 
-    Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            PushActivity.this.closeProgressDialog();
-            String message="";
-            if( null != volleyError.networkResponse){
-                message=new String( volleyError.networkResponse.data);
+                if (!validateData(htMerchantModel)) return;
+
+                SellerApplication.getInstance().writeMerchantInfo(htMerchantModel.getResultData().getUser());
+                //刷新界面数据
+                EventBus.getDefault().post(new RefreshSettingEvent());
+
+            } catch (Exception ex) {
+                Log.e( TAG , ex.getMessage());
             }
-            DialogUtils.showDialog(PushActivity.this, PushActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
         }
     };
 }

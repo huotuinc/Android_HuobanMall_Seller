@@ -82,8 +82,6 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
     }
 
     private void firstSaleGoodData() {
-        //this.showProgressDialog("", "正在获取数据，请稍等...");
-        // getData();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -116,29 +114,33 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
             TopSalesActivity.this.closeProgressDialog();
             topGoods_listview.onRefreshComplete();
 
-            if( mjTopGoodsModel==null){
-                DialogUtils.showDialog(TopSalesActivity.this, TopSalesActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
+            if(! validateData(mjTopGoodsModel)){
                 return;
             }
-            if( mjTopGoodsModel.getSystemResultCode()!=1){
-                SimpleDialogFragment.createBuilder(TopSalesActivity.this, TopSalesActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage( mjTopGoodsModel.getSystemResultDescription() )
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }else if( mjTopGoodsModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().showActivity(TopSalesActivity.this, LoginActivity.class);
-                return;
-            }
-            else if( mjTopGoodsModel.getResultCode() != 1){
-                SimpleDialogFragment.createBuilder( TopSalesActivity.this , TopSalesActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage( mjTopGoodsModel.getResultDescription() )
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }
+
+//            if( mjTopGoodsModel==null){
+//                DialogUtils.showDialog(TopSalesActivity.this, TopSalesActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
+//                return;
+//            }
+//            if( mjTopGoodsModel.getSystemResultCode()!=1){
+//                SimpleDialogFragment.createBuilder(TopSalesActivity.this, TopSalesActivity.this.getSupportFragmentManager())
+//                        .setTitle("错误信息")
+//                        .setMessage( mjTopGoodsModel.getSystemResultDescription() )
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+//                return;
+//            }else if( mjTopGoodsModel.getResultCode()== Constant.TOKEN_OVERDUE){
+//                ActivityUtils.getInstance().skipActivity(TopSalesActivity.this, LoginActivity.class);
+//                return;
+//            }
+//            else if( mjTopGoodsModel.getResultCode() != 1){
+//                SimpleDialogFragment.createBuilder( TopSalesActivity.this , TopSalesActivity.this.getSupportFragmentManager())
+//                        .setTitle("错误信息")
+//                        .setMessage( mjTopGoodsModel.getResultDescription() )
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+//                return;
+//            }
 
             topGoodsList.clear();
 
@@ -161,7 +163,5 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
             default:
                 break;
         }
-
     }
-
 }

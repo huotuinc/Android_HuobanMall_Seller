@@ -419,13 +419,9 @@ public class SettingActivity extends BaseFragmentActivity
         cropBitmap = bitmap;
 
         // 上传头像
-        //new UserLogoAsyncTask().execute();
-
         if( false == canConnect() ){
             return;
         }
-
-
 
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         cropBitmap.compress(Bitmap.CompressFormat.PNG, 90, bao);
@@ -452,95 +448,100 @@ public class SettingActivity extends BaseFragmentActivity
 
         this.showProgressDialog("","正在上传，请稍等...");
 
-        VolleyRequestManager.getRequestQueue().add(request);
+        VolleyRequestManager.AddRequest(request);
     }
 
     Response.Listener<HTMerchantModel> updateListener = new Response.Listener<HTMerchantModel>() {
         @Override
         public void onResponse(HTMerchantModel htMerchantModel) {
+            if( SettingActivity.this.isFinishing() ) return;
+
             SettingActivity.this.closeProgressDialog();
-            if( null == htMerchantModel){
-                DialogUtils.showDialog(SettingActivity.this, SettingActivity.this.getSupportFragmentManager(), "错误信息", "更新失败", "关闭");
+
+            if( !validateData(htMerchantModel) ){
                 return;
             }
-            if( htMerchantModel.getSystemResultCode()!=1){
-                DialogUtils.showDialog(SettingActivity.this,SettingActivity.this.getSupportFragmentManager(),"错误信息",htMerchantModel.getSystemResultDescription(),"关闭");
-                return;
-            }
-            if( htMerchantModel.getResultCode() == Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().skipActivity(SettingActivity.this,LoginActivity.class);
-                return;
-            }
-            if( htMerchantModel.getResultCode() != 1){
-                DialogUtils.showDialog(SettingActivity.this,SettingActivity.this.getSupportFragmentManager(),"错误信息",htMerchantModel.getResultDescription(),"关闭");
-                return;
-            }
+//            if( null == htMerchantModel){
+//                DialogUtils.showDialog(SettingActivity.this, SettingActivity.this.getSupportFragmentManager(), "错误信息", "更新失败", "关闭");
+//                return;
+//            }
+//            if( htMerchantModel.getSystemResultCode()!=1){
+//                DialogUtils.showDialog(SettingActivity.this,SettingActivity.this.getSupportFragmentManager(),"错误信息",htMerchantModel.getSystemResultDescription(),"关闭");
+//                return;
+//            }
+//            if( htMerchantModel.getResultCode() == Constant.TOKEN_OVERDUE){
+//                ActivityUtils.getInstance().skipActivity(SettingActivity.this,LoginActivity.class);
+//                return;
+//            }
+//            if( htMerchantModel.getResultCode() != 1){
+//                DialogUtils.showDialog(SettingActivity.this,SettingActivity.this.getSupportFragmentManager(),"错误信息",htMerchantModel.getResultDescription(),"关闭");
+//                return;
+//            }
             SellerApplication.getInstance().writeMerchantInfo(htMerchantModel.getResultData().getUser());
             //刷新界面数据
             EventBus.getDefault().post(new RefreshSettingEvent());
         }
     };
 
-
-    public class UserLogoAsyncTask extends
-    AsyncTask<Void, Void, HTMerchantModel>
-    {
-        private int profileType;
-
-        private Object profileData;
-
-        @Override
-        protected void onPreExecute() {
-        // TODO Auto-generated method stub
-        super.onPreExecute();
-        profileType = 0;
-        ByteArrayOutputStream bao = new ByteArrayOutputStream();
-        cropBitmap.compress(Bitmap.CompressFormat.PNG, 90, bao);
-        byte[] buffer = bao.toByteArray();
-        String imgStr = Base64.encodeToString(buffer, 0, buffer.length,
-                Base64.DEFAULT);
-        profileData = imgStr;
-    }
-
-        @Override
-        protected void onPostExecute(HTMerchantModel result) {
-
-        }
-
-        @Override
-        protected HTMerchantModel doInBackground(Void... params) {
-        // TODO Auto-generated method stub
-            HTMerchantModel registerBean = new HTMerchantModel();
-        JSONUtil<HTMerchantModel> jsonUtil = new JSONUtil<HTMerchantModel>();
-        String url;
-        ObtainParamsMap obtainMap = new ObtainParamsMap(
-                SettingActivity.this);
-        Map<String, String> paramMap = obtainMap.obtainMap();
-
-        // 拼接注册url
-        url = Constant.UPDATE_PROFILE;
-        // 注册是POST提交
-        paramMap.put("profileType", String.valueOf(profileType));
-        paramMap.put("profileData", String.valueOf(profileData));
-        // 封装sign
-        String signStr = obtainMap.getSign(paramMap);
-        paramMap.put("sign", signStr);
-        if (Constant.IS_PRODUCTION_ENVIRONMENT) {
-            String jsonStr = HttpUtil.getInstance().doPost(url, paramMap);
-            try {
-                registerBean = jsonUtil.toBean(jsonStr, registerBean);
-            } catch (JsonSyntaxException e) {
-                Log.e("JSON_ERROR", e.getMessage());
-                registerBean.setResultCode(0);
-                registerBean.setResultDescription("解析json出错");
-            }
-        } else {
-        }
-
-        return registerBean;
-    }
-
-    }
+//    public class UserLogoAsyncTask extends
+//    AsyncTask<Void, Void, HTMerchantModel>
+//    {
+//        private int profileType;
+//
+//        private Object profileData;
+//
+//        @Override
+//        protected void onPreExecute() {
+//        // TODO Auto-generated method stub
+//        super.onPreExecute();
+//        profileType = 0;
+//        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+//        cropBitmap.compress(Bitmap.CompressFormat.PNG, 90, bao);
+//        byte[] buffer = bao.toByteArray();
+//        String imgStr = Base64.encodeToString(buffer, 0, buffer.length,
+//                Base64.DEFAULT);
+//        profileData = imgStr;
+//    }
+//
+//        @Override
+//        protected void onPostExecute(HTMerchantModel result) {
+//
+//        }
+//
+//        @Override
+//        protected HTMerchantModel doInBackground(Void... params) {
+//        // TODO Auto-generated method stub
+//            HTMerchantModel registerBean = new HTMerchantModel();
+//        JSONUtil<HTMerchantModel> jsonUtil = new JSONUtil<HTMerchantModel>();
+//        String url;
+//        ObtainParamsMap obtainMap = new ObtainParamsMap(
+//                SettingActivity.this);
+//        Map<String, String> paramMap = obtainMap.obtainMap();
+//
+//        // 拼接注册url
+//        url = Constant.UPDATE_PROFILE;
+//        // 注册是POST提交
+//        paramMap.put("profileType", String.valueOf(profileType));
+//        paramMap.put("profileData", String.valueOf(profileData));
+//        // 封装sign
+//        String signStr = obtainMap.getSign(paramMap);
+//        paramMap.put("sign", signStr);
+//        if (Constant.IS_PRODUCTION_ENVIRONMENT) {
+//            String jsonStr = HttpUtil.getInstance().doPost(url, paramMap);
+//            try {
+//                registerBean = jsonUtil.toBean(jsonStr, registerBean);
+//            } catch (JsonSyntaxException e) {
+//                Log.e("JSON_ERROR", e.getMessage());
+//                registerBean.setResultCode(0);
+//                registerBean.setResultDescription("解析json出错");
+//            }
+//        } else {
+//        }
+//
+//        return registerBean;
+//    }
+//
+//    }
 
 
     public void onEventMainThread(RefreshSettingEvent event){

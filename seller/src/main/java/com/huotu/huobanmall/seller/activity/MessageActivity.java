@@ -95,15 +95,10 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
     protected void onResume()
     {
         super.onResume();
-
         firstGetData();
     }
 
-
     protected void firstGetData(){
-        //this.showProgressDialog("","正在获取数据，请稍等...");
-        //operateType= OperateTypeEnum.REFRESH;
-        //getData();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -180,27 +175,31 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
             msgList.onRefreshComplete();
             MessageActivity.this.closeProgressDialog();
 
-            if( mjMessageModel ==null ){
-                ToastUtils.showLongToast(MessageActivity.this, "网络请求发生异常，请重试");
+            if(!validateData(mjMessageModel)){
                 return;
             }
-            if( 1 != mjMessageModel.getSystemResultCode()){
-                String errorMsg = mjMessageModel.getSystemResultDescription();
-                if( null == errorMsg|| errorMsg.length()<1){
-                    errorMsg = "服务器发生" + mjMessageModel.getSystemResultCode()+"错误";
-                }
-                ToastUtils.showLongToast(MessageActivity.this,  errorMsg );
-                return;
-            }
-            if( Constant.TOKEN_OVERDUE == mjMessageModel.getResultCode() ){
-                ToastUtils.showLongToast(MessageActivity.this, "账户登录过期，请重新登录");
-                ActivityUtils.getInstance().skipActivity( MessageActivity.this , LoginActivity.class );
-                return;
-            }
-            if( 1 != mjMessageModel.getResultCode()){
-                DialogUtils.showDialog( MessageActivity.this , MessageActivity.this.getSupportFragmentManager() ,"错误信息",mjMessageModel.getResultDescription(),"关闭" );
-                return;
-            }
+//            if( mjMessageModel ==null ){
+//                ToastUtils.showLongToast(MessageActivity.this, "网络请求发生异常，请重试");
+//                return;
+//            }
+//            if( 1 != mjMessageModel.getSystemResultCode()){
+//                String errorMsg = mjMessageModel.getSystemResultDescription();
+//                if( null == errorMsg|| errorMsg.length()<1){
+//                    errorMsg = "服务器发生" + mjMessageModel.getSystemResultCode()+"错误";
+//                }
+//                ToastUtils.showLongToast(MessageActivity.this,  errorMsg );
+//                return;
+//            }
+//            if( Constant.TOKEN_OVERDUE == mjMessageModel.getResultCode() ){
+//                ToastUtils.showLongToast(MessageActivity.this, "账户登录过期，请重新登录");
+//                ActivityUtils.getInstance().skipActivity( MessageActivity.this , LoginActivity.class );
+//                return;
+//            }
+//            if( 1 != mjMessageModel.getResultCode()){
+//                DialogUtils.showDialog( MessageActivity.this , MessageActivity.this.getSupportFragmentManager() ,"错误信息",mjMessageModel.getResultDescription(),"关闭" );
+//                return;
+//            }
+
             if( mjMessageModel.getResultData() == null ){
                 DialogUtils.showDialog(MessageActivity.this,MessageActivity.this.getSupportFragmentManager(),"错误信息","服务端返回的数据有问题","关闭");
                 return;
@@ -225,15 +224,15 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
-        msgList.onRefreshComplete();
+        if( MessageActivity.this.isFinishing() ) return;
 
+        msgList.onRefreshComplete();
         super.onErrorResponse(volleyError);
     }
 
     @Override
         public void onClick(View v)
         {
-            // TODO Auto-generated method stub
             switch (v.getId()) {
                 case R.id.header_back: {
                     finish();
