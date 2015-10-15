@@ -24,6 +24,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.formatter.YAxisValueFormatter;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.huotu.huobanmall.seller.bean.CloseEvnt;
 import com.huotu.huobanmall.seller.bean.MJNewTodayModel;
 import com.huotu.huobanmall.seller.bean.RefreshSettingEvent;
@@ -264,7 +267,7 @@ public class MainActivity extends BaseFragmentActivity{
 
         _todayOrderCount.setText( String.valueOf( _data.getResultData().getTodayOrderAmount()));
         _todayMemberCount.setText(String.valueOf( _data.getResultData().getTodayMemberAmount() ));
-        _todayFxsCount.setText( String.valueOf(_data.getResultData().getTodayPartnerAmount()));
+        _todayFxsCount.setText(String.valueOf(_data.getResultData().getTodayPartnerAmount()));
 
         if(_currentIndex==0){
             _space1.setBackgroundColor( getResources().getColor( R.color.main_header_bg ));
@@ -315,11 +318,13 @@ public class MainActivity extends BaseFragmentActivity{
         List<Entry> yValues=new ArrayList<>();
         int count = xData.size();
         int index = 0;
+        int max = 0;
         for(int i=0;i< count ;i++){
             if( null == xData.get(i) ) continue;
             int x = xData.get(i);
             xValues.add( String.valueOf(x) +"时");
             int y = yData.get(i);
+            if( max <y ) max = y;
             Entry item=new Entry( y , i );
             yValues.add(item);
         }
@@ -344,7 +349,22 @@ public class MainActivity extends BaseFragmentActivity{
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setStartAtZero(true);
         yAxis.setLabelCount(4, false);
+        yAxis.setAxisMinValue(0);
+        int labelCount = yAxis.getLabelCount();
+        if( max  < labelCount  ) {
+            max = labelCount;
+        }
+        yAxis.setAxisMaxValue(max);
+
         yAxis.setDrawGridLines(false);
+        yAxis.setValueFormatter(new YAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, YAxis yAxis) {
+                //DecimalFormat format = new DecimalFormat("##");
+                String temp = String.valueOf((int)value);
+                return temp;
+            }
+        });
 
         lineChart.getAxisRight().setDrawLabels(false);
 

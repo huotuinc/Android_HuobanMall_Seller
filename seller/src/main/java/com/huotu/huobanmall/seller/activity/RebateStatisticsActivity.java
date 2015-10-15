@@ -116,7 +116,6 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                         search_text.setError("不能为空");
                     }else {
                         detail_btn.setChecked(true);
-                        //String key = search_text.getText().toString().trim();
                         _operateType = OperateTypeEnum.REFRESH;
                         getData_MX( _operateType  );
                     }

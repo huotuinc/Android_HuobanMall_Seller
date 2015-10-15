@@ -38,8 +38,8 @@ public class BaseFragment extends Fragment implements Response.ErrorListener{
         ProgressDialogFragment.ProgressDialogBuilder builder = ProgressDialogFragment.createBuilder(this.getActivity() , this.getFragmentManager())
                 .setTitle(title)
                 .setMessage( message )
-                .setCancelable(false);
-                //.setCancelableOnTouchOutside(false);
+                //.setCancelable(false);
+                .setCancelableOnTouchOutside(false);
         _progressDialog = (ProgressDialogFragment) builder.show();
     }
 

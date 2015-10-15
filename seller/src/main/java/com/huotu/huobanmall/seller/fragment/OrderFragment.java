@@ -299,9 +299,7 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         _fragmentManager = this.getActivity().getSupportFragmentManager();
         _orderFragmentAdapter = new OrderFragmentPageAdapter(_fragments, _fragmentManager);
         _viewPager.setAdapter(_orderFragmentAdapter);
-
         _indicator.setViewPager(_viewPager);
-
     }
 
 
@@ -399,16 +397,8 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
 
                 if( x instanceof Date){
                     int day = ((Date)x).getDate();
-//                    if(i==0 && day != 0 ){
-//                        xValues1.add("0日");
-//                        startIndex =1;
-//                    }
                     xValues1.add( String.valueOf( day ) + "日");
                 }else{
-//                    if(i==0 && x != 0  ){
-//                        xValues1.add("0时");
-//                        startIndex =1;
-//                    }
                     xValues1.add( String.valueOf( x ) +"时" );
                 }
 

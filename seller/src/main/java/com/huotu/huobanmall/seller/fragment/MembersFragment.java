@@ -372,10 +372,12 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
             int lineColor2 = 0xFF0094FF;
             int lineColor1 =0xFFFF3C00;
             int textColor = 0xFF000000;
-            //int circleColor=0xFFFFFFFF;
+
             List<String> xValue = new ArrayList<>();
 
             ArrayList<LineDataSet> dataSets =new ArrayList<>();
+
+            int max = 0;
 
             if( xData1!=null && yData1 !=null ) {
                 List<String> xValues1 = new ArrayList<String>();
@@ -400,6 +402,9 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                     //}
 
                     Object y = yData1.get(i);
+                    int yint = Integer.parseInt( y.toString() );
+                    if( max < yint ) { max = yint;}
+
                     Entry item = new Entry(Float.valueOf(y.toString()), i);
                     yValues1.add(item);
                 }
@@ -414,8 +419,9 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                 //dataSet1.setValueTextColor(Color.GREEN);
                 //dataSet1.setDrawCubic(true);
                 dataSet1.setCircleColorHole(Color.WHITE);
+                dataSet1.setAxisDependency(YAxis.AxisDependency.LEFT);
                 //
-                dataSet1.setValueFormatter(new DefaultValueFormatter(0));
+                //dataSet1.setValueFormatter(new  );
 
                 dataSets.add(dataSet1);
             }
@@ -440,6 +446,8 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                     //    xValue.add(x);
                     //}
                     Object y = yData2.get(i);
+                    int yint = Integer.parseInt(y.toString());
+                    if( max < yint ){max=yint;}
                     Entry item = new Entry(Float.valueOf(y.toString()), i);
                     yValues2.add(item);
                 }
@@ -454,6 +462,7 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                 //dataSet2.setValueTextColor(Color.GREEN);
                 //dataSet2.setDrawCubic(true);
                 dataSet2.setCircleColorHole(Color.WHITE);
+                dataSet2.setAxisDependency(YAxis.AxisDependency.LEFT);
 
                 dataSets.add(dataSet2);
             }
@@ -463,13 +472,23 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
             xAxis.setTextColor(textColor);
 
             YAxis yAxis1 = lineChart.getAxisRight();
-            yAxis1.setTextColor(0xFFFFFFFF);
-            yAxis1.setEnabled(true);
-
-            yAxis1.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+            yAxis1.setDrawGridLines(false);
+//            yAxis1.setTextColor(0xFFFFFFFF);
+//            yAxis1.setEnabled(true);
+//            yAxis1.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
 
             YAxis yAxis = lineChart.getAxisLeft();
             yAxis.setTextColor(0xFF000000);
+            yAxis.setLabelCount(4,false);
+
+            int labelCount = yAxis.getLabelCount();
+            if( max  < labelCount  ) {
+                max = labelCount;
+            }
+            yAxis.setAxisMaxValue(max);
+
+            lineChart.getAxisRight().setDrawLabels(false);
+            //lineChart.getAxisRight().set
 
             lineChart.setBorderColor(gridColor);
             lineChart.setDrawBorders(true);
