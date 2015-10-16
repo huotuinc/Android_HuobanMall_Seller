@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_15"
         android:textColor="@color/statistic_check_color"
         android:layout_marginRight="20dp"
         android:id="@+id/salesdetail_money"
