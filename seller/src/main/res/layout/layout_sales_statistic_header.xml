@@ -57,13 +57,7 @@
             android:checked="true"
             android:background="@drawable/radiobutton_left"
             android:textColor="@drawable/check_text"
-            android:layout_marginTop="5dp"
-            android:paddingBottom="@dimen/space_5"
-            android:paddingRight="@dimen/space_5"
-            android:paddingLeft="@dimen/space_5"
-            android:paddingTop="@dimen/space_5"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="0dp"
+            android:padding="@dimen/space_5"
             />
 
         <RadioButton
@@ -73,16 +67,10 @@
             android:button="@null"
             android:text=" 统计 "
             android:checked="false"
-            android:paddingBottom="@dimen/space_5"
-            android:paddingTop="@dimen/space_5"
-            android:paddingRight="@dimen/space_5"
-            android:paddingLeft="@dimen/space_5"
+            android:padding="@dimen/space_5"
             android:textSize="@dimen/text_size_16"
             android:gravity="center"
             android:singleLine="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:background="@drawable/radiobutton_right"
             android:textColor="@drawable/check_text"
             />
