@@ -63,6 +63,9 @@ public class SaleGoodsFragment extends BaseFragment {
 
     Handler _handler = new Handler();
 
+    View emptyView=null;
+    boolean isSetEmptyView = false;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -104,9 +107,9 @@ public class SaleGoodsFragment extends BaseFragment {
         _goodsAdapter = new GoodsAdapter(this.getActivity(), _goodsList);
         _goodsSaleListView.getRefreshableView().setAdapter(_goodsAdapter);
 
-        View emptyView = new View(this.getActivity());
+        emptyView = new View(this.getActivity());
         emptyView.setBackgroundResource(R.mipmap.tpzw);
-        _goodsSaleListView.setEmptyView(emptyView);
+        //_goodsSaleListView.setEmptyView(emptyView);
         _goodsSaleListView.setMode(PullToRefreshBase.Mode.BOTH);
         _goodsSaleListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
@@ -237,6 +240,11 @@ public class SaleGoodsFragment extends BaseFragment {
         public void onResponse(MJGoodModel mjGoodModel) {
             SaleGoodsFragment.this.closeProgressDialog();
             _goodsSaleListView.onRefreshComplete();
+
+            if (isSetEmptyView == false) {
+                _goodsSaleListView.setEmptyView(emptyView);
+                isSetEmptyView=true;
+            }
 
             if( mjGoodModel==null){
                 SimpleDialogFragment.createBuilder(SaleGoodsFragment.this.getActivity(), SaleGoodsFragment.this.getActivity().getSupportFragmentManager())

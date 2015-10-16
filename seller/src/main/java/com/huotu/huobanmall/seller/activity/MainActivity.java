@@ -394,7 +394,7 @@ public class MainActivity extends BaseFragmentActivity{
                 return;
             }
 
-            DecimalFormat decimalFormat=new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+            DecimalFormat decimalFormat=new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
             String todaySales = decimalFormat.format(mjNewTodayModel.getResultData().getTodaySales());//format 返回的是字符串
             main_TodayMoney.setText("￥" + todaySales );
             String totalSales = decimalFormat.format(mjNewTodayModel.getResultData().getTotalSales() );

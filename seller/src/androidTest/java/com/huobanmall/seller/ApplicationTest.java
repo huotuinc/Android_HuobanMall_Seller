@@ -22,6 +22,7 @@ import com.huotu.huobanmall.seller.utils.SystemTools;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -139,4 +140,14 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         System.out.print(date);
     }
 
+
+    public void testfloat(){
+        DecimalFormat f = new DecimalFormat("0.00");
+        float s = 0.0000f;
+        String temp = f.format(s);
+        temp +="fff";
+        s = 1232.002342f;
+        temp = f.format(s);
+        temp ="sdfsd";
+    }
 }

@@ -80,6 +80,8 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
     List<UserScoreModel> _userScoreList =null;
     OperateTypeEnum _operateType = OperateTypeEnum.REFRESH;
     Handler handler =new Handler();
+    View emptyView=null;
+    boolean isSetEmptyView = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +94,7 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.detail_btn) {
                     header_operate.setVisibility(View.VISIBLE);
-                    _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH );
+                    _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH);
                     _operateType = OperateTypeEnum.REFRESH;
                     getData_MX(_operateType);
                 } else if (checkedId == R.id.statistic_btn) {
@@ -110,14 +112,14 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         search_text.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH  ||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
-                    if (TextUtils.isEmpty(search_text.getText())){
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    if (TextUtils.isEmpty(search_text.getText())) {
                         search_text.requestFocus();
                         search_text.setError("不能为空");
-                    }else {
+                    } else {
                         detail_btn.setChecked(true);
                         _operateType = OperateTypeEnum.REFRESH;
-                        getData_MX( _operateType  );
+                        getData_MX(_operateType);
                     }
                     return true;
                 }
@@ -125,9 +127,10 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
             }
         });
 
-        View emptyView= new View(this);
-        emptyView.setBackgroundResource(R.mipmap.tpzw);
-        _rebateStatistics_listview.setEmptyView(emptyView);
+       emptyView= new View(this);
+       emptyView.setBackgroundResource(R.mipmap.tpzw);
+//        _rebateStatistics_listview.setEmptyView(emptyView);
+
         _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH);
 
         _userScoreList = new ArrayList<>();
@@ -167,7 +170,6 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
     }
 
     private void firstGetData() {
-        //this.showProgressDialog("", "正在获取数据，请稍等...");
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -244,29 +246,12 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
             RebateStatisticsActivity.this.closeProgressDialog();
             _rebateStatistics_listview.onRefreshComplete();
 
-            if( mjUserScoreModel==null){
-                DialogUtils.showDialog(RebateStatisticsActivity.this, RebateStatisticsActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
-                return;
+            if( isSetEmptyView ==false ){
+                _rebateStatistics_listview.setEmptyView(emptyView);
+                isSetEmptyView=true;
             }
-            if( mjUserScoreModel.getSystemResultCode()!=1){
-                SimpleDialogFragment.createBuilder(RebateStatisticsActivity.this, RebateStatisticsActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage( mjUserScoreModel.getSystemResultDescription() )
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }else if( mjUserScoreModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().skipActivity(RebateStatisticsActivity.this, LoginActivity.class);
-                return;
-            }
-            else if( mjUserScoreModel.getResultCode() != 1){
-                SimpleDialogFragment.createBuilder( RebateStatisticsActivity.this , RebateStatisticsActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage( mjUserScoreModel.getResultDescription() )
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }
+
+            if( !validateData(mjUserScoreModel)) return;
 
             if( _operateType == OperateTypeEnum.REFRESH ) {
 
@@ -293,33 +278,14 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
             if( RebateStatisticsActivity.this.isFinishing() ) return;
             RebateStatisticsActivity.this.closeProgressDialog();
             _rebateStatistics_listview.onRefreshComplete();
+            if( isSetEmptyView ==false ){
+                _rebateStatistics_listview.setEmptyView(emptyView);
+                isSetEmptyView=true;
+            }
 
             if(!validateData(mjTopScoreModel)){
                 return;
             }
-//            if( mjTopScoreModel==null){
-//                DialogUtils.showDialog(RebateStatisticsActivity.this, RebateStatisticsActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
-//                return;
-//            }
-//            if( mjTopScoreModel.getSystemResultCode()!=1){
-//                SimpleDialogFragment.createBuilder(RebateStatisticsActivity.this, RebateStatisticsActivity.this.getSupportFragmentManager())
-//                        .setTitle("错误信息")
-//                        .setMessage( mjTopScoreModel.getSystemResultDescription() )
-//                        .setNegativeButtonText("关闭")
-//                        .show();
-//                return;
-//            }else if( mjTopScoreModel.getResultCode()== Constant.TOKEN_OVERDUE){
-//                ActivityUtils.getInstance().showActivity(RebateStatisticsActivity.this, LoginActivity.class);
-//                return;
-//            }
-//            else if( mjTopScoreModel.getResultCode() != 1){
-//                SimpleDialogFragment.createBuilder( RebateStatisticsActivity.this , RebateStatisticsActivity.this.getSupportFragmentManager())
-//                        .setTitle("错误信息")
-//                        .setMessage( mjTopScoreModel.getResultDescription() )
-//                        .setNegativeButtonText("关闭")
-//                        .show();
-//                return;
-//            }
 
             _topScoreList.clear();
             if( mjTopScoreModel.getResultData() !=null && mjTopScoreModel.getResultData().getList() !=null

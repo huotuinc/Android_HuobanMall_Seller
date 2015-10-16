@@ -46,7 +46,8 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
     @Bind(R.id.header_title)
     TextView header_title;
     Handler handler=new Handler();
-
+    View emptyView=null;
+    boolean isSetEmptyView = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,14 +59,15 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
         _headerBack.setOnClickListener(this);
         header_title.setText("商品销量前十");
 
+        emptyView= new View(this);
+        emptyView.setBackgroundResource(R.mipmap.tpzw);
+
         topGoodsList = new ArrayList<>();
         topGoodsAdapter = new TopGoodsAdapter(this, topGoodsList);
         topGoods_listview.getRefreshableView().setAdapter(topGoodsAdapter);
 
+        //topGoods_listview.setEmptyView(emptyView);
 
-        View emptyView= new View(this);
-        emptyView.setBackgroundResource(R.mipmap.tpzw);
-        topGoods_listview.setEmptyView(emptyView);
         topGoods_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
@@ -108,48 +110,28 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
     }
     Response.Listener<MJTopGoodsModel> listener =new Response.Listener<MJTopGoodsModel>() {
         @Override
-        public void onResponse(MJTopGoodsModel mjTopGoodsModel ) {
-            if(TopSalesActivity.this.isFinishing()) return;
+        public void onResponse(MJTopGoodsModel mjTopGoodsModel) {
+            if (TopSalesActivity.this.isFinishing()) return;
 
             TopSalesActivity.this.closeProgressDialog();
             topGoods_listview.onRefreshComplete();
 
-            if(! validateData(mjTopGoodsModel)){
+            if (isSetEmptyView == false) {
+                topGoods_listview.setEmptyView(emptyView);
+                isSetEmptyView=true;
+            }
+
+            if (!validateData(mjTopGoodsModel)) {
                 return;
             }
 
-//            if( mjTopGoodsModel==null){
-//                DialogUtils.showDialog(TopSalesActivity.this, TopSalesActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
-//                return;
-//            }
-//            if( mjTopGoodsModel.getSystemResultCode()!=1){
-//                SimpleDialogFragment.createBuilder(TopSalesActivity.this, TopSalesActivity.this.getSupportFragmentManager())
-//                        .setTitle("错误信息")
-//                        .setMessage( mjTopGoodsModel.getSystemResultDescription() )
-//                        .setNegativeButtonText("关闭")
-//                        .show();
-//                return;
-//            }else if( mjTopGoodsModel.getResultCode()== Constant.TOKEN_OVERDUE){
-//                ActivityUtils.getInstance().skipActivity(TopSalesActivity.this, LoginActivity.class);
-//                return;
-//            }
-//            else if( mjTopGoodsModel.getResultCode() != 1){
-//                SimpleDialogFragment.createBuilder( TopSalesActivity.this , TopSalesActivity.this.getSupportFragmentManager())
-//                        .setTitle("错误信息")
-//                        .setMessage( mjTopGoodsModel.getResultDescription() )
-//                        .setNegativeButtonText("关闭")
-//                        .show();
-//                return;
-//            }
-
             topGoodsList.clear();
 
-            if( mjTopGoodsModel.getResultData() !=null
-                    && mjTopGoodsModel.getResultData().getList() !=null
-                    && mjTopGoodsModel.getResultData().getList().size()>0){
+            if (mjTopGoodsModel.getResultData() != null
+                    && mjTopGoodsModel.getResultData().getList() != null
+                    && mjTopGoodsModel.getResultData().getList().size() > 0) {
                 topGoodsList.addAll(mjTopGoodsModel.getResultData().getList());
             }
-
             topGoodsAdapter.notifyDataSetChanged();
         }
     };

@@ -57,7 +57,8 @@ public class OffShelfFragment extends BaseFragment {
     boolean _isPrepared = false;
     boolean _isFirst =true;
     Handler _handler = new Handler();
-
+    View emptyView=null;
+    boolean isSetEmptyView = false;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -90,9 +91,9 @@ public class OffShelfFragment extends BaseFragment {
         _goodsAdapter=new GoodsAdapter(this.getActivity() , _goodsList);
         _goodsOffshelfListview.getRefreshableView().setAdapter(_goodsAdapter);
 
-        View emptyView = new View(this.getActivity());
+        emptyView = new View(this.getActivity());
         emptyView.setBackgroundResource(R.mipmap.tpzw);
-        _goodsOffshelfListview.setEmptyView(emptyView);
+        //_goodsOffshelfListview.setEmptyView(emptyView);
 
         _goodsOffshelfListview.setMode(PullToRefreshBase.Mode.BOTH);
         _goodsOffshelfListview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -216,6 +217,11 @@ public class OffShelfFragment extends BaseFragment {
         @Override
         public void onResponse(MJGoodModel mjGoodModel) {
            if( OffShelfFragment.this.isDetached() || OffShelfFragment.this.isRemoving() ) return;
+
+            if (isSetEmptyView == false) {
+                _goodsOffshelfListview.setEmptyView(emptyView);
+                isSetEmptyView=true;
+            }
 
             OffShelfFragment.this.closeProgressDialog();
             _goodsOffshelfListview.onRefreshComplete();
