@@ -56,6 +56,8 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
     MessageAdapter adapter;
     OperateTypeEnum operateType= OperateTypeEnum.REFRESH;
     Handler handler = new Handler();
+    View emptyView = null;
+   boolean isSetEmptyView=false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +69,9 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
         header_title.setText("消息中心");
         header_back.setOnClickListener(this);
 
-        View emptyView = new View(this);
+        emptyView = new View(this);
         emptyView.setBackgroundResource(R.mipmap.tpzw);
-        msgList.setEmptyView(emptyView);
+        //msgList.setEmptyView(emptyView);
 
         msgList.setMode(PullToRefreshBase.Mode.BOTH);
         msgList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -175,30 +177,14 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
             msgList.onRefreshComplete();
             MessageActivity.this.closeProgressDialog();
 
+            if( isSetEmptyView ==false ){
+                msgList.setEmptyView(emptyView);
+                isSetEmptyView=true;
+            }
+
             if(!validateData(mjMessageModel)){
                 return;
             }
-//            if( mjMessageModel ==null ){
-//                ToastUtils.showLongToast(MessageActivity.this, "网络请求发生异常，请重试");
-//                return;
-//            }
-//            if( 1 != mjMessageModel.getSystemResultCode()){
-//                String errorMsg = mjMessageModel.getSystemResultDescription();
-//                if( null == errorMsg|| errorMsg.length()<1){
-//                    errorMsg = "服务器发生" + mjMessageModel.getSystemResultCode()+"错误";
-//                }
-//                ToastUtils.showLongToast(MessageActivity.this,  errorMsg );
-//                return;
-//            }
-//            if( Constant.TOKEN_OVERDUE == mjMessageModel.getResultCode() ){
-//                ToastUtils.showLongToast(MessageActivity.this, "账户登录过期，请重新登录");
-//                ActivityUtils.getInstance().skipActivity( MessageActivity.this , LoginActivity.class );
-//                return;
-//            }
-//            if( 1 != mjMessageModel.getResultCode()){
-//                DialogUtils.showDialog( MessageActivity.this , MessageActivity.this.getSupportFragmentManager() ,"错误信息",mjMessageModel.getResultDescription(),"关闭" );
-//                return;
-//            }
 
             if( mjMessageModel.getResultData() == null ){
                 DialogUtils.showDialog(MessageActivity.this,MessageActivity.this.getSupportFragmentManager(),"错误信息","服务端返回的数据有问题","关闭");

@@ -373,6 +373,7 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:background="@drawable/setting_menu"
+                    android:visibility="gone"
                     >
 
                     <TextView
@@ -403,6 +404,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
+                    android:visibility="gone"
                     android:background="@drawable/line_gray_shape" />
                 <LinearLayout
                     android:id="@+id/messageLabel"

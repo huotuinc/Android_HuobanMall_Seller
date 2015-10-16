@@ -333,7 +333,7 @@ public class MainActivity extends BaseFragmentActivity{
         dataSet.setCircleColors(new int[]{Color.rgb(255, 255, 255)});
         dataSet.setCircleSize(5);
         dataSet.setDrawValues(false);
-        dataSet.setLineWidth(4);
+        dataSet.setLineWidth(3);
         dataSet.setColor(lineColor);
         dataSet.setValueTextSize(14);
         dataSet.setValueTextColor(Color.GREEN);
