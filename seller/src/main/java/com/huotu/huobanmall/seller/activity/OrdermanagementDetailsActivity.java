@@ -25,6 +25,7 @@ import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -130,75 +131,57 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
                         urlString,
                         MJOrderDetailModel.class,
                         null,
-                        orderDetailListener,
-                        this);
+                        new MyListener(this),
+                        new MJErrorListener(this)
+                );
 
         this.showProgressDialog("", "正在获取数据，请稍等...");
 
         VolleyRequestManager.AddRequest(request);
     }
 
-    private Response.Listener< MJOrderDetailModel > orderDetailListener = new Response.Listener<MJOrderDetailModel>() {
+    //private Response.Listener< MJOrderDetailModel > orderDetailListener = new Response.Listener<MJOrderDetailModel>() {
+    static class MyListener implements Response.Listener<MJOrderDetailModel>{
+        WeakReference<OrdermanagementDetailsActivity> ref;
+        public MyListener(OrdermanagementDetailsActivity act){
+            ref=new WeakReference<OrdermanagementDetailsActivity>(act);
+        }
+
         @Override
         public void onResponse( MJOrderDetailModel mjOrderDetailModel ) {
-            if( OrdermanagementDetailsActivity.this.isFinishing() ) return;
+            if( ref.get()==null) return;
+            if( ref.get().isFinishing() ) return;
 
-            OrdermanagementDetailsActivity.this.closeProgressDialog();
+            ref.get().closeProgressDialog();
 
-            if(! validateData(mjOrderDetailModel)){
+            if(! ref.get().validateData(mjOrderDetailModel)){
                 return;
             }
-//            if (mjOrderDetailModel == null) {
-//                DialogUtils.showDialog(OrdermanagementDetailsActivity.this
-//                        , OrdermanagementDetailsActivity.this.getSupportFragmentManager()
-//                        , "错误信息"
-//                        , "获取数据失败"
-//                        , "关闭");
-//                return;
-//            }
-//            if (mjOrderDetailModel.getSystemResultCode() != 1) {
-//                DialogUtils.showDialog(OrdermanagementDetailsActivity.this
-//                        , OrdermanagementDetailsActivity.this.getSupportFragmentManager()
-//                        , "错误信息"
-//                        , mjOrderDetailModel.getSystemResultDescription()
-//                        , "关闭");
-//                return;
-//            } else if (mjOrderDetailModel.getResultCode() == Constant.TOKEN_OVERDUE) {
-//                ActivityUtils.getInstance().showActivity(OrdermanagementDetailsActivity.this, LoginActivity.class);
-//                return;
-//            } else if (mjOrderDetailModel.getResultCode() != 1) {
-//                DialogUtils.showDialog(OrdermanagementDetailsActivity.this
-//                        , OrdermanagementDetailsActivity.this.getSupportFragmentManager()
-//                        , "错误信息"
-//                        , mjOrderDetailModel.getResultDescription()
-//                        , "关闭");
-//                return;
-//            }
 
             if( mjOrderDetailModel.getResultData().getData() ==null ){
-                DialogUtils.showDialog(OrdermanagementDetailsActivity.this,OrdermanagementDetailsActivity.this.getSupportFragmentManager(),"错误信息","返回数据不正确","关闭");
+                DialogUtils.showDialog(ref.get(),ref.get().getSupportFragmentManager(),"错误信息","返回数据不正确","关闭");
                 return;
             }
 
-            _data = mjOrderDetailModel.getResultData().getData();
-            _orderGoodsAdapter = new LogisticsGoodsAdapter(OrdermanagementDetailsActivity.this , _data.getList());
-            order_item_goodsList.setAdapter(_orderGoodsAdapter);
-            buyer.setText( _data.getBuyer() );
-            receiver.setText( _data.getReceiver() );
-            address.setText(_data.getAddress());
-            moblic.setText( "联系方式：" + _data.getContact() ==null ? "" : _data.getContact() );
-            orderNo.setText( _data.getOrderNo() );
-            tvAmount.setText( "共"+_data.getAmount() +"件商品 实付:￥" );
-            tvPaid.setText( String.valueOf( _data.getPaid() ) );
+            ref.get(). _data = mjOrderDetailModel.getResultData().getData();
+            ref.get()._orderGoodsAdapter = new LogisticsGoodsAdapter( ref.get() ,  ref.get()._data.getList());
+            ref.get().order_item_goodsList.setAdapter( ref.get()._orderGoodsAdapter);
+            ref.get(). buyer.setText(  ref.get()._data.getBuyer() );
+            ref.get().receiver.setText(  ref.get()._data.getReceiver() );
+            ref.get().address.setText( ref.get()._data.getAddress());
+            ref.get(). moblic.setText( "联系方式：" +  ref.get()._data.getContact() ==null ? "" : ref.get(). _data.getContact() );
+            ref.get().orderNo.setText(  ref.get()._data.getOrderNo() );
+            ref.get().tvAmount.setText( "共"+ ref.get()._data.getAmount() +"件商品 实付:￥" );
+            ref.get().tvPaid.setText( String.valueOf(  ref.get()._data.getPaid() ) );
 
-            if( _data.getScoreList() ==null ) {
+            if(  ref.get()._data.getScoreList() ==null ) {
                 List<OrderScoreModel> scores =new ArrayList<>();
-                _scoreAdapter=new ScoreExpandableAdapter( OrdermanagementDetailsActivity.this, scores);
-                _orderScoreList.setAdapter(_scoreAdapter);
+                ref.get()._scoreAdapter=new ScoreExpandableAdapter(  ref.get() , scores);
+                ref.get()._orderScoreList.setAdapter( ref.get()._scoreAdapter);
             }else{
                 List<OrderScoreModel> scores = new ArrayList<>();
-                for(int k=0;k<_data.getScoreList().size();k++){
-                    UserScoreModel model = _data.getScoreList().get(k);
+                for(int k=0;k< ref.get()._data.getScoreList().size();k++){
+                    UserScoreModel model =  ref.get()._data.getScoreList().get(k);
                     OrderScoreModel item = new OrderScoreModel();
                     item.setUserType(model.getUserType());
                     scores.add(item);
@@ -215,14 +198,14 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
                     item.setList(list);
                 }
 
-                _scoreAdapter = new ScoreExpandableAdapter(OrdermanagementDetailsActivity.this, scores);
-                _orderScoreList.setAdapter(_scoreAdapter);
-                if( _orderScoreList.getCount()>0 ){
-                    _orderScoreList.expandGroup(0);
+                ref.get()._scoreAdapter = new ScoreExpandableAdapter( ref.get(), scores);
+                ref.get()._orderScoreList.setAdapter( ref.get()._scoreAdapter);
+                if(  ref.get()._orderScoreList.getCount()>0 ){
+                    ref.get()._orderScoreList.expandGroup(0);
                 }
             }
         }
-    };
+    }
 
 
     public void onClick(View v) {

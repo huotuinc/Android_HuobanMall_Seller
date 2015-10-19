@@ -40,6 +40,7 @@ import com.huotu.huobanmall.seller.widget.MJMarkerView;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -194,8 +195,8 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
                 url,
                 MJSaleStatisticModel.class,
                 null,
-                saleReportListner,
-                errorListener
+                new MyListener(this),
+                new MJErrorListener(this)
         );
 
         this.showProgressDialog("", "正在获取数据，请稍等...");
@@ -217,69 +218,77 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
         _indicator.setViewPager(_viewPager);
     }
 
-    protected Response.Listener<MJSaleStatisticModel> saleReportListner = new Response.Listener<MJSaleStatisticModel>() {
+    //protected Response.Listener<MJSaleStatisticModel> saleReportListner = new Response.Listener<MJSaleStatisticModel>() {
+    static class MyListener implements Response.Listener<MJSaleStatisticModel>{
+        WeakReference<SalesFragment> ref;
+        public MyListener(SalesFragment frag){
+            ref=new WeakReference<SalesFragment>(frag);
+        }
+
         @Override
         public void onResponse(MJSaleStatisticModel mjSaleStatisticModel  ) {
-           if( SalesFragment.this.isDetached() || SalesFragment.this.isRemoving() ) return;
+           if( ref.get()==null || ref.get().getActivity() ==null )return;
 
-            SalesFragment.this.closeProgressDialog();
+            if( ref.get().isDetached() || ref.get().isRemoving() ) return;
+
+            ref.get().closeProgressDialog();
 
             if( mjSaleStatisticModel==null){
-                DialogUtils.showDialog(SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager(), "错误信息", "请求数据失败", "关闭");
+                DialogUtils.showDialog(ref.get().getActivity(), ref.get().getFragmentManager(), "错误信息", "请求数据失败", "关闭");
                 return;
             }
             if( mjSaleStatisticModel.getSystemResultCode()!=1){
-                DialogUtils.showDialog(SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager(), "错误信息", mjSaleStatisticModel.getSystemResultDescription(), "关闭");
+                DialogUtils.showDialog(ref.get().getActivity(), ref.get().getFragmentManager(), "错误信息", mjSaleStatisticModel.getSystemResultDescription(), "关闭");
                 return;
             }
 
             if(mjSaleStatisticModel.getResultCode() == Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().showActivity(SalesFragment.this.getActivity(), LoginActivity.class);
+                ActivityUtils.getInstance().showActivity(ref.get().getActivity(), LoginActivity.class);
                 return;
             }
             if( mjSaleStatisticModel.getResultCode() != 1){
-                DialogUtils.showDialog( SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager() ,"错误信息", mjSaleStatisticModel.getResultDescription() ,"关闭" );
+                DialogUtils.showDialog( ref.get().getActivity(), ref.get().getFragmentManager() ,"错误信息", mjSaleStatisticModel.getResultDescription() ,"关闭" );
                 return;
             }
 
-            _data=mjSaleStatisticModel;
-            Float total = _data.getResultData().getTotalAmount();
-            _sales_total.setText( String.valueOf( total ));
-            if(_currentIndx==0) {
-                Float todayAmount = _data.getResultData().getTodayAmount();
-                _sales_info_count.setText( String.valueOf( todayAmount ));
-            }else if( _currentIndx == 1){
-                Float weekAmount = _data.getResultData().getWeekAmount();
-                _sales_info_count.setText( String.valueOf( weekAmount ) );
-            }else if( _currentIndx==2){
-                Float monthAmount = _data.getResultData().getMonthAmount();
-                _sales_info_count.setText( String.valueOf( monthAmount ));
+            ref.get()._data=mjSaleStatisticModel;
+            Float total = ref.get()._data.getResultData().getTotalAmount();
+            ref.get()._sales_total.setText( String.valueOf( total ));
+            if(ref.get()._currentIndx==0) {
+                Float todayAmount = ref.get()._data.getResultData().getTodayAmount();
+                ref.get()._sales_info_count.setText( String.valueOf( todayAmount ));
+            }else if( ref.get()._currentIndx == 1){
+                Float weekAmount = ref.get()._data.getResultData().getWeekAmount();
+                ref.get()._sales_info_count.setText( String.valueOf( weekAmount ) );
+            }else if( ref.get()._currentIndx==2){
+                Float monthAmount = ref.get()._data.getResultData().getMonthAmount();
+                ref.get()._sales_info_count.setText( String.valueOf( monthAmount ));
             }
             //setLineChartData();
-            _fragment1.setData(_data,1);
-            _fragment2.setData(_data,2);
-            _fragment3.setData(_data,3);
-            _salesFragmentAdapter.notifyDataSetChanged();
+            ref.get()._fragment1.setData(ref.get()._data, 1);
+            ref.get()._fragment2.setData(ref.get()._data, 2);
+            ref.get()._fragment3.setData(ref.get()._data, 3);
+            ref.get()._salesFragmentAdapter.notifyDataSetChanged();
         }
-    };
+    }
 
-    protected Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            if( SalesFragment.this.isRemoving() || SalesFragment.this.isDetached() ) return;
-
-            SalesFragment.this.closeProgressDialog();
-
-            String message="";
-            if( volleyError.networkResponse !=null){
-                message = new String( volleyError.networkResponse.data);
-            }else if( volleyError.getCause() !=null ) {
-                message = volleyError.getCause().getMessage();
-            }
-            DialogUtils.showDialog(SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager(),"错误信息", message ,"关闭");
-
-        }
-    };
+//    protected Response.ErrorListener errorListener = new Response.ErrorListener() {
+//        @Override
+//        public void onErrorResponse(VolleyError volleyError) {
+//            if( SalesFragment.this.isRemoving() || SalesFragment.this.isDetached() ) return;
+//
+//            SalesFragment.this.closeProgressDialog();
+//
+//            String message="";
+//            if( volleyError.networkResponse !=null){
+//                message = new String( volleyError.networkResponse.data);
+//            }else if( volleyError.getCause() !=null ) {
+//                message = volleyError.getCause().getMessage();
+//            }
+//            DialogUtils.showDialog(SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager(),"错误信息", message ,"关闭");
+//
+//        }
+//    };
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

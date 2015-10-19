@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -24,6 +26,8 @@ import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -66,33 +70,9 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_statistic);
         ButterKnife.bind(this);
-        Drawable drawable1 = getResources().getDrawable(R.mipmap.fxs);
-        drawable1.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        moresta_fxs.setCompoundDrawables(null, drawable1, null, null);
-        Drawable drawable2= getResources().getDrawable(R.mipmap.sp);
-        drawable2.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        moresta_sp.setCompoundDrawables(null, drawable2, null, null);
-        Drawable drawable3 = getResources().getDrawable(R.mipmap.xsetj);
-        drawable3.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        moresta_xsetj.setCompoundDrawables(null, drawable3, null, null);
-        Drawable drawable4 = getResources().getDrawable(R.mipmap.hytj);
-        drawable4.setBounds(0, 0,100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        moresta_hytj.setCompoundDrawables(null, drawable4, null, null);
-        Drawable drawable5 = getResources().getDrawable(R.mipmap.xsmx);
-        drawable5.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        moresta_xsmx.setCompoundDrawables(null, drawable5, null, null);
-        Drawable drawable6 = getResources().getDrawable(R.mipmap.fltj);
-        drawable6.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        moresta_fljftj.setCompoundDrawables(null, drawable6, null, null);
-        Drawable drawable7 = getResources().getDrawable(R.mipmap.xftj);
-        drawable7.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        moresta_xftj.setCompoundDrawables(null, drawable7, null, null);
-        Drawable drawable8 = getResources().getDrawable(R.mipmap.kb);
-        drawable8.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        kb1.setCompoundDrawables(null, drawable8, null, null);
-        Drawable drawable9 = getResources().getDrawable(R.mipmap.kb);
-        drawable9.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        kb2.setCompoundDrawables(null, drawable9, null, null);
+
+        setImangeSize();
+
         btnBack.setOnClickListener(this);
         morestatistic_title2.setOnClickListener(this);
         moresta_fljftj.setOnClickListener(this);
@@ -103,6 +83,7 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         moresta_xsetj.setOnClickListener(this);
         moresta_xsmx.setOnClickListener(this);
 
+        this._pullToRefreshBase = morestat_refresh;
         morestat_refresh.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
@@ -122,6 +103,44 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         },1000);
     }
 
+    protected void setImangeSize(){
+        int screemWidth = getWindowManager().getDefaultDisplay().getWidth();
+        int screemHeight = getWindowManager().getDefaultDisplay().getHeight();
+
+        int size = screemWidth/3;
+        int imageHeight = 50;
+        int imageWidth = 50;
+        int space = (size - imageWidth)/2;
+
+        Drawable drawable1 = getResources().getDrawable(R.mipmap.fxs);
+        drawable1.setBounds(0, 0, space , space );//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_fxs.setCompoundDrawables(null, drawable1, null, null);
+        Drawable drawable2= getResources().getDrawable(R.mipmap.sp);
+        drawable2.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_sp.setCompoundDrawables(null, drawable2, null, null);
+        Drawable drawable3 = getResources().getDrawable(R.mipmap.xsetj);
+        drawable3.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_xsetj.setCompoundDrawables(null, drawable3, null, null);
+        Drawable drawable4 = getResources().getDrawable(R.mipmap.hytj);
+        drawable4.setBounds(0, 0,space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_hytj.setCompoundDrawables(null, drawable4, null, null);
+        Drawable drawable5 = getResources().getDrawable(R.mipmap.xsmx);
+        drawable5.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_xsmx.setCompoundDrawables(null, drawable5, null, null);
+        Drawable drawable6 = getResources().getDrawable(R.mipmap.fltj);
+        drawable6.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_fljftj.setCompoundDrawables(null, drawable6, null, null);
+        Drawable drawable7 = getResources().getDrawable(R.mipmap.xftj);
+        drawable7.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        moresta_xftj.setCompoundDrawables(null, drawable7, null, null);
+        Drawable drawable8 = getResources().getDrawable(R.mipmap.kb);
+        drawable8.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        kb1.setCompoundDrawables(null, drawable8, null, null);
+        Drawable drawable9 = getResources().getDrawable(R.mipmap.kb);
+        drawable9.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        kb2.setCompoundDrawables(null, drawable9, null, null);
+
+    }
 
     @Override
     protected void onResume() {
@@ -145,8 +164,8 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
                 url,
                 MJOtherStatisticModel.class,
                 null,
-                otherListener,
-                this
+                new MyListener(this),
+                new MJErrorListener(this)
         );
 
         VolleyRequestManager.AddRequest(otherRequest);
@@ -159,37 +178,29 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         moresta_fxs.setText( "0" );
     }
 
-    Response.Listener<MJOtherStatisticModel> otherListener=new Response.Listener<MJOtherStatisticModel>() {
+    //Response.Listener<MJOtherStatisticModel> otherListener=new Response.Listener<MJOtherStatisticModel>() {
+
+    static class MyListener implements Response.Listener<MJOtherStatisticModel>{
+        WeakReference<MoreStatisticActivity> ref;
+        public MyListener(MoreStatisticActivity act){
+            ref=new WeakReference<MoreStatisticActivity>(act);
+        }
+
         @Override
         public void onResponse(MJOtherStatisticModel  mjOtherStatisticModel ) {
-          if( MoreStatisticActivity.this.isFinishing() )return;
+          //if( MoreStatisticActivity.this.isFinishing() )return;
+            if( ref.get()==null) return;
 
-            MoreStatisticActivity.this.closeProgressDialog();
-            morestat_refresh.onRefreshComplete();
-            clearData();
+            ref.get().closeProgressDialog();
+            ref.get().morestat_refresh.onRefreshComplete();
+            ref.get().clearData();
 
-            if(! validateData(mjOtherStatisticModel)){
+            if(! ref.get().validateData(mjOtherStatisticModel)){
                 return;
             }
-//            if( mjOtherStatisticModel==null){
-//                DialogUtils.showDialog(MoreStatisticActivity.this, MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息","请求数据失败","关闭");
-//                return;
-//            }
-//            if( mjOtherStatisticModel.getSystemResultCode()!=1){
-//                DialogUtils.showDialog(MoreStatisticActivity.this,MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息", mjOtherStatisticModel.getSystemResultDescription(),"关闭");
-//                return;
-//            }
-//            if( mjOtherStatisticModel.getResultCode() == Constant.TOKEN_OVERDUE){
-//                ActivityUtils.getInstance().skipActivity(MoreStatisticActivity.this, LoginActivity.class);
-//                return;
-//            }
-//            if( mjOtherStatisticModel.getResultCode() !=1){
-//                DialogUtils.showDialog(MoreStatisticActivity.this,MoreStatisticActivity.this.getSupportFragmentManager(),"错误信息",mjOtherStatisticModel.getResultDescription(),"关闭");
-//                return;
-//            }
 
             if( mjOtherStatisticModel.getResultData() ==null || mjOtherStatisticModel.getResultData().getOtherInfoList() ==null ){
-                DialogUtils.showDialog( MoreStatisticActivity.this , MoreStatisticActivity.this.getSupportFragmentManager(),
+                DialogUtils.showDialog( ref.get() , ref.get().getSupportFragmentManager(),
                         "错误信息","服务端返回数据不完整","关闭");
                 return;
             }
@@ -199,12 +210,12 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
             String fxsCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getDiscributorAmount());
             String memberCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getMemberAmount());
 
-            moresta_ordercount.setText(  orderCount );
-            moresta_sp.setText( spCount );
-            moresta_hytj.setText( memberCount );
-            moresta_fxs.setText( fxsCount );
+            ref.get(). moresta_ordercount.setText(  orderCount );
+            ref.get(). moresta_sp.setText( spCount );
+            ref.get(). moresta_hytj.setText( memberCount );
+            ref.get().moresta_fxs.setText( fxsCount );
         }
-    };
+    }
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {

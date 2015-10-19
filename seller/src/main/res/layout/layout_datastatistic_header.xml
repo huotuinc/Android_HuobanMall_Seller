@@ -57,6 +57,8 @@
             android:singleLine="true"
             android:background="@drawable/radiobutton_middle"
             android:textColor="@drawable/check_text"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="-1dp"
             />
         <RadioButton
             android:id="@+id/tab_rb_c"

@@ -20,6 +20,7 @@ import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.huotu.huobanmall.seller.R;
+import com.huotu.huobanmall.seller.activity.BaseFragmentActivity;
 import com.huotu.huobanmall.seller.activity.LoginActivity;
 import com.huotu.huobanmall.seller.adapter.GoodsAdapter;
 import com.huotu.huobanmall.seller.bean.GoodsModel;
@@ -28,12 +29,14 @@ import com.huotu.huobanmall.seller.bean.MJGoodModel;
 import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.common.Constant;
 import com.huotu.huobanmall.seller.utils.ActivityUtils;
+import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -106,6 +109,7 @@ public class SaleGoodsFragment extends BaseFragment {
         _goodsList = new ArrayList<>();
         _goodsAdapter = new GoodsAdapter(this.getActivity(), _goodsList);
         _goodsSaleListView.getRefreshableView().setAdapter(_goodsAdapter);
+        _pulltoRefreshListView = _goodsSaleListView;//
 
         emptyView = new View(this.getActivity());
         emptyView.setBackgroundResource(R.mipmap.tpzw);
@@ -160,6 +164,8 @@ public class SaleGoodsFragment extends BaseFragment {
     public void onDetach() {
         super.onDetach();
 
+        _goodsSaleListView.onRefreshComplete();
+        VolleyRequestManager.cancelAllRequest();
     }
 
     @Override
@@ -189,6 +195,9 @@ public class SaleGoodsFragment extends BaseFragment {
             _handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+
+                    if( SaleGoodsFragment.this.getActivity() ==null || SaleGoodsFragment.this.isDetached() || SaleGoodsFragment.this.isRemoving() ) return;
+
                     _type = OperateTypeEnum.REFRESH;
                     _isFirst=false;
                     _goodsSaleListView.setRefreshing(true);
@@ -228,45 +237,54 @@ public class SaleGoodsFragment extends BaseFragment {
                 url,
                 MJGoodModel.class,
                 null,
-                goodslistListener,
-                this
-                );
+                new MyListener(this),
+                new MJErrorListener(this));
 
         VolleyRequestManager.AddRequest(goodsListRequest);
     }
 
-    Response.Listener<MJGoodModel> goodslistListener =new Response.Listener<MJGoodModel>() {
+//    Response.Listener<MJGoodModel> goodslistListener =new Response.Listener<MJGoodModel>() {
+    static class MyListener implements Response.Listener<MJGoodModel>{
+        WeakReference<SaleGoodsFragment> ref;
+        public MyListener(SaleGoodsFragment frag){
+            ref=new WeakReference<SaleGoodsFragment>(frag);
+        }
+
         @Override
         public void onResponse(MJGoodModel mjGoodModel) {
-            SaleGoodsFragment.this.closeProgressDialog();
-            _goodsSaleListView.onRefreshComplete();
+            if( ref.get()==null || ref.get().getActivity()==null ) return;
 
-            if (isSetEmptyView == false) {
-                _goodsSaleListView.setEmptyView(emptyView);
-                isSetEmptyView=true;
+            //if(  SaleGoodsFragment.this.getActivity() ==null || SaleGoodsFragment.this.isDetached()||SaleGoodsFragment.this.isRemoving() ) return;
+
+             ref.get().closeProgressDialog();
+            ref.get(). _goodsSaleListView.onRefreshComplete();
+
+            if ( ref.get().isSetEmptyView == false) {
+                ref.get()._goodsSaleListView.setEmptyView( ref.get().emptyView);
+                ref.get().isSetEmptyView=true;
             }
 
             if( mjGoodModel==null){
-                SimpleDialogFragment.createBuilder(SaleGoodsFragment.this.getActivity(), SaleGoodsFragment.this.getActivity().getSupportFragmentManager())
-                        .setTitle("错误信息")
+                SimpleDialogFragment.createBuilder( ref.get().getActivity() , ( (BaseFragmentActivity)ref.get().getActivity()).getSupportFragmentManager())
+                .setTitle("错误信息")
                         .setMessage( "获取数据失败" )
                         .setNegativeButtonText("关闭")
                         .show();
                 return;
             }
             if( mjGoodModel.getSystemResultCode()!=1){
-                SimpleDialogFragment.createBuilder( SaleGoodsFragment.this.getActivity() , SaleGoodsFragment.this.getActivity().getSupportFragmentManager())
+                SimpleDialogFragment.createBuilder(  ref.get().getActivity() , ((BaseFragmentActivity) ref.get().getActivity()).getSupportFragmentManager())
                         .setTitle("错误信息")
                         .setMessage( mjGoodModel.getSystemResultDescription() )
                         .setNegativeButtonText("关闭")
                         .show();
                 return;
             }else if( mjGoodModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().skipActivity(SaleGoodsFragment.this.getActivity(), LoginActivity.class);
+                ActivityUtils.getInstance().skipActivity( ref.get().getActivity(), LoginActivity.class);
                 return;
             }
             else if( mjGoodModel.getResultCode() != 1){
-                SimpleDialogFragment.createBuilder( SaleGoodsFragment.this.getActivity() , SaleGoodsFragment.this.getActivity().getSupportFragmentManager())
+                SimpleDialogFragment.createBuilder(  ref.get().getActivity() , ((BaseFragmentActivity) ref.get().getActivity()).getSupportFragmentManager())
                         .setTitle("错误信息")
                         .setMessage( mjGoodModel.getResultDescription() )
                         .setNegativeButtonText("关闭")
@@ -274,32 +292,50 @@ public class SaleGoodsFragment extends BaseFragment {
                 return;
             }
 
-//            if( mjGoodModel.getResultData() ==null || mjGoodModel.getResultData().getList()==null||mjGoodModel.getResultData().getList().size()<1){
-//                return;
-//            }
-
-            if(_type == OperateTypeEnum.REFRESH){
-                _goodsList.clear();
+            if( ref.get()._type == OperateTypeEnum.REFRESH){
+                ref.get()._goodsList.clear();
                 if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList()!=null && mjGoodModel.getResultData().getList().size()>0) {
-                    _goodsList.addAll(mjGoodModel.getResultData().getList());
+                    ref.get()._goodsList.addAll(mjGoodModel.getResultData().getList());
                 }else{
                     ToastUtils.showLong(Constant.No_Data_Text,Gravity.BOTTOM);
                 }
             }else{
                 if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList()!=null && mjGoodModel.getResultData().getList().size()>0 ) {
-                    _goodsList.addAll(mjGoodModel.getResultData().getList());
+                    ref.get()._goodsList.addAll(mjGoodModel.getResultData().getList());
                 }else{
                     ToastUtils.showLong(Constant.No_Data_Text, Gravity.BOTTOM);
                 }
             }
-            _goodsAdapter.notifyDataSetChanged();
+            ref.get()._goodsAdapter.notifyDataSetChanged();
         }
     };
 
+//    Response.ErrorListener errorListener =new Response.ErrorListener() {
+//        @Override
+//        public void onErrorResponse(VolleyError volleyError) {
+//            if( SaleGoodsFragment.this.getActivity() ==null ||  SaleGoodsFragment.this.isRemoving() || SaleGoodsFragment.this.isDetached() ) return;
+//
+//            _goodsSaleListView.onRefreshComplete();
+//            SaleGoodsFragment.this.closeProgressDialog();
+//            String message="";
+//            if( null != volleyError.networkResponse){
+//                message=new String( volleyError.networkResponse.data);
+//            }else{
+//                message = volleyError.getMessage();
+//            }
+//            if( message.length()<1){
+//                message = "网络请求失败，请检查网络状态";
+//            }
+//            DialogUtils.showDialog(SaleGoodsFragment.this.getActivity(), SaleGoodsFragment.this.getFragmentManager(), "错误信息", message, "关闭");
+//
+//        }
+//    };
 
-    @Override
-    public void onErrorResponse(VolleyError volleyError) {
-        _goodsSaleListView.onRefreshComplete();
-        super.onErrorResponse(volleyError);
-    }
+//    @Override
+//    public void onErrorResponse(VolleyError volleyError) {
+//        if( SaleGoodsFragment.this.getActivity() ==null ||  SaleGoodsFragment.this.isRemoving() || SaleGoodsFragment.this.isDetached() ) return;
+//
+//        _goodsSaleListView.onRefreshComplete();
+//        super.onErrorResponse(volleyError);
+//    }
 }

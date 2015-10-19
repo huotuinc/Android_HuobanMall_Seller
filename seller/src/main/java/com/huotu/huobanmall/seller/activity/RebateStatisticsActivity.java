@@ -41,6 +41,7 @@ import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -131,6 +132,7 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
        emptyView.setBackgroundResource(R.mipmap.tpzw);
 //        _rebateStatistics_listview.setEmptyView(emptyView);
 
+        this._pullToRefreshBase = _rebateStatistics_listview;
         _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH);
 
         _userScoreList = new ArrayList<>();
@@ -214,8 +216,8 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                 url ,
                 MJUserScoreModel.class,
                 null,
-                listener_MX,
-                this
+                new MyListener_MX(this),
+                new MJErrorListener(this)
         );
 
         VolleyRequestManager.AddRequest(request);
@@ -238,36 +240,44 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
         VolleyRequestManager.AddRequest(request);
     }
 
-    Response.Listener<MJUserScoreModel> listener_MX =new Response.Listener<MJUserScoreModel>() {
+    //Response.Listener<MJUserScoreModel> listener_MX =new Response.Listener<MJUserScoreModel>() {
+    static class MyListener_MX implements Response.Listener<MJUserScoreModel>{
+        WeakReference<RebateStatisticsActivity> ref;
+        public MyListener_MX(RebateStatisticsActivity act){
+            ref = new WeakReference<RebateStatisticsActivity>(act);
+        }
+
         @Override
         public void onResponse(MJUserScoreModel mjUserScoreModel ) {
-           if( RebateStatisticsActivity.this.isFinishing() ) return;
+            if( ref.get()==null)return;
 
-            RebateStatisticsActivity.this.closeProgressDialog();
-            _rebateStatistics_listview.onRefreshComplete();
+           if( ref.get().isFinishing() ) return;
 
-            if( isSetEmptyView ==false ){
-                _rebateStatistics_listview.setEmptyView(emptyView);
-                isSetEmptyView=true;
+            ref.get().closeProgressDialog();
+            ref.get()._rebateStatistics_listview.onRefreshComplete();
+
+            if( ref.get().isSetEmptyView ==false ){
+                ref.get(). _rebateStatistics_listview.setEmptyView(ref.get().emptyView);
+                ref.get().isSetEmptyView=true;
             }
 
-            if( !validateData(mjUserScoreModel)) return;
+            if( !ref.get().validateData(mjUserScoreModel)) return;
 
-            if( _operateType == OperateTypeEnum.REFRESH ) {
+            if( ref.get()._operateType == OperateTypeEnum.REFRESH ) {
 
-                _userScoreList.clear();
+                ref.get()._userScoreList.clear();
 
                 if (mjUserScoreModel.getResultData() != null && mjUserScoreModel.getResultData().getList() != null
                         && mjUserScoreModel.getResultData().getList().size() > 0) {
-                    _userScoreList.addAll(mjUserScoreModel.getResultData().getList());
+                    ref.get()._userScoreList.addAll(mjUserScoreModel.getResultData().getList());
                 }
-                _rebateStatistics_listview.setAdapter( _userScoreAdapter );
-            }else if( _operateType == OperateTypeEnum.LOADMORE){
+                ref.get()._rebateStatistics_listview.setAdapter( ref.get()._userScoreAdapter );
+            }else if( ref.get()._operateType == OperateTypeEnum.LOADMORE){
                 if (mjUserScoreModel.getResultData() != null && mjUserScoreModel.getResultData().getList() != null
                         && mjUserScoreModel.getResultData().getList().size() > 0) {
-                    _userScoreList.addAll(mjUserScoreModel.getResultData().getList());
+                    ref.get(). _userScoreList.addAll(mjUserScoreModel.getResultData().getList());
                 }
-                _userScoreAdapter.notifyDataSetChanged();
+                ref.get(). _userScoreAdapter.notifyDataSetChanged();
             }
         }
     };

@@ -58,6 +58,8 @@
             android:background="@drawable/radiobutton_left"
             android:textColor="@drawable/check_text"
             android:padding="@dimen/space_5"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="-1dp"
             />
 
         <RadioButton
@@ -71,6 +73,8 @@
             android:textSize="@dimen/text_size_16"
             android:gravity="center"
             android:singleLine="true"
+            android:layout_marginLeft="-1dp"
+            android:layout_marginRight="0dp"
             android:background="@drawable/radiobutton_right"
             android:textColor="@drawable/check_text"
             />

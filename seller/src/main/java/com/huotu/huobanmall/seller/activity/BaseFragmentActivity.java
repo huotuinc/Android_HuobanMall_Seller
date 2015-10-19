@@ -3,6 +3,7 @@ package com.huotu.huobanmall.seller.activity;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -13,6 +14,7 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.avast.android.dialogs.fragment.ProgressDialogFragment;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.bean.BaseModel;
 import com.huotu.huobanmall.seller.bean.RoleEnum;
@@ -24,6 +26,8 @@ import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.Util;
 import com.umeng.analytics.MobclickAgent;
 
+import java.lang.ref.WeakReference;
+
 import cn.jpush.android.api.JPushInterface;
 
 /**
@@ -31,6 +35,8 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class BaseFragmentActivity extends FragmentActivity implements View.OnClickListener , Response.ErrorListener {
     ProgressDialogFragment _progressDialog=null;
+    PullToRefreshBase _pullToRefreshBase =null;
+
     protected static final String NULL_NETWORK = "无网络或当前网络不可用!";
 
     public BaseFragmentActivity() {
@@ -112,6 +118,10 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
         if( BaseFragmentActivity.this.isFinishing() ) return;
 
         BaseFragmentActivity.this.closeProgressDialog();
+        if( _pullToRefreshBase!=null ){
+            _pullToRefreshBase.onRefreshComplete();
+        }
+
         String message="";
         if( volleyError instanceof TimeoutError ){
             message = "网络连接超时";
@@ -133,6 +143,48 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
         DialogUtils.showDialog(BaseFragmentActivity.this, BaseFragmentActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
     }
 
+    //Response.ErrorListener errorListener =new Response.ErrorListener() {
+    static class MJErrorListener implements Response.ErrorListener{
+        WeakReference<BaseFragmentActivity> ref;
+        public MJErrorListener(BaseFragmentActivity act){
+            ref = new WeakReference<BaseFragmentActivity>(act);
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            if( ref.get() ==null )return;
+
+            if( ref.get().isFinishing() ) return;
+
+            ref.get().closeProgressDialog();
+            if( ref.get()._pullToRefreshBase!=null ){
+                ref.get()._pullToRefreshBase.onRefreshComplete();
+            }
+
+            String message="";
+            if( volleyError instanceof TimeoutError ){
+                message = "网络连接超时";
+            }else if( volleyError instanceof NetworkError || volleyError instanceof NoConnectionError ) {
+                message ="网络请求异常，请检查网络状态";
+            }else if( volleyError instanceof ParseError ){
+                message = "数据解析失败，请检测数据的正确性";
+            }else if( volleyError instanceof ServerError || volleyError instanceof AuthFailureError){
+                if( null != volleyError.networkResponse){
+                    message=new String( volleyError.networkResponse.data);
+                }else{
+                    message = volleyError.getMessage();
+                }
+            }
+
+            if( message.length()<1){
+                message = "网络请求失败，请检查网络状态";
+            }
+
+            ToastUtils.showLong( message , Toast.LENGTH_LONG);
+            //DialogUtils.showDialog(BaseFragmentActivity.this, BaseFragmentActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
+
+        }
+    }
 
  
     /**
@@ -190,4 +242,5 @@ public class BaseFragmentActivity extends FragmentActivity implements View.OnCli
 
         return false;
     }
+
 }

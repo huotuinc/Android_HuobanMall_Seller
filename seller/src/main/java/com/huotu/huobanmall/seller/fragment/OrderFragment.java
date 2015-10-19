@@ -56,6 +56,7 @@ import com.viewpagerindicator.TitlePageIndicator;
 
 import org.w3c.dom.Text;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -154,8 +155,8 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
                 url,
                 MJBillStatisticModel.class,
                 null,
-                billReportListner,
-                this
+                new MyListener(this),
+                new MJErrorListener(this)
         );
 
         this.showProgressDialog("", "正在获取数据，请稍等...");
@@ -189,52 +190,61 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener 
         }
     }
 
-    protected Response.Listener<MJBillStatisticModel> billReportListner = new Response.Listener<MJBillStatisticModel>() {
+    //protected Response.Listener<MJBillStatisticModel> billReportListner = new Response.Listener<MJBillStatisticModel>() {
+
+    static class MyListener implements Response.Listener<MJBillStatisticModel>{
+        WeakReference<OrderFragment> ref;
+        public MyListener(OrderFragment frag){
+            ref=new WeakReference<OrderFragment>(frag);
+        }
+
         @Override
         public void onResponse(MJBillStatisticModel mjBillStatisticModel  ) {
-         if( OrderFragment.this.isRemoving() || OrderFragment.this.isDetached() ) return;
+            if( ref.get()==null || ref.get().getActivity()==null) return;
 
-            OrderFragment.this.closeProgressDialog();
+            if(  ref.get().isRemoving() ||  ref.get().isDetached() ) return;
+
+            ref.get().closeProgressDialog();
 
             if( mjBillStatisticModel==null){
-                DialogUtils.showDialog( OrderFragment.this.getActivity(), OrderFragment.this.getFragmentManager() ,"错误信息", "请求数据失败","关闭" );
+                DialogUtils.showDialog(  ref.get().getActivity(),  ref.get().getFragmentManager() ,"错误信息", "请求数据失败","关闭" );
                 return;
             }
             if( mjBillStatisticModel.getSystemResultCode()!=1){
-                DialogUtils.showDialog( OrderFragment.this.getActivity(), OrderFragment.this.getFragmentManager() ,"错误信息", mjBillStatisticModel.getSystemResultDescription(),"关闭" );
+                DialogUtils.showDialog(  ref.get().getActivity(),  ref.get().getFragmentManager() ,"错误信息", mjBillStatisticModel.getSystemResultDescription(),"关闭" );
                 return;
             }
 
             if(mjBillStatisticModel.getResultCode() == Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().showActivity(OrderFragment.this.getActivity(), LoginActivity.class);
+                ActivityUtils.getInstance().showActivity( ref.get().getActivity(), LoginActivity.class);
                 return;
             }
             if( mjBillStatisticModel.getResultCode() != 1){
-                DialogUtils.showDialog( OrderFragment.this.getActivity(), OrderFragment.this.getFragmentManager() ,"错误信息", mjBillStatisticModel.getResultDescription() ,"关闭" );
+                DialogUtils.showDialog(  ref.get().getActivity(),  ref.get().getFragmentManager() ,"错误信息", mjBillStatisticModel.getResultDescription() ,"关闭" );
                 return;
             }
 
-            _data=mjBillStatisticModel;
+            ref.get()._data=mjBillStatisticModel;
 
-            Long totalAmount = _data.getResultData().getTotalAmount();
-            _orderTotal.setText(String.valueOf(totalAmount));
-            if( _currentIdx== 0){
-                Long todayAmount = _data.getResultData().getTodayAmount();
-                _order_info_count.setText( String.valueOf( todayAmount ) );
-            }else if( _currentIdx==1){
-                Long weekAmount = _data.getResultData().getWeekAmount();
-                _order_info_count.setText( String.valueOf( weekAmount ) );
-            }else if( _currentIdx==2){
-                Long monthAmount = _data.getResultData().getMonthAmount();
-                _order_info_count.setText( String.valueOf(monthAmount) );
+            Long totalAmount = ref.get()._data.getResultData().getTotalAmount();
+            ref.get()._orderTotal.setText(String.valueOf(totalAmount));
+            if( ref.get()._currentIdx== 0){
+                Long todayAmount = ref.get()._data.getResultData().getTodayAmount();
+                ref.get()._order_info_count.setText( String.valueOf( todayAmount ) );
+            }else if( ref.get()._currentIdx==1){
+                Long weekAmount = ref.get()._data.getResultData().getWeekAmount();
+                ref.get()._order_info_count.setText( String.valueOf( weekAmount ) );
+            }else if( ref.get()._currentIdx==2){
+                Long monthAmount = ref.get()._data.getResultData().getMonthAmount();
+                ref.get()._order_info_count.setText( String.valueOf(monthAmount) );
             }
 
-            _fragment1.setData( _data , 1 );
-            _fragment2.setData(_data,2);
-            _fragment3.setData(_data, 3);
-            _orderFragmentAdapter.notifyDataSetChanged();
+            ref.get()._fragment1.setData( ref.get()._data , 1 );
+            ref.get()._fragment2.setData(ref.get()._data,2);
+            ref.get()._fragment3.setData(ref.get()._data, 3);
+            ref.get()._orderFragmentAdapter.notifyDataSetChanged();
         }
-    };
+    }
 
     protected void setData(){
     }
