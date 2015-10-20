@@ -31,6 +31,7 @@ import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,10 +96,10 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
         _goodsedit_onshelf.setOnClickListener(this);
         _goodsedit_offshelf.setOnClickListener(this);
         _goodsedit_all.setOnClickListener(this);
+
+        _pullToRefreshBase = _goodsedit_listview;
         _goodsedit_listview.setMode(PullToRefreshBase.Mode.BOTH);
-
         _goodsedit_listview.getRefreshableView().setOnItemClickListener(this);
-
         _goodsedit_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> pullToRefreshBase) {
@@ -161,8 +162,8 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                         urlString,
                         MJGoodModel.class,
                         null,
-                        goodsListListener,
-                        this);
+                        new MyListener(this),
+                        new MJErrorListener(this));
 
         VolleyRequestManager.AddRequest( goodsListRequest);
     }
@@ -208,88 +209,96 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                         urlString,
                         MJGoodModel.class,
                         null,
-                        goodsListListener,
-                        this);
+                        new MyListener(this),
+                        new MJErrorListener(this));
 
         VolleyRequestManager.AddRequest(goodsListRequest);
     }
 
-    private Response.Listener< MJGoodModel > goodsListListener = new Response.Listener<MJGoodModel>() {
+    //private Response.Listener< MJGoodModel > goodsListListener = new Response.Listener<MJGoodModel>() {
+    static class MyListener implements Response.Listener<MJGoodModel>{
+        WeakReference<GoodsEditActivity> ref;
+        public MyListener(GoodsEditActivity act){
+            ref= new WeakReference<GoodsEditActivity>(act);
+        }
+
         @Override
         public void onResponse( MJGoodModel mjGoodModel ) {
-            if( GoodsEditActivity.this.isFinishing() ) return;
+            if( ref.get()==null) return;
+            if( ref.get().isFinishing() ) return;
 
-            GoodsEditActivity.this.closeProgressDialog();
-            _goodsedit_listview.onRefreshComplete();
-            if(_type==1) {
-                _goodsedit_offshelf.setVisibility(View.VISIBLE);
-                _goodsedit_onshelf.setVisibility(View.GONE);
+            ref.get().closeProgressDialog();
+            ref.get()._goodsedit_listview.onRefreshComplete();
+            if(ref.get()._type==1) {
+                ref.get()._goodsedit_offshelf.setVisibility(View.VISIBLE);
+                ref.get()._goodsedit_onshelf.setVisibility(View.GONE);
             }else{
-                _goodsedit_offshelf.setVisibility(View.GONE);
-                _goodsedit_onshelf.setVisibility(View.VISIBLE);
+                ref.get()._goodsedit_offshelf.setVisibility(View.GONE);
+                ref.get()._goodsedit_onshelf.setVisibility(View.VISIBLE);
             }
 
-            if( mjGoodModel==null){
-                SimpleDialogFragment.createBuilder(GoodsEditActivity.this, GoodsEditActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage( "获取数据失败" )
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }
-            if( mjGoodModel.getSystemResultCode()!=1){
-                SimpleDialogFragment.createBuilder( GoodsEditActivity.this , GoodsEditActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage( mjGoodModel.getSystemResultDescription() )
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }else if( mjGoodModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().skipActivity( GoodsEditActivity.this, LoginActivity.class);
-                return;
-            }
-            else if( mjGoodModel.getResultCode() != 1){
-                SimpleDialogFragment.createBuilder( GoodsEditActivity.this , GoodsEditActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage( mjGoodModel.getResultDescription() )
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }
+            if(!ref.get().validateData(mjGoodModel)) return;
+//            if( mjGoodModel==null){
+//                SimpleDialogFragment.createBuilder(GoodsEditActivity.this, GoodsEditActivity.this.getSupportFragmentManager())
+//                        .setTitle("错误信息")
+//                        .setMessage( "获取数据失败" )
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+//                return;
+//            }
+//            if( mjGoodModel.getSystemResultCode()!=1){
+//                SimpleDialogFragment.createBuilder( GoodsEditActivity.this , GoodsEditActivity.this.getSupportFragmentManager())
+//                        .setTitle("错误信息")
+//                        .setMessage( mjGoodModel.getSystemResultDescription() )
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+//                return;
+//            }else if( mjGoodModel.getResultCode()== Constant.TOKEN_OVERDUE){
+//                ActivityUtils.getInstance().skipActivity( GoodsEditActivity.this, LoginActivity.class);
+//                return;
+//            }
+//            else if( mjGoodModel.getResultCode() != 1){
+//                SimpleDialogFragment.createBuilder( GoodsEditActivity.this , GoodsEditActivity.this.getSupportFragmentManager())
+//                        .setTitle("错误信息")
+//                        .setMessage( mjGoodModel.getResultDescription() )
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+//                return;
+//            }
 
-            _goodsedit_all.setBackgroundResource(R.mipmap.wsz);
-            if( _type == 1 && _operateType == OperateTypeEnum.REFRESH){
-                _saleGoodsList.clear();
+            ref.get()._goodsedit_all.setBackgroundResource(R.mipmap.wsz);
+            if( ref.get()._type == 1 && ref.get()._operateType == OperateTypeEnum.REFRESH){
+                ref.get()._saleGoodsList.clear();
                 if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList()!=null) {
-                    _saleGoodsList.addAll(mjGoodModel.getResultData().getList());
+                    ref.get()._saleGoodsList.addAll(mjGoodModel.getResultData().getList());
                 }
-                _goodsedit_listview.getRefreshableView().setAdapter(_saleGoodsAdapter);
-            }else if( _type==1 && _operateType == OperateTypeEnum.LOADMORE){
+                ref.get()._goodsedit_listview.getRefreshableView().setAdapter(ref.get()._saleGoodsAdapter);
+            }else if( ref.get()._type==1 && ref.get()._operateType == OperateTypeEnum.LOADMORE){
                 if( mjGoodModel.getResultData() !=null && mjGoodModel.getResultData().getList() !=null ) {
-                    _saleGoodsList.addAll(mjGoodModel.getResultData().getList());
+                    ref.get()._saleGoodsList.addAll(mjGoodModel.getResultData().getList());
                 }
-                _saleGoodsAdapter.notifyDataSetChanged();
-            }else if( _type==2 && _operateType==OperateTypeEnum.REFRESH){
-                _offShelfList.clear();
+                ref.get()._saleGoodsAdapter.notifyDataSetChanged();
+            }else if( ref.get()._type==2 && ref.get()._operateType==OperateTypeEnum.REFRESH){
+                ref.get()._offShelfList.clear();
                 if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList() !=null ) {
-                    _offShelfList.addAll(mjGoodModel.getResultData().getList());
+                    ref.get()._offShelfList.addAll(mjGoodModel.getResultData().getList());
                 }
-                _goodsedit_listview.getRefreshableView().setAdapter(_offShelfAdapter);
-            }else if( _type==2 && _operateType==OperateTypeEnum.LOADMORE){
+                ref.get()._goodsedit_listview.getRefreshableView().setAdapter(ref.get()._offShelfAdapter);
+            }else if( ref.get()._type==2 && ref.get()._operateType==OperateTypeEnum.LOADMORE){
                 if( mjGoodModel.getResultData()!=null && mjGoodModel.getResultData().getList()!=null ) {
-                    _offShelfList.addAll(mjGoodModel.getResultData().getList());
+                    ref.get()._offShelfList.addAll(mjGoodModel.getResultData().getList());
                 }
-                _offShelfAdapter.notifyDataSetChanged();
+                ref.get()._offShelfAdapter.notifyDataSetChanged();
             }
         }
-    };
-
-    @Override
-    public void onErrorResponse(VolleyError volleyError) {
-        if( GoodsEditActivity.this.isFinishing() ) return;
-        _goodsedit_listview.onRefreshComplete();
-        super.onErrorResponse(volleyError);
     }
+
+//    @Override
+//    public void onErrorResponse(VolleyError volleyError) {
+//        if( GoodsEditActivity.this.isFinishing() ) return;
+//        _goodsedit_listview.onRefreshComplete();
+//        super.onErrorResponse(volleyError);
+//    }
 
     @Override
     public void onClick(View v) {
@@ -390,8 +399,8 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
                 BaseModel.class,
                 null,
                 maps,
-                operGoodsListener,
-                this
+                new MyListener_Operate(this),
+                new MJErrorListener(this)
         );
 
         GoodsEditActivity.this.showProgressDialog("", "请稍等...");
@@ -399,53 +408,59 @@ public class GoodsEditActivity extends BaseFragmentActivity implements
         VolleyRequestManager.AddRequest(operGoodsRequest);
     }
 
-    protected Response.Listener<BaseModel> operGoodsListener=new Response.Listener<BaseModel>() {
+    //protected Response.Listener<BaseModel> operGoodsListener=new Response.Listener<BaseModel>() {
+    static class MyListener_Operate implements Response.Listener<BaseModel>{
+        WeakReference<GoodsEditActivity> ref;
+        public MyListener_Operate(GoodsEditActivity act ){
+            ref =new WeakReference<GoodsEditActivity>(act);
+        }
+
         @Override
         public void onResponse(BaseModel baseModel) {
+            if( ref.get() ==null ) return;
+            if( ref.get().isFinishing() ) return;
 
-            if( GoodsEditActivity.this.isFinishing() ) return;
+            ref.get().closeProgressDialog();
 
-           GoodsEditActivity.this.closeProgressDialog();
+            if( !ref.get().validateData(baseModel)) return;
+//            if( null == baseModel){
+//                SimpleDialogFragment.createBuilder( ref.get() , ref.get().getSupportFragmentManager())
+//                        .setTitle("错误信息")
+//                        .setMessage("请求失败")
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+//                return;
+//            }
+//            if( baseModel.getSystemResultCode() !=1 ){
+//                SimpleDialogFragment.createBuilder( ref.get() , ref.get().getSupportFragmentManager())
+//                        .setTitle("错误信息")
+//                        .setMessage(baseModel.getSystemResultDescription())
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+//                return;
+//            }
+//            if(baseModel.getResultCode()== Constant.TOKEN_OVERDUE){
+//                ActivityUtils.getInstance().skipActivity( GoodsEditActivity.this ,LoginActivity.class);
+//                return;
+//            }
+//            if(baseModel.getResultCode() !=1){
+//                SimpleDialogFragment.createBuilder( GoodsEditActivity.this , GoodsEditActivity.this.getSupportFragmentManager())
+//                        .setTitle("错误信息")
+//                        .setMessage(baseModel.getResultDescription())
+//                        .setNegativeButtonText("关闭")
+//                        .show();
+//                return;
+//            }
 
-            if( null == baseModel){
-                SimpleDialogFragment.createBuilder( GoodsEditActivity.this , GoodsEditActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage("请求失败")
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }
-            if( baseModel.getSystemResultCode() !=1 ){
-                SimpleDialogFragment.createBuilder( GoodsEditActivity.this , GoodsEditActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage(baseModel.getSystemResultDescription())
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }
-            if(baseModel.getResultCode()== Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().skipActivity( GoodsEditActivity.this ,LoginActivity.class);
-                return;
-            }
-            if(baseModel.getResultCode() !=1){
-                SimpleDialogFragment.createBuilder( GoodsEditActivity.this , GoodsEditActivity.this.getSupportFragmentManager())
-                        .setTitle("错误信息")
-                        .setMessage(baseModel.getResultDescription())
-                        .setNegativeButtonText("关闭")
-                        .show();
-                return;
-            }
-
-            if(_type==1){
-                _operateType= OperateTypeEnum.REFRESH;
-                getSaleGoodsData(_operateType);
-            }else if(_type==2){
-                _operateType=OperateTypeEnum.REFRESH;
-                getOffShelfGoodsData(_operateType);
+            if(ref.get(). _type==1){
+                ref.get(). _operateType= OperateTypeEnum.REFRESH;
+                ref.get(). getSaleGoodsData(ref.get()._operateType);
+            }else if(ref.get() ._type==2){
+                ref.get() ._operateType=OperateTypeEnum.REFRESH;
+                ref.get() .getOffShelfGoodsData(ref.get()._operateType);
             }
         }
-    };
-
+    }
 
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {

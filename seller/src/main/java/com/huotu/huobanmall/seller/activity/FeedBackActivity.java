@@ -144,7 +144,7 @@ public class FeedBackActivity extends BaseFragmentActivity implements OnClickLis
                 null,
                 paras,
                 listener,
-                this
+                new MJErrorListener(this)
         );
 
         this.showProgressDialog("", "正在提交数据，请稍等...");

@@ -63,7 +63,7 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
     @Bind(R.id.morestatistic_refresh)
     PullToRefreshScrollView morestat_refresh;
 
-    Handler handler =new Handler();
+    Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,42 +96,42 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
             @Override
             public void run() {
 
-                if( MoreStatisticActivity.this.isFinishing() ) return;
+                if (MoreStatisticActivity.this.isFinishing()) return;
 
                 morestat_refresh.setRefreshing(true);
             }
-        },1000);
+        }, 1000);
     }
 
-    protected void setImangeSize(){
+    protected void setImangeSize() {
         int screemWidth = getWindowManager().getDefaultDisplay().getWidth();
         int screemHeight = getWindowManager().getDefaultDisplay().getHeight();
 
-        int size = screemWidth/3;
-        int imageHeight = 50;
-        int imageWidth = 50;
-        int space = (size - imageWidth)/2;
+        int size = screemWidth / 3;
+        int imageHeight = (int) (size * 0.5);
+        int imageWidth = (int) (size * 0.5);
+        int space = imageWidth;
 
         Drawable drawable1 = getResources().getDrawable(R.mipmap.fxs);
-        drawable1.setBounds(0, 0, space , space );//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        drawable1.setBounds(0 , 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         moresta_fxs.setCompoundDrawables(null, drawable1, null, null);
-        Drawable drawable2= getResources().getDrawable(R.mipmap.sp);
+        Drawable drawable2 = getResources().getDrawable(R.mipmap.sp);
         drawable2.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         moresta_sp.setCompoundDrawables(null, drawable2, null, null);
         Drawable drawable3 = getResources().getDrawable(R.mipmap.xsetj);
         drawable3.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         moresta_xsetj.setCompoundDrawables(null, drawable3, null, null);
         Drawable drawable4 = getResources().getDrawable(R.mipmap.hytj);
-        drawable4.setBounds(0, 0,space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        drawable4.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         moresta_hytj.setCompoundDrawables(null, drawable4, null, null);
         Drawable drawable5 = getResources().getDrawable(R.mipmap.xsmx);
         drawable5.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         moresta_xsmx.setCompoundDrawables(null, drawable5, null, null);
         Drawable drawable6 = getResources().getDrawable(R.mipmap.fltj);
-        drawable6.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        drawable6.setBounds(0 , 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         moresta_fljftj.setCompoundDrawables(null, drawable6, null, null);
         Drawable drawable7 = getResources().getDrawable(R.mipmap.xftj);
-        drawable7.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        drawable7.setBounds(0 , 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         moresta_xftj.setCompoundDrawables(null, drawable7, null, null);
         Drawable drawable8 = getResources().getDrawable(R.mipmap.kb);
         drawable8.setBounds(0, 0, space, space);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
@@ -148,16 +148,16 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         super.onResume();
     }
 
-    protected void getData(){
-        if( false== canConnect()){
+    protected void getData() {
+        if (false == canConnect()) {
             this.closeProgressDialog();
             morestat_refresh.onRefreshComplete();
             return;
         }
 
         String url = Constant.OTHERSTATISTIC_INTERFACE;
-        HttpParaUtils httpParaUtils =new HttpParaUtils();
-        url = httpParaUtils.getHttpGetUrl(url ,null);
+        HttpParaUtils httpParaUtils = new HttpParaUtils();
+        url = httpParaUtils.getHttpGetUrl(url, null);
 
         GsonRequest<MJOtherStatisticModel> otherRequest = new GsonRequest<MJOtherStatisticModel>(
                 Request.Method.GET,
@@ -171,55 +171,54 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
         VolleyRequestManager.AddRequest(otherRequest);
     }
 
-    protected void clearData(){
-        moresta_ordercount.setText(  "0" );
-        moresta_sp.setText( "0" );
-        moresta_hytj.setText( "0" );
-        moresta_fxs.setText( "0" );
+    protected void clearData() {
+        moresta_ordercount.setText("0");
+        moresta_sp.setText("0");
+        moresta_hytj.setText("0");
+        moresta_fxs.setText("0");
     }
 
-    //Response.Listener<MJOtherStatisticModel> otherListener=new Response.Listener<MJOtherStatisticModel>() {
-
-    static class MyListener implements Response.Listener<MJOtherStatisticModel>{
+    static class MyListener implements Response.Listener<MJOtherStatisticModel> {
         WeakReference<MoreStatisticActivity> ref;
-        public MyListener(MoreStatisticActivity act){
-            ref=new WeakReference<MoreStatisticActivity>(act);
+
+        public MyListener(MoreStatisticActivity act) {
+            ref = new WeakReference<MoreStatisticActivity>(act);
         }
 
         @Override
-        public void onResponse(MJOtherStatisticModel  mjOtherStatisticModel ) {
-          //if( MoreStatisticActivity.this.isFinishing() )return;
-            if( ref.get()==null) return;
+        public void onResponse(MJOtherStatisticModel mjOtherStatisticModel) {
+            //if( MoreStatisticActivity.this.isFinishing() )return;
+            if (ref.get() == null) return;
 
             ref.get().closeProgressDialog();
             ref.get().morestat_refresh.onRefreshComplete();
             ref.get().clearData();
 
-            if(! ref.get().validateData(mjOtherStatisticModel)){
+            if (!ref.get().validateData(mjOtherStatisticModel)) {
                 return;
             }
 
-            if( mjOtherStatisticModel.getResultData() ==null || mjOtherStatisticModel.getResultData().getOtherInfoList() ==null ){
-                DialogUtils.showDialog( ref.get() , ref.get().getSupportFragmentManager(),
-                        "错误信息","服务端返回数据不完整","关闭");
+            if (mjOtherStatisticModel.getResultData() == null || mjOtherStatisticModel.getResultData().getOtherInfoList() == null) {
+                DialogUtils.showDialog(ref.get(), ref.get().getSupportFragmentManager(),
+                        "错误信息", "服务端返回数据不完整", "关闭");
                 return;
             }
 
-            String orderCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getBillAmount());
-            String spCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getGoodsAmount() );
-            String fxsCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getDiscributorAmount());
-            String memberCount = String.valueOf( mjOtherStatisticModel.getResultData().getOtherInfoList().getMemberAmount());
+            String orderCount = String.valueOf(mjOtherStatisticModel.getResultData().getOtherInfoList().getBillAmount());
+            String spCount = String.valueOf(mjOtherStatisticModel.getResultData().getOtherInfoList().getGoodsAmount());
+            String fxsCount = String.valueOf(mjOtherStatisticModel.getResultData().getOtherInfoList().getDiscributorAmount());
+            String memberCount = String.valueOf(mjOtherStatisticModel.getResultData().getOtherInfoList().getMemberAmount());
 
-            ref.get(). moresta_ordercount.setText(  orderCount );
-            ref.get(). moresta_sp.setText( spCount );
-            ref.get(). moresta_hytj.setText( memberCount );
-            ref.get().moresta_fxs.setText( fxsCount );
+            ref.get().moresta_ordercount.setText(orderCount);
+            ref.get().moresta_sp.setText(spCount);
+            ref.get().moresta_hytj.setText(memberCount);
+            ref.get().moresta_fxs.setText(fxsCount);
         }
     }
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
-        if( MoreStatisticActivity.this.isFinishing() ) return;
+        if (MoreStatisticActivity.this.isFinishing()) return;
 
         MoreStatisticActivity.this.closeProgressDialog();
         morestat_refresh.onRefreshComplete();
@@ -231,61 +230,61 @@ public class MoreStatisticActivity extends BaseFragmentActivity {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        if(v.getId()==R.id.morestatistic_title2){//订单统计
-            if( hasRole(RoleEnum.订单统计 ) == false){
+        if (v.getId() == R.id.morestatistic_title2) {//订单统计
+            if (hasRole(RoleEnum.订单统计) == false) {
                 ToastUtils.showLong("您所属的账号无访问权限。");
                 return;
             }
             Bundle bd = new Bundle();
-            bd.putInt("tabType",Constant.TAB_ORDER);
-            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class,bd);
-        }else if( v.getId() == R.id.morestatistic_menu_xftj){//消费统计
-            if( hasRole(RoleEnum.消费统计 ) == false){
+            bd.putInt("tabType", Constant.TAB_ORDER);
+            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class, bd);
+        } else if (v.getId() == R.id.morestatistic_menu_xftj) {//消费统计
+            if (hasRole(RoleEnum.消费统计) == false) {
                 ToastUtils.showLong("您所属的账号无访问权限。");
                 return;
             }
-            ActivityUtils.getInstance().showActivity(this, ConsumeStatisticsActivity.class );
-        }else if( v.getId() == R.id.morestatistic_menu_xsmx){//销售明细
-            if( hasRole(RoleEnum.销售明细 ) == false){
+            ActivityUtils.getInstance().showActivity(this, ConsumeStatisticsActivity.class);
+        } else if (v.getId() == R.id.morestatistic_menu_xsmx) {//销售明细
+            if (hasRole(RoleEnum.销售明细) == false) {
                 ToastUtils.showLong("您所属的账号无访问权限。");
                 return;
             }
-            ActivityUtils.getInstance().showActivity(this, SalesDetailActivity.class );
+            ActivityUtils.getInstance().showActivity(this, SalesDetailActivity.class);
 
-        }else if( v.getId() == R.id.morestatistic_menu_hytj){//会员统计
-            if( hasRole(RoleEnum.会员统计 ) == false){
+        } else if (v.getId() == R.id.morestatistic_menu_hytj) {//会员统计
+            if (hasRole(RoleEnum.会员统计) == false) {
                 ToastUtils.showLong("您所属的账号无访问权限。");
                 return;
             }
             Bundle bd = new Bundle();
-            bd.putInt( "tabType" , Constant.TAB_MEMBER );
-            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class , bd );
-        }else if( v.getId() == R.id.morestatistic_menu_fltj){//返利积分
-            if( hasRole(RoleEnum.返利积分统计 ) == false){
+            bd.putInt("tabType", Constant.TAB_MEMBER);
+            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class, bd);
+        } else if (v.getId() == R.id.morestatistic_menu_fltj) {//返利积分
+            if (hasRole(RoleEnum.返利积分统计) == false) {
                 ToastUtils.showLong("您所属的账号无访问权限。");
                 return;
             }
-            ActivityUtils.getInstance().showActivity(this, RebateStatisticsActivity.class );
-        }else if( v.getId() == R.id.morestatistic_menu_xsetj){//销售额统计
-            if( hasRole(RoleEnum.销售额统计 ) == false){
-                ToastUtils.showLong("您所属的账号无访问权限。");
-                return;
-            }
-
-            Bundle bd = new Bundle();
-            bd.putInt( "tabType" , Constant.TAB_SALE );
-            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class, bd );
-        }else if( v.getId() == R.id.morestatistic_menu_fxs){//分销商
-            if( hasRole(RoleEnum.会员统计 ) == false){
+            ActivityUtils.getInstance().showActivity(this, RebateStatisticsActivity.class);
+        } else if (v.getId() == R.id.morestatistic_menu_xsetj) {//销售额统计
+            if (hasRole(RoleEnum.销售额统计) == false) {
                 ToastUtils.showLong("您所属的账号无访问权限。");
                 return;
             }
 
             Bundle bd = new Bundle();
-            bd.putInt( "tabType" , Constant.TAB_MEMBER );
-            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class , bd );
-        }else if( v.getId() == R.id.morestatistic_menu_sp){//商品
-           // ActivityUtils.getInstance().showActivity(this, TopSalesActivity.class );
+            bd.putInt("tabType", Constant.TAB_SALE);
+            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class, bd);
+        } else if (v.getId() == R.id.morestatistic_menu_fxs) {//分销商
+            if (hasRole(RoleEnum.会员统计) == false) {
+                ToastUtils.showLong("您所属的账号无访问权限。");
+                return;
+            }
+
+            Bundle bd = new Bundle();
+            bd.putInt("tabType", Constant.TAB_MEMBER);
+            ActivityUtils.getInstance().showActivity(this, DataStatisticActivity.class, bd);
+        } else if (v.getId() == R.id.morestatistic_menu_sp) {//商品
+            // ActivityUtils.getInstance().showActivity(this, TopSalesActivity.class );
         }
     }
 }

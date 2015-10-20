@@ -122,7 +122,8 @@ public class LoginActivity extends BaseFragmentActivity implements
                 HTMerchantModel.class,
                 null,
                 loginListener,
-                this);
+                new MJErrorListener(this)
+        );
 
         VolleyRequestManager.AddRequest(loginRequest);
     }

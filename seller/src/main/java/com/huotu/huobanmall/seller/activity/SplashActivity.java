@@ -39,8 +39,8 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
     @Bind(R.id.loadL)
     RelativeLayout loadLayout;
     //升级APP 请求代码
-    public static final int REQUESTCODE_UPDATE= 6001;
-    HTInitBean _data=null;
+    public static final int REQUESTCODE_UPDATE = 6001;
+    HTInitBean _data = null;
     //消息的类型
     private int messageType = 0;
 
@@ -55,13 +55,12 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
         handlerView();
     }
 
-    protected void initJPush(){
+    protected void initJPush() {
         //int enable = MyApplication.readInt(this , Constant.LOGIN_USER_INFO,  Constant.PUSH_ENABLE , 1 );
         //if( enable == 1){
-            if(  JPushInterface.isPushStopped(SplashActivity.this))
-            {
-                JPushInterface.resumePush(SplashActivity.this);
-            }
+        if (JPushInterface.isPushStopped(SplashActivity.this)) {
+            JPushInterface.resumePush(SplashActivity.this);
+        }
         //}else {
         //    if( false == JPushInterface.isPushStopped(LoadingActivity.this)){
         //        JPushInterface.stopPush(LoadingActivity.this);
@@ -69,11 +68,9 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
         //}
     }
 
-
-
     protected void initView() {
         ButterKnife.bind(this);
-        if(getIntent().hasExtra("type")){
+        if (getIntent().hasExtra("type")) {
             messageType = getIntent().getIntExtra("type", 0);
         }
     }
@@ -102,8 +99,8 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
                 });
     }
 
-    protected void callInit ( ) {
-        if( false== canConnect() ){
+    protected void callInit() {
+        if (false == canConnect()) {
             this.finish();
             return;
         }
@@ -153,26 +150,27 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
 
     //Response.Listener<HTInitBean> htInitBeanListener = new Response.Listener<HTInitBean>() {
 
-    static class MyListener implements Response.Listener<HTInitBean>{
+    static class MyListener implements Response.Listener<HTInitBean> {
         WeakReference<SplashActivity> ref;
-        public MyListener(SplashActivity act){
+
+        public MyListener(SplashActivity act) {
             ref = new WeakReference<SplashActivity>(act);
         }
 
         @Override
         public void onResponse(HTInitBean htInitBean) {
-            if( ref.get()==null) return;
+            if (ref.get() == null) return;
 
-            if( ref.get().isFinishing() ) return;
+            if (ref.get().isFinishing()) return;
 
             ref.get()._data = htInitBean;
-            if( htInitBean == null ){
+            if (htInitBean == null) {
                 //DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息","请求数据失败","关闭");
                 ToastUtils.showLong("请求数据失败");
                 ref.get().finish();
                 return;
             }
-            if( htInitBean.getSystemResultCode() != 1 ){
+            if (htInitBean.getSystemResultCode() != 1) {
                 //DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息",htInitBean.getSystemResultDescription(),"关闭");
                 ToastUtils.showLong(htInitBean.getSystemResultDescription());
                 ref.get().finish();
@@ -180,9 +178,9 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
             }
 
             //判断是否需要升级
-            if( htInitBean.getResultData() !=null ){
-                boolean isNeedUpdate =  ref.get().judgeUpdate(htInitBean.getResultData().getUpdate());
-                if( isNeedUpdate ) {
+            if (htInitBean.getResultData() != null) {
+                boolean isNeedUpdate = ref.get().judgeUpdate(htInitBean.getResultData().getUpdate());
+                if (isNeedUpdate) {
                     ref.get().updateApp(htInitBean.getResultData().getUpdate());
                     return;
                 }
@@ -238,26 +236,26 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
 //            }
             ref.get().gotoMain();
         }
-    };
+    }
 
-    protected void gotoMain(){
-        if( _data.getResultCode() == Constant.TOKEN_OVERDUE ||
-            _data.getResultCode() == Constant.ERROR_USER_PASSWORD ){
+    protected void gotoMain() {
+        if (_data.getResultCode() == Constant.TOKEN_OVERDUE ||
+                _data.getResultCode() == Constant.ERROR_USER_PASSWORD) {
             //调转到登录界面
             Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
             intent.putExtra("type", messageType);
-            ActivityUtils.getInstance().skipActivity ( SplashActivity.this, intent);
+            ActivityUtils.getInstance().skipActivity(SplashActivity.this, intent);
             return;
         }
 
-        if( _data.getResultCode() != 1){
-            ToastUtils.showLong( _data.getResultDescription());
+        if (_data.getResultCode() != 1) {
+            ToastUtils.showLong(_data.getResultDescription());
             SplashActivity.this.finish();
             return;
         }
 
-        if( _data.getResultData() ==null  ){
-            ToastUtils.showLong( "启动失败，返回的数据有问题。" );
+        if (_data.getResultData() == null) {
+            ToastUtils.showLong("启动失败，返回的数据有问题。");
             SplashActivity.this.finish();
             return;
         }
@@ -266,23 +264,21 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
 
         //更新Token信息
         MerchantModel user = _data.getResultData().getUser();
-        if(null != user){
-            String token = user.getToken ();
+        if (null != user) {
+            String token = user.getToken();
             //记录商户信息
             SellerApplication.getInstance().writeMerchantInfo(user);
-            if( !StringUtils.isEmpty ( token )){
+            if (!StringUtils.isEmpty(token)) {
                 // 跳转到首页
                 Intent intent = new Intent();
                 intent.putExtra("type", messageType);
-                intent.setClass( SplashActivity.this , MainActivity.class );
-                ActivityUtils.getInstance().skipActivity ( SplashActivity.this, intent);
-            }
-            else{
+                intent.setClass(SplashActivity.this, MainActivity.class);
+                ActivityUtils.getInstance().skipActivity(SplashActivity.this, intent);
+            } else {
                 //跳转到登录界面
-                ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class );
+                ActivityUtils.getInstance().skipActivity(SplashActivity.this, LoginActivity.class);
             }
-        }
-        else{
+        } else {
             //跳转到登录界面
             ActivityUtils.getInstance().skipActivity(SplashActivity.this, LoginActivity.class);
         }
@@ -290,18 +286,20 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
 
     /**
      * 判断 App 是否要升级
+     *
      * @param updateInfo
      * @return
      */
-    protected boolean judgeUpdate( UpdateModel updateInfo ){
-        if( updateInfo == null || updateInfo.getUpdateType()==null ) return false;
-        if( updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.NO.getIndex() ) return false;
+    protected boolean judgeUpdate(UpdateModel updateInfo) {
+        if (updateInfo == null || updateInfo.getUpdateType() == null) return false;
+        if (updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.NO.getIndex())
+            return false;
 
-        if( updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.FORCE_WHOLE.getIndex() ){
+        if (updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.FORCE_WHOLE.getIndex()) {
             //强制整包更新
             //updateAppNow( updateInfo );
             return true;
-        }else if( updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.WHOLE.getIndex() ){
+        } else if (updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.WHOLE.getIndex()) {
             //整包更新
             return true;
         }
@@ -311,7 +309,7 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
-        if( SplashActivity.this.isFinishing() ) return;
+        if (SplashActivity.this.isFinishing()) return;
 
         ToastUtils.showLong("访问失败，请重试");
         SplashActivity.this.finish();
@@ -328,7 +326,7 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
 
     @Override
     public void onNegativeButtonClicked(int i) {
-        if( i == REQUESTCODE_UPDATE ){
+        if (i == REQUESTCODE_UPDATE) {
             ToastUtils.showLong("用户取消升级APP");
             gotoMain();
         }
@@ -336,8 +334,8 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if( requestCode == Constant.REQUEST_CODE_CLIENT_DOWNLOAD
-            && resultCode == Constant.RESULT_CODE_CLIENT_DOWNLOAD_FAILED){
+        if (requestCode == Constant.REQUEST_CODE_CLIENT_DOWNLOAD
+                && resultCode == Constant.RESULT_CODE_CLIENT_DOWNLOAD_FAILED) {
 //            Bundle bd = data.getExtras();
 //            if (bd != null) {
 //                boolean isForce = bd.getBoolean("isForce");
@@ -347,7 +345,7 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
 //            }
             finish();
         }
-        if( requestCode == Constant.REQUEST_CODE_CLIENT_DOWNLOAD && resultCode == 0 ){
+        if (requestCode == Constant.REQUEST_CODE_CLIENT_DOWNLOAD && resultCode == 0) {
             finish();
         }
 
@@ -361,19 +359,19 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
 
     @Override
     public void onPositiveButtonClicked(int i) {
-        if( i== REQUESTCODE_UPDATE){
-            updateAppNow( _data.getResultData().getUpdate() );
+        if (i == REQUESTCODE_UPDATE) {
+            updateAppNow(_data.getResultData().getUpdate());
         }
     }
 
-    protected void updateAppNow( UpdateModel model ){
-        boolean isForce=false;
-        AppUpdateActivity.UpdateType type= AppUpdateActivity.UpdateType.FullUpate;
-        String md5= model.getUpdateMD5();
-        String url= model.getUpdateUrl(); //
-        String tips= model.getUpdateTips(); //
+    protected void updateAppNow(UpdateModel model) {
+        boolean isForce = false;
+        AppUpdateActivity.UpdateType type = AppUpdateActivity.UpdateType.FullUpate;
+        String md5 = model.getUpdateMD5();
+        String url = model.getUpdateUrl(); //
+        String tips = model.getUpdateTips(); //
 
-        Intent intent = new Intent( SplashActivity.this, AppUpdateActivity.class);
+        Intent intent = new Intent(SplashActivity.this, AppUpdateActivity.class);
         intent.putExtra("isForce", isForce);
         intent.putExtra("type", type);
         intent.putExtra("md5", md5);
@@ -383,24 +381,23 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
     }
 
     /**
-     *
      * @param updateInfo
      */
-    protected void updateApp( UpdateModel updateInfo ){
-        if( updateInfo == null || updateInfo.getUpdateType()==null )return;
-        if( updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.NO.getIndex() ) return;
+    protected void updateApp(UpdateModel updateInfo) {
+        if (updateInfo == null || updateInfo.getUpdateType() == null) return;
+        if (updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.NO.getIndex()) return;
 
-        if( updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.FORCE_WHOLE.getIndex() ){
+        if (updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.FORCE_WHOLE.getIndex()) {
             //强制整包更新
-            updateAppNow( updateInfo );
-        }else if( updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.WHOLE.getIndex() ){
+            updateAppNow(updateInfo);
+        } else if (updateInfo.getUpdateType().getValue() == VersionUpdateTypeEnum.WHOLE.getIndex()) {
             //整包更新
-            SimpleDialogFragment.createBuilder( SplashActivity.this , SplashActivity.this.getSupportFragmentManager() )
+            SimpleDialogFragment.createBuilder(SplashActivity.this, SplashActivity.this.getSupportFragmentManager())
                     .setTitle("询问")
-                    .setMessage( updateInfo.getUpdateTips() )
+                    .setMessage(updateInfo.getUpdateTips())
                     .setPositiveButtonText("升级")
                     .setNegativeButtonText("下次再说")
-                    .setRequestCode( REQUESTCODE_UPDATE)
+                    .setRequestCode(REQUESTCODE_UPDATE)
                     .show();
         }
 

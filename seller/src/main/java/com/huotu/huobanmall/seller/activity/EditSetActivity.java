@@ -90,7 +90,7 @@ public class EditSetActivity extends BaseFragmentActivity {
                 null,
                 maps,
                 updateListener,
-                this
+                new MJErrorListener(this)
         );
 
         this.showProgressDialog("", "正在更新数据，请稍等...");

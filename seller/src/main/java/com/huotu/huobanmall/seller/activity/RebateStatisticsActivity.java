@@ -234,7 +234,7 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
                 MJTopScoreModel.class,
                 null,
                 listener_TJ,
-                this
+                new MJErrorListener(this)
         );
 
         VolleyRequestManager.AddRequest(request);

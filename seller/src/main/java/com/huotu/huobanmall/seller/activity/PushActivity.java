@@ -142,8 +142,9 @@ public class PushActivity extends BaseFragmentActivity implements View.OnClickLi
                 null,
                 maps,
                 updateListener,
-                this
+                new MJErrorListener(this)
         );
+
         VolleyRequestManager.getRequestQueue().add(request);
     }
 

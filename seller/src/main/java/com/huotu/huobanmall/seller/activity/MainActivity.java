@@ -105,7 +105,7 @@ public class MainActivity extends BaseFragmentActivity{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        _main_Refresh.setColorSchemeColors( R.color.holo_blue_bright, R.color.holo_green_light,
+        _main_Refresh.setColorSchemeColors(R.color.holo_blue_bright, R.color.holo_green_light,
                 R.color.holo_orange_light, R.color.holo_red_light);
         _main_Refresh.setOnRefreshListener(refreshListener);
 
@@ -133,6 +133,8 @@ public class MainActivity extends BaseFragmentActivity{
         main_menu_gdtj.setOnClickListener(this);
         main_menu_szgl.setOnClickListener(this);
         _ibShop.setOnClickListener(this);
+
+        _mainChart.setNoDataText("");
 
         setShopNameLogo();
 

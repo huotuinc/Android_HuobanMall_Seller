@@ -41,6 +41,7 @@ import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.lang.ref.WeakReference;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -158,21 +159,28 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
                 _currentIndx = position;
 
                 if( _data==null || _data.getResultData()==null ) return;
+                DecimalFormat format = new DecimalFormat("0.00");
                 if( position==0){
                     Float amount = _data.getResultData().getTotalAmount();
                     Float todayAmount = _data.getResultData().getTodayAmount();
-                    _sales_total.setText( String.valueOf( amount ) );
-                    _sales_info_count.setText( String.valueOf( todayAmount) );
+                    String temp = format.format( amount );
+                    _sales_total.setText( temp );
+                    temp = format.format( todayAmount );
+                    _sales_info_count.setText( temp );
                 }else if( position==1){
                     Float amount = _data.getResultData().getTotalAmount();
                     Float weekAmount = _data.getResultData().getWeekAmount();
-                    _sales_total.setText( String.valueOf( amount ));
-                    _sales_info_count.setText( String.valueOf( weekAmount ));
+                    String temp = format.format( amount );
+                    _sales_total.setText( temp );
+                    temp = format.format( weekAmount);
+                    _sales_info_count.setText( temp );
                 }else if( position==2){
                     Float amount = _data.getResultData().getTotalAmount();
                     Float monthAmount = _data.getResultData().getMonthAmount();
-                    _sales_total.setText( String.valueOf( amount ));
-                    _sales_info_count.setText( String.valueOf( monthAmount ));
+                    String temp = format.format( amount);
+                    _sales_total.setText(  temp );
+                    temp = format.format( monthAmount );
+                    _sales_info_count.setText( temp );
                 }
             }
 
@@ -253,16 +261,23 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
 
             ref.get()._data=mjSaleStatisticModel;
             Float total = ref.get()._data.getResultData().getTotalAmount();
-            ref.get()._sales_total.setText( String.valueOf( total ));
+
+            DecimalFormat decimalFormat=new DecimalFormat("0.00");
+            String temp = decimalFormat.format( total  );
+
+            ref.get()._sales_total.setText( temp );
             if(ref.get()._currentIndx==0) {
                 Float todayAmount = ref.get()._data.getResultData().getTodayAmount();
-                ref.get()._sales_info_count.setText( String.valueOf( todayAmount ));
+                temp = decimalFormat.format( todayAmount );
+                ref.get()._sales_info_count.setText( temp );
             }else if( ref.get()._currentIndx == 1){
                 Float weekAmount = ref.get()._data.getResultData().getWeekAmount();
-                ref.get()._sales_info_count.setText( String.valueOf( weekAmount ) );
+                temp = decimalFormat.format( weekAmount );
+                ref.get()._sales_info_count.setText( temp );
             }else if( ref.get()._currentIndx==2){
                 Float monthAmount = ref.get()._data.getResultData().getMonthAmount();
-                ref.get()._sales_info_count.setText( String.valueOf( monthAmount ));
+                temp = decimalFormat.format( monthAmount );
+                ref.get()._sales_info_count.setText( temp );
             }
             //setLineChartData();
             ref.get()._fragment1.setData(ref.get()._data, 1);
@@ -271,24 +286,6 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
             ref.get()._salesFragmentAdapter.notifyDataSetChanged();
         }
     }
-
-//    protected Response.ErrorListener errorListener = new Response.ErrorListener() {
-//        @Override
-//        public void onErrorResponse(VolleyError volleyError) {
-//            if( SalesFragment.this.isRemoving() || SalesFragment.this.isDetached() ) return;
-//
-//            SalesFragment.this.closeProgressDialog();
-//
-//            String message="";
-//            if( volleyError.networkResponse !=null){
-//                message = new String( volleyError.networkResponse.data);
-//            }else if( volleyError.getCause() !=null ) {
-//                message = volleyError.getCause().getMessage();
-//            }
-//            DialogUtils.showDialog(SalesFragment.this.getActivity(), SalesFragment.this.getFragmentManager(),"错误信息", message ,"关闭");
-//
-//        }
-//    };
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

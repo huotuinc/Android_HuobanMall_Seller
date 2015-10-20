@@ -48,6 +48,7 @@ import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.viewpagerindicator.TabPageIndicator;
 
+import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -156,6 +157,117 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
     }
 
 
+    static class MyErrorListener implements Response.ErrorListener{
+        WeakReference<OrderActivity> ref;
+        public MyErrorListener(OrderActivity act){
+            ref=new WeakReference<OrderActivity>(act);
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            if( ref.get()==null ) return;
+            ref.get().closeProgressDialog();
+            ref.get()._pagerAdapter._lv.get(0).onRefreshComplete();
+            ref.get()._pagerAdapter._lv.get(1).onRefreshComplete();
+            ref.get()._pagerAdapter. _lv.get(2).onRefreshComplete();
+            ref.get()._pagerAdapter. _lv.get(3).onRefreshComplete();
+
+            String message="";
+            if( null != volleyError.networkResponse){
+                message=new String( volleyError.networkResponse.data);
+            }else{
+                message = volleyError.getMessage();
+            }
+            if( message.length()<1){
+                message = "网络请求失败，请检查网络状态";
+            }
+            DialogUtils.showDialog(ref.get(), ref.get().getSupportFragmentManager(), "错误信息", message, "关闭");
+        }
+    }
+
+    static class MyListener_0 implements Response.Listener<MJOrderListModel>{
+        WeakReference<OrderActivity> ref;
+        public MyListener_0(OrderActivity act){
+            ref=new WeakReference<>(act);
+        }
+
+        @Override
+        public void onResponse(MJOrderListModel mjOrderListModel) {
+            if( ref.get()==null )return;
+
+            ref.get()._handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    ref.get()._pagerAdapter._lv.get(0).onRefreshComplete();
+                    ref.get().closeProgressDialog();
+                }
+            });
+            ref.get()._pagerAdapter.setData(0, ref.get()._pagerAdapter._operateTypes.get(0), mjOrderListModel);
+        }
+    }
+
+    static class MyListener_1 implements Response.Listener<MJOrderListModel>{
+        WeakReference<OrderActivity> ref;
+        public MyListener_1(OrderActivity act){
+            ref=new WeakReference<>(act);
+        }
+        @Override
+        public void onResponse(MJOrderListModel mjOrderListModel) {
+            if( ref.get()==null )return;
+
+            ref.get()._handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    ref.get()._pagerAdapter. _lv.get(1).onRefreshComplete();
+                    ref.get().closeProgressDialog();
+                }
+            });
+
+            ref.get()._pagerAdapter.setData(1, ref.get()._pagerAdapter._operateTypes.get(1), mjOrderListModel);
+        }
+    }
+
+    static class MyListener_2 implements Response.Listener<MJOrderListModel>{
+        WeakReference<OrderActivity> ref;
+        public MyListener_2(OrderActivity act){
+            ref=new WeakReference<>(act);
+        }
+        @Override
+        public void onResponse(MJOrderListModel mjOrderListModel) {
+            if( ref.get()==null )return;
+            ref.get()._handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    ref.get()._pagerAdapter. _lv.get(2).onRefreshComplete();
+                    ref.get().closeProgressDialog();
+                }
+            });
+
+            ref.get()._pagerAdapter. setData(2, ref.get()._pagerAdapter._operateTypes.get(2), mjOrderListModel );
+        }
+    }
+
+    static class MyListener_3 implements Response.Listener<MJOrderListModel>{
+        WeakReference<OrderActivity> ref;
+        public MyListener_3(OrderActivity act){
+            ref=new WeakReference<>(act);
+        }
+        @Override
+        public void onResponse(MJOrderListModel mjOrderListModel) {
+            if( ref.get()==null )return;
+
+            ref.get()._handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    ref.get()._pagerAdapter. _lv.get(3).onRefreshComplete();
+                    ref.get().closeProgressDialog();
+                }
+            });
+
+            ref.get()._pagerAdapter. setData(3, ref.get()._pagerAdapter._operateTypes.get(3), mjOrderListModel);
+        }
+    }
+
     public class OrderPagerAdapter extends PagerAdapter{
         private final String[] Titles = new String[] { "全部", "待付款","待收货","已完成"};
         List<PullToRefreshListView> _lv;
@@ -194,10 +306,10 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             _operateTypes = new ArrayList<>();
             _tabInit = new HashMap<>();
             _listeners =new HashMap<>();
-            _listeners.put(0,listener_0);
-            _listeners.put(1,listener_1);
-            _listeners.put(2,listener_2);
-            _listeners.put(3,listener_3);
+            _listeners.put(0,new MyListener_0(OrderActivity.this));
+            _listeners.put(1,new MyListener_1(OrderActivity.this));
+            _listeners.put(2,new MyListener_2(OrderActivity.this));
+            _listeners.put(3,new MyListener_3(OrderActivity.this));
             for( int i =0;i<4;i++) {
                 _tabInit.put(i,false);
 
@@ -214,19 +326,6 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                         int tabIndex = (Integer) pullToRefreshBase.getTag();
                         _operateTypes.set(tabIndex, OperateTypeEnum.REFRESH);
                         getData(tabIndex, OperateTypeEnum.REFRESH, _listeners.get(tabIndex));
-//                        if (tabIndex == 0) {
-//                            _operateTypes.set(0, OperateTypeEnum.REFRESH);
-//                            getData_0(OperateTypeEnum.REFRESH);
-//                        } else if (tabIndex == 1) {
-//                            _operateTypes.set(1, OperateTypeEnum.REFRESH);
-//                            getData_1(OperateTypeEnum.REFRESH);
-//                        } else if (tabIndex == 2) {
-//                            _operateTypes.set(2, OperateTypeEnum.REFRESH);
-//                            getData_2(OperateTypeEnum.REFRESH);
-//                        } else if (tabIndex == 3) {
-//                            _operateTypes.set(3, OperateTypeEnum.REFRESH);
-//                            getData_3(OperateTypeEnum.REFRESH);
-//                        }
                     }
 
                     @Override
@@ -234,19 +333,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                         int tabIndex = (Integer) pullToRefreshBase.getTag();
                         _operateTypes.set(tabIndex, OperateTypeEnum.LOADMORE);
                         getData(tabIndex, OperateTypeEnum.LOADMORE , _listeners.get(tabIndex));
-//                        if (tabIndex == 0) {
-//                            _operateTypes.set(0, OperateTypeEnum.LOADMORE);
-//                            getData_0(OperateTypeEnum.LOADMORE);
-//                        } else if (tabIndex == 1) {
-//                            _operateTypes.set(1, OperateTypeEnum.LOADMORE);
-//                            getData_1(OperateTypeEnum.LOADMORE);
-//                        } else if (tabIndex == 2) {
-//                            _operateTypes.set(2, OperateTypeEnum.LOADMORE);
-//                            getData_2(OperateTypeEnum.LOADMORE);
-//                        } else if (tabIndex == 3) {
-//                            _operateTypes.set(3, OperateTypeEnum.LOADMORE);
-//                            getData_3(OperateTypeEnum.LOADMORE);
-//                        }
+
                     }
                 });
                 _lv.add(lv);
@@ -305,25 +392,13 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
                     MJOrderListModel.class,
                     null,
                     listener,
-                    errorListener
+                    new MyErrorListener( OrderActivity.this )
             );
 
             VolleyRequestManager.AddRequest(request);
         }
 
-        Response.Listener<MJOrderListModel> listener_0 =new Response.Listener<MJOrderListModel>() {
-            @Override
-            public void onResponse(MJOrderListModel mjOrderListModel) {
-                _handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        _lv.get(0).onRefreshComplete();
-                        OrderActivity.this.closeProgressDialog();
-                    }
-                });
-                setData( 0 , _operateTypes.get(0) , mjOrderListModel );
-            }
-        };
+        //Response.Listener<MJOrderListModel> listener_0 =new Response.Listener<MJOrderListModel>() {
 
         protected void setData( int index , OperateTypeEnum operateType , MJOrderListModel data ){
             if( data == null ){
@@ -373,50 +448,50 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             }
         }
 
-        Response.Listener<MJOrderListModel> listener_1 =new Response.Listener<MJOrderListModel>() {
-            @Override
-            public void onResponse(MJOrderListModel mjOrderListModel) {
-                _handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        _lv.get(1).onRefreshComplete();
-                        OrderActivity.this.closeProgressDialog();
-                    }
-                });
+//        Response.Listener<MJOrderListModel> listener_1 =new Response.Listener<MJOrderListModel>() {
+//            @Override
+//            public void onResponse(MJOrderListModel mjOrderListModel) {
+//                _handler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        _lv.get(1).onRefreshComplete();
+//                        OrderActivity.this.closeProgressDialog();
+//                    }
+//                });
+//
+//                setData(1, _operateTypes.get(1), mjOrderListModel);
+//            }
+//        };
 
-                setData(1, _operateTypes.get(1), mjOrderListModel);
-            }
-        };
+//        Response.Listener<MJOrderListModel> listener_2 =new Response.Listener<MJOrderListModel>() {
+//            @Override
+//            public void onResponse(MJOrderListModel mjOrderListModel) {
+//                _handler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        _lv.get(2).onRefreshComplete();
+//                        OrderActivity.this.closeProgressDialog();
+//                    }
+//                });
+//
+//                setData(2, _operateTypes.get(2) , mjOrderListModel );
+//            }
+//        };
 
-        Response.Listener<MJOrderListModel> listener_2 =new Response.Listener<MJOrderListModel>() {
-            @Override
-            public void onResponse(MJOrderListModel mjOrderListModel) {
-                _handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        _lv.get(2).onRefreshComplete();
-                        OrderActivity.this.closeProgressDialog();
-                    }
-                });
-
-                setData(2, _operateTypes.get(2) , mjOrderListModel );
-            }
-        };
-
-        Response.Listener<MJOrderListModel> listener_3 =new Response.Listener<MJOrderListModel>() {
-            @Override
-            public void onResponse(MJOrderListModel mjOrderListModel) {
-                _handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        _lv.get(3).onRefreshComplete();
-                        OrderActivity.this.closeProgressDialog();
-                    }
-                });
-
-                setData(3, _operateTypes.get(3), mjOrderListModel);
-            }
-        };
+//        Response.Listener<MJOrderListModel> listener_3 =new Response.Listener<MJOrderListModel>() {
+//            @Override
+//            public void onResponse(MJOrderListModel mjOrderListModel) {
+//                _handler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        _lv.get(3).onRefreshComplete();
+//                        OrderActivity.this.closeProgressDialog();
+//                    }
+//                });
+//
+//                setData(3, _operateTypes.get(3), mjOrderListModel);
+//            }
+//        };
 
         public void search( int index ){
             _operateTypes.set(index, OperateTypeEnum.REFRESH);
@@ -432,27 +507,34 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
             getData(index , lastDate, keyword, operateType, listener );
         }
 
-        Response.ErrorListener errorListener=new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                OrderActivity.this.closeProgressDialog();
-                _lv.get(0).onRefreshComplete();
-                _lv.get(1).onRefreshComplete();
-                _lv.get(2).onRefreshComplete();
-                _lv.get(3).onRefreshComplete();
-
-                String message="";
-                if( null != volleyError.networkResponse){
-                    message=new String( volleyError.networkResponse.data);
-                }else{
-                    message = volleyError.getMessage();
-                }
-                if( message.length()<1){
-                    message = "网络请求失败，请检查网络状态";
-                }
-                DialogUtils.showDialog(OrderActivity.this, OrderActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
-            }
-        };
+        //Response.ErrorListener errorListener=new Response.ErrorListener() {
+//        static class MyErrorListener implements Response.ErrorListener{
+//            WeakReference<OrderActivity> ref;
+//            public MyErrorListener(OrderActivity act){
+//                ref=new WeakReference<OrderActivity>(act);
+//            }
+//
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//                if( ref.get()==null ) return;
+//                ref.get().closeProgressDialog();
+//                ref.get()._pagerAdapter._lv.get(0).onRefreshComplete();
+//                ref.get()._pagerAdapter._lv.get(1).onRefreshComplete();
+//                ref.get()._pagerAdapter. _lv.get(2).onRefreshComplete();
+//                ref.get()._pagerAdapter. _lv.get(3).onRefreshComplete();
+//
+//                String message="";
+//                if( null != volleyError.networkResponse){
+//                    message=new String( volleyError.networkResponse.data);
+//                }else{
+//                    message = volleyError.getMessage();
+//                }
+//                if( message.length()<1){
+//                    message = "网络请求失败，请检查网络状态";
+//                }
+//                DialogUtils.showDialog(ref.get(), ref.get().getSupportFragmentManager(), "错误信息", message, "关闭");
+//            }
+//        }
 
         protected List<OrderTestModel> changeData( List<OrderListModel> orders){
             List<OrderTestModel> list=new ArrayList<>();

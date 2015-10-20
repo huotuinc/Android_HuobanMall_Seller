@@ -183,10 +183,10 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
                 MJSendSMSModel.class,
                 null,
                 sendSMSListener,
-                errorListener
+                new MJErrorListener(this)
         );
 
-        VolleyRequestManager.getRequestQueue().add(sendSMSRequest);
+        VolleyRequestManager.AddRequest(sendSMSRequest);
     }
 
     private void forgetPassword() {
@@ -217,10 +217,10 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
                 MJForget.class,
                 null,
                 forgetPasswordListener,
-                errorListener
+                new MJErrorListener(this)
         );
 
-        VolleyRequestManager.getRequestQueue().add(forgetGsonRequest);
+        VolleyRequestManager.AddRequest(forgetGsonRequest);
     }
 
     Response.Listener<MJSendSMSModel> sendSMSListener = new Response.Listener<MJSendSMSModel>() {
@@ -274,17 +274,17 @@ public class ForgetActivity extends BaseFragmentActivity implements OnClickListe
         }
     };
 
-    Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            ForgetActivity.this.closeProgressDialog();
-            String message = "";
-            if (null != volleyError.networkResponse) {
-                message = new String(volleyError.networkResponse.data);
-            }
-            DialogUtils.showDialog(ForgetActivity.this, ForgetActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
-        }
-    };
+//    Response.ErrorListener errorListener = new Response.ErrorListener() {
+//        @Override
+//        public void onErrorResponse(VolleyError volleyError) {
+//            ForgetActivity.this.closeProgressDialog();
+//            String message = "";
+//            if (null != volleyError.networkResponse) {
+//                message = new String(volleyError.networkResponse.data);
+//            }
+//            DialogUtils.showDialog(ForgetActivity.this, ForgetActivity.this.getSupportFragmentManager(), "错误信息", message, "关闭");
+//        }
+//    };
 
     @Override
     public void onNegativeButtonClicked(int i) {

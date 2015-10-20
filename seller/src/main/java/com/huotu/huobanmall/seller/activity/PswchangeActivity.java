@@ -26,6 +26,7 @@ import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -193,45 +194,37 @@ public class PswchangeActivity extends BaseFragmentActivity implements
                 url,
                 HTMerchantModel.class,
                 null,
-                modifyPasswordListener,
-                this
+                new MyListener(this),
+                new MJErrorListener(this)
         );
 
         VolleyRequestManager.AddRequest(loginRequest);
     }
-    Response.Listener<HTMerchantModel> modifyPasswordListener = new Response.Listener<HTMerchantModel>() {
+
+    //Response.Listener<HTMerchantModel> modifyPasswordListener = new Response.Listener<HTMerchantModel>() {
+
+    static class MyListener implements Response.Listener<HTMerchantModel>{
+        WeakReference<PswchangeActivity> ref;
+        public MyListener(PswchangeActivity act){
+            ref =new WeakReference<PswchangeActivity>(act);
+        }
+
         @Override
         public void onResponse(HTMerchantModel htMerchantModel ) {
-           if( PswchangeActivity.this.isFinishing() ) return;
-            PswchangeActivity.this.closeProgressDialog();
+           if( ref.get()==null ) return;
+            if( ref.get().isFinishing() ) return;
+            ref.get().closeProgressDialog();
 
-            if( ! validateData( htMerchantModel)){
+            if( ! ref.get().validateData(htMerchantModel)){
                 return;
             }
-//            if(  htMerchantModel.getSystemResultCode() != 1 ) {
-//                SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
-//                        .setTitle("系统错误")
-//                        .setMessage(htMerchantModel.getSystemResultDescription())
-//                        .setNegativeButtonText("关闭")
-//                        .show();
-//                return;
-//            }
-//            if( htMerchantModel.getResultCode() !=1 ){
-//                SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
-//                        .setTitle("系统错误")
-//                        .setMessage(htMerchantModel.getResultDescription())
-//                        .setNegativeButtonText("关闭")
-//                        .show();
-//                return;
-//            }
 
             ToastUtils.showLong("修改密码成功");
 
             SellerApplication.getInstance().writeMerchantInfo( htMerchantModel.getResultData().getUser() );
 
-            PswchangeActivity.this.finish();
+            ref.get().finish();
         }
-    };
-
+    }
 
 }
