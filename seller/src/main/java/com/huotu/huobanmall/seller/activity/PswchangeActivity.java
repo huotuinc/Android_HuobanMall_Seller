@@ -208,22 +208,6 @@ public class PswchangeActivity extends BaseFragmentActivity implements
             if( ! validateData( htMerchantModel)){
                 return;
             }
-//            if(  htMerchantModel.getSystemResultCode() != 1 ) {
-//                SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
-//                        .setTitle("系统错误")
-//                        .setMessage(htMerchantModel.getSystemResultDescription())
-//                        .setNegativeButtonText("关闭")
-//                        .show();
-//                return;
-//            }
-//            if( htMerchantModel.getResultCode() !=1 ){
-//                SimpleDialogFragment.createBuilder(PswchangeActivity.this, PswchangeActivity.this.getSupportFragmentManager())
-//                        .setTitle("系统错误")
-//                        .setMessage(htMerchantModel.getResultDescription())
-//                        .setNegativeButtonText("关闭")
-//                        .show();
-//                return;
-//            }
 
             ToastUtils.showLong("修改密码成功");
 

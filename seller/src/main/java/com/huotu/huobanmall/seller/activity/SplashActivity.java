@@ -53,17 +53,10 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
     }
 
     protected void initJPush(){
-        //int enable = MyApplication.readInt(this , Constant.LOGIN_USER_INFO,  Constant.PUSH_ENABLE , 1 );
-        //if( enable == 1){
             if(  JPushInterface.isPushStopped(SplashActivity.this))
             {
                 JPushInterface.resumePush(SplashActivity.this);
             }
-        //}else {
-        //    if( false == JPushInterface.isPushStopped(LoadingActivity.this)){
-        //        JPushInterface.stopPush(LoadingActivity.this);
-        //    }
-        //}
     }
 
 
@@ -151,13 +144,11 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
         public void onResponse(HTInitBean htInitBean) {
             _data = htInitBean;
             if( htInitBean == null ){
-                //DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息","请求数据失败","关闭");
                 ToastUtils.showLong("请求数据失败");
                 SplashActivity.this.finish();
                 return;
             }
             if( htInitBean.getSystemResultCode() != 1 ){
-                //DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息",htInitBean.getSystemResultDescription(),"关闭");
                 ToastUtils.showLong(htInitBean.getSystemResultDescription());
                 SplashActivity.this.finish();
                 return;
@@ -171,55 +162,6 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
                     return;
                 }
             }
-
-//            if( htInitBean.getResultCode() == Constant.TOKEN_OVERDUE ||
-//                htInitBean.getResultCode() == Constant.ERROR_USER_PASSWORD ){
-//                //调转到登录界面
-//                ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class);
-//                return;
-//            }
-//
-//            if( htInitBean.getResultCode() != 1){
-//                //DialogUtils.showDialog(SplashActivity.this,SplashActivity.this.getSupportFragmentManager(),"错误信息",htInitBean.getResultDescription(),"关闭");
-//                ToastUtils.showLong( htInitBean.getResultDescription());
-//                SplashActivity.this.finish();
-//                return;
-//            }
-//
-//            if( htInitBean.getResultData() ==null  ){
-//                ToastUtils.showLong( "启动失败，返回的数据有问题。" );
-//                SplashActivity.this.finish();
-//                return;
-//            }
-//
-//
-//            SellerApplication.getInstance().writeGlobalInfo(htInitBean.getResultData().getGlobal());
-//
-//            //updateApp( htInitBean.getResultData().getUpdate() );
-//
-//            //更新Token信息
-//            MerchantModel user = htInitBean.getResultData().getUser();
-//            if(null != user)
-//            {
-//                String token = user.getToken ();
-//                //记录商户信息
-//                SellerApplication.getInstance().writeMerchantInfo(user);
-//                if( !StringUtils.isEmpty ( token ))
-//                {
-//                    //直接登录
-//                    ActivityUtils.getInstance().skipActivity ( SplashActivity.this, MainActivity.class);
-//                }
-//                else
-//                {
-//                    //跳转到登录界面
-//                    ActivityUtils.getInstance().skipActivity ( SplashActivity.this, LoginActivity.class );
-//                }
-//            }
-//            else
-//            {
-//                //跳转到登录界面
-//                ActivityUtils.getInstance().skipActivity(SplashActivity.this, LoginActivity.class);
-//            }
             gotoMain();
         }
     };
@@ -312,13 +254,7 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if( requestCode == Constant.REQUEST_CODE_CLIENT_DOWNLOAD
             && resultCode == Constant.RESULT_CODE_CLIENT_DOWNLOAD_FAILED){
-//            Bundle bd = data.getExtras();
-//            if (bd != null) {
-//                boolean isForce = bd.getBoolean("isForce");
-//                if (isForce) {
-//                    finish();
-//                }
-//            }
+
             finish();
         }
         if( requestCode == Constant.REQUEST_CODE_CLIENT_DOWNLOAD && resultCode == 0 ){

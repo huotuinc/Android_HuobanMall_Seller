@@ -76,13 +76,6 @@ public class BillDataAdapter extends RecyclerView.Adapter<BillDataAdapter.OrderL
     @Override
     public void onBindViewHolder(OrderListViewHolder holder, int position) {
         OrderListModel model = _list.get(position);
-        //OrderGoodsAdapter goodsAdapter = new OrderGoodsAdapter( _context , model.getGoods() );
-        //_goodsList.clear();
-        //_goodsList.addAll( model.getGoods());
-        //_goodsAdapter.notifyDataSetChanged();
-        //holder.lv.setAdapter( _goodsAdapter );
-        //setListViewHeightBasedOnChildren( holder.lv );
-
         holder.tvOrderNo.setText(model.getOrderNo());
         holder.tvStatus.setText(model.getStatus() );
         holder.position = position;
@@ -93,7 +86,6 @@ public class BillDataAdapter extends RecyclerView.Adapter<BillDataAdapter.OrderL
             _goodsList.clear();
             _goodsList.addAll(model.getList());
             _goodsAdapter.notifyDataSetChanged();
-            //holder.lv.setAdapter(_goodsAdapter);
         }else {
             holder.lv.setVisibility(View.GONE);
             holder.lvChildOrder.setVisibility(View.VISIBLE);
@@ -103,12 +95,10 @@ public class BillDataAdapter extends RecyclerView.Adapter<BillDataAdapter.OrderL
             holder.lvChildOrder.setAdapter( _childOrderAdapter);
         }
 
-        //addGoods( holder.llGoods , model.getGoods() );
     }
 
     @Override
     public int getItemViewType(int position) {
-        //return super.getItemViewType(position);
         return _goodsList.get(position).getViewType();
     }
 
@@ -124,7 +114,6 @@ public class BillDataAdapter extends RecyclerView.Adapter<BillDataAdapter.OrderL
             tvTitle.setText( list.get(i).getTitle());
             tvCount.setText( String.valueOf(list.get(i).getStock()));
             tvPrice.setText( String.valueOf(list.get(i).getPrice()) );
-            //tvSpec.setText( list.get(i).get() );
             BitmapLoader.create().displayUrl(_context, iv, list.get(i).getPictureUrl());
             ll.addView(view);
         }
@@ -153,12 +142,6 @@ public class BillDataAdapter extends RecyclerView.Adapter<BillDataAdapter.OrderL
             super(view );
 
             llGoods = (LinearLayout)view.findViewById(R.id.bill_item_ll4);
-//            llGoods.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    onSeeOrderDetailListener(v , _list.get(position));
-//                }
-//            });
             tvOrderNo = (TextView)view.findViewById(R.id.bill_item_orderNo);
             tvStatus = (TextView) view.findViewById(R.id.bill_item_status);
 
@@ -178,7 +161,6 @@ public class BillDataAdapter extends RecyclerView.Adapter<BillDataAdapter.OrderL
                 }
             });
 
-            //
             lvChildOrder = (ExpandableListView) view.findViewById(R.id.bill_item_childOrder);
 
         }

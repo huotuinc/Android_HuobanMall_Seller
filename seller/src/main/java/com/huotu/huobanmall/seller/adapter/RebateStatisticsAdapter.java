@@ -53,15 +53,12 @@ public class RebateStatisticsAdapter extends BaseAdapter {
             holder.ivPicture = (NetworkImageView) convertView.findViewById(R.id.consumestatistics_imageView);
             holder.tvName = (TextView) convertView.findViewById(R.id.consumestatistics_name);
             holder.tvScore = (TextView) convertView.findViewById(R.id.consumestatistics_score);
-            //holder.tvTime = (TextView)convertView.findViewById(R.id.consumestatistics_time);
-            //holder.tvMoblie = (TextView)convertView.findViewById(R.id.consumestatistics_moblie);
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.tvName.setText( _list.get(position).getName() );
-        //String dateStr = SystemTools.getDateTime(_list.get(position).getTime(), "yyyy-MM-dd HH:ss:mm");
-        //holder.tvTime.setText( dateStr );
         holder.tvScore.setText( String.valueOf( _list.get(position).getScore() ));
         BitmapLoader.create().displayUrl(_context, holder.ivPicture, _list.get(position).getPictureUrl() , R.mipmap.zchyzrs , R.mipmap.zchyzrs);
 

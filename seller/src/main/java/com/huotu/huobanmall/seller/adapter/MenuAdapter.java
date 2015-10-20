@@ -42,28 +42,6 @@ public class MenuAdapter extends BaseAdapter {
         MenuModel model = list.get(position);
 
         convertView = inflater.inflate(R.layout.layout_menuitem, null);
-        //ImageView iv =(ImageView) convertView.findViewById(R.id.menu_icon);
-        //TextView tv = (TextView)convertView.findViewById(R.id.menu_name);
-//        ImageView ivTop = (ImageView)convertView.findViewById(R.id.menu_topline);
-//        ImageView ivLeft = (ImageView)convertView.findViewById(R.id.menu_leftline);
-//        ImageView ivRight =(ImageView)convertView.findViewById(R.id.menu_rightline);
-//        ImageView ivBotton = (ImageView)convertView.findViewById(R.id.menu_bottonline);
-
-        //iv.setBackgroundResource(model.getIcon());
-        //tv.setText(model.getName());
-
-//        if( position % 2 == 0 ){
-//            ivTop.setVisibility(View.GONE);
-//            ivLeft.setVisibility(View.GONE);
-//            ivRight.setVisibility(View.VISIBLE);
-//            ivBotton.setVisibility(View.VISIBLE);
-//        }else {
-//            ivTop.setVisibility(View.VISIBLE);
-//            ivLeft.setVisibility(View.VISIBLE);
-//            ivRight.setVisibility(View.GONE);
-//            ivBotton.setVisibility(View.GONE);
-//        }
-
         return convertView;
     }
 }

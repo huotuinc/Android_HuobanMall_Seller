@@ -66,7 +66,6 @@ public class TopSalesActivity extends BaseFragmentActivity implements View.OnCli
         topGoodsAdapter = new TopGoodsAdapter(this, topGoodsList);
         topGoods_listview.getRefreshableView().setAdapter(topGoodsAdapter);
 
-        //topGoods_listview.setEmptyView(emptyView);
 
         topGoods_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override

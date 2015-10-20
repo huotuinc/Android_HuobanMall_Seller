@@ -129,7 +129,6 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
 
         emptyView = new View(this);
         emptyView.setBackgroundResource(R.mipmap.tpzw);
-        //_consumStatistics_listview.setEmptyView(entmyview);
         _consumStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH);
 
         _consumeStatisticsList = new ArrayList<>();
@@ -171,9 +170,7 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
     }
 
     private void firstGetData() {
-        //this.showProgressDialog("","正在获取数据，请稍等...");
-        //_operateType = OperateTypeEnum.REFRESH;
-        //getData_MX(_operateType);
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -284,30 +281,6 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
             }
 
             if(!validateData(mjConsumeListModel))return;
-
-//            if( mjConsumeListModel==null){
-//                DialogUtils.showDialog(ConsumeStatisticsActivity.this, ConsumeStatisticsActivity.this.getSupportFragmentManager(), "错误信息", "获取数据失败", "关闭");
-//                return;
-//            }
-//            if( mjConsumeListModel.getSystemResultCode()!=1){
-//                SimpleDialogFragment.createBuilder(ConsumeStatisticsActivity.this, ConsumeStatisticsActivity.this.getSupportFragmentManager())
-//                        .setTitle("错误信息")
-//                        .setMessage( mjConsumeListModel.getSystemResultDescription() )
-//                        .setNegativeButtonText("关闭")
-//                        .show();
-//                return;
-//            }else if( mjConsumeListModel.getResultCode()== Constant.TOKEN_OVERDUE){
-//                ActivityUtils.getInstance().skipActivity(ConsumeStatisticsActivity.this, LoginActivity.class);
-//                return;
-//            }
-//            else if( mjConsumeListModel.getResultCode() != 1){
-//                SimpleDialogFragment.createBuilder( ConsumeStatisticsActivity.this , ConsumeStatisticsActivity.this.getSupportFragmentManager())
-//                        .setTitle("错误信息")
-//                        .setMessage( mjConsumeListModel.getResultDescription() )
-//                        .setNegativeButtonText("关闭")
-//                        .show();
-//                return;
-//            }
 
             if( _operateType == OperateTypeEnum.REFRESH ) {
                 _consumeDetailList.clear();

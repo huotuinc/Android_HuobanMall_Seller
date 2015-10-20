@@ -53,7 +53,6 @@ public class WebViewActivity extends BaseFragmentActivity implements View.OnClic
         _webView = _pullToRefreshWebViewPage.getRefreshableView();
         _webView.getSettings().setJavaScriptEnabled(true);
         _webView.setWebViewClient(new SellerWebViewClient());
-        //_webView.setWebChromeClient(new SellerWebChromeClient(_webViewTitle , _pullToRefreshWebViewPage ));
 
         if( null != getIntent() && getIntent().hasExtra(Constant.Extra_Url )){
             _url= getIntent().getStringExtra( Constant.Extra_Url );
@@ -73,7 +72,6 @@ public class WebViewActivity extends BaseFragmentActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        //super.onClick(v);
         if( v.getId() == R.id.header_back){
             this.finish();
         }

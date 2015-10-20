@@ -129,7 +129,6 @@ public class RebateStatisticsActivity extends BaseFragmentActivity {
 
        emptyView= new View(this);
        emptyView.setBackgroundResource(R.mipmap.tpzw);
-//        _rebateStatistics_listview.setEmptyView(emptyView);
 
         _rebateStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH);
 

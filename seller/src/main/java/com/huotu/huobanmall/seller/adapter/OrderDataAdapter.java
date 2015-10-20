@@ -184,67 +184,17 @@ public class OrderDataAdapter extends BaseAdapter{ //RecyclerView.Adapter<OrderD
 
     @Override
     public int getItemViewType(int position) {
-        //return super.getItemViewType(position);
+
         return _data.get(position).getViewType();
     }
 
     @Override
     public long getItemId(int position) {
-        //return super.getItemId(position);
+
         return position;
     }
 
-//      @Override
-//            public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//                if( viewType==0 ){
-//                    View view = _inflater.inflate(R.layout.layout_order_main_item, null);
-//                    ViewHolder holder=new ViewHolder( view , viewType );
-//                    return holder;
-//                }else if( viewType==1){
-//                    View view = _inflater.inflate(R.layout.layout_order_child_item,null);
-//                    ViewHolder holder= new ViewHolder(view , viewType );
-//                    return holder;
-//                }else if( viewType==2){
-//                    View view = _inflater.inflate(R.layout.layout_order_goods_item,null);
-//                    ViewHolder holder= new ViewHolder(view , viewType );
-//                    return holder;
-//        }else if( viewType==3){
-//            View view = _inflater.inflate(R.layout.layout_order_logistic_item,null);
-//            ViewHolder holder =new ViewHolder(view , viewType );
-//            return holder;
-//        }else if( viewType==4){
-//
-//        }
-//        return null;
-//    }
-
-//    @Override
-//    public void onBindViewHolder(ViewHolder holder, int position) {
-//        OrderTestModel model=_data.get(position);
-//        int viewType= model.getViewType();
-//        if( viewType== 0){
-//            holder.tvOrdernNo.setText( model.getMainOrderNO() );
-//            holder.tvOrderTime.setText( String.valueOf(model.getOrderTime()));
-//        }else if ( viewType==1){
-//            holder.tvOrdernNo.setText( model.getChildOrderNO() );
-//            holder.tvStatus.setText( model.getStatus() );
-//        }else if( viewType==2){
-//            holder.tvGoodsName.setText( model.getGoodsName() );
-//            holder.tvPrice.setText( model.getPrice());
-//            holder.tvCount.setText(model.getCount());
-//            holder.tvSpec.setText( model.getSpec());
-//            BitmapLoader.create().displayUrl(_context,holder.ivPicture, model.getPictureUrl());
-//        }else if( viewType==3){
-//            //holder.btnLogistics
-//        }
-//    }
-
-//    @Override
-//    public int getItemCount() {
-//        return _data==null?0:_data.size();
-//    }
-
-    public class ViewHolder { //extends  RecyclerView.ViewHolder {
+    public class ViewHolder {
 
         public TextView tvOrdernNo;
         public TextView tvGoodsName;

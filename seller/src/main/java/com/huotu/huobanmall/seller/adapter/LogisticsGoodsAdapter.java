@@ -68,28 +68,7 @@ public class LogisticsGoodsAdapter extends BaseAdapter {
         return convertView;
     }
 
-//    @Override
-//    public int getItemCount() {
-//        return _data==null?0:_data.size();
-//    }
 
-//    @Override
-//    public void onBindViewHolder(LogisticsGoodsAdapter.GoodsViewHolder viewHolder, int i) {
-//        if(_data==null)return;
-//        viewHolder.tvTitle.setText( _data.get(i).getTitle());
-//        viewHolder.tvCounts.setText(_data.get(i).getAmount());
-//        viewHolder.tvColorSize.setText( _data.get(i).getSpec() );
-//        viewHolder.tvPrice.setText( "￥" + String.valueOf( _data.get(i).getMoney() ) );
-//
-//    }
-
-//    @Override
-//    public LogisticsGoodsAdapter.GoodsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-//        LogisticsGoodsAdapter.GoodsViewHolder viewHolder= null;
-//        View view = LayoutInflater.from(viewGroup.getContext()).inflate( R.layout.layout_bill_goods_item ,null);
-//        viewHolder = new GoodsViewHolder(view);
-//        return viewHolder;
-//    }
 
     class GoodsViewHolder {//extends  RecyclerView.ViewHolder{
         public TextView tvTitle;
@@ -98,10 +77,5 @@ public class LogisticsGoodsAdapter extends BaseAdapter {
         public TextView tvColorSize;
         public NetworkImageView ivPicture;
 
-//        public GoodsViewHolder(View itemView) {
-//            super(itemView);
-//            tvTitle =  (TextView)itemView.findViewById(R.id.order_purchaseofgoods_name);
-//            tvCounts = (TextView)itemView.findViewById(R.id.order_purchaseofgoods_count);
-//        }
     }
 }

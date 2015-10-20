@@ -71,7 +71,6 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
     OrderDetailModel _data=null;
 
     LogisticsGoodsAdapter _orderGoodsAdapter;
-    //List<OrderListProductModel> _productList=null;
 
     ScoreExpandableAdapter _scoreAdapter=null;
 
@@ -148,32 +147,6 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
             if(! validateData(mjOrderDetailModel)){
                 return;
             }
-//            if (mjOrderDetailModel == null) {
-//                DialogUtils.showDialog(OrdermanagementDetailsActivity.this
-//                        , OrdermanagementDetailsActivity.this.getSupportFragmentManager()
-//                        , "错误信息"
-//                        , "获取数据失败"
-//                        , "关闭");
-//                return;
-//            }
-//            if (mjOrderDetailModel.getSystemResultCode() != 1) {
-//                DialogUtils.showDialog(OrdermanagementDetailsActivity.this
-//                        , OrdermanagementDetailsActivity.this.getSupportFragmentManager()
-//                        , "错误信息"
-//                        , mjOrderDetailModel.getSystemResultDescription()
-//                        , "关闭");
-//                return;
-//            } else if (mjOrderDetailModel.getResultCode() == Constant.TOKEN_OVERDUE) {
-//                ActivityUtils.getInstance().showActivity(OrdermanagementDetailsActivity.this, LoginActivity.class);
-//                return;
-//            } else if (mjOrderDetailModel.getResultCode() != 1) {
-//                DialogUtils.showDialog(OrdermanagementDetailsActivity.this
-//                        , OrdermanagementDetailsActivity.this.getSupportFragmentManager()
-//                        , "错误信息"
-//                        , mjOrderDetailModel.getResultDescription()
-//                        , "关闭");
-//                return;
-//            }
 
             if( mjOrderDetailModel.getResultData().getData() ==null ){
                 DialogUtils.showDialog(OrdermanagementDetailsActivity.this,OrdermanagementDetailsActivity.this.getSupportFragmentManager(),"错误信息","返回数据不正确","关闭");

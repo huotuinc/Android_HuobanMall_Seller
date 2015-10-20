@@ -77,6 +77,6 @@ public class OrderGoodsAdapter extends BaseAdapter{
 
         TextView goods_colorSize;
 
-        //TextView goods_size;
+
     }
 }

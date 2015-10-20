@@ -167,23 +167,7 @@ public class LogisticsActivity extends BaseFragmentActivity {
             if( !validateData(mjLogisticsDetailModel) ){
                 return;
             }
-//            if(null == mjLogisticsDetailModel){
-//                DialogUtils.showDialog(LogisticsActivity.this, LogisticsActivity.this.getSupportFragmentManager()
-//                        , "错误信息", "请求失败", "关闭");
-//                return;
-//            }
-//            if(mjLogisticsDetailModel.getSystemResultCode()!=1){
-//                DialogUtils.showDialog(LogisticsActivity.this, LogisticsActivity.this.getSupportFragmentManager()
-//                        ,"错误信息",mjLogisticsDetailModel.getSystemResultDescription(),"关闭");
-//                return;
-//            }else if( mjLogisticsDetailModel.getResultCode()== Constant.TOKEN_OVERDUE){
-//                ActivityUtils.getInstance().skipActivity(LogisticsActivity.this,LoginActivity.class);
-//                return;
-//            }else if( mjLogisticsDetailModel.getResultCode() != 1){
-//                DialogUtils.showDialog(LogisticsActivity.this, LogisticsActivity.this.getSupportFragmentManager()
-//                        ,"错误信息",mjLogisticsDetailModel.getResultDescription(),"关闭");
-//                return;
-//            }
+
 
             if( null == mjLogisticsDetailModel.getResultData() ){
                 DialogUtils.showDialog(LogisticsActivity.this , LogisticsActivity.this.getSupportFragmentManager(),
