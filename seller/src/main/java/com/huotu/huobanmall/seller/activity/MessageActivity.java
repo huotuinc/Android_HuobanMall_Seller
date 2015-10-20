@@ -26,6 +26,7 @@ import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -162,51 +163,57 @@ public class MessageActivity extends BaseFragmentActivity implements View.OnClic
                 url ,
                 MJMessageModel.class,
                 null,
-                listener,
-                this
+                new MyListener(this),
+                new MJErrorListener(this)
         );
 
         VolleyRequestManager.AddRequest(request);
     }
 
-    Response.Listener<MJMessageModel> listener = new Response.Listener<MJMessageModel>() {
+    //Response.Listener<MJMessageModel> listener = new Response.Listener<MJMessageModel>() {
+    static class MyListener implements Response.Listener<MJMessageModel>{
+        WeakReference<MessageActivity> ref;
+        public MyListener(MessageActivity act){
+            ref = new WeakReference<MessageActivity>(act);
+        }
+
         @Override
         public void onResponse(MJMessageModel mjMessageModel) {
-            if( MessageActivity.this.isFinishing() )return;
+            if( ref.get()==null) return;
+            if(  ref.get().isFinishing() )return;
 
-            msgList.onRefreshComplete();
-            MessageActivity.this.closeProgressDialog();
+            ref.get().msgList.onRefreshComplete();
+            ref.get().closeProgressDialog();
 
-            if( isSetEmptyView ==false ){
-                msgList.setEmptyView(emptyView);
-                isSetEmptyView=true;
+            if( ref.get().isSetEmptyView ==false ){
+                ref.get().msgList.setEmptyView(ref.get().emptyView);
+                ref.get().isSetEmptyView=true;
             }
 
-            if(!validateData(mjMessageModel)){
+            if(!ref.get().validateData(mjMessageModel)){
                 return;
             }
 
             if( mjMessageModel.getResultData() == null ){
-                DialogUtils.showDialog(MessageActivity.this,MessageActivity.this.getSupportFragmentManager(),"错误信息","服务端返回的数据有问题","关闭");
+                DialogUtils.showDialog(ref.get() ,ref.get().getSupportFragmentManager(),"错误信息","服务端返回的数据有问题","关闭");
                 return;
             }
 
-            if( operateType== OperateTypeEnum.REFRESH){
-                list.clear();
+            if( ref.get().operateType== OperateTypeEnum.REFRESH){
+                ref.get().list.clear();
                 if( mjMessageModel.getResultData().getMessages()!=null){
-                    list.addAll( mjMessageModel.getResultData().getMessages());
+                    ref.get().list.addAll( mjMessageModel.getResultData().getMessages());
                 }
 
-                adapter.notifyDataSetChanged();
-            }else if( operateType == OperateTypeEnum.LOADMORE){
+                ref.get().adapter.notifyDataSetChanged();
+            }else if( ref.get().operateType == OperateTypeEnum.LOADMORE){
                 if( mjMessageModel.getResultData().getMessages()!=null){
-                    list.addAll( mjMessageModel.getResultData().getMessages());
+                    ref.get().list.addAll( mjMessageModel.getResultData().getMessages());
                 }
-                adapter.notifyDataSetChanged();
+                ref.get().adapter.notifyDataSetChanged();
             }
         }
-    };
-
+    }
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {

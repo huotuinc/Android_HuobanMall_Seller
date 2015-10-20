@@ -6,6 +6,8 @@ import com.huotu.huobanmall.seller.bean.GlobalModel;
 import com.huotu.huobanmall.seller.bean.MerchantModel;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+import com.squareup.leakcanary.LeakCanary;
+
 import cn.jpush.android.api.JPushInterface;
 
 /**
@@ -30,6 +32,8 @@ public class SellerApplication extends Application{
     public void onCreate() {
         super.onCreate();
         _baiduLocation =new BaiduLocation();
+
+        //LeakCanary.install(this);//内存检测工具
 
         initJPush();
 

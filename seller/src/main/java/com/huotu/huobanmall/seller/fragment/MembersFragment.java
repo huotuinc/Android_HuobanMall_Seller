@@ -32,6 +32,7 @@ import com.huotu.huobanmall.seller.activity.RebateStatisticsActivity;
 import com.huotu.huobanmall.seller.activity.WebViewActivity;
 import com.huotu.huobanmall.seller.adapter.MembersFragmentPageAdapter;
 import com.huotu.huobanmall.seller.bean.MJMemberStatisticModel;
+import com.huotu.huobanmall.seller.bean.MJMessageModel;
 import com.huotu.huobanmall.seller.bean.TopConsumeModel;
 import com.huotu.huobanmall.seller.bean.TopScoreModel;
 import com.huotu.huobanmall.seller.common.Constant;
@@ -45,6 +46,7 @@ import com.huotu.huobanmall.seller.widget.MJMarkerView;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -214,8 +216,8 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
                 url,
                 MJMemberStatisticModel.class,
                 null,
-                userReportListner,
-                this
+                new MyListener(this),
+                new MJErrorListener(this)
         );
 
         this.showProgressDialog("", "正在获取数据，请稍等...");
@@ -223,61 +225,69 @@ public class MembersFragment extends BaseFragment implements View.OnClickListene
         VolleyRequestManager.AddRequest(userReportRequest);
     }
 
-    protected Response.Listener<MJMemberStatisticModel> userReportListner = new Response.Listener<MJMemberStatisticModel>() {
+    //protected Response.Listener<MJMemberStatisticModel> userReportListner = new Response.Listener<MJMemberStatisticModel>() {
+    static class MyListener implements Response.Listener<MJMemberStatisticModel>{
+        WeakReference<MembersFragment> ref;
+        public MyListener(MembersFragment frag){
+            ref=new WeakReference<MembersFragment>(frag);
+        }
+
         @Override
         public void onResponse(MJMemberStatisticModel mjMemberStatisticModel  ) {
-         if( MembersFragment.this.isRemoving() || MembersFragment.this.isDetached() ) return;
+            if( ref.get()==null || ref.get().getActivity()==null) return;
 
-            MembersFragment.this.closeProgressDialog();
+         if( ref.get().isRemoving() || ref.get().isDetached() ) return;
+
+            ref.get().closeProgressDialog();
 
             if( mjMemberStatisticModel==null){
-                DialogUtils.showDialog(MembersFragment.this.getActivity(), MembersFragment.this.getFragmentManager(), "错误信息", "请求数据失败", "关闭");
+                DialogUtils.showDialog(ref.get().getActivity(), ref.get().getFragmentManager(), "错误信息", "请求数据失败", "关闭");
                 return;
             }
             if( mjMemberStatisticModel.getSystemResultCode()!=1){
-                DialogUtils.showDialog( MembersFragment.this.getActivity(), MembersFragment.this.getFragmentManager() ,"错误信息", mjMemberStatisticModel.getSystemResultDescription(),"关闭" );
+                DialogUtils.showDialog( ref.get().getActivity(), ref.get().getFragmentManager() ,"错误信息", mjMemberStatisticModel.getSystemResultDescription(),"关闭" );
                 return;
             }
 
             if(mjMemberStatisticModel.getResultCode() == Constant.TOKEN_OVERDUE){
-                ActivityUtils.getInstance().showActivity(MembersFragment.this.getActivity(), LoginActivity.class);
+                ActivityUtils.getInstance().skipActivity(ref.get().getActivity(), LoginActivity.class);
                 return;
             }
             if( mjMemberStatisticModel.getResultCode() != 1){
-                DialogUtils.showDialog( MembersFragment.this.getActivity(), MembersFragment.this.getFragmentManager() ,"错误信息", mjMemberStatisticModel.getResultDescription() ,"关闭" );
+                DialogUtils.showDialog( ref.get().getActivity(), ref.get().getFragmentManager() ,"错误信息", mjMemberStatisticModel.getResultDescription() ,"关闭" );
                 return;
             }
 
-            _data=mjMemberStatisticModel;
+            ref.get()._data=mjMemberStatisticModel;
 
-            Long total = _data.getResultData().getTotalMember();
-            _members_total.setText( String.valueOf( total) );
-            Long fxsAmount = _data.getResultData().getTotalPartner();
-            _members_firendCount.setText( String.valueOf( fxsAmount));
-            if(_currentIndex==0){
-                Long today_fxs = _data.getResultData().getTodayMemberAmount();
-                Long today_menber = _data.getResultData().getTodayPartnerAmount();
-                _member_fxsCount2.setText( String.valueOf( today_fxs) );
-                _member_memberCount2.setText( String.valueOf( today_menber ) );
-            }else if( _currentIndex==1){
-                Long week_fxsCount = _data.getResultData().getWeekPartnerAmount();
-                Long week_MemberCount = _data.getResultData().getWeekMemberAmount();
-                _member_fxsCount2.setText( String.valueOf( week_fxsCount ));
-                _member_memberCount2.setText( String.valueOf( week_MemberCount ));
-            }else if( _currentIndex==2){
-                Long month_fxs = _data.getResultData().getMonthPartnerAmount();
-                Long month_MemberCount = _data.getResultData().getMonthMemberAmount();
-                _member_fxsCount2.setText( String.valueOf( month_fxs ));
-                _member_memberCount2.setText( String.valueOf( month_MemberCount) );
+            Long total = ref.get()._data.getResultData().getTotalMember();
+            ref.get()._members_total.setText( String.valueOf( total) );
+            Long fxsAmount = ref.get()._data.getResultData().getTotalPartner();
+            ref.get()._members_firendCount.setText( String.valueOf( fxsAmount));
+            if(ref.get()._currentIndex==0){
+                Long today_fxs = ref.get()._data.getResultData().getTodayMemberAmount();
+                Long today_menber = ref.get()._data.getResultData().getTodayPartnerAmount();
+                ref.get()._member_fxsCount2.setText(String.valueOf(today_fxs));
+                ref.get()._member_memberCount2.setText( String.valueOf( today_menber ) );
+            }else if( ref.get()._currentIndex==1){
+                Long week_fxsCount = ref.get()._data.getResultData().getWeekPartnerAmount();
+                Long week_MemberCount =ref.get(). _data.getResultData().getWeekMemberAmount();
+                ref.get()._member_fxsCount2.setText(String.valueOf(week_fxsCount));
+                ref.get()._member_memberCount2.setText( String.valueOf( week_MemberCount ));
+            }else if( ref.get()._currentIndex==2){
+                Long month_fxs = ref.get()._data.getResultData().getMonthPartnerAmount();
+                Long month_MemberCount = ref.get()._data.getResultData().getMonthMemberAmount();
+                ref.get(). _member_fxsCount2.setText( String.valueOf( month_fxs ));
+                ref.get(). _member_memberCount2.setText( String.valueOf( month_MemberCount) );
             }
 
-            _fragment1.setData(_data,1);
-            _fragment2.setData(_data,2);
-            _fragment3.setData(_data, 3);
-            _membersFragmentAdapter.notifyDataSetChanged();
+            ref.get()._fragment1.setData(ref.get()._data,1);
+            ref.get()._fragment2.setData(ref.get()._data,2);
+            ref.get()._fragment3.setData(ref.get()._data, 3);
+            ref.get()._membersFragmentAdapter.notifyDataSetChanged();
 
         }
-    };
+    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

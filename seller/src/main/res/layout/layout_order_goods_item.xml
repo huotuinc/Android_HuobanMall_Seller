@@ -10,17 +10,17 @@
         android:id="@+id/test_order_goods_item_picture"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:scaleType="fitXY"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/space_15"
         android:background="@mipmap/ic_launcher"/>
 
     <RelativeLayout
         android:id="@+id/test_order_goods_item_goods"
-        android:layout_centerVertical="true"
+        android:layout_alignTop="@id/test_order_goods_item_picture"
         android:layout_toRightOf="@id/test_order_goods_item_picture"
         android:paddingRight="@dimen/space_10"
         android:paddingLeft="@dimen/space_10"
-        android:layout_marginBottom="@dimen/space_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -43,8 +43,10 @@
             android:layout_alignEnd="@+id/test_order_goods_item_price" />
         <TextView
             android:id="@+id/test_order_goods_item_goodsName"
+            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_7"
             android:textColor="@color/black"
             android:layout_marginRight="@dimen/space_5"
             android:maxLines="2"

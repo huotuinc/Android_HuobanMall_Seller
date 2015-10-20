@@ -35,6 +35,7 @@ import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -164,9 +165,18 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
         firstGetData();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        VolleyRequestManager.cancelAllRequest();
+    }
+
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+
+        handler.removeCallbacksAndMessages(null);
     }
 
     private void firstGetData() {
@@ -217,9 +227,12 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                 url ,
                 MJConsumeListModel.class,
                 null,
-                listener_MX,
-                this
+                new MyListener_MX(this),
+                new MJErrorListener(this)
         );
+
+        request.setShouldCache(false);
+
         VolleyRequestManager.AddRequest(request);
     }
 
@@ -236,8 +249,10 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
                 MJTopConsumeModel.class,
                 null,
                 listener_TJ,
-                this
+                new MJErrorListener(this)
         );
+
+        request.setShouldCache(false);
 
         VolleyRequestManager.AddRequest(request);
     }
@@ -267,36 +282,48 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
     };
 
 
-    Response.Listener<MJConsumeListModel> listener_MX =new Response.Listener<MJConsumeListModel>() {
+    //Response.Listener<MJConsumeListModel> listener_MX =new Response.Listener<MJConsumeListModel>() {
+    static class MyListener_MX implements Response.Listener<MJConsumeListModel>{
+        WeakReference<ConsumeStatisticsActivity> ref;
+        public MyListener_MX(ConsumeStatisticsActivity act){
+            ref = new WeakReference<ConsumeStatisticsActivity>(act);
+        }
+
         @Override
         public void onResponse(MJConsumeListModel mjConsumeListModel ) {
-         if( ConsumeStatisticsActivity.this.isFinishing() ) return;
+            if( ref.get() ==null ) return;
 
-            ConsumeStatisticsActivity.this.closeProgressDialog();
-            _consumStatistics_listview.onRefreshComplete();
+         if( ref.get().isFinishing() ) return;
 
-            if(isSetEmptyView==false){
-                _consumStatistics_listview.setEmptyView(emptyView);
-                isSetEmptyView=true;
+            ref.get().closeProgressDialog();
+            ref.get() ._consumStatistics_listview.onRefreshComplete();
+
+            if(ref.get() .isSetEmptyView==false){
+                ref.get() ._consumStatistics_listview.setEmptyView(ref.get().emptyView);
+                ref.get() . isSetEmptyView=true;
             }
 
-            if(!validateData(mjConsumeListModel))return;
 
-            if( _operateType == OperateTypeEnum.REFRESH ) {
-                _consumeDetailList.clear();
+
+
+            if(!ref.get() .validateData(mjConsumeListModel))return;
+
+            if( ref.get() ._operateType == OperateTypeEnum.REFRESH ) {
+                ref.get() ._consumeDetailList.clear();
+
                 if( mjConsumeListModel.getResultData() !=null
                         && mjConsumeListModel.getResultData().getList() !=null
                         && mjConsumeListModel.getResultData().getList().size()> 0 ) {
-                    _consumeDetailList.addAll(mjConsumeListModel.getResultData().getList());
+                    ref.get() ._consumeDetailList.addAll(mjConsumeListModel.getResultData().getList());
                 }
-                _consumStatistics_listview.setAdapter( _consumeDetailAdapter );
+                ref.get() ._consumStatistics_listview.setAdapter(  ref.get() ._consumeDetailAdapter );
             }else{
                 if( mjConsumeListModel.getResultData() !=null
                         && mjConsumeListModel.getResultData().getList() !=null
                         && mjConsumeListModel.getResultData().getList().size()> 0 ) {
-                    _consumeDetailList.addAll(mjConsumeListModel.getResultData().getList());
+                    ref.get() ._consumeDetailList.addAll(mjConsumeListModel.getResultData().getList());
                 }
-                _consumeDetailAdapter.notifyDataSetChanged();
+                ref.get() ._consumeDetailAdapter.notifyDataSetChanged();
             }
         }
     };

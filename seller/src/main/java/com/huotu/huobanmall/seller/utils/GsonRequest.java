@@ -1,5 +1,7 @@
 package com.huotu.huobanmall.seller.utils;
 
+import android.os.Handler;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -8,6 +10,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -61,6 +64,8 @@ public class GsonRequest<T> extends Request<T> {
 	 */
 	private final Listener<T> mListener;
 
+	private ErrorListener mErrorListener;
+
 	private static Map<String,String > mHeader = new HashMap<>();
 
 	private Map<String,String> mParams=new HashMap<>();
@@ -87,6 +92,7 @@ public class GsonRequest<T> extends Request<T> {
 		super(method, url, errorListener);
 		this.mClass = objectClass;
 		this.mListener = listener;
+		this.mErrorListener = errorListener;
 		mGson = new GsonBuilder()
 				.registerTypeAdapter(Date.class, new DateJsonDeserializer())
 				.registerTypeAdapter(Date.class, new DateJsonSerializer())
@@ -113,6 +119,7 @@ public class GsonRequest<T> extends Request<T> {
 		super(method,url, errorListener);
 		this.mTypeToken= typeToken;
 		this.mListener = listener;
+		this.mErrorListener = errorListener;
 		this.mGson = new GsonBuilder()
 				.registerTypeAdapter(Date.class, new DateJsonDeserializer())
 				.registerTypeAdapter(Date.class , new DateJsonSerializer())
@@ -138,6 +145,7 @@ public class GsonRequest<T> extends Request<T> {
 		super(method, url, errorListener);
 		this.mClass = objectClass;
 		this.mListener = listener;
+		this.mErrorListener = errorListener;
 		this.mGson = new GsonBuilder()
 				.registerTypeAdapter(Date.class , new DateJsonDeserializer())
 				.registerTypeAdapter(Date.class , new DateJsonSerializer())
@@ -150,8 +158,16 @@ public class GsonRequest<T> extends Request<T> {
 		this.mParams = paras;
 		this.mTypeToken=null;
 
-		this.setRetryPolicy( new DefaultRetryPolicy(Constant.REQUEST_TIMEOUT,1,1.0f));
+		this.setRetryPolicy(new DefaultRetryPolicy(Constant.REQUEST_TIMEOUT, 1, 1.0f));
 		this.setTag( TAG );
+
+
+	}
+
+
+	@Override
+	protected VolleyError parseNetworkError(VolleyError volleyError) {
+		return super.parseNetworkError(volleyError);
 	}
 
 	@Override
@@ -170,6 +186,12 @@ public class GsonRequest<T> extends Request<T> {
 		} catch (JsonSyntaxException e) {
 			return Response.error(new ParseError(e));
 		}
+	}
+
+	@Override
+	public void deliverError(VolleyError error) {
+		if( mErrorListener ==null ) return;
+		super.deliverError(error);
 	}
 
 	@Override

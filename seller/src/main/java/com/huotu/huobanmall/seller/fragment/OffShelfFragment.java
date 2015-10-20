@@ -25,12 +25,14 @@ import com.huotu.huobanmall.seller.bean.GoodsOpeTypeEnum;
 import com.huotu.huobanmall.seller.bean.MJGoodModel;
 import com.huotu.huobanmall.seller.bean.OperateTypeEnum;
 import com.huotu.huobanmall.seller.common.Constant;
+import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.StringUtils;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,6 +92,7 @@ public class OffShelfFragment extends BaseFragment {
         _goodsList = new ArrayList<>();
         _goodsAdapter=new GoodsAdapter(this.getActivity() , _goodsList);
         _goodsOffshelfListview.getRefreshableView().setAdapter(_goodsAdapter);
+        _pulltoRefreshListView = _goodsOffshelfListview;
 
         emptyView = new View(this.getActivity());
         emptyView.setBackgroundResource(R.mipmap.tpzw);
@@ -144,6 +147,9 @@ public class OffShelfFragment extends BaseFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+
+        _goodsOffshelfListview.onRefreshComplete();
+        VolleyRequestManager.cancelAllRequest();
     }
 
     @Override
@@ -176,7 +182,7 @@ public class OffShelfFragment extends BaseFragment {
             _handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if( OffShelfFragment.this.isDetached()|| OffShelfFragment.this.isRemoving() ) return;
+                    if( OffShelfFragment.this.getActivity()==null|| OffShelfFragment.this.isDetached()|| OffShelfFragment.this.isRemoving() ) return;
                     _type = OperateTypeEnum.REFRESH;
                     _isFirst = false;
                     _goodsOffshelfListview.setRefreshing(true);
@@ -206,28 +212,35 @@ public class OffShelfFragment extends BaseFragment {
                 url,
                 MJGoodModel.class,
                 null,
-                goodslistListener,
-                this
+                new MyListener(this),
+                new MJErrorListener(this)
         );
 
         VolleyRequestManager.AddRequest(goodsListRequest);
     }
 
-    Response.Listener<MJGoodModel> goodslistListener =new Response.Listener<MJGoodModel>() {
+    //Response.Listener<MJGoodModel> goodslistListener =new Response.Listener<MJGoodModel>() {
+    static class MyListener implements Response.Listener<MJGoodModel>{
+        WeakReference<OffShelfFragment> ref;
+        public MyListener(OffShelfFragment frag){
+            ref=new WeakReference<OffShelfFragment>(frag);
+        }
+
         @Override
         public void onResponse(MJGoodModel mjGoodModel) {
-           if( OffShelfFragment.this.isDetached() || OffShelfFragment.this.isRemoving() ) return;
+           //if( OffShelfFragment.this.getActivity()==null|| OffShelfFragment.this.isDetached() || OffShelfFragment.this.isRemoving() ) return;
+            if( ref.get()==null || ref.get().getActivity() ==null ) return;
 
-            if (isSetEmptyView == false) {
-                _goodsOffshelfListview.setEmptyView(emptyView);
-                isSetEmptyView=true;
+            if (  ref.get().isSetEmptyView == false) {
+                ref.get(). _goodsOffshelfListview.setEmptyView(ref.get().emptyView);
+                ref.get().isSetEmptyView=true;
             }
 
-            OffShelfFragment.this.closeProgressDialog();
-            _goodsOffshelfListview.onRefreshComplete();
+            ref.get().closeProgressDialog();
+            ref.get()._goodsOffshelfListview.onRefreshComplete();
 
             if( mjGoodModel==null ){
-                SimpleDialogFragment.createBuilder(OffShelfFragment.this.getActivity(), OffShelfFragment.this.getActivity().getSupportFragmentManager())
+                SimpleDialogFragment.createBuilder(ref.get().getActivity(), ref.get().getActivity().getSupportFragmentManager())
                         .setTitle("错误信息")
                         .setMessage( "获取数据失败" )
                         .setNegativeButtonText("关闭")
@@ -235,14 +248,14 @@ public class OffShelfFragment extends BaseFragment {
                 return;
             }
             if( mjGoodModel.getSystemResultCode()!=1){
-                SimpleDialogFragment.createBuilder(OffShelfFragment.this.getActivity(), OffShelfFragment.this.getActivity().getSupportFragmentManager())
+                SimpleDialogFragment.createBuilder(ref.get().getActivity(), ref.get().getActivity().getSupportFragmentManager())
                         .setTitle("错误信息")
                         .setMessage( mjGoodModel.getSystemResultDescription() )
                         .setNegativeButtonText("关闭")
                         .show();
                 return;
             }else if( mjGoodModel.getResultCode() != 1){
-                SimpleDialogFragment.createBuilder( OffShelfFragment.this.getActivity() , OffShelfFragment.this.getActivity().getSupportFragmentManager())
+                SimpleDialogFragment.createBuilder( ref.get().getActivity() , ref.get().getActivity().getSupportFragmentManager())
                         .setTitle("错误信息")
                         .setMessage( mjGoodModel.getResultDescription() )
                         .setNegativeButtonText("关闭")
@@ -250,21 +263,51 @@ public class OffShelfFragment extends BaseFragment {
                 return;
             }
 
-            if( _type == OperateTypeEnum.REFRESH){
-                _goodsList.clear();
+            if( ref.get()._type == OperateTypeEnum.REFRESH){
+                ref.get()._goodsList.clear();
                 if( mjGoodModel.getResultData() !=null && mjGoodModel.getResultData().getList()!=null && mjGoodModel.getResultData().getList().size()>0 ) {
-                    _goodsList.addAll(mjGoodModel.getResultData().getList());
+                    ref.get()._goodsList.addAll(mjGoodModel.getResultData().getList());
                 }else{
                     ToastUtils.showLong(Constant.No_Data_Text,Gravity.BOTTOM);
                 }
             }else{
                 if( mjGoodModel.getResultData() !=null && mjGoodModel.getResultData().getList()!=null && mjGoodModel.getResultData().getList().size()>0 ) {
-                    _goodsList.addAll(mjGoodModel.getResultData().getList());
+                    ref.get()._goodsList.addAll(mjGoodModel.getResultData().getList());
                 }else{
                     ToastUtils.showLong(Constant.No_Data_Text, Gravity.BOTTOM);
                 }
             }
-            _goodsAdapter.notifyDataSetChanged();
+            ref.get()._goodsAdapter.notifyDataSetChanged();
         }
     };
+
+//    @Override
+//    public void onErrorResponse(VolleyError volleyError) {
+//        if( OffShelfFragment.this.getActivity()==null ||  OffShelfFragment.this.isDetached() || OffShelfFragment.this.isRemoving() ) return;
+//
+//        _goodsOffshelfListview.onRefreshComplete();
+//        super.onErrorResponse(volleyError);
+//    }
+
+//    Response.ErrorListener errorListener =new Response.ErrorListener() {
+//        @Override
+//        public void onErrorResponse(VolleyError volleyError) {
+//            if( OffShelfFragment.this.getActivity() ==null ||  OffShelfFragment.this.isRemoving() || OffShelfFragment.this.isDetached() ) return;
+//
+//            _goodsOffshelfListview.onRefreshComplete();
+//            OffShelfFragment.this.closeProgressDialog();
+//            String message="";
+//            if( null != volleyError.networkResponse){
+//                message=new String( volleyError.networkResponse.data);
+//            }else{
+//                message = volleyError.getMessage();
+//            }
+//            if( message.length()<1){
+//                message = "网络请求失败，请检查网络状态";
+//            }
+//            DialogUtils.showDialog(OffShelfFragment.this.getActivity(), OffShelfFragment.this.getFragmentManager(), "错误信息", message, "关闭");
+//
+//        }
+//    };
+
 }

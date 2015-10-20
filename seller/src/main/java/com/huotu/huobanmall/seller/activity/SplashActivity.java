@@ -25,6 +25,9 @@ import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.StringUtils;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
+
+import java.lang.ref.WeakReference;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
@@ -106,8 +109,8 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
                 url,
                 HTInitBean.class,
                 null,
-                htInitBeanListener,
-                this
+                new MyListener(this),
+                new MJErrorListener(this)
         );
         VolleyRequestManager.AddRequest(initRequest);
     }
@@ -117,6 +120,8 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+
+        VolleyRequestManager.cancelAllRequest();
     }
 
     private void initLocation() {
@@ -139,32 +144,45 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
         SellerApplication.getInstance().getBaiduLocationClient().start();
     }
 
-    Response.Listener<HTInitBean> htInitBeanListener = new Response.Listener<HTInitBean>() {
+    //Response.Listener<HTInitBean> htInitBeanListener = new Response.Listener<HTInitBean>() {
+
+    static class MyListener implements Response.Listener<HTInitBean>{
+        WeakReference<SplashActivity> ref;
+        public MyListener(SplashActivity act){
+            ref = new WeakReference<SplashActivity>(act);
+        }
+
         @Override
         public void onResponse(HTInitBean htInitBean) {
-            _data = htInitBean;
+            if( ref.get()==null) return;
+
+            if( ref.get().isFinishing() ) return;
+
+            ref.get()._data = htInitBean;
             if( htInitBean == null ){
                 ToastUtils.showLong("请求数据失败");
-                SplashActivity.this.finish();
+                ref.get().finish();
                 return;
             }
             if( htInitBean.getSystemResultCode() != 1 ){
                 ToastUtils.showLong(htInitBean.getSystemResultDescription());
-                SplashActivity.this.finish();
+                ref.get().finish();
                 return;
             }
 
             //判断是否需要升级
             if( htInitBean.getResultData() !=null ){
-                boolean isNeedUpdate = judgeUpdate( htInitBean.getResultData().getUpdate() );
+                boolean isNeedUpdate =  ref.get().judgeUpdate(htInitBean.getResultData().getUpdate());
                 if( isNeedUpdate ) {
-                    updateApp( htInitBean.getResultData().getUpdate() );
+                    ref.get().updateApp(htInitBean.getResultData().getUpdate());
                     return;
                 }
             }
-            gotoMain();
+
+            ref.get().gotoMain();
+
         }
-    };
+    }
 
     protected void gotoMain(){
         if( _data.getResultCode() == Constant.TOKEN_OVERDUE ||
@@ -237,10 +255,20 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
-        //super.onErrorResponse(volleyError);
+        if( SplashActivity.this.isFinishing() ) return;
+
         ToastUtils.showLong("访问失败，请重试");
         SplashActivity.this.finish();
     }
+
+//    Response.ErrorListener errorListener =new Response.ErrorListener() {
+//        @Override
+//        public void onErrorResponse(VolleyError volleyError) {
+//            if( SplashActivity.this.isFinishing() ) return;
+//            ToastUtils.showLong("访问失败，请重试");
+//            SplashActivity.this.finish();
+//        }
+//    };
 
     @Override
     public void onNegativeButtonClicked(int i) {

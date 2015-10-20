@@ -28,10 +28,12 @@ import com.huotu.huobanmall.seller.utils.BitmapLoader;
 import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
+import com.huotu.huobanmall.seller.utils.L;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 
 import org.apache.commons.logging.Log;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -102,6 +104,7 @@ public class LogisticsActivity extends BaseFragmentActivity {
         _goodsAdapter = new LogisticsGoodsAdapter(this, _data.getList());
         _logistics_goods.setAdapter(_goodsAdapter);
 
+        _pullToRefreshBase=_scrollView;
         _scrollView.getRefreshableView().smoothScrollTo(0, 0);
 
         firstGetData();
@@ -141,8 +144,8 @@ public class LogisticsActivity extends BaseFragmentActivity {
                 url,
                 MJLogisticsDetailModel.class,
                 null,
-                requestListener,
-                this
+                new MyListener(this),
+                new MJErrorListener(this)
         );
 
         VolleyRequestManager.AddRequest( request );
@@ -156,35 +159,44 @@ public class LogisticsActivity extends BaseFragmentActivity {
         super.onErrorResponse(volleyError);
     }
 
-    Response.Listener<MJLogisticsDetailModel> requestListener = new Response.Listener<MJLogisticsDetailModel>() {
+    //Response.Listener<MJLogisticsDetailModel> requestListener = new Response.Listener<MJLogisticsDetailModel>() {
+    static class MyListener implements Response.Listener<MJLogisticsDetailModel>{
+        WeakReference<LogisticsActivity> ref;
+        public MyListener( LogisticsActivity act){
+            ref =new WeakReference<LogisticsActivity>(act);
+        }
+
         @Override
         public void onResponse(MJLogisticsDetailModel mjLogisticsDetailModel ) {
-            if( LogisticsActivity.this.isFinishing() ) return;
 
-            LogisticsActivity.this.closeProgressDialog();
-            _scrollView.onRefreshComplete();
+            if( ref.get()==null ) return;
 
-            if( !validateData(mjLogisticsDetailModel) ){
+            if( ref.get().isFinishing() ) return;
+
+            ref.get().closeProgressDialog();
+            ref.get()._scrollView.onRefreshComplete();
+
+            if( !ref.get().validateData(mjLogisticsDetailModel) ){
                 return;
             }
 
 
             if( null == mjLogisticsDetailModel.getResultData() ){
-                DialogUtils.showDialog(LogisticsActivity.this , LogisticsActivity.this.getSupportFragmentManager(),
+                DialogUtils.showDialog(ref.get() , ref.get().getSupportFragmentManager(),
                         "错误信息", "返回数据不完整","关闭");
                 return;
             }
 
-            _data = mjLogisticsDetailModel.getResultData().getData();
-            setData();
-            _scrollView.getRefreshableView().smoothScrollTo(0, 0);
+            ref.get()._data = mjLogisticsDetailModel.getResultData().getData();
+            ref.get().setData();
+            ref.get()._scrollView.getRefreshableView().smoothScrollTo(0, 0);
         }
     };
 
     protected void setData(){
         if(_data==null) return;
 
-        BitmapLoader.create().displayUrl( this , _logistics_logo , _data.getPictureURL() , R.mipmap.wl,R.mipmap.wl);
+        BitmapLoader.create().displayUrl(this, _logistics_logo, _data.getPictureURL(), R.mipmap.wl, R.mipmap.wl);
         _logistics_orderNo.setText(_data.getNo());
         _logistics_status.setText(_data.getStatusName());
         _logistics_source.setText(_data.getSource());
