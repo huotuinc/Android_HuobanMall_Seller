@@ -75,39 +75,9 @@ public class LogisticsAdapter extends BaseAdapter{
         }
     }
 
-//    @Override
-//    public LogisticsDetailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        LogisticsDetailViewHolder viewHolder;
-//        if( viewType == 0) {
-//            View view = _inflater.inflate(R.layout.layout_logistics_item_first , null);
-//            viewHolder = new LogisticsDetailViewHolder( view );
-//        }else {
-//            View view = _inflater.inflate( R.layout.layout_logistics_item,null);
-//            viewHolder = new LogisticsDetailViewHolder(view);
-//        }
-//        return viewHolder;
-//    }
-
-//    @Override
-//    public void onBindViewHolder(LogisticsDetailViewHolder holder, int position) {
-//        if(_list==null) return;
-//        LogisticsDetailModel model = _list.get(position);
-//        holder.tvLogistics_Context.setText( model.getSource());
-//    }
-
-//    @Override
-//    public int getItemCount() {
-//        return _list==null ? 0: _list.size();
-//    }
-
     public class LogisticsDetailViewHolder{ //extends RecyclerView.ViewHolder{
         private TextView tvLogistics_Context;
         private TextView tvTime;
 
-//        public LogisticsDetailViewHolder(View itemView) {
-//            super(itemView);
-//
-//            tvLogistics_Context = (TextView)itemView.findViewById(R.id.logistics_item_context);
-//        }
     }
 }

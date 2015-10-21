@@ -180,6 +180,7 @@ public class LogisticsActivity extends BaseFragmentActivity {
                 return;
             }
 
+
             if( null == mjLogisticsDetailModel.getResultData() ){
                 DialogUtils.showDialog(ref.get() , ref.get().getSupportFragmentManager(),
                         "错误信息", "返回数据不完整","关闭");

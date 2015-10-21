@@ -130,7 +130,6 @@ public class ConsumeStatisticsActivity extends BaseFragmentActivity implements V
 
         emptyView = new View(this);
         emptyView.setBackgroundResource(R.mipmap.tpzw);
-        //_consumStatistics_listview.setEmptyView(entmyview);
         _consumStatistics_listview.setMode(PullToRefreshBase.Mode.BOTH);
 
         _consumeStatisticsList = new ArrayList<>();

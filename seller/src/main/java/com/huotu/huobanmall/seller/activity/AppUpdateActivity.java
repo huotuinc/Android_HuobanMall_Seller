@@ -174,42 +174,7 @@ public class AppUpdateActivity extends BaseFragmentActivity implements ISimpleDi
 			if(updateType == UpdateType.FullUpate){//整包更新,直接进行安装
 				installApk(softwarePath);
 			}else{//增量更新
-//				new Thread(){
-//					public void run() {
-//						//将本地中的apk拷贝一份至临时文件夹
-//						backupApk(getPackageResourcePath(), oldapk_filepath);
-//						//step1.patch包与旧包生成新包，并生成新包md5
-//						L.i("patch start!");
-//						PatchUtils.patch(oldapk_filepath, newapk_savepath, softwarePath);
-//						L.i("patch end!");
-//						//step2.检测md5值是否一致
-//						String patchMd5 = SecurityUtil.md5sum(newapk_savepath);
-//						if(destMd5.equals(patchMd5)){//step3.2.md5一致，进行安装
-//							installApk(newapk_savepath);
-//						}else{//step3.1.md5不一致重新下载，进行整包更新
-//							//T.show(AppUpdateActivity.this, "重新更新");
-//							handler.post(new Runnable() {
-//								@Override
-//								public void run() {
-//									CustomDialog.showChooiceDialg(AppUpdateActivity.this, "温馨提示", "验证错误!更新失败，是否重新更新?", "重新更新", "取消", null,
-//											new DialogInterface.OnClickListener() {
-//												@Override
-//												public void onClick(DialogInterface dialog, int which) {
-//													task = new ClientDownLoadTask();
-//													task.execute(clientURL);
-//												}
-//											}, new DialogInterface.OnClickListener() {
-//												@Override
-//												public void onClick(DialogInterface dialog, int which) {
-//													//下载失败
-//													downloadClientFailed();
-//												}
-//											});
-//								}
-//							});
-//						}
-//					};
-//				}.start();
+
 			}
 
 		}

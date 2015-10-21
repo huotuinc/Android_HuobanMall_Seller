@@ -496,6 +496,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
         public void search( int index ){
             _operateTypes.set(index, OperateTypeEnum.REFRESH);
             getData(index,OperateTypeEnum.REFRESH,_listeners.get(index));
+
         }
 
         protected void getData( int index ,  OperateTypeEnum operateType, Response.Listener<MJOrderListModel> listener){
@@ -584,6 +585,7 @@ public class OrderActivity extends BaseFragmentActivity implements View.OnClickL
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
+
             container.addView(_lv.get(position));
             return _lv.get(position);
         }

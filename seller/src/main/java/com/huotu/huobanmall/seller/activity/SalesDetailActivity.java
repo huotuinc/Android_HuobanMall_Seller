@@ -170,7 +170,6 @@ public class SalesDetailActivity extends BaseFragmentActivity implements Compoun
         Map<String,String> paras = new HashMap<>();
         HttpParaUtils httpParaUtils = new HttpParaUtils();
         if( type == OperateTypeEnum.REFRESH ) {
-            //url = httpParaUtils.getHttpGetUrl(url, null);
         }else {
 
             if( _saledetailList !=null && _saledetailList.size() >0 ) {

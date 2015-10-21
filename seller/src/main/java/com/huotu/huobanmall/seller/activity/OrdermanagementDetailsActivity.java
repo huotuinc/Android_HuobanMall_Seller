@@ -72,7 +72,6 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
     OrderDetailModel _data=null;
 
     LogisticsGoodsAdapter _orderGoodsAdapter;
-    //List<OrderListProductModel> _productList=null;
 
     ScoreExpandableAdapter _scoreAdapter=null;
 

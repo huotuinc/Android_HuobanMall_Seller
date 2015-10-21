@@ -38,7 +38,6 @@ public class MembersFragmentPageAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        //return super.getItemPosition(object);
         return PagerAdapter.POSITION_NONE;
     }
 }
