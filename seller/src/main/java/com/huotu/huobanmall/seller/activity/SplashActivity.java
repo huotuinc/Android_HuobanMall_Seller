@@ -33,7 +33,12 @@ import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 
 /**
- * 启动界面
+ * 描述：启动界面
+ * 类名：SplashActivity
+ * 包名：
+ * 作者：JinXiangDong
+ * 日期：2015/10/22 9:21
+ * 版权：杭州火图科技
  */
 public class SplashActivity extends BaseFragmentActivity implements ISimpleDialogListener {
     @Bind(R.id.loadL)
@@ -112,13 +117,14 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
         VolleyRequestManager.AddRequest(initRequest);
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
 
         VolleyRequestManager.cancelAllRequest();
+
+        SellerApplication.getInstance().getBaiduLocationClient().stop();
     }
 
     private void initLocation() {
