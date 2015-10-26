@@ -127,8 +127,8 @@ public class FeedBackActivity extends BaseFragmentActivity implements OnClickLis
 
         String url = Constant.FEEDBACK_INTERFACE;
         Map<String,String> maps = new HashMap<>();
-        String username = PreferenceHelper.readString( FeedBackActivity.this , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_NAME );
-        String contact = PreferenceHelper.readString( FeedBackActivity.this , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_MOBILE);
+        String username = PreferenceHelper.readString( FeedBackActivity.this , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_NAME ,"" );
+        String contact = PreferenceHelper.readString( FeedBackActivity.this , Constant.LOGIN_USER_INFO , Constant.LOGIN_AUTH_MOBILE , "");
         String context = edtContent.getText().toString().trim();
 
         maps.put("name" , username);
