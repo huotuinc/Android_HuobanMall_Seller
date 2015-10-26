@@ -9,8 +9,9 @@
         android:layout_height="wrap_content">
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/bill_item_picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:scaleType="fitXY"
             android:layout_marginLeft="@dimen/space_15"
             android:background="@mipmap/ic_launcher"/>
 
