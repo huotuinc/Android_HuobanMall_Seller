@@ -104,13 +104,13 @@ public class OrderDataAdapter extends BaseAdapter{ //RecyclerView.Adapter<OrderD
             holder.tvTotalPrice = (TextView)convertView.findViewById(R.id.test_order_logistic_item_pay);
             holder.tvCount = (TextView)convertView.findViewById(R.id.test_order_logistic_item_amount);
 
-            convertView.setTag(holder);
+            convertView.setTag( R.layout.layout_order_logistic_item, holder);
         }else{
-            holder = (ViewHolder)convertView.getTag();
+            holder = (ViewHolder)convertView.getTag( R.layout.layout_order_logistic_item );
         }
 
-        holder.tvCount.setText ( "共" + String.valueOf( model.getCount()) + "件商品 实付:￥");
-        holder.tvTotalPrice.setText(String.valueOf( model.getTotalPrice()));
+        holder.tvCount.setText("共" + String.valueOf(model.getCount()) + "件商品 实付:￥");
+        holder.tvTotalPrice.setText(String.valueOf(model.getTotalPrice()));
 
         return convertView;
     }
@@ -129,17 +129,25 @@ public class OrderDataAdapter extends BaseAdapter{ //RecyclerView.Adapter<OrderD
             holder.rlGoods.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onSeeOrderDetailListener(v, model );
+                    OrderTestModel bean = null;
+                    if( v.getTag() !=null && v.getTag() instanceof  OrderTestModel) {
+                        bean = (OrderTestModel) v.getTag();
+                        onSeeOrderDetailListener(v, bean);
+                    }
                 }
             });
-            convertView.setTag(holder);
+
+            convertView.setTag( R.layout.layout_order_goods_item, holder);
         }else{
-            holder=(ViewHolder)convertView.getTag();
+            holder=(ViewHolder)convertView.getTag( R.layout.layout_order_goods_item );
         }
         holder.tvGoodsName.setText( model.getGoodsName() );
         holder.tvPrice.setText( "￥"+ String.valueOf( model.getPrice() ));
-        holder.tvCount.setText( "X " + String .valueOf( model.getCount() ) );
+        holder.tvCount.setText( "X " + String .valueOf(model.getCount()) );
         holder.tvSpec.setText(model.getSpec());
+
+        holder.rlGoods.setTag(model);
+
         BitmapLoader.create().displayUrl(_context, holder.ivPicture, model.getPictureUrl() , R.mipmap.goods , R.mipmap.goods );
         return convertView;
     }
@@ -151,9 +159,9 @@ public class OrderDataAdapter extends BaseAdapter{ //RecyclerView.Adapter<OrderD
             holder= new ViewHolder();
             holder.tvOrdernNo = (TextView)convertView.findViewById(R.id.test_order_child_item_childno);
             holder.tvStatus = (TextView)convertView.findViewById(R.id.test_order_child_item_status);
-            convertView.setTag(holder);
+            convertView.setTag( R.layout.layout_order_child_item , holder);
         }else{
-            holder=(ViewHolder)convertView.getTag();
+            holder=(ViewHolder)convertView.getTag( R.layout.layout_order_child_item );
         }
         holder.tvOrdernNo.setText( model.getChildOrderNO() );
         holder.tvStatus.setText( model.getStatus() );
@@ -167,9 +175,9 @@ public class OrderDataAdapter extends BaseAdapter{ //RecyclerView.Adapter<OrderD
             holder=new ViewHolder();
             holder.tvOrdernNo = (TextView)convertView.findViewById(R.id.test_order_main_item_orderNo);
             holder.tvOrderTime = (TextView)convertView.findViewById(R.id.test_order_main_item_orderTime);
-            convertView.setTag( holder );
+            convertView.setTag( R.layout.layout_order_main_item , holder );
         }else {
-            holder = (ViewHolder)convertView.getTag();
+            holder = (ViewHolder)convertView.getTag(R.layout.layout_order_main_item );
         }
         holder.tvOrdernNo.setText( model.getMainOrderNO()==null ? "": model.getMainOrderNO());
 
