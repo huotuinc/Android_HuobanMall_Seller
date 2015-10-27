@@ -44,6 +44,7 @@
         <activity
             android:name=".activity.SplashActivity"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,38 +52,41 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ForgetActivity" />
-        <activity android:name=".activity.PswchangeActivity" />
+        <activity android:name=".activity.ForgetActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.PswchangeActivity" android:screenOrientation="portrait" />
         <activity android:name=".activity.LoginActivity" android:launchMode="singleTask" />
-        <activity android:name=".activity.WebViewActivity" />
-        <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.PushActivity" />
-        <activity android:name=".activity.SalesDetailActivity" />
-        <activity android:name=".activity.ConsumeStatisticsActivity" />
-        <activity android:name=".activity.RebateStatisticsActivity" />
-        <activity android:name=".activity.TopSalesActivity"/>
-
-        <activity android:name=".activity.FeedBackActivity"/>
-
-        <activity android:name=".activity.MessageActivity" android:launchMode="singleTask"/>
-
+        <activity android:name=".activity.WebViewActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.SettingActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.PushActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.SalesDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ConsumeStatisticsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.RebateStatisticsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.TopSalesActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.FeedBackActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MessageActivity"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTask"/>
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".activity.DataStatisticActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_data_statistic"
             android:theme="@style/Theme.PageIndicatorDefaults" >
         </activity>
         <activity
             android:name=".activity.GoodsActivity"
             android:label="@string/title_activity_goods"
+            android:screenOrientation="portrait"
             android:theme="@style/StyledIndicatorsTheme" >
         </activity>
         <activity
             android:name=".activity.GoodsEditActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_goods_edit" >
         </activity>
         <activity android:name=".activity.AppUpdateActivity" />
@@ -106,10 +110,12 @@
 
         <activity
             android:name=".activity.MoreStatisticActivity"
-            android:label="@string/title_activity_more_statistic" >
+            android:label="@string/title_activity_more_statistic"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.EditSetActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_edit_set" >
         </activity>
         <activity
@@ -119,16 +125,18 @@
         </activity>
         <activity
             android:name=".activity.LogisticsActivity"
-            android:label="@string/title_activity_logistics" >
+            android:label="@string/title_activity_logistics"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".activity.OrdermanagementDetailsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_ordermanagement_details" >
         </activity>
-        <activity android:name=".activity.OrderActivity" android:theme="@style/Theme.PageIndicatorDefaults"></activity>
-
-
+        <activity android:name=".activity.OrderActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/Theme.PageIndicatorDefaults"></activity>
 
         <!-- JPUSH Required SDK核心功能-->
         <activity
