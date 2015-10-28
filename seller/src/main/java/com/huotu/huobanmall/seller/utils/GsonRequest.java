@@ -212,6 +212,15 @@ public class GsonRequest<T> extends Request<T> {
 		return mParams;
 	}
 
+	@Override
+	protected String getParamsEncoding() {
+		return super.getParamsEncoding();
+	}
+
+	@Override
+	public byte[] getBody() throws AuthFailureError {
+		return super.getBody();
+	}
 
 	public class DateJsonDeserializer implements JsonDeserializer<Date>{
 		@Override

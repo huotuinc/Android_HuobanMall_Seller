@@ -75,6 +75,7 @@
                 android:onClick="onClickButton"
                 android:padding="10dp"
                 android:text="忘记密码?"
+                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </LinearLayout>

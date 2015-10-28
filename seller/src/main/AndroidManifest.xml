@@ -232,7 +232,7 @@
         <!-- 友盟统计 Appkey -->
         <meta-data  android:name="UMENG_APPKEY" android:value="561777aa67e58ecd30002e08" />
         <!-- 友盟统计 渠道ID -->
-        <meta-data android:name="UMENG_CHANNEL" android:value="huotu" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="${UMENG_CHANNEL_VALUE}" />
     </application>
 
 </manifest>
