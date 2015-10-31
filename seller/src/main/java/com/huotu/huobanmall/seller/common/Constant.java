@@ -14,7 +14,6 @@ public class Constant {
      * 操作平台码
      *
      */
-
     public static final String APPKEY = "b73ca64567fb49ee963477263283a1bf";
     // 平台安全码
     public static final String APP_SECRET = "1165a8d240b29af3f418b8d10599d0da";
@@ -47,7 +46,8 @@ public class Constant {
     // 城市码
     public final static String  PRE_LOCATION_CITY_CODE = "cityCode";
     // url请求前缀
-    public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
+    //public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
+    public final static String BASE_ROOT_URL ="http://sapi.huobanplus.com/";//正式版地址
     //public final static String BASE_ROOT_URL ="http://192.168.1.57:8080/huobanmall/";
     //public final static String BASE_ROOT_URL ="http://192.168.1.48:8080/huobanmall/";
     public static final String BASE_URL = BASE_ROOT_URL + "app/";// 基础URL

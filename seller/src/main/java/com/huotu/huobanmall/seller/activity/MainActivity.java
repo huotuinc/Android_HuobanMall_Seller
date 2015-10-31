@@ -375,7 +375,7 @@ public class MainActivity extends BaseFragmentActivity{
         lineChart.setDrawBorders(true);
         LineData data =new LineData(xValues, dataSet);
         lineChart.setData(data);
-        lineChart.invalidate();
+        //lineChart.invalidate();
         lineChart.animateX(2000, Easing.EasingOption.EaseInOutQuart);
     }
 

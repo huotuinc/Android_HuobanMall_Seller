@@ -52,13 +52,21 @@ android {
             versionName "${SELLER_VERSIONNAME}"
             applicationId 'com.huotu.huobanmall.seller'
         }
+        qq {
+            minSdkVersion MINSDKVERSION.toInteger()
+            signingConfig signingConfigs.huotu_hb
+            targetSdkVersion TARGETSDKVERSION.toInteger()
+            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
+            versionName "${SELLER_VERSIONNAME}"
+            applicationId 'com.huotu.huobanmall.seller'
+        }
     }
 
     applicationVariants.all { variant ->
-        variant.outputs.each {
-            output ->
-                output.outputFile = new File(output.outputFile.parent +"\\" + project.name + "_" + variant.flavorName + "_" + variant.buildType.name + "_" + variant.versionName + ".apk")
-        }
+            variant.outputs.each {
+                output ->
+                    output.outputFile = new File(output.outputFile.parent + "\\" + project.name + "_" + variant.flavorName + "_" + variant.buildType.name + "_" + variant.versionName + ".apk")
+            }
     }
 
     productFlavors.all { flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name] }
