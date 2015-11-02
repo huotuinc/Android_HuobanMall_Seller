@@ -30,6 +30,7 @@ import org.apache.http.client.methods.HttpHead;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -147,8 +148,8 @@ public class GsonRequest<T> extends Request<T> {
 		this.mListener = listener;
 		this.mErrorListener = errorListener;
 		this.mGson = new GsonBuilder()
-				.registerTypeAdapter(Date.class , new DateJsonDeserializer())
-				.registerTypeAdapter(Date.class , new DateJsonSerializer())
+				.registerTypeAdapter(Date.class, new DateJsonDeserializer())
+				.registerTypeAdapter(Date.class, new DateJsonSerializer())
 				.setDateFormat(DateFormat.LONG)
 				.create();
 
@@ -235,5 +236,4 @@ public class GsonRequest<T> extends Request<T> {
 			return new JsonPrimitive( date.getTime() );
 		}
 	}
-
 }

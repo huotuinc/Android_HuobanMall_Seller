@@ -343,32 +343,34 @@ public class MainActivity extends BaseFragmentActivity{
         dataSet.setCircleColor(lineColor);
         dataSet.setCircleColorHole(bg);
         dataSet.setDrawCircleHole(true);
+        dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setAvoidFirstLastClipping(true);
 
         YAxis yAxis = lineChart.getAxisLeft();
-        yAxis.setStartAtZero(true);
+        //yAxis.setStartAtZero(true);
         yAxis.setLabelCount(4, false);
-        yAxis.setAxisMinValue(0);
+        //yAxis.setAxisMinValue(0);
         int labelCount = yAxis.getLabelCount();
         if( max  < labelCount  ) {
             max = labelCount;
         }
         yAxis.setAxisMaxValue(max);
 
-        yAxis.setDrawGridLines(false);
+        //yAxis.setDrawGridLines(false);
         yAxis.setValueFormatter(new YAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, YAxis yAxis) {
                 //DecimalFormat format = new DecimalFormat("##");
-                String temp = String.valueOf((int)value);
+                String temp = String.valueOf((int) value);
                 return temp;
             }
         });
 
         lineChart.getAxisRight().setDrawLabels(false);
+        lineChart.getAxisRight().setDrawGridLines(false);
 
         lineChart.getLegend().setEnabled(false);
         lineChart.setBorderColor( gridColor );

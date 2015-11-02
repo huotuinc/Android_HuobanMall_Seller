@@ -8,46 +8,46 @@ import java.util.List;
  * Created by Administrator on 2015/9/14.
  */
 public class SaleStatisticModel {
-    private Float totalAmount;
-    private Float todayAmount;
-    private Float weekAmount;
-    private Float monthAmount;
+    private Double totalAmount;
+    private Double todayAmount;
+    private Double weekAmount;
+    private Double monthAmount;
     private List<Integer> todayTimes;
-    private List<Float> todayAmounts;
+    private List<Double> todayAmounts;
     private List<Date> weekTimes;
-    private List<Float> weekAmounts;
+    private List<Double> weekAmounts;
     private List<Date> monthTimes;
-    private List<Float> monthAmounts;
+    private List<Double> monthAmounts;
 
-    public Float getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Float totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public Float getTodayAmount() {
+    public Double getTodayAmount() {
         return todayAmount;
     }
 
-    public void setTodayAmount(Float todayAmount) {
+    public void setTodayAmount(Double todayAmount) {
         this.todayAmount = todayAmount;
     }
 
-    public Float getWeekAmount() {
+    public Double getWeekAmount() {
         return weekAmount;
     }
 
-    public void setWeekAmount(Float weekAmount) {
+    public void setWeekAmount(Double weekAmount) {
         this.weekAmount = weekAmount;
     }
 
-    public Float getMonthAmount() {
+    public Double getMonthAmount() {
         return monthAmount;
     }
 
-    public void setMonthAmount(Float monthAmount) {
+    public void setMonthAmount(Double monthAmount) {
         this.monthAmount = monthAmount;
     }
 
@@ -59,11 +59,11 @@ public class SaleStatisticModel {
         this.todayTimes = todayTimes;
     }
 
-    public List<Float> getTodayAmounts() {
+    public List<Double> getTodayAmounts() {
         return todayAmounts;
     }
 
-    public void setTodayAmounts(List<Float> todayAmounts) {
+    public void setTodayAmounts(List<Double> todayAmounts) {
         this.todayAmounts = todayAmounts;
     }
 
@@ -75,11 +75,11 @@ public class SaleStatisticModel {
         this.weekTimes = weekTimes;
     }
 
-    public List<Float> getWeekAmounts() {
+    public List<Double> getWeekAmounts() {
         return weekAmounts;
     }
 
-    public void setWeekAmounts(List<Float> weekAmounts) {
+    public void setWeekAmounts(List<Double> weekAmounts) {
         this.weekAmounts = weekAmounts;
     }
 
@@ -91,11 +91,11 @@ public class SaleStatisticModel {
         this.monthTimes = monthTimes;
     }
 
-    public List<Float> getMonthAmounts() {
+    public List<Double> getMonthAmounts() {
         return monthAmounts;
     }
 
-    public void setMonthAmounts(List<Float> monthAmounts) {
+    public void setMonthAmounts(List<Double> monthAmounts) {
         this.monthAmounts = monthAmounts;
     }
 

@@ -161,22 +161,22 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
                 if( _data==null || _data.getResultData()==null ) return;
                 DecimalFormat format = new DecimalFormat("0.00");
                 if( position==0){
-                    Float amount = _data.getResultData().getTotalAmount();
-                    Float todayAmount = _data.getResultData().getTodayAmount();
+                    Double amount = _data.getResultData().getTotalAmount();
+                    Double todayAmount = _data.getResultData().getTodayAmount();
                     String temp = format.format( amount );
                     _sales_total.setText( temp );
                     temp = format.format( todayAmount );
                     _sales_info_count.setText( temp );
                 }else if( position==1){
-                    Float amount = _data.getResultData().getTotalAmount();
-                    Float weekAmount = _data.getResultData().getWeekAmount();
+                    Double amount = _data.getResultData().getTotalAmount();
+                    Double weekAmount = _data.getResultData().getWeekAmount();
                     String temp = format.format( amount );
                     _sales_total.setText( temp );
                     temp = format.format( weekAmount);
                     _sales_info_count.setText( temp );
                 }else if( position==2){
-                    Float amount = _data.getResultData().getTotalAmount();
-                    Float monthAmount = _data.getResultData().getMonthAmount();
+                    Double amount = _data.getResultData().getTotalAmount();
+                    Double monthAmount = _data.getResultData().getMonthAmount();
                     String temp = format.format( amount);
                     _sales_total.setText(  temp );
                     temp = format.format( monthAmount );
@@ -260,22 +260,22 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
             }
 
             ref.get()._data=mjSaleStatisticModel;
-            Float total = ref.get()._data.getResultData().getTotalAmount();
+            Double total = ref.get()._data.getResultData().getTotalAmount();
 
             DecimalFormat decimalFormat=new DecimalFormat("0.00");
             String temp = decimalFormat.format( total  );
 
             ref.get()._sales_total.setText( temp );
             if(ref.get()._currentIndx==0) {
-                Float todayAmount = ref.get()._data.getResultData().getTodayAmount();
+                Double todayAmount = ref.get()._data.getResultData().getTodayAmount();
                 temp = decimalFormat.format( todayAmount );
                 ref.get()._sales_info_count.setText( temp );
             }else if( ref.get()._currentIndx == 1){
-                Float weekAmount = ref.get()._data.getResultData().getWeekAmount();
+                Double weekAmount = ref.get()._data.getResultData().getWeekAmount();
                 temp = decimalFormat.format( weekAmount );
                 ref.get()._sales_info_count.setText( temp );
             }else if( ref.get()._currentIndx==2){
-                Float monthAmount = ref.get()._data.getResultData().getMonthAmount();
+                Double monthAmount = ref.get()._data.getResultData().getMonthAmount();
                 temp = decimalFormat.format( monthAmount );
                 ref.get()._sales_info_count.setText( temp );
             }
@@ -353,7 +353,7 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
             }
         }
 
-        protected void setLineChartData( LineChart lineChart , List<Object> xData1 , List<Float> yData1 ){
+        protected void setLineChartData( LineChart lineChart , List<Object> xData1 , List<Double> yData1 ){
             if( xData1==null || yData1==null )return;
 
             //int bgColor=0xFFFFFFFF;
@@ -382,7 +382,8 @@ public class SalesFragment extends BaseFragment implements View.OnClickListener{
                 }
 
                 xValues1.add( x );
-                Float y = yData1.get(i);
+                Double yDou = yData1.get(i);
+                Float y = yDou.floatValue(); //(Float) yData1.get(i);
                 Entry item=new Entry( y , i );
                 yValues1.add(item);
             }

@@ -6,7 +6,7 @@ package com.huotu.huobanmall.seller.bean;
 public class TopGoodsModel {
     private Integer amount;
     private String picture;
-    private Float price;
+    private Double price;
     private String title;
 
     public Integer getAmount() {
@@ -25,11 +25,11 @@ public class TopGoodsModel {
         this.picture = picture;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

@@ -15,6 +15,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.huotu.huobanmall.seller.utils.DigestUtils;
+import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.ObtainParamsMap;
 import com.huotu.huobanmall.seller.utils.SystemTools;
@@ -72,6 +73,17 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     public class  t {
+
+        public Double getF() {
+            return f;
+        }
+
+        public void setF(Double f) {
+            this.f = f;
+        }
+
+        public Double f;
+
         public Date getD() {
             return d;
         }
@@ -83,10 +95,18 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         private Date d; }
 
     public void testJsonDateLong(){
-        String s1 = "{d:1442160000000}";
-        String s2 = "{d:1442376000000}";
-        String s3 = "{d:1442419200000}";
-        String s4 = "{d:1442592000000}";
+//        Number ddd= 1252113.52;
+//        double dfds = ddd.floatValue();
+//        double dfasf = ddd.doubleValue();
+//        Number dfsddf=111111.52;
+//        float d2222= dfsddf.floatValue();
+//        double d333 = dfsddf.floatValue();
+
+
+        String s1 = "{d:1442160000000,f=1252113.52}";
+        String s2 = "{d:1442376000000,f=52113.52}";
+        String s3 = "{d:1442419200000,f=12.521}";
+        String s4 = "{d:1442592000000,f=12.4}";
         t tt = new t();
         tt.setD(new Date(System.currentTimeMillis()));
 
@@ -96,7 +116,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(1442419200000L));
 
-   Date d=        calendar.getTime();
+        Date d= calendar.getTime();
         Date y2 = new Date( 1442419200000L);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         format.setTimeZone(TimeZone.getTimeZone("GMT+8"));
@@ -116,9 +136,12 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                         return new JsonPrimitive( date.getTime());
                     }
                 })
+                //.registerTypeAdapter(Float.class, new FloatGsonAdapter())
                 .setDateFormat(DateFormat.LONG).create();
 
-        String sd= ss.toJson(tt, t.class);
+        //String sd= ss.toJson(tt, t.class);
+
+        Float d2 = Float.MAX_VALUE;
 
         t t1 = ss.fromJson(s1, tt.getClass());
         t t2 = ss.fromJson(s2, tt.getClass());
@@ -141,6 +164,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
 
+
+
     public void testfloat(){
         DecimalFormat f = new DecimalFormat("0.00");
         float s = 0.0000f;
@@ -149,5 +174,20 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         s = 1232.002342f;
         temp = f.format(s);
         temp ="sdfsd";
+    }
+
+
+    public class FloatGsonAdapter implements JsonSerializer<Float> , JsonDeserializer<Float>{
+        @Override
+        public JsonElement serialize(Float aFloat, Type type, JsonSerializationContext jsonSerializationContext) {
+            return new JsonPrimitive( aFloat);
+        }
+
+        @Override
+        public Float deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            // jsonElement.getAsJsonPrimitive().getAsDouble() ;
+            //DecimalFormat format = new DecimalFormat("0.00");
+            return (float)jsonElement.getAsJsonPrimitive().getAsDouble();
+        }
     }
 }

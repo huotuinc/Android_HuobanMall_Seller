@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class ConsumeListModel {
     private Date time;
-    private Float money;
+    private Double money;
     private String name;
     private Integer amount;
     private String pictureUrl;
@@ -28,11 +28,11 @@ public class ConsumeListModel {
         this.time = time;
     }
 
-    public Float getMoney() {
+    public Double getMoney() {
         return money;
     }
 
-    public void setMoney(Float money) {
+    public void setMoney(Double money) {
         this.money = money;
     }
 

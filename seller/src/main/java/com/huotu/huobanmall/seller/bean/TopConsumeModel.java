@@ -5,7 +5,7 @@ package com.huotu.huobanmall.seller.bean;
  */
 public class TopConsumeModel {
     private Integer amount;
-    private Float money;
+    private Double money;
     private String name;
     private String pictureUrl;
 
@@ -17,11 +17,11 @@ public class TopConsumeModel {
         this.amount = amount;
     }
 
-    public Float getMoney() {
+    public Double getMoney() {
         return money;
     }
 
-    public void setMoney(Float money) {
+    public void setMoney(Double money) {
         this.money = money;
     }
 

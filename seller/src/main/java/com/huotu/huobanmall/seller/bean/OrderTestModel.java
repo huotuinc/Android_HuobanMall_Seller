@@ -12,9 +12,9 @@ public class OrderTestModel {
     private Date time;
     private String pictureUrl;
     private String goodsName;
-    private Float price;
+    private Double price;
     private Integer count;
-    private Float totalPrice;
+    private Double totalPrice;
 
     public String getSpec() {
         return spec;
@@ -74,11 +74,11 @@ public class OrderTestModel {
         this.goodsName = goodsName;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -90,11 +90,11 @@ public class OrderTestModel {
         this.count = count;
     }
 
-    public Float getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Float totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

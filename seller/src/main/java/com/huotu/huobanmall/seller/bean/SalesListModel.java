@@ -10,7 +10,7 @@ public class SalesListModel {
     private String title;
     private String receiver;
     private String moblie;
-    private Float money;
+    private Double money;
     private Date time;
 
     public String getPictureUrl() {
@@ -55,11 +55,11 @@ public class SalesListModel {
         this.moblie = moblie;
     }
 
-    public Float getMoney() {
+    public Double getMoney() {
         return money;
     }
 
-    public void setMoney(Float money) {
+    public void setMoney(Double money) {
         this.money = money;
     }
 

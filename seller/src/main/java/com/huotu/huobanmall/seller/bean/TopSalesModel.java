@@ -9,7 +9,7 @@ public class TopSalesModel {
     /**
      * 单价
      */
-    private Float money;
+    private Double money;
     /**
      * 图片地址
      */
@@ -29,11 +29,11 @@ public class TopSalesModel {
     private String orderNo;
 
 
-    public Float getMoney() {
+    public Double getMoney() {
         return money;
     }
 
-    public void setMoney(Float money) {
+    public void setMoney(Double money) {
         this.money = money;
     }
 

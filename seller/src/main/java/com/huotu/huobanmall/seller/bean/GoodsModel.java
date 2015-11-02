@@ -18,7 +18,7 @@ public class GoodsModel implements Serializable {
     /**
      * 销售价格(元)
      */
-    private float price;
+    private double price;
     /**
      * 库存量
      */
@@ -62,7 +62,7 @@ public class GoodsModel implements Serializable {
         return pictureUrl;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -78,7 +78,7 @@ public class GoodsModel implements Serializable {
         this.pictureUrl = pictureUrl;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

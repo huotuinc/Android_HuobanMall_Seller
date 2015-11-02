@@ -48,6 +48,7 @@ public class Constant {
     // url请求前缀
     //public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
     public final static String BASE_ROOT_URL ="http://sapi.huobanplus.com/";//正式版地址
+    //public final static String BASE_ROOT_URL ="http://192.168.1.57:8080/huobanmall/";
     //public final static String BASE_ROOT_URL ="http://192.168.1.2:8080/huobanmall/";
     //public final static String BASE_ROOT_URL ="http://192.168.1.48:8080/huobanmall/";
     public static final String BASE_URL = BASE_ROOT_URL + "app/";// 基础URL

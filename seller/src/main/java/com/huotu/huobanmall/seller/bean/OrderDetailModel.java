@@ -33,7 +33,7 @@ public class OrderDetailModel {
     /**
      * 实付金额
      */
-    private Float paid;
+    private double paid;
     /**
      * 收货人
      */
@@ -99,11 +99,11 @@ public class OrderDetailModel {
         this.orderNo = orderNo;
     }
 
-    public Float getPaid() {
+    public double getPaid() {
         return paid;
     }
 
-    public void setPaid(Float paid) {
+    public void setPaid(double paid) {
         this.paid = paid;
     }
 

@@ -5,7 +5,7 @@ package com.huotu.huobanmall.seller.bean;
  */
 public class OrderListProductModel {
     private Integer amount;
-    private Float money;
+    private double money;
     private String pictureUrl;
     private String spec;
     /**
@@ -31,11 +31,11 @@ public class OrderListProductModel {
         this.amount = amount;
     }
 
-    public Float getMoney() {
+    public double getMoney() {
         return money;
     }
 
-    public void setMoney(Float money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 

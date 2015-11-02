@@ -18,8 +18,8 @@ public class MJNewTodayModel extends BaseModel {
     private InnerClass resultData;
 
     public class InnerClass {
-        private float totalSales;
-        private float todaySales;
+        private double totalSales;
+        private double todaySales;
         private Integer todayPartnerAmount;
         private Integer todayMemberAmount;
         private Integer todayOrderAmount;
@@ -54,11 +54,11 @@ public class MJNewTodayModel extends BaseModel {
             this.todayOrderAmount = todayOrderAmount;
         }
 
-        public void setTotalSales(float totalSales) {
+        public void setTotalSales(double totalSales) {
             this.totalSales = totalSales;
         }
 
-        public void setTodaySales(float todaySales) {
+        public void setTodaySales(double todaySales) {
             this.todaySales = todaySales;
         }
 
@@ -86,11 +86,11 @@ public class MJNewTodayModel extends BaseModel {
             this.partnerAmount = partnerAmount;
         }
 
-        public float getTotalSales() {
+        public double getTotalSales() {
             return totalSales;
         }
 
-        public float getTodaySales() {
+        public double getTodaySales() {
             return todaySales;
         }
 
