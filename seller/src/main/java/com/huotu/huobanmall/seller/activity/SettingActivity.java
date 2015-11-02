@@ -227,6 +227,7 @@ public class SettingActivity extends BaseFragmentActivity
                 String url = PreferenceHelper.readString(this.getApplicationContext(), Constant.LOGIN_GLOBAL_INFO,Constant.LOGIN_GLOBAL_ABOUTURL);
                 Intent intent=new Intent();
                 intent.setClass(SettingActivity.this,WebViewActivity.class);
+                //ToastUtils.showLong(url);
                 intent.putExtra(Constant.Extra_Url, url);
                 intent.putExtra(Constant.Extra_Title, "关于我们");
                 ActivityUtils.getInstance().showActivity(SettingActivity.this, intent );
