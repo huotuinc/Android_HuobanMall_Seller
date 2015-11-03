@@ -76,6 +76,7 @@ public class LoginActivity extends BaseFragmentActivity implements
         loginBtn.setOnClickListener(this);
         forgetPsw.setOnClickListener(this);
         forgetPsw.setText("忘记密码？");
+        forgetPsw.setVisibility(View.GONE);
         header_back.setOnClickListener(this);
 
         if(getIntent().hasExtra("type")){

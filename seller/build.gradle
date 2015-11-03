@@ -61,6 +61,14 @@ android {
             versionName "${SELLER_VERSIONNAME}"
             applicationId 'com.huotu.huobanmall.seller'
         }
+        app360 {
+            minSdkVersion MINSDKVERSION.toInteger()
+            signingConfig signingConfigs.huotu_hb
+            targetSdkVersion TARGETSDKVERSION.toInteger()
+            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
+            versionName "${SELLER_VERSIONNAME}"
+            applicationId 'com.huotu.huobanmall.seller'
+        }
     }
 
     applicationVariants.all { variant ->
