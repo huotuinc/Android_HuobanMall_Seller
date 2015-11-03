@@ -164,11 +164,11 @@ public class OrdermanagementDetailsActivity extends BaseFragmentActivity impleme
 
             ref.get(). _data = mjOrderDetailModel.getResultData().getData();
             ref.get()._orderGoodsAdapter = new LogisticsGoodsAdapter( ref.get() ,  ref.get()._data.getList());
-            ref.get().order_item_goodsList.setAdapter( ref.get()._orderGoodsAdapter);
+            ref.get().order_item_goodsList.setAdapter(ref.get()._orderGoodsAdapter);
             ref.get(). buyer.setText(  ref.get()._data.getBuyer() );
             ref.get().receiver.setText(  ref.get()._data.getReceiver() );
             ref.get().address.setText( ref.get()._data.getAddress());
-            ref.get(). moblic.setText( "联系方式：" +  ref.get()._data.getContact() ==null ? "" : ref.get(). _data.getContact() );
+            ref.get(). moblic.setText( "联系方式：" + ( ref.get()._data.getContact() ==null ? "" : ref.get(). _data.getContact()) );
             ref.get().orderNo.setText(  ref.get()._data.getOrderNo() );
             ref.get().tvAmount.setText( "共"+ ref.get()._data.getAmount() +"件商品 实付:￥" );
             ref.get().tvPaid.setText( String.valueOf(  ref.get()._data.getPaid() ) );

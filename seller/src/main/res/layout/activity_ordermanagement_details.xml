@@ -113,7 +113,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/line_gray_shape" />
 
                 <LinearLayout
@@ -156,7 +156,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/line_gray_shape" />
 
                 <LinearLayout
@@ -265,7 +265,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/line_gray_shape" />
 
                 <LinearLayout
