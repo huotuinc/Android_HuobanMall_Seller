@@ -16,8 +16,8 @@
 
     <TextView
         android:id="@+id/order_score_category_arrow"
-        android:layout_width="25dp"
-        android:layout_height="12dp"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/space_10"

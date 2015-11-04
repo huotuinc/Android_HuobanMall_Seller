@@ -70,7 +70,7 @@ public class LogisticsGoodsAdapter extends BaseAdapter {
 
 
 
-    class GoodsViewHolder {//extends  RecyclerView.ViewHolder{
+    class GoodsViewHolder {
         public TextView tvTitle;
         public TextView tvCounts;
         public TextView tvPrice;

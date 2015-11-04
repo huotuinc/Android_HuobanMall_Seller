@@ -8,7 +8,7 @@ import com.huotu.huobanmall.seller.R;
 
 
 /**
- * 
+ *
  * @类名称：BitmapLoader
  * @类描述：加载图片
  * @创建人：aaron
@@ -32,11 +32,11 @@ public class BitmapLoader
 
     private BitmapLoader()
     {
-        
+
     }
 
     /**
-     * 
+     *
      * @方法描述：采用volly加载网络图片
      * @方法名：displayUrl
      * @参数：@param context 上下文环境
@@ -53,9 +53,9 @@ public class BitmapLoader
     {
         displayUrl(context, imageView, imageUrl , R.mipmap.icon ,R.mipmap.icon );
     }
-    
+
     /**
-     * 
+     *
      * @方法描述：采用volly加载网络图片
      * @方法名：displayUrl
      * @参数：@param context 上下文环境
@@ -77,7 +77,7 @@ public class BitmapLoader
             //ImageLoader imageLoader = VolleyRequestManager.getImageLoader(context);
             imageView.setImageUrl("", null );
             return;
-        } 
+        }
 
         imageView.setBackgroundResource(0);
         imageView.setDefaultImageResId(initImg);
