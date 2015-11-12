@@ -69,8 +69,6 @@ public class LoginActivity extends BaseFragmentActivity implements
     {
         ButterKnife.bind(this);
         userName.setText("");
-        //userName.setText("18767152078");
-        //userName.setText("jxd");
         passWord.setText("");
         header_title.setText("用户登录");
         loginBtn.setOnClickListener(this);
