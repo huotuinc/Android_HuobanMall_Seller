@@ -43,8 +43,9 @@
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/main_today"
-            android:layout_alignTop="@id/main_todyMoney"
+            android:layout_alignBottom="@+id/main_todayMoneyLabel"
             android:layout_marginRight="20dp"
+            android:textSize="@dimen/text_size_15"
             android:layout_alignParentRight="true"
             android:textColor="@android:color/white"
             android:layout_width="wrap_content"

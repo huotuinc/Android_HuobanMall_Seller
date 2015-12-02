@@ -40,6 +40,8 @@ import com.huotu.huobanmall.seller.utils.DialogUtils;
 import com.huotu.huobanmall.seller.utils.GsonRequest;
 import com.huotu.huobanmall.seller.utils.HttpParaUtils;
 import com.huotu.huobanmall.seller.utils.PreferenceHelper;
+import com.huotu.huobanmall.seller.utils.SystemTools;
+import com.huotu.huobanmall.seller.utils.SystemUtils;
 import com.huotu.huobanmall.seller.utils.ToastUtils;
 import com.huotu.huobanmall.seller.utils.VolleyRequestManager;
 import com.huotu.huobanmall.seller.widget.MJMarkerView;
@@ -52,6 +54,8 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 public class MainActivity extends BaseFragmentActivity{
+    @Bind(R.id.main_today)
+    TextView main_Today;
     @Bind(R.id.main_todyMoney)
     TextView main_TodayMoney;
     @Bind(R.id.main_totalMoney)
@@ -104,6 +108,9 @@ public class MainActivity extends BaseFragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        String today = SystemTools.getDateTime(System.currentTimeMillis(),"MM-dd");
+        main_Today.setText("今日 "+ today);
 
         _main_Refresh.setColorSchemeColors(R.color.holo_blue_bright, R.color.holo_green_light,
                 R.color.holo_orange_light, R.color.holo_red_light);
