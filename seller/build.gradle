@@ -69,6 +69,30 @@ android {
             versionName "${SELLER_VERSIONNAME}"
             applicationId 'com.huotu.huobanmall.seller'
         }
+        xiaomi {
+            minSdkVersion MINSDKVERSION.toInteger()
+            signingConfig signingConfigs.huotu_hb
+            targetSdkVersion TARGETSDKVERSION.toInteger()
+            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
+            versionName "${SELLER_VERSIONNAME}"
+            applicationId 'com.huotu.huobanmall.seller'
+        }
+        huawei {
+            minSdkVersion MINSDKVERSION.toInteger()
+            signingConfig signingConfigs.huotu_hb
+            targetSdkVersion TARGETSDKVERSION.toInteger()
+            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
+            versionName "${SELLER_VERSIONNAME}"
+            applicationId 'com.huotu.huobanmall.seller'
+        }
+        baidu {
+            minSdkVersion MINSDKVERSION.toInteger()
+            signingConfig signingConfigs.huotu_hb
+            targetSdkVersion TARGETSDKVERSION.toInteger()
+            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
+            versionName "${SELLER_VERSIONNAME}"
+            applicationId 'com.huotu.huobanmall.seller'
+        }
     }
 
     lintOptions{

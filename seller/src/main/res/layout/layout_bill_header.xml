@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true">
     <Button
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/header_back"
         android:layout_width="30dp"
         android:layout_height="25dp"

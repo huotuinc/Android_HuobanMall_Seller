@@ -2,6 +2,7 @@ package com.huotu.huobanmall.seller.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.RelativeLayout;
@@ -125,6 +126,8 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
         VolleyRequestManager.cancelAllRequest();
 
         SellerApplication.getInstance().getBaiduLocationClient().stop();
+
+        Log.i("SplashActivity","onDestroy");
     }
 
     private void initLocation() {
@@ -255,15 +258,6 @@ public class SplashActivity extends BaseFragmentActivity implements ISimpleDialo
         }
         return false;
     }
-
-
-//    @Override
-//    public void onErrorResponse(VolleyError volleyError) {
-//        if (SplashActivity.this.isFinishing()) return;
-//
-//        ToastUtils.showLong("访问失败，请重试");
-//        SplashActivity.this.finish();
-//    }
 
     static class MyErrorListener implements Response.ErrorListener {
         WeakReference<SplashActivity> ref;

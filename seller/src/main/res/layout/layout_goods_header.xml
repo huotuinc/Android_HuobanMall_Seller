@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <Button
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:id="@+id/header_back"
         android:layout_width="50dp"
         android:layout_height="20dp"
