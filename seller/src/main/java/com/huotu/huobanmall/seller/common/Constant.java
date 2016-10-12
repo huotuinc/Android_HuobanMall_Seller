@@ -2,6 +2,8 @@ package com.huotu.huobanmall.seller.common;
 
 import android.os.Environment;
 
+import com.huotu.huobanmall.seller.BuildConfig;
+
 import java.io.File;
 
 /**
@@ -47,7 +49,8 @@ public class Constant {
     public final static String  PRE_LOCATION_CITY_CODE = "cityCode";
     // url请求前缀
     //public final static String BASE_ROOT_URL ="http://apitest.51flashmall.com:8080/huobanmall/";
-    public final static String BASE_ROOT_URL ="http://sapi.huobanplus.com/";//正式版地址
+    //public final static String BASE_ROOT_URL ="http://sapi.huobanplus.com/";//正式版地址
+    public final static String BASE_ROOT_URL = BuildConfig.Root_Url;
     //public final static String BASE_ROOT_URL ="http://192.168.1.57:8080/huobanmall/";
     //public final static String BASE_ROOT_URL ="http://192.168.1.2:8080/huobanmall/";
     //public final static String BASE_ROOT_URL ="http://192.168.1.48:8080/huobanmall/";

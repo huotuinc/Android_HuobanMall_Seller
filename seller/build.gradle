@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+apply from: "E:/myjob/keystore/keystore.gradle"
+
 android {
     signingConfigs {
         huotu_hb {
@@ -8,14 +10,23 @@ android {
             storeFile file(huotu_signing_storefile)
             storePassword huotu_signing_storepassword
         }
+
     }
+
     compileSdkVersion COMPILE_SDK_VERSION.toInteger()
     buildToolsVersion "${BUILD_TOOLS_VERSION}"
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
         }
+
+        xingzhuang{
+            res.srcDirs = ['customer/xingzhuang/res']
+            manifest.srcFile 'customer/xingzhuang/AndroidManifest.xml'
+        }
     }
+
+
     defaultConfig {
         applicationId 'com.huotu.huobanmall.seller'
         minSdkVersion MINSDKVERSION.toInteger()
@@ -23,7 +34,9 @@ android {
         versionCode Integer.parseInt( "${SELLER_VERSIONCODE}")
         versionName "${SELLER_VERSIONNAME}"
         signingConfig signingConfigs.huotu_hb
+        buildConfigField 'String', 'Root_Url','"http://sapi.huobanplus.com/"'//接口根地址
     }
+
     buildTypes {
         release {
             //开启代码混淆
@@ -45,53 +58,63 @@ android {
         }
     }
     productFlavors {
-        huotu {
+//        huotu {
+//            minSdkVersion MINSDKVERSION.toInteger()
+//            signingConfig signingConfigs.huotu_hb
+//            targetSdkVersion TARGETSDKVERSION.toInteger()
+//            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
+//            versionName "${SELLER_VERSIONNAME}"
+//            applicationId 'com.huotu.huobanmall.seller'
+//        }
+//        qq {
+//            minSdkVersion MINSDKVERSION.toInteger()
+//            signingConfig signingConfigs.huotu_hb
+//            targetSdkVersion TARGETSDKVERSION.toInteger()
+//            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
+//            versionName "${SELLER_VERSIONNAME}"
+//            applicationId 'com.huotu.huobanmall.seller'
+//        }
+//        app360 {
+//            minSdkVersion MINSDKVERSION.toInteger()
+//            signingConfig signingConfigs.huotu_hb
+//            targetSdkVersion TARGETSDKVERSION.toInteger()
+//            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
+//            versionName "${SELLER_VERSIONNAME}"
+//            applicationId 'com.huotu.huobanmall.seller'
+//        }
+//        xiaomi {
+//            minSdkVersion MINSDKVERSION.toInteger()
+//            signingConfig signingConfigs.huotu_hb
+//            targetSdkVersion TARGETSDKVERSION.toInteger()
+//            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
+//            versionName "${SELLER_VERSIONNAME}"
+//            applicationId 'com.huotu.huobanmall.seller'
+//        }
+//        huawei {
+//            minSdkVersion MINSDKVERSION.toInteger()
+//            signingConfig signingConfigs.huotu_hb
+//            targetSdkVersion TARGETSDKVERSION.toInteger()
+//            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
+//            versionName "${SELLER_VERSIONNAME}"
+//            applicationId 'com.huotu.huobanmall.seller'
+//        }
+//        baidu {
+//            minSdkVersion MINSDKVERSION.toInteger()
+//            signingConfig signingConfigs.huotu_hb
+//            targetSdkVersion TARGETSDKVERSION.toInteger()
+//            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
+//            versionName "${SELLER_VERSIONNAME}"
+//            applicationId 'com.huotu.huobanmall.seller'
+//        }
+
+        xingzhuang{
+            applicationId 'com.huotu.mall.seller.xingzhuang'
             minSdkVersion MINSDKVERSION.toInteger()
-            signingConfig signingConfigs.huotu_hb
             targetSdkVersion TARGETSDKVERSION.toInteger()
-            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
+            signingConfig signingConfigs.yingyan
+            versionCode SELLER_VERSIONCODE.toInteger()
             versionName "${SELLER_VERSIONNAME}"
-            applicationId 'com.huotu.huobanmall.seller'
-        }
-        qq {
-            minSdkVersion MINSDKVERSION.toInteger()
-            signingConfig signingConfigs.huotu_hb
-            targetSdkVersion TARGETSDKVERSION.toInteger()
-            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
-            versionName "${SELLER_VERSIONNAME}"
-            applicationId 'com.huotu.huobanmall.seller'
-        }
-        app360 {
-            minSdkVersion MINSDKVERSION.toInteger()
-            signingConfig signingConfigs.huotu_hb
-            targetSdkVersion TARGETSDKVERSION.toInteger()
-            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
-            versionName "${SELLER_VERSIONNAME}"
-            applicationId 'com.huotu.huobanmall.seller'
-        }
-        xiaomi {
-            minSdkVersion MINSDKVERSION.toInteger()
-            signingConfig signingConfigs.huotu_hb
-            targetSdkVersion TARGETSDKVERSION.toInteger()
-            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
-            versionName "${SELLER_VERSIONNAME}"
-            applicationId 'com.huotu.huobanmall.seller'
-        }
-        huawei {
-            minSdkVersion MINSDKVERSION.toInteger()
-            signingConfig signingConfigs.huotu_hb
-            targetSdkVersion TARGETSDKVERSION.toInteger()
-            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
-            versionName "${SELLER_VERSIONNAME}"
-            applicationId 'com.huotu.huobanmall.seller'
-        }
-        baidu {
-            minSdkVersion MINSDKVERSION.toInteger()
-            signingConfig signingConfigs.huotu_hb
-            targetSdkVersion TARGETSDKVERSION.toInteger()
-            versionCode Integer.parseInt("${SELLER_VERSIONCODE}")
-            versionName "${SELLER_VERSIONNAME}"
-            applicationId 'com.huotu.huobanmall.seller'
+            buildConfigField 'String', 'Root_Url','"http://sapi.xingzhuangmall.com/"'//接口根地址
         }
     }
 
@@ -114,8 +137,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.huotu.android.library:libcropper:1.0'
     compile 'com.github.mikephil.charting:MPAndroidChart:1.1'
-    compile 'com.huotu.android.library:libedittext:1.5'
-    compile 'com.handmark.library:pulltorefresh:1.0'
+    compile 'com.huotu.android.library:libedittext:1.6'
+    compile 'com.handmark.library:pulltorefresh:1.1'
     compile 'com.avast.android.dialogs:android-styled-dialogs:2.2.1'
     compile 'com.zcw.togglebutton:ToggleButton:1.0'
     compile 'com.android.support:appcompat-v7:22.1.1'

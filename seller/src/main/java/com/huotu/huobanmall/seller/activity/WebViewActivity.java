@@ -1,9 +1,11 @@
 package com.huotu.huobanmall.seller.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -13,6 +15,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshWebView;
 import com.huotu.huobanmall.seller.R;
 import com.huotu.huobanmall.seller.common.Constant;
+import com.huotu.huobanmall.seller.common.SellerApplication;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -52,6 +55,21 @@ public class WebViewActivity extends BaseFragmentActivity implements View.OnClic
 
         _webView = _pullToRefreshWebViewPage.getRefreshableView();
         _webView.getSettings().setJavaScriptEnabled(true);
+        _webView.getSettings().setUseWideViewPort(true);
+        _webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        _webView.getSettings().setSaveFormData(true);
+        _webView.getSettings().setAllowFileAccess(true);
+        _webView.getSettings().setLoadWithOverviewMode(false);
+        _webView.getSettings().setSavePassword(true);
+        _webView.getSettings().setLoadsImagesAutomatically(true);
+        _webView.getSettings().setDomStorageEnabled(true);
+        _webView.getSettings().setAppCacheEnabled(true);
+        _webView.getSettings().setDatabaseEnabled(true);
+        String dir = SellerApplication.getInstance().getDir("database", Context.MODE_PRIVATE).getPath();
+        _webView.getSettings().setGeolocationDatabasePath(dir);
+        _webView.getSettings().setGeolocationEnabled(true);
+
+
         _webView.setWebViewClient(new SellerWebViewClient());
 
         if( null != getIntent() && getIntent().hasExtra(Constant.Extra_Url )){

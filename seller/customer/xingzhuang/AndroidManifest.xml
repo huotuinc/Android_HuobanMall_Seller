@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+    package="com.huotu.huobanmall.seller">
+
+    <application
+        android:name=".common.SellerApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+
+        <!-- 百度定位 meta-data需要写在application中 -->
+        <meta-data  tools:replace="android:value" android:name="com.baidu.lbsapi.API_KEY" android:value="" />
+
+        <!-- JPUSH Required  . Enable it you can get statistics data with channel -->
+        <meta-data tools:replace="android:value" android:name="JPUSH_CHANNEL" android:value="xingzhuang"/>
+        <!--  </>值来自开发者平台取得的AppKey-->
+        <meta-data tools:replace="android:value" android:name="JPUSH_APPKEY" android:value="f4b6f69b90da68b0c5091454" />
+
+        <!-- 友盟统计 Appkey -->
+        <meta-data  tools:replace="android:value" android:name="UMENG_APPKEY" android:value="" />
+
+    </application>
+
+</manifest>
