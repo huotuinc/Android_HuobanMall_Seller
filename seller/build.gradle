@@ -45,7 +45,6 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //设置签名信息
-            signingConfig signingConfigs.huotu_hb
             zipAlignEnabled true
         }
         debug {
@@ -112,8 +111,8 @@ android {
             minSdkVersion MINSDKVERSION.toInteger()
             targetSdkVersion TARGETSDKVERSION.toInteger()
             signingConfig signingConfigs.yingyan
-            versionCode SELLER_VERSIONCODE.toInteger()
-            versionName "${SELLER_VERSIONNAME}"
+            versionCode XINGZHUANG_VERSIONCODE.toInteger()
+            versionName "${XINGZHUANG_VERSIONNAME}"
             buildConfigField 'String', 'Root_Url','"http://sapi.xingzhuangmall.com/"'//接口根地址
         }
     }
